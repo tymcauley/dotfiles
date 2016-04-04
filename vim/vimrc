@@ -1,0 +1,154 @@
+" Load pathogen
+filetype off
+call pathogen#infect()
+call pathogen#helptags()
+
+" Attempt to determine the type of a file based on its name and possibly its
+" contents.  Use this to allow intelligent auto-indenting for each filetype,
+" and for plugins that are filetype specific.
+filetype plugin on
+filetype indent on
+
+" Enable syntax highlighting
+let python_highlight_all=1
+syntax on
+
+" Set 'nocompatible' to ward off unexpected things that your distro might
+" have made, as well as sanely reset options when re-sourcing .vimrc
+set nocompatible
+
+" Enable omni completion
+set omnifunc=syntaxcomplete#Complete
+
+" One of the most important options to activate. Allows you to switch from an
+" unsaved buffer without saving it first. Also allows you to keep an undo
+" history for multiple files. Vim will complain if you try to quit without
+" saving, and swap files will keep you safe if your computer crashes.
+set hidden
+
+" Better command-line completion
+set wildmenu
+
+" Show partial commands in the last line of the screen
+set showcmd
+
+" Use case insensitive search, except when using capital letters
+set ignorecase
+set smartcase
+
+" Allow backspacing over autoindent, line breaks and start of insert action
+set backspace=indent,eol,start
+
+" When opening a new line and no filetype-specific indenting is enabled, keep
+" the same indent as the line you're currently on. Useful for READMEs, etc.
+set autoindent
+
+" Create a more informative status line
+" set statusline=%F%m%r%h%w\ FORMAT=%{&ff}\ TYPE=%Y\ POS=%01l,%01v\ (%p%%)\ LEN=%L
+
+" Always display the status line, even if only one window is displayed
+set laststatus=2
+
+" Instead of failing a command because of unsaved changes, instead raise a
+" dialogue asking if you wish to save changed files.
+set confirm
+
+" Use visual bell instead of beeping when doing something wrong
+"set visualbell
+
+" Enable use of the mouse for all modes
+"set mouse=a
+
+" Set the command window height to 2 lines, to avoid many cases of having to
+" press <Enter> to continue"
+set cmdheight=2
+
+" Display line numbers on the left
+set number
+
+" Indentation settings for using hard tabs for indent. Display tabs as
+" four characters wide.
+set shiftwidth=4
+set tabstop=4
+set softtabstop=4
+set expandtab
+
+" Set the default location of window splits
+set splitbelow
+set splitright
+
+" Flag unnecessary whitespace
+highlight BadWhitespace ctermbg=red guibg=darkred
+au BufRead,BufNewFile *.py match BadWhitespace /\s\+$/
+
+" Prevent the quickfix/location buffer from showing up in typical buffer
+" navigation commands.
+augroup qf
+    autocmd!
+    autocmd FileType qf set nobuflisted
+augroup END
+
+" Default to using UTF8 encoding.
+set encoding=utf-8
+
+" Highlight any characters that go past the 80th column
+"highlight OverLength ctermbg=red ctermfg=white guibg=#592929
+"match OverLength /\%81v.\+/
+
+" Enable code folding
+set foldmethod=indent
+set foldlevel=99
+
+" Better comment insertion
+set formatoptions+=r " insert a new comment when making a newline in insert mode
+set formatoptions+=c " auto-wrap comments
+set textwidth=79     " Set auto-wrap to 79 characters
+set formatoptions+=o " insert a new comment when making a newline in normal mode
+
+" Increase max number of tabs opened
+set tabpagemax=50
+
+" TODO: Explain the purpose of this (change a single-line piece of code inside
+" parens so that the parens and code are all on separate lines).
+nnoremap <F2> [(li<CR><ESC>%%i<CR><ESC>%
+nnoremap <F3> :set wrap!<CR>
+nnoremap <F4> :set paste!<CR>
+nnoremap <F6> :cd %:p:h<CR>:pwd<CR>
+
+" Split window navigation
+nnoremap <C-h> <C-w>h
+nnoremap <C-j> <C-w>j
+nnoremap <C-k> <C-w>k
+nnoremap <C-l> <C-w>l
+
+" Buffer navigation
+nnoremap <C-n> :bn<CR>
+nnoremap <C-p> :bp<CR>
+
+" Enable code folding with the spacebar
+nnoremap <space> za
+
+" Ctrl-P settings
+let g:ctrlp_map = '<C-f>'
+nnoremap <C-b> :CtrlPBuffer<CR>
+
+" TODO: This might not work on non-Ubuntu platforms.
+" Font/color settings:
+let base16colorspace=256  " Access colors present in 256 colorspace
+set background=dark
+colorscheme base16-default
+
+" Enable docstring previews for folded Python functions.
+let g:SimpylFold_docstring_preview=1
+
+" Syntastic settings
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
+let g:syntastic_python_python_exec = '/usr/bin/python3'  " Proper Python3 syntax checking
+
+" Flake8 (Python syntax checker) settings
+" let g:flake8_pyflake_marker=''     " Disable PyFlakes warnings
+" let g:flake8_complexity_marker=''  " Disable McCabe complexity warnings
+" let g:flake8_naming_marker=''      " Disable naming warnings

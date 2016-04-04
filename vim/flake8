@@ -1,0 +1,7 @@
+[flake8]
+# F401: Unused import error
+# E221: Multiple spaces before operator
+# E226: Missing whitespace around arithmetic operator
+# E241: Multiple spaces after ','
+# E731: Do not use a lambda expression, use a def
+ignore = F401,E221,E226,E241,E731
