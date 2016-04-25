@@ -3,6 +3,7 @@
 # Keep track of starting directory.
 CWD=`pwd`
 
+
 # Install Base16 Shell.
 dest_dir="$HOME/.config/base16-shell"
 if [ -d "$dest_dir" ]; then
@@ -12,6 +13,7 @@ if [ -d "$dest_dir" ]; then
 else
     git clone https://github.com/chriskempson/base16-shell.git $dest_dir
 fi
+
 
 # Prompt user to ask if they want to build vim with python3 support (this takes
 # ~5 minutes).
@@ -40,7 +42,29 @@ if [ "$yn" == "y" ]; then
     rm -rf $vim_src_dir
 fi
 
+
 # Customize vim installation.
 ./vim/install_vim.bash
 
-# TODO: Clone my zprezto repo and install that.
+
+# Clone zprezto repo and install that.
+ZPREZTO_PATH="$HOME/.zprezto"
+
+if [[ -d "$ZPREZTO_PATH" ]]; then
+    cd "$ZPREZTO_PATH"
+    git pull
+    git submodule update --init --recursive
+else
+    # Clone ZSH configuration files.
+    git clone --recursive https://github.com/tymcauley/prezto.git \
+        "$ZPREZTO_PATH"
+
+    # Install ZSH configuration.
+    for rcfile in $ZPREZTO_PATH/runcoms/z*; do
+        rcfile_name=${rcfile##*/}
+        ln -s "$rcfile" "$HOME/.$rcfile_name"
+    done
+
+    # Change shell to ZSH.
+    chsh -s /bin/zsh
+fi
