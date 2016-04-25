@@ -1,7 +1,33 @@
 #!/bin/bash -e
 
+
+# If the user accidentally ran this as root, tell them that this might be
+# wrong.
+if [[ $EUID -eq 0 ]]; then
+    echo "This script was not designed to run as root. All files will be"
+    echo "installed using the following HOME directory: $HOME"
+
+    # Give the user the option to exit and re-run the script as a non-root
+    # user.
+    read -p "Do you want to continue running this script as root? [y/n] " yn
+    if [ "$yn" != "y" ]; then
+        exit 0
+    fi
+fi
+
+
 # Keep track of starting directory.
 CWD=`pwd`
+
+
+# Make sure the basic set of utilities are installed.
+# TODO: Maybe make sure that the system in question is actually Ubuntu, and if
+# not, then try to install these with a different command?
+sudo apt-get install vim-gnome zsh git
+
+
+# Customize git installation.
+./git/install_git.bash
 
 
 # Install Base16 Shell.
@@ -12,34 +38,6 @@ if [ -d "$dest_dir" ]; then
     cd $CWD
 else
     git clone https://github.com/chriskempson/base16-shell.git $dest_dir
-fi
-
-
-# Prompt user to ask if they want to build vim with python3 support (this takes
-# ~5 minutes).
-read -p "Do you want to install/update vim with Python3 support? [y/n] " yn
-if [ "$yn" == "y" ]; then
-    vim_src_dir="vim_src"
-    git clone https://github.com/vim/vim.git $vim_src_dir
-    cd $vim_src_dir
-    python3_config_dir=`python3-config --configdir`
-    ./configure \
-        --enable-perlinterp=yes \
-        --enable-python3interp=yes \
-        --enable-rubyinterp=yes \
-        --enable-cscope \
-        --enable-gui=auto \
-        --enable-gnome-check=yes \
-        --with-features=huge \
-        --enable-multibyte \
-        --with-x \
-        --with-python3-config-dir=$python3_config_dir
-    make
-    sudo make install
-    cd ..
-
-    # Clean up.
-    rm -rf $vim_src_dir
 fi
 
 
@@ -54,6 +52,7 @@ if [[ -d "$ZPREZTO_PATH" ]]; then
     cd "$ZPREZTO_PATH"
     git pull
     git submodule update --init --recursive
+    cd $CWD
 else
     # Clone ZSH configuration files.
     git clone --recursive https://github.com/tymcauley/prezto.git \

@@ -1,0 +1,7 @@
+[user]
+    email = tymcauley@gmail.com
+    name = Tynan McAuley
+[push]
+    default = simple
+[alias]
+    workprofile = config user.email \"tynan@motivps.com\"
