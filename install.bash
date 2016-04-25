@@ -30,6 +30,10 @@ sudo apt-get install vim-gnome zsh git
 ./git/install_git.bash
 
 
+# Customize subversion installation.
+./svn/install_svn.bash
+
+
 # Install Base16 Shell.
 dest_dir="$HOME/.config/base16-shell"
 if [ -d "$dest_dir" ]; then
