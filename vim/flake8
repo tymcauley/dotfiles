@@ -3,5 +3,6 @@
 # E221: Multiple spaces before operator
 # E226: Missing whitespace around arithmetic operator
 # E241: Multiple spaces after ','
+# E402: Module level import not at top of file.
 # E731: Do not use a lambda expression, use a def
-ignore = F401,E221,E226,E241,E731
+ignore = F401,E221,E226,E241,E402,E731
