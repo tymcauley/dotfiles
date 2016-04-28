@@ -34,6 +34,10 @@ sudo apt-get install vim-gnome zsh git
 ./svn/install_svn.bash
 
 
+# Customize Python3 installation.
+./python/install_python.bash
+
+
 # Install Base16 Shell.
 dest_dir="$HOME/.config/base16-shell"
 if [ -d "$dest_dir" ]; then
