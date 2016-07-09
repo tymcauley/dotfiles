@@ -19,11 +19,28 @@ fi
 # Keep track of starting directory.
 CWD=`pwd`
 
+# Check OS.
+OS=`uname -s`
+MAC=false
+UBUNTU=false
+if [[ "$OS" == "Darwin" ]]; then
+    MAC=true
+elif [[ "$OS" == "Linux" ]]; then
+    # This should really do a check to see what linux distribution is being
+    # used.
+    UBUNTU=true
+else
+    echo "Unknown operating system: $OS. Aborting."
+    exit 1
+fi
+
 
 # Make sure the basic set of utilities are installed.
-# TODO: Maybe make sure that the system in question is actually Ubuntu, and if
-# not, then try to install these with a different command?
-sudo apt-get install vim-gnome zsh git
+if $MAC; then
+    brew install vim zsh git
+elif $UBUNTU; then
+    sudo apt-get install vim-gnome zsh git
+fi
 
 
 # Customize git installation.
@@ -31,7 +48,7 @@ sudo apt-get install vim-gnome zsh git
 
 
 # Customize subversion installation.
-./svn/install_svn.bash
+# ./svn/install_svn.bash
 
 
 # Customize Python3 installation.
@@ -55,6 +72,7 @@ fi
 
 # Clone zprezto repo and install that.
 ZPREZTO_PATH="$HOME/.zprezto"
+ZSH_PATH=`which zsh`
 
 if [[ -d "$ZPREZTO_PATH" ]]; then
     cd "$ZPREZTO_PATH"
@@ -73,5 +91,6 @@ else
     done
 
     # Change shell to ZSH.
-    chsh -s /bin/zsh
+    echo "Changing shell to $ZSH_PATH. Confirm that it is in /etc/shells"
+    chsh -s $ZSH_PATH
 fi

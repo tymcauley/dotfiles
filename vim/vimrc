@@ -132,11 +132,9 @@ nnoremap <space> za
 let g:ctrlp_map = '<C-f>'
 nnoremap <C-b> :CtrlPBuffer<CR>
 
-" TODO: This might not work on non-Ubuntu platforms.
 " Font/color settings:
 let base16colorspace=256  " Access colors present in 256 colorspace
-set background=dark
-colorscheme base16-default
+colorscheme base16-default-dark
 
 " Enable docstring previews for folded Python functions.
 let g:SimpylFold_docstring_preview=1
