@@ -37,7 +37,15 @@ fi
 
 # Make sure the basic set of utilities are installed.
 if $MAC; then
-    brew install vim zsh git
+    # TODO: Add installation of homebrew to this script if homebrew doesn't
+    # exist.
+    brew install vim zsh git htop
+    # NOTE: To get htop to be able to see all processes not owned by the
+    # current user (basically, to get around having to run `sudo htop`), you
+    # have to do this:
+    #   cd /usr/local/Cellar/htop/<VERSION_NUMBER>/bin/
+    #   chmod 6555 htop
+    #   sudo chown root htop
 elif $UBUNTU; then
     sudo apt-get install vim-gnome zsh git
 fi
