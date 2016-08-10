@@ -44,6 +44,7 @@ set backspace=indent,eol,start
 set autoindent
 
 " Create a more informative status line
+" DEPRECATED BY AIRLINE PLUGIN.
 " set statusline=%F%m%r%h%w\ FORMAT=%{&ff}\ TYPE=%Y\ POS=%01l,%01v\ (%p%%)\ LEN=%L
 
 " Always display the status line, even if only one window is displayed
@@ -77,7 +78,7 @@ set expandtab
 set splitbelow
 set splitright
 
-" Flag unnecessary whitespace
+" Flag unnecessary whitespace in .py files
 highlight BadWhitespace ctermbg=red guibg=darkred
 au BufRead,BufNewFile *.py match BadWhitespace /\s\+$/
 
