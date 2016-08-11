@@ -43,10 +43,6 @@ set backspace=indent,eol,start
 " the same indent as the line you're currently on. Useful for READMEs, etc.
 set autoindent
 
-" Create a more informative status line
-" DEPRECATED BY AIRLINE PLUGIN.
-" set statusline=%F%m%r%h%w\ FORMAT=%{&ff}\ TYPE=%Y\ POS=%01l,%01v\ (%p%%)\ LEN=%L
-
 " Always display the status line, even if only one window is displayed
 set laststatus=2
 
@@ -69,6 +65,7 @@ set number
 
 " Indentation settings for using hard tabs for indent. Display tabs as
 " four characters wide.
+" TODO: Set this based on filetype?
 set shiftwidth=4
 set tabstop=4
 set softtabstop=4
@@ -77,10 +74,6 @@ set expandtab
 " Set the default location of window splits
 set splitbelow
 set splitright
-
-" Flag unnecessary whitespace in .py files
-highlight BadWhitespace ctermbg=red guibg=darkred
-au BufRead,BufNewFile *.py match BadWhitespace /\s\+$/
 
 " Prevent the quickfix/location buffer from showing up in typical buffer
 " navigation commands.
@@ -92,23 +85,43 @@ augroup END
 " Default to using UTF8 encoding.
 set encoding=utf-8
 
-" Highlight any characters that go past the 80th column
-"highlight OverLength ctermbg=red ctermfg=white guibg=#592929
-"match OverLength /\%81v.\+/
-
 " Enable code folding
 set foldmethod=indent
 set foldlevel=99
 
-" Better comment insertion
-set formatoptions+=r " insert a new comment when making a newline in insert mode
-set formatoptions+=c " auto-wrap comments
-set textwidth=79     " Set auto-wrap to 79 characters
-set formatoptions+=o " insert a new comment when making a newline in normal mode
+" Flag trailing whitespace in certain filetypes.
+"   Python
+"   Verilog
+"   SystemVerilog
+" TODO: Should I make these sets of file extensions into some variable?
+highlight BadWhitespace ctermbg=red guibg=darkred
+au BufRead,BufNewFile *.py,*.v,*.vs match BadWhitespace /\s\+$/
 
-" Increase max number of tabs opened
-set tabpagemax=50
+" Wrap text after a certain number of characters for certain filetypes.
+"   Python: 79 characters
+"   Verilog: 79 characters
+"   SystemVerilog: 79 characters
+au BufRead,BufNewFile *.py,*.v,*.vs set textwidth=79
 
+" Add in a ruler for certain filetypes.
+"   Python: Add a ruler 1 character past textwidth.
+au BufRead,BufNewFile *.py set colorcolumn=+1
+highlight ColorColumn ctermbg=0 guibg=lightgrey
+
+" Intelligent comment formatting.
+"   Python
+"   Verilog
+"   SystemVerilog
+" Options:
+"   r : Insert a new comment leader when inserting a newline in insert mode
+"       (hitting <Enter>).
+"   o : Insert a new comment leader when inserting a newline in normal mode
+"       (using the 'o' or 'O' command).
+"   c : Insert a new comment leader when wrapping text based on 'textwidth'.
+au BufRead,BufNewFile *.py,*.v,*.vs set formatoptions+=r formatoptions+=o
+    \ formatoptions+=c
+
+" Custom key mappings for commands I like.
 nnoremap <F7> :cd %:p:h<CR>:pwd<CR>
 nnoremap <F8> :set wrap!<CR>
 nnoremap <F9> :set paste!<CR>
