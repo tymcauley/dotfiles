@@ -1,6 +1,5 @@
 #!/bin/bash -e
 
-
 # If the user accidentally ran this as root, tell them that this might be
 # wrong.
 if [[ $EUID -eq 0 ]]; then
@@ -37,8 +36,11 @@ fi
 
 # Make sure the basic set of utilities are installed.
 if $MAC; then
-    # TODO: Add installation of homebrew to this script if homebrew doesn't
-    # exist.
+    # If homebrew isn't installed, install it.
+    if ! which brew >/dev/null 2>&1; then
+        /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+    fi
+
     brew install vim zsh git htop
 
     # NOTE: To get htop to be able to see all processes not owned by the
@@ -67,7 +69,8 @@ fi
 
 
 # Customize Python3 installation.
-./python/install_python.bash
+# TODO: Don't do this if I don't have sudo privileges, or if I'm on Centos.
+./python/install_python.bash $MAC $UBUNTU
 
 
 # Install Base16 Shell.
@@ -91,6 +94,28 @@ ZSH_PATH=`which zsh`
 
 if [[ -d "$ZPREZTO_PATH" ]]; then
     cd "$ZPREZTO_PATH"
+
+    # Before updating our local repo, update this repo from the parent that we
+    # forked from.
+
+    # Check if we have an upstream remote configured. If we don't then
+    # configure one.
+    if ! git remote -v | grep -s '^upstream' >/dev/null 2>&1; then
+        git remote add upstream https://github.com/sorin-ionescu/prezto.git
+    fi
+
+    # Fetch everything in the remote that we don't have yet.
+    git fetch upstream
+
+    # Make sure we're currently in the master branch of the local repo.
+    git checkout master
+
+    # Rewrite the master branch so that any commits in the upstream that we don't
+    # have get played over. The alternative is using `git merge upstream/master`,
+    # but that adds in an extra 'merged branches' commit.
+    git rebase upstream/master
+
+    # Now we can update.
     git pull
     git submodule update --init --recursive
     cd $CWD

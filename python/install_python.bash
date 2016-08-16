@@ -2,20 +2,9 @@
 
 # Install packages for Python3.
 
-# Check OS.
-OS=`uname -s`
-MAC=false
-UBUNTU=false
-if [[ "$OS" == "Darwin" ]]; then
-    MAC=true
-elif [[ "$OS" == "Linux" ]]; then
-    # This should really do a check to see what linux distribution is being
-    # used.
-    UBUNTU=true
-else
-    echo "Unknown operating system: $OS. Aborting."
-    exit 1
-fi
+# Grab OS-type from inputs.
+MAC=$1
+UBUNTU=$2
 
 # Install everything needed to:
 #   -Build Python code from source
@@ -29,6 +18,9 @@ elif $UBUNTU; then
     sudo apt-get install python3-dev tcl8.6-dev tk8.6-dev tcl-dev tk-dev \
         python3-tk libjpeg-dev libjpeg-turbo8-dev libjpeg8-dev liblcms2-dev \
         libfreetype6-dev libpng12-dev zlib1g-dev libatlas-base-dev gfortran
+else
+    echo 'No valid operating system specified, exiting.'
+    exit 1
 fi
 
 # sudo is not necessary on Mac.
