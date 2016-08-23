@@ -2,6 +2,10 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>AboutToPasteTabsWithCancel</key>
+	<true/>
+	<key>AboutToPasteTabsWithCancel_selection</key>
+	<integer>2</integer>
 	<key>AppleAntiAliasingThreshold</key>
 	<integer>1</integer>
 	<key>AppleScrollAnimationEnabled</key>
@@ -36342,9 +36346,9 @@
 	<key>NSWindow Frame SharedPreferences</key>
 	<string>760 814 918 495 0 0 2560 1417 </string>
 	<key>NSWindow Frame iTerm Window 0</key>
-	<string>0 1032 505 377 0 0 2560 1417 </string>
+	<string>0 1035 505 377 0 0 2560 1417 </string>
 	<key>NSWindow Frame iTerm Window 1</key>
-	<string>2618 937 505 377 2560 0 2560 1440 </string>
+	<string>22 353 490 377 0 0 1280 777 </string>
 	<key>NSWindow Frame iTerm Window 2</key>
 	<string>866 681 425 352 0 0 1920 1057 </string>
 	<key>NSWindow Frame iTerm Window 3</key>
@@ -37747,7 +37751,7 @@
 	<key>NoSyncInstallationId</key>
 	<string>2E7BE5CF-EA4B-476C-A82D-076E7EA0A337</string>
 	<key>NoSyncLastTipTime</key>
-	<real>493162107.56106502</real>
+	<real>493277249.39899898</real>
 	<key>NoSyncNeverRemindPrefsChangesLostForFile</key>
 	<true/>
 	<key>NoSyncNeverRemindPrefsChangesLostForFile_selection</key>
@@ -37773,9 +37777,12 @@
 		<string>0011</string>
 		<string>0012</string>
 		<string>0013</string>
+		<string>0014</string>
 	</array>
 	<key>OpenBookmark</key>
 	<false/>
+	<key>PasteTabToStringTabStopSize</key>
+	<integer>4</integer>
 	<key>PointerActions</key>
 	<dict>
 		<key>Button,1,1,,</key>
