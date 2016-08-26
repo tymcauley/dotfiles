@@ -21,13 +21,19 @@ CWD=`pwd`
 # Check OS.
 OS=`uname -s`
 MAC=false
+CENTOS=false
 UBUNTU=false
 if [[ "$OS" == "Darwin" ]]; then
     MAC=true
 elif [[ "$OS" == "Linux" ]]; then
-    # This should really do a check to see what linux distribution is being
-    # used.
-    UBUNTU=true
+    if cat /etc/system-release | grep -iq centos; then
+        CENTOS=true
+    elif cat /etc/system-release | grep -iq ubuntu; then
+        UBUNTU=true
+    else
+        echo "In Linux, unknown distro: $OS. Aborting."
+        exit 1
+    fi
 else
     echo "Unknown operating system: $OS. Aborting."
     exit 1
@@ -55,6 +61,8 @@ if $MAC; then
 
     # Update all installed Homebrew packages.
     brew upgrade
+elif $CENTOS; then
+    echo "Nothing to install for CentOS."
 elif $UBUNTU; then
     sudo apt-get install vim-gnome zsh git
 fi
@@ -69,8 +77,7 @@ fi
 
 
 # Customize Python3 installation.
-# TODO: Don't do this if I don't have sudo privileges, or if I'm on Centos.
-./python/install_python.bash $MAC $UBUNTU
+./python/install_python.bash $MAC $CENTOS $UBUNTU
 
 
 # Install Base16 Shell.
@@ -130,7 +137,11 @@ else
         ln -s "$rcfile" "$HOME/.$rcfile_name"
     done
 
-    # Change shell to ZSH.
-    echo "Changing shell to $ZSH_PATH. Confirm that it is in /etc/shells"
-    chsh -s $ZSH_PATH
+    # If the users's shell is already ZSH, don't both changing it.
+    if ! echo $SHELL | grep -iq zsh; then
+        echo "Changing shell to $ZSH_PATH. Confirm that it is in /etc/shells"
+        chsh -s $ZSH_PATH
+    else
+        echo "Shell set to $SHELL. No change necessary."
+    fi
 fi

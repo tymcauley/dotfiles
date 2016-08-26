@@ -4,7 +4,8 @@
 
 # Grab OS-type from inputs.
 MAC=$1
-UBUNTU=$2
+CENTOS=$2
+UBUNTU=$3
 
 # Install everything needed to:
 #   -Build Python code from source
@@ -14,6 +15,9 @@ UBUNTU=$2
 # TODO: Maybe don't need any of this on mac...
 if $MAC; then
     brew install python3
+elif $CENTOS; then
+    echo "No python installs necessary for CentOS."
+    exit 0
 elif $UBUNTU; then
     sudo apt-get install python3-dev tcl8.6-dev tk8.6-dev tcl-dev tk-dev \
         python3-tk libjpeg-dev libjpeg-turbo8-dev libjpeg8-dev liblcms2-dev \
