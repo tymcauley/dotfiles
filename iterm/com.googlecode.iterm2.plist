@@ -36324,35 +36324,20 @@
 		BAtzdHJlYW10eXBlZIHoA4QBQISEhAhOU1N0cmluZwGEhAhOU09iamVjdACF
 		hAErATGG
 		</data>
-		<string>307</string>
+		<string>322</string>
 	</array>
 	<key>NSTableView Hidden Columns KeyBingingTable</key>
 	<array/>
 	<key>NSTableView Sort Ordering KeyBingingTable</key>
 	<array/>
-	<key>NSToolbar Configuration com.apple.NSColorPanel</key>
-	<dict>
-		<key>TB Is Shown</key>
-		<integer>1</integer>
-	</dict>
-	<key>NSWindow Frame NSFontPanel</key>
-	<string>2115 329 445 94 0 0 2560 1417 </string>
-	<key>NSWindow Frame Preferences</key>
-	<string>269 313 606 456 0 0 1280 777 </string>
 	<key>NSWindow Frame SUUpdateAlert</key>
-	<string>970 607 700 622 0 0 2560 1417 </string>
-	<key>NSWindow Frame SessionsPreferences</key>
-	<string>269 153 606 456 0 0 1920 1057 </string>
+	<string>330 305 620 392 0 0 1280 777 </string>
 	<key>NSWindow Frame SharedPreferences</key>
-	<string>760 814 918 495 0 0 2560 1417 </string>
+	<string>269 136 796 473 0 0 1280 777 </string>
 	<key>NSWindow Frame iTerm Window 0</key>
-	<string>0 1035 505 377 0 0 2560 1417 </string>
+	<string>0 1063 2560 354 0 0 2560 1417 </string>
 	<key>NSWindow Frame iTerm Window 1</key>
-	<string>22 353 490 377 0 0 1280 777 </string>
-	<key>NSWindow Frame iTerm Window 2</key>
-	<string>866 681 425 352 0 0 1920 1057 </string>
-	<key>NSWindow Frame iTerm Window 3</key>
-	<string>1123 344 973 713 0 0 1920 1057 </string>
+	<string>85 182 2401 923 0 0 2560 1417 </string>
 	<key>NeverWarnAboutShortLivedSessions_26365F51-2579-4699-ABC8-42F0D70955C7</key>
 	<true/>
 	<key>NeverWarnAboutShortLivedSessions_26365F51-2579-4699-ABC8-42F0D70955C7_selection</key>
@@ -37742,16 +37727,14 @@
 			<string>/Users/tynan</string>
 		</dict>
 	</array>
-	<key>NoSyncCommandHistoryHasEverBeenUsed</key>
-	<true/>
 	<key>NoSyncDoNotWarnBeforeMultilinePaste</key>
 	<true/>
 	<key>NoSyncDoNotWarnBeforeMultilinePaste_selection</key>
 	<integer>0</integer>
 	<key>NoSyncInstallationId</key>
-	<string>2E7BE5CF-EA4B-476C-A82D-076E7EA0A337</string>
+	<string>61339F49-F59C-4A16-95A3-7E3C1B18F4D1</string>
 	<key>NoSyncLastTipTime</key>
-	<real>493277249.39899898</real>
+	<real>495418846.38775402</real>
 	<key>NoSyncNeverRemindPrefsChangesLostForFile</key>
 	<true/>
 	<key>NoSyncNeverRemindPrefsChangesLostForFile_selection</key>
@@ -37759,7 +37742,9 @@
 	<key>NoSyncPermissionToShowTip</key>
 	<true/>
 	<key>NoSyncTimeOfFirstLaunchOfVersionWithTip</key>
-	<real>489981337.12121701</real>
+	<real>493694213.905132</real>
+	<key>NoSyncTipsDisabled</key>
+	<true/>
 	<key>NoSyncTipsToNotShow</key>
 	<array>
 		<string>000</string>
@@ -37774,12 +37759,10 @@
 		<string>0008</string>
 		<string>0009</string>
 		<string>0010</string>
-		<string>0011</string>
-		<string>0012</string>
-		<string>0013</string>
-		<string>0014</string>
 	</array>
 	<key>OpenBookmark</key>
+	<false/>
+	<key>PMPrintingExpandedStateForPrint2</key>
 	<false/>
 	<key>PasteTabToStringTabStopSize</key>
 	<integer>4</integer>
@@ -37818,6 +37801,8 @@
 	</dict>
 	<key>PrefsCustomFolder</key>
 	<string>/Users/tynan/dotfiles/iterm</string>
+	<key>Print In Black And White</key>
+	<true/>
 	<key>PromptOnQuit</key>
 	<false/>
 	<key>SUEnableAutomaticChecks</key>
@@ -37825,11 +37810,11 @@
 	<key>SUFeedAlternateAppNameKey</key>
 	<string>iTerm</string>
 	<key>SUFeedURL</key>
-	<string>https://iterm2.com/appcasts/final.xml?shard=72</string>
+	<string>https://iterm2.com/appcasts/final.xml?shard=38</string>
 	<key>SUHasLaunchedBefore</key>
 	<true/>
 	<key>SULastCheckTime</key>
-	<date>2016-08-18T16:56:39Z</date>
+	<date>2016-09-19T22:10:43Z</date>
 	<key>SUSendProfileInfo</key>
 	<false/>
 	<key>ShowBookmarkName</key>
@@ -37841,6 +37826,6 @@
 	<key>WordCharacters</key>
 	<string>/-+\~_.</string>
 	<key>iTerm Version</key>
-	<string>3.0.7</string>
+	<string>3.0.9</string>
 </dict>
 </plist>
