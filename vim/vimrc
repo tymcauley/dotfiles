@@ -93,19 +93,23 @@ set foldlevel=99
 "   Python
 "   Verilog
 "   SystemVerilog
+"   Scala
 " TODO: Should I make these sets of file extensions into some variable?
 highlight BadWhitespace ctermbg=red guibg=darkred
-au BufRead,BufNewFile *.py,*.v,*.vs match BadWhitespace /\s\+$/
+au BufRead,BufNewFile *.py,*.v,*.vs,*.scala match BadWhitespace /\s\+$/
 
 " Wrap text after a certain number of characters for certain filetypes.
 "   Python: 79 characters
 "   Verilog: 79 characters
 "   SystemVerilog: 79 characters
+"   Scala: 99 characters
 au BufRead,BufNewFile *.py,*.v,*.vs set textwidth=79
+au BufRead,BufNewFile *.scala set textwidth=99
 
 " Add in a ruler for certain filetypes.
 "   Python: Add a ruler 1 character past textwidth.
-au BufRead,BufNewFile *.py set colorcolumn=+1
+"   Scala: Add a ruler 1 character past textwidth.
+au BufRead,BufNewFile *.py,*.scala set colorcolumn=+1
 highlight ColorColumn ctermbg=0 guibg=lightgrey
 
 " Intelligent comment formatting.
