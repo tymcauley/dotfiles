@@ -102,9 +102,9 @@ au BufRead,BufNewFile *.py,*.v,*.vs,*.scala match BadWhitespace /\s\+$/
 "   Python: 79 characters
 "   Verilog: 79 characters
 "   SystemVerilog: 79 characters
-"   Scala: 99 characters
+"   Scala: 119 characters
 au BufRead,BufNewFile *.py,*.v,*.vs set textwidth=79
-au BufRead,BufNewFile *.scala set textwidth=99
+au BufRead,BufNewFile *.scala set textwidth=119
 
 " Add in a ruler for certain filetypes.
 "   Python: Add a ruler 1 character past textwidth.
