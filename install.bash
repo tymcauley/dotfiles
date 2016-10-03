@@ -47,6 +47,13 @@ if $MAC; then
         /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
     fi
 
+    # Update to the most recent version of Homebrew.
+    brew update
+
+    # Update all installed Homebrew packages.
+    brew upgrade
+
+    # Make sure the default programs are installed.
     brew install vim zsh git htop
 
     # NOTE: To get htop to be able to see all processes not owned by the
@@ -56,11 +63,6 @@ if $MAC; then
     #   chmod 6555 htop
     #   sudo chown root htop
 
-    # Update to the most recent version of Homebrew.
-    brew update
-
-    # Update all installed Homebrew packages.
-    brew upgrade
 elif $CENTOS; then
     echo "Nothing to install for CentOS."
 elif $UBUNTU; then
