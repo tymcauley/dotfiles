@@ -6,3 +6,5 @@
 # E402: Module level import not at top of file.
 # E731: Do not use a lambda expression, use a def
 ignore = F401,E221,E226,E241,E402,E731
+# Set max number of characters per line (default is 80)
+max-line-length = 100
