@@ -71,15 +71,15 @@ fi
 
 
 # Customize git installation.
-./git/install_git.bash
+./git/install_git
 
 
 # Customize subversion installation.
-# ./svn/install_svn.bash
+# ./svn/install_svn
 
 
 # Customize Python3 installation.
-./python/install_python.bash $MAC $CENTOS $UBUNTU
+./python/install_python $MAC $CENTOS $UBUNTU
 
 
 # Install Base16 Shell.
@@ -94,7 +94,7 @@ fi
 
 
 # Customize vim installation.
-./vim/install_vim.bash
+./vim/install_vim
 
 
 # Clone zprezto repo and install that.
