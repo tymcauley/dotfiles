@@ -82,6 +82,10 @@ fi
 ./python/install_python $MAC $CENTOS $UBUNTU
 
 
+# Install local bin scripts.
+./bin/install_bin
+
+
 # Install Base16 Shell.
 dest_dir="$HOME/.config/base16-shell"
 if [ -d "$dest_dir" ]; then
