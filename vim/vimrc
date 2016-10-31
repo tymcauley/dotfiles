@@ -131,9 +131,9 @@ au BufRead,BufNewFile *.py,*.v,*.sv set formatoptions+=r formatoptions+=o
     \ formatoptions+=c
 
 " Custom key mappings for commands I like.
-nnoremap <F7> :cd %:p:h<CR>:pwd<CR>
-nnoremap <F8> :set wrap!<CR>
-nnoremap <F9> :set paste!<CR>
+" nnoremap <F7> :cd %:p:h<CR>:pwd<CR>
+" nnoremap <F8> :set wrap!<CR>
+" nnoremap <F9> :set paste!<CR>
 
 " Split window navigation
 nnoremap <C-h> <C-w>h
