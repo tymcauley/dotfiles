@@ -86,6 +86,10 @@ fi
 ./bin/install_bin
 
 
+# Customize tmux installation.
+./tmux/install_tmux
+
+
 # Install Base16 Shell.
 dest_dir="$HOME/.config/base16-shell"
 if [ -d "$dest_dir" ]; then

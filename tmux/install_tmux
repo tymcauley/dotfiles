@@ -1,0 +1,7 @@
+#!/bin/bash -e
+
+# Install tmux config.
+TMUX_CONF="$HOME/.tmux.conf"
+if [ ! -e $TMUX_CONF ]; then
+    ln -s -v ~/dotfiles/tmux/tmux.conf $TMUX_CONF
+fi
