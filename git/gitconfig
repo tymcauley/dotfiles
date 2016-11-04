@@ -3,5 +3,10 @@
     name = Tynan McAuley
 [push]
     default = simple
+[diff]
+    tool = vimdiff
+[difftool]
+    prompt = false
 [alias]
     workprofile = config user.email \"tynan@remicro.com\"
+    dt = difftool
