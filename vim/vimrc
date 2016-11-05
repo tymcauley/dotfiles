@@ -4,7 +4,7 @@ call pathogen#infect()
 call pathogen#helptags()
 
 " Attempt to determine the type of a file based on its name and possibly its
-" contents.  Use this to allow intelligent auto-indenting for each filetype,
+" contents. Use this to allow intelligent auto-indenting for each filetype,
 " and for plugins that are filetype specific.
 filetype plugin on
 filetype indent on
@@ -20,21 +20,28 @@ set nocompatible
 " Enable omni completion
 set omnifunc=syntaxcomplete#Complete
 
+" spelling (w.o. capitalization check)
+set spellfile=~/.vim/dict.add
+set spellcapcheck=''
+
 " One of the most important options to activate. Allows you to switch from an
 " unsaved buffer without saving it first. Also allows you to keep an undo
 " history for multiple files. Vim will complain if you try to quit without
 " saving, and swap files will keep you safe if your computer crashes.
 set hidden
 
-" Better command-line completion
-set wildmenu
+" Set command-line completion options.
+set wildignore+=.svn,CVS,.git,*.pyc,*.o,*.a,*.class,*.mo,*.la,*.so,*.obj,*.swp,*.jpg,*.png,*.xpm,*.gif,*.pdf,*.bak,*.beam,*/tmp/*,*.zip,log/**,node_modules/**,target/**,tmp/**,*.rbc
+set wildmode=longest,list,full
 
 " Show partial commands in the last line of the screen
 set showcmd
 
-" Use case insensitive search, except when using capital letters
-set ignorecase
-set smartcase
+" Search settings.
+set hlsearch      " highlight search
+set incsearch     " reveal search incrementally as typed
+set ignorecase    " case-insensitive match...
+set smartcase     " ...except when uppercase letters are given
 
 " Allow backspacing over autoindent, line breaks and start of insert action
 set backspace=indent,eol,start
@@ -56,8 +63,23 @@ set confirm
 " Enable use of the mouse for all modes
 "set mouse=a
 
-" Disable highlighting on search.
-set nohlsearch
+" By default, don't wrap text.
+set nowrap
+
+" Mark the end of a non-wrapped long line with a '#'. Also, show non-breaking
+" space characters.
+set list
+set listchars=extends:#,nbsp:.
+
+" When scrolling to the top or bottom of the screen, keep 2 lines between the
+" cursor and the edge of the screen.
+set scrolloff=2
+
+" completion
+set completeopt=longest,menuone
+
+" Don't show what mode we're in on the last line. I'm already using airline.
+set noshowmode
 
 " Set the command window height to 2 lines, to avoid many cases of having to
 " press <Enter> to continue"
@@ -130,7 +152,19 @@ highlight ColorColumn ctermbg=0 guibg=lightgrey
 au BufRead,BufNewFile *.py,*.v,*.sv set formatoptions+=r formatoptions+=o
     \ formatoptions+=c
 
+"" Map settings
+
+let mapleader=','       " map by , instead of /
+let maplocalleader='\'  " map local by \
+
+" clear search
+nmap <silent> <leader>/ :nohlsearch<CR>
+
+" spelling
+nnoremap <silent> <leader>s :set spell!<CR>
+
 " Custom key mappings for commands I like.
+set pastetoggle=<F2>  " Toggle paste mode for verbatim pasting.
 " nnoremap <F7> :cd %:p:h<CR>:pwd<CR>
 " nnoremap <F8> :set wrap!<CR>
 " nnoremap <F9> :set paste!<CR>
@@ -142,15 +176,62 @@ nnoremap <C-k> <C-w>k
 nnoremap <C-l> <C-w>l
 
 " Buffer navigation
-nnoremap <C-n> :bn<CR>
-nnoremap <C-p> :bp<CR>
+map ga <C-^>
+nmap gn :bn<CR>
+nmap gp :bp<CR>
+nmap gk :bp<bar>bd #<CR>
+
+" complete by tab
+inoremap <silent> <expr> <tab> Smart_TabComplete()
 
 " Enable code folding with the spacebar
 nnoremap <space> za
 
+" smart tab complete from http://vim.wikia.com/wiki/Smart_mapping_for_tab_completion
+function! Smart_TabComplete()
+  let line = getline('.')                         " current line
+
+  let substr = strpart(line, -1, col('.')+1)      " from the start of the current
+                                                  " line to one character right
+                                                  " of the cursor
+  let substr = matchstr(substr, "[^ \t]*$")       " word till cursor
+  if (strlen(substr)==0)                          " nothing to match on empty string
+    return "\<tab>"
+  endif
+  let has_period = match(substr, '\.') != -1      " position of period, if any
+  let has_slash = match(substr, '\/') != -1       " position of slash, if any
+  if (!has_period && !has_slash)
+    return "\<C-X>\<C-P>"                         " existing text matching
+  elseif ( has_slash )
+    return "\<C-X>\<C-F>"                         " file matching
+  else
+    return "\<C-X>\<C-O>"                         " plugin matching
+  endif
+endfunction
+
+" status (airline)
+set laststatus=2
+if !exists('g:airline_symbols')
+  let g:airline_symbols = {}
+endif
+let g:airline_theme = 'wombat'
+
+let g:airline_left_sep = '▶'
+let g:airline_right_sep = '◄'
+let g:airline_symbols.linenr = '␤'
+let g:airline_symbols.branch = '⎇'
+let g:airline_symbols.paste = 'ρ'
+let g:airline_symbols.whitespace = 'Ξ'
+
+" file finding (ctrlp)
+let g:ctrlp_map = '<leader>t'
+map <c-p>  :CtrlP getcwd()<CR>
+let g:ctrlp_user_command = 'ag %s -l -f --nocolor -g ""' " silver searcher
+let g:ctrlp_switch_buffer = '' " always open a new instance for side-by-side
+
 " Ctrl-P settings
-let g:ctrlp_map = '<C-f>'
-nnoremap <C-b> :CtrlPBuffer<CR>
+" let g:ctrlp_map = '<C-f>'
+" nnoremap <C-b> :CtrlPBuffer<CR>
 
 " Font/color settings:
 let base16colorspace=256  " Access colors present in 256 colorspace

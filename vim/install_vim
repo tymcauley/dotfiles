@@ -66,6 +66,10 @@ git_clone_or_update https://github.com/ctrlpvim/ctrlp.vim.git \
 git_clone_or_update https://github.com/vim-airline/vim-airline.git \
     "$VIM_BUNDLE/vim-airline"
 
+# Themes for awesome status bar.
+git_clone_or_update https://github.com/vim-airline/vim-airline-themes.git \
+    "$VIM_BUNDLE/vim-airline-themes"
+
 # Column-align multiple lines.
 git_clone_or_update https://github.com/vim-scripts/Align.git \
     "$VIM_BUNDLE/Align"
