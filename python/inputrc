@@ -1,0 +1,7 @@
+# Initialization for Readline library, used in Python's interactive shell.
+
+# Enable Tab-completion.
+Tab: complete
+
+# Enable vi-style editing.
+set editing-mode vi
