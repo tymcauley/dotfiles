@@ -2,6 +2,17 @@
 
 # Install packages for Python3.
 
+# Install inputrc (configuration for readline library) and pystartup. This
+# should happen regardless of OS.
+INPUTRC="$HOME/.inputrc"
+PYSTARTUP="$HOME/.pystartup"
+if [ ! -e $INPUTRC ]; then
+    ln -s -v ~/dotfiles/python/inputrc $INPUTRC
+fi
+if [ ! -e $PYSTARTUP ]; then
+    ln -s -v ~/dotfiles/python/pystartup $PYSTARTUP
+fi
+
 # Grab OS-type from inputs.
 MAC=$1
 CENTOS=$2
@@ -25,16 +36,6 @@ elif $UBUNTU; then
 else
     echo 'No valid operating system specified, exiting.'
     exit 1
-fi
-
-# Install inputrc (configuration for readline library) and pystartup.
-INPUTRC="$HOME/.inputrc"
-PYSTARTUP="$HOME/.pystartup"
-if [ ! -e $INPUTRC ]; then
-    ln -s -v ~/dotfiles/python/inputrc $INPUTRC
-fi
-if [ ! -e $PYSTARTUP ]; then
-    ln -s -v ~/dotfiles/python/pystartup $PYSTARTUP
 fi
 
 # sudo is not necessary on Mac.
