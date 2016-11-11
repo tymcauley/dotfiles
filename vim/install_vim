@@ -77,7 +77,3 @@ git_clone_or_update https://github.com/vim-scripts/Align.git \
 # Base16 colors in vim.
 git_clone_or_update https://github.com/chriskempson/base16-vim.git \
     "$VIM_BUNDLE/base16-vim"
-
-# Vim Tmux navigator.
-git_clone_or_update https://github.com/christoomey/vim-tmux-navigator.git \
-    "$VIM_BUNDLE/vim-tmux-navigator"
