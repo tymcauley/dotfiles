@@ -66,10 +66,12 @@ set confirm
 " By default, don't wrap text.
 set nowrap
 
-" Mark the end of a non-wrapped long line with a '#'. Also, show non-breaking
-" space characters.
+" Showing special characters:
+"   Mark the end of a non-wrapped long line with a '#'.
+"   Show non-breaking space characters as ¬.
+"   Show tabs as ▸ followed by spaces.
 set list
-set listchars=extends:#,nbsp:.
+set listchars=extends:#,nbsp:¬,tab:▸\ ,
 
 " When scrolling to the top or bottom of the screen, keep 2 lines between the
 " cursor and the edge of the screen.
