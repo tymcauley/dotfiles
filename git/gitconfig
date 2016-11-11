@@ -2,6 +2,7 @@
     email = tymcauley@gmail.com
     name = Tynan McAuley
 [push]
+    # When you use 'git push', push only the current branch, not all branches.
     default = simple
 [diff]
     tool = vimdiff
