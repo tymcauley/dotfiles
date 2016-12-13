@@ -57,8 +57,10 @@ set laststatus=2
 " dialogue asking if you wish to save changed files.
 set confirm
 
-" Use visual bell instead of beeping when doing something wrong
-"set visualbell
+" Use visual bell instead of beeping when doing something wrong. No more
+" annoying beeps!
+set visualbell
+set noerrorbells
 
 " Enable use of the mouse for all modes
 "set mouse=a
