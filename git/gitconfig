@@ -8,6 +8,8 @@
     tool = vimdiff
 [difftool]
     prompt = false
+[merge]
+    tool = vimdiff
 [alias]
     workprofile = config user.email \"tynan@remicro.com\"
     dt = difftool
