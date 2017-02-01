@@ -94,10 +94,9 @@ set number
 
 " Indentation settings for using hard tabs for indent. Display tabs as
 " four characters wide.
-" TODO: Set this based on filetype?
-set shiftwidth=4
 set tabstop=4
 set softtabstop=4
+set shiftwidth=4
 set expandtab
 
 " Set the default location of window splits
@@ -155,6 +154,9 @@ highlight ColorColumn ctermbg=0 guibg=lightgrey
 "   c : Insert a new comment leader when wrapping text based on 'textwidth'.
 au BufRead,BufNewFile *.py,*.v,*.sv set formatoptions+=r formatoptions+=o
     \ formatoptions+=c
+
+" File-based indentation settings.
+autocmd Filetype verilog,systemverilog setlocal ts=2 sts=2 sw=2 expandtab
 
 "" Map settings
 
