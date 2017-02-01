@@ -127,7 +127,7 @@ highlight BadWhitespace ctermbg=red guibg=darkred
 au BufRead,BufNewFile *.py,*.v,*.sv,*.scala match BadWhitespace /\s\+$/
 
 " Wrap text after a certain number of characters for certain filetypes.
-"   Python: 99 characters
+"   Python: 119 characters
 "   Verilog: 119 characters
 "   SystemVerilog: 119 characters
 "   Scala: 119 characters
@@ -167,6 +167,9 @@ nmap <silent> <leader>/ :nohlsearch<CR>
 " spelling
 nnoremap <silent> <leader>s :set spell!<CR>
 
+" Delete trailing whitespace.
+nnoremap <silent> <leader>w :call TrimWhitespace()<CR>
+
 " Custom key mappings for commands I like.
 set pastetoggle=<F2>  " Toggle paste mode for verbatim pasting.
 " nnoremap <F7> :cd %:p:h<CR>:pwd<CR>
@@ -186,10 +189,18 @@ nmap gp :bp<CR>
 nmap gk :bp<bar>bd #<CR>
 
 " complete by tab
-inoremap <silent> <expr> <tab> Smart_TabComplete()
+" inoremap <silent> <expr> <tab> Smart_TabComplete()
 
 " Enable code folding with the spacebar
 nnoremap <space> za
+
+" Function for removing trailing whitespace without affecting the cursor
+" location/search history: http://vi.stackexchange.com/a/456
+fun! TrimWhitespace()
+  let l:save = winsaveview()
+  %s/\s\+$//e
+  call winrestview(l:save)
+endfun
 
 " smart tab complete from http://vim.wikia.com/wiki/Smart_mapping_for_tab_completion
 function! Smart_TabComplete()
