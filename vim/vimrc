@@ -193,8 +193,84 @@ nmap gk :bp<bar>bd #<CR>
 " complete by tab
 " inoremap <silent> <expr> <tab> Smart_TabComplete()
 
+" Start interactive EasyAlign in visual mode (e.g. vipgs)
+xmap gs <Plug>(EasyAlign)
+
+" Start interactive EasyAlign for a motion/text object (e.g. gsip)
+nmap gs <Plug>(EasyAlign)
+
+" Experimentation with some custom EasyAlign commands.
+if !exists('g:easy_align_delimiters')
+  let g:easy_align_delimiters = {}
+endif
+
+let g:easy_align_delimiters['d'] = {
+\ 'pattern': ' \S\+$',
+\ 'stick_to_left': 0, 'stick_to_right': 1,
+\ 'delimiter_align': 'l',
+\ 'left_margin': 0, 'right_margin': 0
+\ }
+
+let g:easy_align_delimiters['f'] = {
+\ 'pattern': ' [',
+\ 'stick_to_left': 0, 'stick_to_right': 1,
+\ 'delimiter_align': 'l',
+\ 'left_margin': 0, 'right_margin': 0
+\ }
+
+let g:easy_align_delimiters['e'] = {
+\ 'pattern': '\( reg\)\@<! ',
+\ 'delimiter_align': 'l',
+\ }
+
 " Enable code folding with the spacebar
 nnoremap <space> za
+
+" TODO: Verilog features I want:
+"   Say I'm in this situation:
+"       ...
+"       .signal_name (),
+"       ...
+"   I'd like to be able to have my cursor somewhere in `.signal_name`, type in
+"   a shortcut, and fill out the parentheses with `signal_name`.
+"
+"   Also, say I have this:
+"       ...
+"       input foo;
+"       input [1:0] bar;
+"       output baz;
+"       output reg bang;
+"       output [31:0] blah;
+"       ...
+"   I'd like to replace that with:
+"       ...
+"       input             foo;
+"       input       [1:0] bar;
+"       output            baz;
+"       output reg        bang;
+"       output     [31:0] blah;
+"       ...
+"   This will require some serious alignment magic... It'll get even more
+"   exciting when there's a bunch of text (think macros/parameters) defining
+"   the width of nets. Also, should the bus width square braces be left or
+"   right aligned?
+"
+"   Special folding functions:
+"       Fold a whole module declaration, not just the I/O ports.
+"
+"   Maybe I should make functions that make a few different things pretty.
+"   Thinking about:
+"       Mass signal declarations (such as above).
+"       Module instantiations.
+"       I/O port declarations in a module definition.
+"
+"   Speaking of alignment stuff, I'd like to be able to control the following:
+"       The `(` and `[` should have 1 padding before and 0 padding after.
+"       The `,` should have 0 padding before and 1 padding after.
+"       The `=` should have 1 padding on either side.
+"   Can I set these options separator-by-separator? I know the Align package
+"   defaults to 1 before, 1 after. Not sure I can set separator-by-separator.
+"   Check out easy-align.
 
 " Function for removing trailing whitespace without affecting the cursor
 " location/search history: http://vi.stackexchange.com/a/456
