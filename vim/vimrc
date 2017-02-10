@@ -158,6 +158,9 @@ au BufRead,BufNewFile *.py,*.v,*.sv set formatoptions+=r formatoptions+=o
 " File-based indentation settings.
 autocmd Filetype verilog,systemverilog setlocal ts=2 sts=2 sw=2 expandtab
 
+" File-based spell check enabling.
+autocmd Filetype gitcommit,markdown setlocal spell
+
 "" Map settings
 
 let mapleader=','       " map by , instead of /
