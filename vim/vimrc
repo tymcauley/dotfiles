@@ -123,14 +123,14 @@ set foldlevel=99
 "   SystemVerilog
 "   Scala
 highlight BadWhitespace ctermbg=red guibg=darkred
-au BufRead,BufNewFile *.py,*.v,*.sv,*.scala match BadWhitespace /\s\+$/
+au BufRead,BufNewFile *.py,*.v,*.sv,*.svh,*.scala match BadWhitespace /\s\+$/
 
 " Wrap text after a certain number of characters for certain filetypes.
 "   Python: 119 characters
 "   Verilog: 119 characters
 "   SystemVerilog: 119 characters
 "   Scala: 119 characters
-au BufRead,BufNewFile *.v,*.sv set textwidth=119
+au BufRead,BufNewFile *.v,*.sv,*.svh set textwidth=119
 au BufRead,BufNewFile *.py set textwidth=119
 au BufRead,BufNewFile *.scala set textwidth=119
 
@@ -139,7 +139,7 @@ au BufRead,BufNewFile *.scala set textwidth=119
 "   Verilog: Add a ruler 1 character past textwidth.
 "   SystemVerilog: Add a ruler 1 character past textwidth.
 "   Scala: Add a ruler 1 character past textwidth.
-au BufRead,BufNewFile *.py,*.v,*.sv,*.scala set colorcolumn=+1
+au BufRead,BufNewFile *.py,*.v,*.sv,*.svh,*.scala set colorcolumn=+1
 highlight ColorColumn ctermbg=0 guibg=lightgrey
 
 " Intelligent comment formatting.
@@ -152,7 +152,7 @@ highlight ColorColumn ctermbg=0 guibg=lightgrey
 "   o : Insert a new comment leader when inserting a newline in normal mode
 "       (using the 'o' or 'O' command).
 "   c : Insert a new comment leader when wrapping text based on 'textwidth'.
-au BufRead,BufNewFile *.py,*.v,*.sv set formatoptions+=r formatoptions+=o
+au BufRead,BufNewFile *.py,*.v,*.sv,*.svh set formatoptions+=r formatoptions+=o
     \ formatoptions+=c
 
 " File-based indentation settings.
