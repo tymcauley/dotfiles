@@ -229,6 +229,27 @@ let g:easy_align_delimiters['e'] = {
 " Enable code folding with the spacebar
 nnoremap <space> za
 
+" Enable the matchit plugin to make the '%' command jump between text tags in
+" addition to brackets/parentheses.
+packadd! matchit
+
+if !exists('b:match_words')
+  let b:match_words = ''
+endif
+
+" Custom delimiters for SystemVerilog.
+" TODO: Make these only get used when a SystemVerilog file is opened.
+let b:match_words = b:match_words
+\. ',\<begin\>:\<end\>'
+\. ',\<module\>:\<endmodule\>'
+\. ',\<function\>:\<endfunction\>'
+\. ',\<task\>:\<endtask\>'
+\. ',\<class\>:\<endclass\>'
+\. ',\<interface\>:\<endinterface\>'
+\. ',\<package\>:\<endpackage\>'
+\. ',\<covergroup\>:\<endgroup\>'
+" TODO: All of the pairs from class and below aren't working...
+
 " TODO: Verilog features I want:
 "   Say I'm in this situation:
 "       ...
