@@ -130,7 +130,7 @@ if [[ -d "$ZPREZTO_PATH" ]]; then
     # Rewrite the master branch so that any commits in the upstream that we don't
     # have get played over. The alternative is using `git merge upstream/master`,
     # but that adds in an extra 'merged branches' commit.
-    git rebase upstream/master
+    git merge upstream/master
 
     # Now we can update.
     git pull
