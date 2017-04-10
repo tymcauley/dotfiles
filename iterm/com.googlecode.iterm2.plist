@@ -36339,17 +36339,17 @@
 	<key>NSTableView Supports v2 KeyBingingTable</key>
 	<true/>
 	<key>NSWindow Frame SUStatusFrame</key>
-	<string>355 577 400 129 0 0 1280 800 </string>
+	<string>614 282 400 129 0 0 1280 777 </string>
 	<key>NSWindow Frame SUUpdateAlert</key>
 	<string>290 184 700 577 0 0 1280 800 </string>
 	<key>NSWindow Frame SharedPreferences</key>
-	<string>2658 572 937 512 2560 0 2560 1417 </string>
+	<string>106 179 918 498 0 0 2560 1417 </string>
 	<key>NSWindow Frame iTerm Window 0</key>
-	<string>0 954 585 452 0 0 2560 1417 </string>
+	<string>2560 348 585 452 2560 0 2560 1417 </string>
 	<key>NSWindow Frame iTerm Window 1</key>
-	<string>479 325 570 452 0 0 1280 777 </string>
+	<string>36 680 585 452 0 0 2560 1417 </string>
 	<key>NSWindow Frame iTerm Window 2</key>
-	<string>113 300 1313 1013 0 0 2560 1417 </string>
+	<string>113 368 1362 945 0 0 2560 1417 </string>
 	<key>NeverWarnAboutShortLivedSessions_26365F51-2579-4699-ABC8-42F0D70955C7</key>
 	<true/>
 	<key>NeverWarnAboutShortLivedSessions_26365F51-2579-4699-ABC8-42F0D70955C7_selection</key>
@@ -37680,7 +37680,7 @@
 			<key>Rows</key>
 			<integer>25</integer>
 			<key>Screen</key>
-			<integer>-2</integer>
+			<integer>0</integer>
 			<key>Scrollback Lines</key>
 			<integer>50000</integer>
 			<key>Scrollback With Status Bar</key>
@@ -37714,7 +37714,7 @@
 			<key>Silence Bell</key>
 			<false/>
 			<key>Space</key>
-			<integer>-1</integer>
+			<integer>1</integer>
 			<key>Sync Title</key>
 			<false/>
 			<key>Tags</key>
@@ -37832,7 +37832,7 @@
 	<key>SUHasLaunchedBefore</key>
 	<true/>
 	<key>SULastCheckTime</key>
-	<date>2017-02-23T19:58:49Z</date>
+	<date>2017-04-09T20:24:00Z</date>
 	<key>SUSendProfileInfo</key>
 	<false/>
 	<key>ShowBookmarkName</key>
@@ -37848,6 +37848,6 @@
 	<key>findRegex_iTerm</key>
 	<false/>
 	<key>iTerm Version</key>
-	<string>3.0.14</string>
+	<string>3.0.15</string>
 </dict>
 </plist>
