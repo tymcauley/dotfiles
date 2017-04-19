@@ -123,7 +123,8 @@ set foldlevel=99
 "   SystemVerilog
 "   Scala
 highlight BadWhitespace ctermbg=red guibg=darkred
-au BufRead,BufNewFile *.py,*.v,*.sv,*.svh,*.scala match BadWhitespace /\s\+$/
+au BufRead,BufNewFile *.py,*.v,*.sv,*.svh,*.scala,*.c,*.h,*.cpp,*.hpp match
+    \ BadWhitespace /\s\+$/
 
 " Wrap text after a certain number of characters for certain filetypes.
 "   Python: 119 characters
@@ -133,13 +134,16 @@ au BufRead,BufNewFile *.py,*.v,*.sv,*.svh,*.scala match BadWhitespace /\s\+$/
 au BufRead,BufNewFile *.v,*.sv,*.svh set textwidth=119
 au BufRead,BufNewFile *.py set textwidth=119
 au BufRead,BufNewFile *.scala set textwidth=119
+au BufRead,BufNewFile *.c,*.h set textwidth=119
+au BufRead,BufNewFile *.cpp,*.hpp set textwidth=119
 
 " Add in a ruler for certain filetypes.
 "   Python: Add a ruler 1 character past textwidth.
 "   Verilog: Add a ruler 1 character past textwidth.
 "   SystemVerilog: Add a ruler 1 character past textwidth.
 "   Scala: Add a ruler 1 character past textwidth.
-au BufRead,BufNewFile *.py,*.v,*.sv,*.svh,*.scala set colorcolumn=+1
+au BufRead,BufNewFile *.py,*.v,*.sv,*.svh,*.scala,*.c,*.h,*.cpp,*.hpp set
+    \ colorcolumn=+1
 highlight ColorColumn ctermbg=0 guibg=lightgrey
 
 " Intelligent comment formatting.
@@ -156,7 +160,7 @@ au BufRead,BufNewFile *.py,*.v,*.sv,*.svh set formatoptions+=r formatoptions+=o
     \ formatoptions+=c
 
 " File-based indentation settings.
-autocmd Filetype verilog,systemverilog setlocal ts=2 sts=2 sw=2 expandtab
+autocmd Filetype verilog,systemverilog,c,cpp setlocal ts=2 sts=2 sw=2 expandtab
 
 " File-based spell check enabling.
 autocmd Filetype gitcommit,markdown setlocal spell
@@ -365,6 +369,11 @@ let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
 let g:syntastic_python_python_exec = '/usr/bin/python3'  " Proper Python3 syntax checking
+
+let g:syntastic_c_compiler = 'clang'
+let g:syntastic_cpp_compiler = 'clang++'
+" let g:syntastic_cpp_checkers = ['clang_check', 'clang_tidy']
+let g:syntastic_cpp_compiler_options = "-std=c++11 -Wall -Wextra -Wpedantic"
 
 " Flake8 (Python syntax checker) settings
 " let g:flake8_pyflake_marker=''     " Disable PyFlakes warnings
