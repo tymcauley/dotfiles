@@ -121,19 +121,11 @@ if [[ -d "$ZPREZTO_PATH" ]]; then
         git remote add upstream https://github.com/sorin-ionescu/prezto.git
     fi
 
-    # Fetch everything in the remote that we don't have yet.
-    git fetch upstream
-
-    # Make sure we're currently in the master branch of the local repo.
-    git checkout master
-
-    # Rewrite the master branch so that any commits in the upstream that we don't
-    # have get played over. The alternative is using `git merge upstream/master`,
-    # but that adds in an extra 'merged branches' commit.
-    git rebase upstream/master
+    # Rebase any commits from upstream we don't have onto the master.
+    git pull --rebase upstream master
 
     # Now we can update.
-    git pull
+    git pull --rebase
     git submodule update --init --recursive
     cd $CWD
 else
