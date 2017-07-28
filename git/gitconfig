@@ -4,8 +4,10 @@
 [push]
     # When you use 'git push', push only the current branch, not all branches.
     default = simple
+    recurseSubmodules = check
 [diff]
     tool = vimdiff
+    submodule = log
 [difftool]
     prompt = false
 [merge]
@@ -13,3 +15,5 @@
 [alias]
     workprofile = config user.email \"tynan@remicro.com\"
     dt = difftool
+[status]
+    submodulesummary = 1
