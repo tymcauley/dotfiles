@@ -125,7 +125,7 @@ au FileType c,cpp,make,python,systemverilog,verilog,vim setlocal textwidth=119
 
 " Add in a ruler for certain filetypes.
 highlight ColorColumn ctermbg=0 guibg=lightgrey
-au FileType c,cpp,make,python,systemverilog,verilog,vim setlocal colorcolumn=+1
+au FileType c,cpp,gitcommit,make,python,systemverilog,verilog,vim setlocal colorcolumn=+1
 
 " Intelligent comment formatting.
 "   Python
