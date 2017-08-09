@@ -15,5 +15,6 @@
 [alias]
     workprofile = config user.email \"tynan@remicro.com\"
     dt = difftool
+    diffws = diff --ignore-space-at-eol --ignore-space-change --ignore-all-space --ignore-blank-lines
 [status]
     submodulesummary = 1
