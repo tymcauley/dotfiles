@@ -112,21 +112,12 @@ ZSH_PATH=`which zsh`
 if [[ -d "$ZPREZTO_PATH" ]]; then
     cd "$ZPREZTO_PATH"
 
-    # Before updating our local repo, update this repo from the parent that we
-    # forked from.
-
     # Check if we have an upstream remote configured. If we don't then
     # configure one.
     if ! git remote -v | grep -s '^upstream' >/dev/null 2>&1; then
         git remote add upstream https://github.com/sorin-ionescu/prezto.git
     fi
 
-    # Rebase any commits from upstream we don't have onto the master.
-    git pull --rebase upstream master
-
-    # Now we can update.
-    git pull --rebase
-    git submodule update --init --recursive
     cd $CWD
 else
     # Clone ZSH configuration files.
