@@ -16,6 +16,7 @@
 [merge]
     tool = vimdiff
 [alias]
+    personalprofile = config user.email \"tymcauley@gmail.com\"
     workprofile = config user.email \"tynan@remicro.com\"
     dt = difftool
     diffws = diff --ignore-space-at-eol --ignore-space-change --ignore-all-space --ignore-blank-lines
