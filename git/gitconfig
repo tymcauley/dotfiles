@@ -6,15 +6,21 @@
     default = simple
     recurseSubmodules = check
 [diff]
-    tool = vimdiff
+    tool = icdiff
     submodule = log
 [difftool]
     prompt = false
+[difftool "icdiff"]
+    cmd = icdiff --line-numbers $LOCAL $REMOTE
+[pager]
+    difftool = true
 [merge]
     tool = vimdiff
 [alias]
     workprofile = config user.email \"tynan@remicro.com\"
     dt = difftool
     diffws = diff --ignore-space-at-eol --ignore-space-change --ignore-all-space --ignore-blank-lines
+    showtool = "!f() { git difftool $1^ $1; }; f"
+    added = difftool --cached
 [status]
     submodulesummary = 1
