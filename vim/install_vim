@@ -85,3 +85,23 @@ git_clone_or_update https://github.com/tpope/vim-obsession.git \
 # Diff blocks of text.
 git_clone_or_update https://github.com/AndrewRadev/linediff.vim.git \
     "$VIM_BUNDLE/linediff.vim"
+
+# Allow user-defined text objects (needed for vim-textobj-line).
+git_clone_or_update https://github.com/kana/vim-textobj-user.git \
+    "$VIM_BUNDLE/vim-textobj-user"
+
+# Make a new text object for the current line.
+git_clone_or_update https://github.com/kana/vim-textobj-line.git \
+    "$VIM_BUNDLE/vim-textobj-line"
+
+# Make a new text object for lines at the same indent level.
+git_clone_or_update https://github.com/michaeljsmith/vim-indent-object.git \
+    "$VIM_BUNDLE/vim-indent-object"
+
+# Add new vim "verb" for surrounding text objects.
+git_clone_or_update https://github.com/tpope/vim-surround.git \
+    "$VIM_BUNDLE/vim-surround"
+
+# Add new vim "verb" for commenting out lines.
+git_clone_or_update https://github.com/tpope/vim-commentary.git \
+    "$VIM_BUNDLE/vim-commentary"

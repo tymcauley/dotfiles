@@ -87,6 +87,17 @@ set cmdheight=2
 " Display line numbers on the left
 set number
 
+" Enable relative line numbers.
+set relativenumber
+
+" Auto-toggling of relative numbers. This will disable relative numbers for panes that do not have focus, and will also
+" disable relative numbers in insert mode.
+augroup numbertoggle
+    autocmd!
+    autocmd BufEnter,FocusGained,InsertLeave * set relativenumber
+    autocmd BufLeave,FocusLost,InsertEnter   * set norelativenumber
+augroup END
+
 " Indentation settings for using hard tabs for indent. Display tabs as four characters wide.
 set tabstop=4
 set softtabstop=4
