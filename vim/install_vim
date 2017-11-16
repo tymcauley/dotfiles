@@ -42,25 +42,9 @@ curl -LSso "$VIM_AUTOLOAD/pathogen.vim" https://tpo.pe/pathogen.vim
 # Lots of customizations taken from:
 #   https://realpython.com/blog/python/vim-and-python-a-match-made-in-heaven/
 
-# Smart code folding in Python files.
-git_clone_or_update https://github.com/tmhedberg/SimpylFold.git \
-    "$VIM_BUNDLE/SimpylFold"
-
 # Syntax checking.
 git_clone_or_update https://github.com/scrooloose/syntastic.git \
     "$VIM_BUNDLE/syntastic"
-
-# PEP8 checking in Python files.
-git_clone_or_update https://github.com/nvie/vim-flake8.git \
-    "$VIM_BUNDLE/vim-flake8"
-
-# Make sure Python indenting conforms to PEP8.
-git_clone_or_update https://github.com/vim-scripts/indentpython.vim.git \
-    "$VIM_BUNDLE/indentpython.vim"
-
-# Powerful searching from within vim.
-git_clone_or_update https://github.com/ctrlpvim/ctrlp.vim.git \
-    "$VIM_BUNDLE/ctrlp.vim"
 
 # Awesome status bar.
 git_clone_or_update https://github.com/vim-airline/vim-airline.git \
@@ -81,10 +65,6 @@ git_clone_or_update https://github.com/chriskempson/base16-vim.git \
 # Improved ability to save vim sessions to disk.
 git_clone_or_update https://github.com/tpope/vim-obsession.git \
     "$VIM_BUNDLE/vim-obsession"
-
-# Diff blocks of text.
-git_clone_or_update https://github.com/AndrewRadev/linediff.vim.git \
-    "$VIM_BUNDLE/linediff.vim"
 
 # Allow user-defined text objects (needed for vim-textobj-line).
 git_clone_or_update https://github.com/kana/vim-textobj-user.git \
