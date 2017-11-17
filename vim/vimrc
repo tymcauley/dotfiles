@@ -157,6 +157,13 @@ autocmd Filetype c,cpp,systemverilog,verilog setlocal ts=2 sts=2 sw=2 expandtab
 " File-based spell check enabling.
 autocmd Filetype gitcommit,markdown setlocal spell
 
+" Add fzf to the runtimepath. Not sure why this is necessary, but I can't get fzf in vim to work without it.
+if isdirectory("/usr/local/opt/fzf")
+    set rtp+=/usr/local/opt/fzf
+elseif isdirectory($HOME . "/.fzf")
+    set rtp+=~/.fzf
+endif
+
 "" Map settings
 
 let mapleader=','       " map by , instead of /
@@ -224,6 +231,11 @@ let g:easy_align_delimiters['e'] = {
 
 " Enable code folding with the spacebar
 nnoremap <space> za
+
+" fzf mappings.
+nnoremap <leader>p :History<CR>
+nnoremap <leader>b :Buffers<CR>
+nnoremap <leader>t :Files<CR>
 
 " Enable the matchit plugin to make the '%' command jump between text tags in
 " addition to brackets/parentheses.
@@ -335,16 +347,6 @@ let g:airline_symbols.linenr = '␤'
 let g:airline_symbols.branch = '⎇'
 let g:airline_symbols.paste = 'ρ'
 let g:airline_symbols.whitespace = 'Ξ'
-
-" file finding (ctrlp)
-let g:ctrlp_map = '<leader>t'
-map <c-p>  :CtrlP getcwd()<CR>
-let g:ctrlp_user_command = 'ag %s -l -f --nocolor -g ""' " silver searcher
-let g:ctrlp_switch_buffer = '' " always open a new instance for side-by-side
-
-" Ctrl-P settings
-" let g:ctrlp_map = '<C-f>'
-" nnoremap <C-b> :CtrlPBuffer<CR>
 
 " Font/color settings:
 if filereadable(expand("~/.vimrc_background"))

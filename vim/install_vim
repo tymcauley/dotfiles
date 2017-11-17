@@ -85,3 +85,7 @@ git_clone_or_update https://github.com/tpope/vim-surround.git \
 # Add new vim "verb" for commenting out lines.
 git_clone_or_update https://github.com/tpope/vim-commentary.git \
     "$VIM_BUNDLE/vim-commentary"
+
+# Integration for fzf in vim.
+git_clone_or_update https://github.com/junegunn/fzf.vim.git \
+    "$VIM_BUNDLE/fzf.vim"
