@@ -89,3 +89,7 @@ git_clone_or_update https://github.com/tpope/vim-commentary.git \
 # Integration for fzf in vim.
 git_clone_or_update https://github.com/junegunn/fzf.vim.git \
     "$VIM_BUNDLE/fzf.vim"
+
+# Add ability to easily open new files up to a specific line/column.
+git_clone_or_update https://github.com/kopischke/vim-fetch.git \
+    "$VIM_BUNDLE/vim-fetch"
