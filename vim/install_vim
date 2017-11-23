@@ -93,3 +93,7 @@ git_clone_or_update https://github.com/junegunn/fzf.vim.git \
 # Add ability to easily open new files up to a specific line/column.
 git_clone_or_update https://github.com/kopischke/vim-fetch.git \
     "$VIM_BUNDLE/vim-fetch"
+
+# Add ability to use dot operator (.) to repeat plugin map operations.
+git_clone_or_update git://github.com/tpope/vim-repeat.git \
+    "$VIM_BUNDLE/vim-repeat"
