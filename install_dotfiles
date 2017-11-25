@@ -54,7 +54,7 @@ if $MAC; then
     brew upgrade
 
     # Make sure the default programs are installed.
-    brew install vim zsh git htop
+    brew install vim zsh git htop rg fzf
 
     # NOTE: To get htop to be able to see all processes not owned by the
     # current user (basically, to get around having to run `sudo htop`), you
