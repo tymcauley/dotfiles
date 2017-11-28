@@ -19,6 +19,10 @@ set nocompatible
 " Enable omni completion
 set omnifunc=syntaxcomplete#Complete
 
+" Make transition from insert mode to normal mode very fast (2 seconds by default).
+set timeoutlen=1000
+set ttimeoutlen=10
+
 " spelling (w.o. capitalization check)
 set spellfile=~/.vim/dict.add
 set spellcapcheck=''
@@ -47,9 +51,6 @@ set backspace=indent,eol,start
 " When opening a new line and no filetype-specific indenting is enabled, keep the same indent as the line you're
 " currently on. Useful for READMEs, etc.
 set autoindent
-
-" Always display the status line, even if only one window is displayed
-set laststatus=2
 
 " Instead of failing a command because of unsaved changes, instead raise a dialogue asking if you wish to save changed
 " files.
@@ -334,28 +335,46 @@ function! Smart_TabComplete()
   endif
 endfunction
 
-" status (airline)
+" Airline Settings
 set laststatus=2
 if !exists('g:airline_symbols')
   let g:airline_symbols = {}
 endif
-let g:airline_theme = 'wombat'
 
-let g:airline_left_sep = '▶'
-let g:airline_right_sep = '◄'
-let g:airline_symbols.linenr = '␤'
+let g:airline_theme = 'base16_bright'
+
 let g:airline_symbols.branch = '⎇'
-let g:airline_symbols.paste = 'ρ'
-let g:airline_symbols.whitespace = 'Ξ'
+let g:airline_symbols.paste  = 'ρ'
+
+" Enable enhanced tabline.
+let g:airline#extensions#tabline#enabled = 1
+
+" Enable tmuxline integration.
+let g:airline#extensions#tmuxline#enabled = 1
+
+" Auto-save tmuxline settings to this file.
+let g:airline#extensions#tmuxline#snapshot_file = "~/.tmux-statusline-colors.conf"
+
+" Tmuxline Settings
+
+" Don't let tmuxline use powerline fonts. Don't have those installed.
+let g:tmuxline_powerline_separators = 0
+
+" Customize the status bar.
+let g:tmuxline_preset = {
+      \'a'    : '#(whoami)',
+      \'b'    : '#h',
+      \'c'    : '#S',
+      \'win'  : '#I #W',
+      \'cwin' : '#I #W #F',
+      \'y'    : '%a %b %d %Y',
+      \'z'    : '%H:%M'}
 
 " Font/color settings:
 if filereadable(expand("~/.vimrc_background"))
   let base16colorspace=256
   source ~/.vimrc_background
 endif
-
-" Enable docstring previews for folded Python functions.
-let g:SimpylFold_docstring_preview=1
 
 " Syntastic settings
 let g:syntastic_always_populate_loc_list = 1
@@ -368,8 +387,3 @@ let g:syntastic_c_compiler = 'clang'
 let g:syntastic_cpp_compiler = 'clang++'
 " let g:syntastic_cpp_checkers = ['clang_check', 'clang_tidy']
 let g:syntastic_cpp_compiler_options = "-std=c++11 -Wall -Wextra -Wpedantic"
-
-" Flake8 (Python syntax checker) settings
-" let g:flake8_pyflake_marker=''     " Disable PyFlakes warnings
-" let g:flake8_complexity_marker=''  " Disable McCabe complexity warnings
-" let g:flake8_naming_marker=''      " Disable naming warnings

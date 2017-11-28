@@ -54,6 +54,10 @@ git_clone_or_update https://github.com/vim-airline/vim-airline.git \
 git_clone_or_update https://github.com/vim-airline/vim-airline-themes.git \
     "$VIM_BUNDLE/vim-airline-themes"
 
+# Add airline integration with the tmux status line.
+git_clone_or_update https://github.com/edkolev/tmuxline.vim.git \
+    "$VIM_BUNDLE/tmuxline.vim"
+
 # Column-align multiple lines.
 git_clone_or_update https://github.com/junegunn/vim-easy-align.git \
     "$VIM_BUNDLE/vim-easy-align"
@@ -97,3 +101,7 @@ git_clone_or_update https://github.com/kopischke/vim-fetch.git \
 # Add ability to use dot operator (.) to repeat plugin map operations.
 git_clone_or_update git://github.com/tpope/vim-repeat.git \
     "$VIM_BUNDLE/vim-repeat"
+
+# Add nice integration with git.
+git_clone_or_update https://github.com/tpope/vim-fugitive.git \
+    "$VIM_BUNDLE/vim-fugitive"
