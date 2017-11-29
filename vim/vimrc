@@ -365,7 +365,7 @@ let g:tmuxline_preset = {
       \'a'    : '#(whoami)',
       \'b'    : '#h',
       \'c'    : '#S',
-      \'win'  : '#I #W',
+      \'win'  : '#I #W #F',
       \'cwin' : '#I #W #F',
       \'y'    : '%a %b %d %Y',
       \'z'    : '%H:%M'}
