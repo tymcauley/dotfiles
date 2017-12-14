@@ -79,6 +79,10 @@ set scrolloff=2
 " completion
 set completeopt=longest,menuone
 
+" Prevent vim from looking through all included files for autocomplete candidates. This can take a very long time when
+" working with large external libraries.
+set complete-=i
+
 " Don't show what mode we're in on the last line. I'm already using airline.
 set noshowmode
 
