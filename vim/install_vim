@@ -21,13 +21,13 @@ git_clone_or_update(){
 # Install vimrc.
 VIMRC="$HOME/.vimrc"
 if [ ! -e "$VIMRC" ]; then
-    ln -s ~/dotfiles/vim/vimrc $VIMRC
+    ln -s `pwd`/vim/vimrc $VIMRC
 fi
 
 # Install flake8 configuration for vim-flake8.
 FLAKE8_CONFIG="$HOME/.config/flake8"
 if [ ! -e "$FLAKE8_CONFIG" ]; then
-    ln -s ~/dotfiles/vim/flake8 $FLAKE8_CONFIG
+    ln -s `pwd`/vim/flake8 $FLAKE8_CONFIG
 fi
 
 # Create necessary directories.

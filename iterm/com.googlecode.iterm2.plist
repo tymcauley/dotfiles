@@ -36308,7 +36308,7 @@
 	<key>LoadPrefsFromCustomFolder</key>
 	<true/>
 	<key>NSNavLastRootDirectory</key>
-	<string>~/dotfiles/iterm</string>
+	<string>~/.dotfiles/iterm</string>
 	<key>NSNavPanelExpandedSizeForOpenMode</key>
 	<string>{712, 448}</string>
 	<key>NSQuotedKeystrokeBinding</key>
@@ -36350,7 +36350,7 @@
 	<key>NSWindow Frame SharedPreferences</key>
 	<string>160 272 796 473 0 0 1280 777 </string>
 	<key>NSWindow Frame iTerm Window 0</key>
-	<string>0 68 650 709 0 0 1280 777 </string>
+	<string>0 275 650 502 0 0 1280 777 </string>
 	<key>NeverWarnAboutShortLivedSessions_26365F51-2579-4699-ABC8-42F0D70955C7</key>
 	<true/>
 	<key>NeverWarnAboutShortLivedSessions_26365F51-2579-4699-ABC8-42F0D70955C7_selection</key>
@@ -37812,7 +37812,7 @@
 		</dict>
 	</dict>
 	<key>PrefsCustomFolder</key>
-	<string>/Users/tynan/dotfiles/iterm</string>
+	<string>/Users/tynan/.dotfiles/iterm</string>
 	<key>Print In Black And White</key>
 	<true/>
 	<key>PromptOnQuit</key>

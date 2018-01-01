@@ -21,7 +21,7 @@ git_clone_or_update(){
 # Install tmux config.
 TMUX_CONF="$HOME/.tmux.conf"
 if [ ! -e $TMUX_CONF ]; then
-    ln -s -v ~/dotfiles/tmux/tmux.conf $TMUX_CONF
+    ln -s -v `pwd`/tmux/tmux.conf $TMUX_CONF
 fi
 
 # Create tmux plugin directory if necessary.

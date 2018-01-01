@@ -1,2 +1,2 @@
 #!/bin/bash -e
-python ~/dotfiles/bin/pip_upgrade.py
+python ~/.local/bin/pip_upgrade.py

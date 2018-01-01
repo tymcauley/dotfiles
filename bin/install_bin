@@ -3,15 +3,15 @@
 # Install bin directory.
 
 CURRENT_SCRIPT=$(basename $0)
-LOCAL_BIN=$HOME/bin
+LOCAL_BIN=$HOME/.local/bin
 
 # Create the local bin directory if necessary.
 if [ ! -d "$LOCAL_BIN" ]; then
-    mkdir -v $LOCAL_BIN
+    mkdir -v -p $LOCAL_BIN
 fi
 
 # Loop through all the files in this directory and link them as needed.
-for source_filepath in ~/dotfiles/bin/*; do
+for source_filepath in `pwd`/bin/*; do
     # Don't make a link of this script in the LOCAL_BIN folder.
     if [[ $source_filepath != *"$CURRENT_SCRIPT"* ]]; then
         source_filename=$(basename $source_filepath)

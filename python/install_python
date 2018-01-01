@@ -7,10 +7,10 @@
 INPUTRC="$HOME/.inputrc"
 PYSTARTUP="$HOME/.pystartup"
 if [ ! -e $INPUTRC ]; then
-    ln -s -v ~/dotfiles/python/inputrc $INPUTRC
+    ln -s -v `pwd`/python/inputrc $INPUTRC
 fi
 if [ ! -e $PYSTARTUP ]; then
-    ln -s -v ~/dotfiles/python/pystartup $PYSTARTUP
+    ln -s -v `pwd`/python/pystartup $PYSTARTUP
 fi
 
 # Grab OS-type from inputs.
