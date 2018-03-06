@@ -105,3 +105,7 @@ git_clone_or_update git://github.com/tpope/vim-repeat.git \
 # Add nice integration with git.
 git_clone_or_update https://github.com/tpope/vim-fugitive.git \
     "$VIM_BUNDLE/vim-fugitive"
+
+# Latex integration.
+git_clone_or_update https://github.com/lervag/vimtex.git \
+    "$VIM_BUNDLE/vimtex"
