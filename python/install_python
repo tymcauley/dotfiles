@@ -64,6 +64,7 @@ fi
 # Install all the python packages we want.
 $INSTALL_CMD install -U cython
 $INSTALL_CMD install -U jupyter
+$INSTALL_CMD install -U jupyterlab
 $INSTALL_CMD install -U numpy
 $INSTALL_CMD install -U matplotlib
 $INSTALL_CMD install -U scipy
