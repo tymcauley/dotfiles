@@ -160,6 +160,7 @@ au FileType c,cpp,gitcommit,make,python,systemverilog,verilog,vim,tcl setlocal c
 
 " File-based indentation settings.
 autocmd Filetype c,cpp,systemverilog,verilog,tcl setlocal ts=2 sts=2 sw=2 expandtab
+autocmd Filetype asm setlocal ts=8 sts=8 sw=8 noexpandtab
 
 " File-based spell check enabling.
 autocmd Filetype gitcommit,markdown,tex setlocal spell
