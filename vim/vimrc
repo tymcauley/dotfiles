@@ -172,6 +172,14 @@ elseif isdirectory($HOME . "/.fzf")
     set rtp+=~/.fzf
 endif
 
+" fzf command to search other files for code using ripgrep.
+command! -bang -nargs=* Rg
+  \ call fzf#vim#grep(
+  \   'rg --column --line-number --no-heading --ignore-case --follow --color always '.shellescape(<q-args>), 1,
+  \   <bang>1 ? fzf#vim#with_preview('up:60%')
+  \           : fzf#vim#with_preview('right:50%:hidden', '?'),
+  \   <bang>0)
+
 "" Map settings
 
 let mapleader=','       " map by , instead of /
@@ -244,6 +252,7 @@ nnoremap <space> za
 nnoremap <leader>p :History<CR>
 nnoremap <leader>b :Buffers<CR>
 nnoremap <leader>t :Files<CR>
+nnoremap <leader>f :Rg<CR>
 
 " Enable the matchit plugin to make the '%' command jump between text tags in
 " addition to brackets/parentheses.
