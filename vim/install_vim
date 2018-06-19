@@ -24,6 +24,11 @@ if [ ! -e "$VIMRC" ]; then
     ln -s `pwd`/vim/vimrc $VIMRC
 fi
 
+VIM_COLORSCHEME="$HOME/.vimrc_background"
+if [ ! -e "$VIM_COLORSCHEME" ]; then
+    ln -s `pwd`/vim/vimrc_background $VIM_COLORSCHEME
+fi
+
 # Install flake8 configuration for vim-flake8.
 FLAKE8_CONFIG="$HOME/.config/flake8"
 if [ ! -e "$FLAKE8_CONFIG" ]; then
