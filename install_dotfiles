@@ -54,7 +54,7 @@ if $MAC; then
     brew upgrade
 
     # Make sure the default programs are installed.
-    DEFAULT_PROGRAMS="vim zsh git htop rg fzf"
+    DEFAULT_PROGRAMS="vim zsh git htop rg fzf tmux fd"
     for program_name in $DEFAULT_PROGRAMS
     do
         if ! command -v $program_name >/dev/null 2>&1; then
