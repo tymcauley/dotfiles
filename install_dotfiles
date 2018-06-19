@@ -43,7 +43,7 @@ fi
 # Make sure the basic set of utilities are installed.
 if $MAC; then
     # If homebrew isn't installed, install it.
-    if ! which brew >/dev/null 2>&1; then
+    if ! command -v brew >/dev/null 2>&1; then
         /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
     fi
 
@@ -54,7 +54,13 @@ if $MAC; then
     brew upgrade
 
     # Make sure the default programs are installed.
-    brew install vim zsh git htop rg fzf
+    DEFAULT_PROGRAMS="vim zsh git htop rg fzf"
+    for program_name in $DEFAULT_PROGRAMS
+    do
+        if ! command -v $program_name >/dev/null 2>&1; then
+            brew install $program_name
+        fi
+    done
 
     # NOTE: To get htop to be able to see all processes not owned by the
     # current user (basically, to get around having to run `sudo htop`), you
