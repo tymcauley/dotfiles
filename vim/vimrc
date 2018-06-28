@@ -11,6 +11,12 @@ filetype indent on
 " Default to using UTF8 encoding.
 set encoding=utf-8
 
+" Load color scheme.
+if filereadable(expand("~/.vimrc_background"))
+  let base16colorspace=256
+  source ~/.vimrc_background
+endif
+
 " Enable syntax highlighting
 let python_highlight_all=1
 syntax on
@@ -31,6 +37,16 @@ set spelllang=en_us
 set spellfile=~/.vim/en.utf-8.add
 set spellcapcheck=''
 set spell
+
+" Set custom highlighting for various spelling mistakes.
+highlight clear SpellBad
+highlight SpellBad cterm=underline
+highlight clear SpellCap
+highlight SpellCap cterm=underline
+highlight clear SpellLocal
+highlight SpellLocal cterm=underline
+highlight clear SpellRare
+highlight SpellRare cterm=underline
 
 " One of the most important options to activate. Allows you to switch from an unsaved buffer without saving it first.
 " Also allows you to keep an undo history for multiple files. Vim will complain if you try to quit without saving, and
@@ -142,7 +158,7 @@ set textwidth=79
 au FileType c,cpp,make,python,systemverilog,verilog,vim,tcl setlocal textwidth=119
 
 " Add in a ruler for certain filetypes.
-highlight ColorColumn ctermbg=0 guibg=lightgrey
+highlight ColorColumn ctermbg=18
 au FileType c,cpp,gitcommit,make,python,systemverilog,verilog,vim,tcl setlocal colorcolumn=+1
 
 " Intelligent comment formatting.
@@ -385,12 +401,6 @@ let g:tmuxline_preset = {
       \'cwin' : '#I #W #F',
       \'y'    : '%a %b %d %Y',
       \'z'    : '%H:%M'}
-
-" Font/color settings:
-if filereadable(expand("~/.vimrc_background"))
-  let base16colorspace=256
-  source ~/.vimrc_background
-endif
 
 " Syntastic settings
 let g:syntastic_always_populate_loc_list = 1
