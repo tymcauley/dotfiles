@@ -88,11 +88,20 @@ set noerrorbells
 set nowrap
 
 " Showing special characters:
-"   Mark the end of a non-wrapped long line with a '#'.
-"   Show non-breaking space characters as ¬.
-"   Show tabs as ▸ followed by spaces.
 set list
-set listchars=extends:#,nbsp:¬,tab:▸\ ,
+set listchars=
+" Mark the end of a non-wrapped long line with a '#'.
+" Place a '#' in the last column when 'wrap' is off and the line continues beyond the right of the screen.
+set listchars+=extends:#,
+" Place a '#' in the first column when 'wrap' is off and there is text preceding the character visible in the first
+" column.
+set listchars+=precedes:#,
+" Show non-breaking space characters as ¬.
+set listchars+=nbsp:¬,
+" Show tabs as ▸ followed by spaces.
+set listchars+=tab:▸\ ,
+" Show trailing spaces as ◊.
+set listchars+=trail:◊,
 
 " When scrolling to the top or bottom of the screen, keep 2 lines between the cursor and the edge of the screen.
 set scrolloff=2
@@ -146,10 +155,6 @@ set foldlevel=99
 
 " Make sure .vf files are interpreted as Verilog.
 au BufRead,BufNewFile *.vf set filetype=verilog
-
-" Flag trailing whitespace in certain filetypes.
-" TODO: For some reason, this isn't working properly.
-match ErrorMsg '\s\+$'
 
 " Default textwidth.
 set textwidth=79
