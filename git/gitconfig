@@ -1,5 +1,5 @@
 [user]
-    email = tymcauley@gmail.com
+    email = 16469394+tymcauley@users.noreply.github.com
     name = Tynan McAuley
 [push]
     # When you use 'git push', push only the current branch, not all branches.
@@ -16,8 +16,7 @@
 [merge]
     tool = vimdiff
 [alias]
-    personalprofile = config user.email \"tymcauley@gmail.com\"
-    workprofile = config user.email \"tynan@remicro.com\"
+    privateprofile = config user.email \"16469394+tymcauley@users.noreply.github.com\"
     dt = difftool
     diffws = diff --ignore-space-at-eol --ignore-space-change --ignore-all-space --ignore-blank-lines
     showtool = "!f() { git difftool $1^ $1; }; f"
