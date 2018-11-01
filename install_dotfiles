@@ -20,68 +20,57 @@ if [[ "$(id -u)" == "0" ]] ; then
 fi
 
 
-
-# Check OS.
-OS=$(uname -s)
-MAC=false
-CENTOS=false
-UBUNTU=false
-if [[ "$OS" == "Darwin" ]] ; then
-    MAC=true
-elif [[ "$OS" == "Linux" ]] ; then
-    if cat /etc/system-release | grep -iq centos; then
-        CENTOS=true
-    elif cat /etc/system-release | grep -iq ubuntu; then
-        UBUNTU=true
+# If Homebrew/Linuxbrew isn't installed, give the user some directions and then exit.
+if ! command -v brew > /dev/null 2>&1 ; then
+    if [[ "$OSTYPE" == darwin* ]] ; then
+        eecho "Looks like Homebrew isn't installed. Please install it before continuing:"
+        echo "  /usr/bin/ruby -e \"\$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)\""
     else
-        eecho "In Linux, unknown distro: $OS. Aborting."
-        exit 1
+        eecho "Looks like Linuxbrew isn't installed. Please install it before continuing:"
+
+        LINUX_DISTRO="$(grep -E '^ID=([a-zA-Z]*)' /etc/os-release | cut -d '=' -f 2)"
+        case $LINUX_DISTRO in
+            *debian*|*ubuntu*)
+                echo "  sudo apt install build-essential curl file git"
+                ;;
+            *centos*)
+                echo "  sudo yum groupinstall 'Development Tools'"
+                echo "  sudo yum install curl file git"
+                ;;
+            *)
+                echo "I don't recognize Linux distribution '$LINUX_DISTRO'. See https://linuxbrew.sh/#dependencies for Linuxbrew dependencies."
+                ;;
+        esac
+
+        echo "  sh -c \"\$(curl -fsSL https://raw.githubusercontent.com/Linuxbrew/install/master/install.sh)\""
+        echo "  test -d ~/.linuxbrew && PATH=\"\$HOME/.linuxbrew/bin:\$HOME/.linuxbrew/sbin:\$PATH\""
+        echo "  test -d /home/linuxbrew/.linuxbrew && PATH=\"/home/linuxbrew/.linuxbrew/bin:/home/linuxbrew/.linuxbrew/sbin:\$PATH\""
+        echo "  echo \"\$(brew --prefix)/bin:\$(brew --prefix)/sbin\""
+        echo "Add the output of this last command to the beginning of your PATH."
     fi
-else
-    eecho "Unknown operating system: $OS. Aborting."
     exit 1
 fi
 
-
 # Make sure the basic set of utilities are installed.
-if $MAC; then
-    # If homebrew isn't installed, install it.
-    if ! command -v brew > /dev/null 2>&1; then
-        iecho "Installing homebrew"
-        /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+iecho "Updating brew packages"
+
+# Update to the most recent version of Homebrew/Linuxbrew.
+brew update
+
+# Update all installed Homebrew/Linuxbrew packages.
+brew upgrade
+
+# Make sure the default programs are installed.
+INSTALLED_PROGRAMS=$(brew list -1)
+PROGRAMS_TO_INSTALL="vim zsh git htop python3 rg fzf tmux fd"
+for program_name in $PROGRAMS_TO_INSTALL ; do
+    if ! echo "$INSTALLED_PROGRAMS" | grep -q "^$program_name\$" > /dev/null 2>&1 ; then
+        brew install $program_name
     fi
+done
 
-    iecho "Updating homebrew packages"
-
-    # Update to the most recent version of Homebrew.
-    brew update
-
-    # Update all installed Homebrew packages.
-    brew upgrade
-
-    # Remove old versions of Homebrew files.
-    brew cleanup
-
-    # Make sure the default programs are installed.
-    DEFAULT_PROGRAMS="vim zsh git htop python3 rg fzf tmux fd"
-    for program_name in $DEFAULT_PROGRAMS
-    do
-        if ! command -v $program_name > /dev/null 2>&1; then
-            brew install $program_name
-        fi
-    done
-
-    # NOTE: To get htop to be able to see all processes not owned by the current user (basically, to get around having
-    # to run 'sudo htop'), you have to do this:
-    #   cd /usr/local/Cellar/htop/<VERSION_NUMBER>/bin/
-    #   chmod 6555 htop
-    #   sudo chown root htop
-
-elif $CENTOS; then
-    iecho "Nothing to install for CentOS."
-elif $UBUNTU; then
-    sudo apt-get install vim-gnome zsh git
-fi
+# Remove old versions of Homebrew/Linuxbrew files.
+brew cleanup
 
 
 # Customize git installation.
@@ -137,7 +126,7 @@ if [[ -d "$ZPREZTO_PATH" ]] ; then
 
     # Check if we have an upstream remote configured. If we don't then
     # configure one.
-    if ! git remote -v | grep -q '^upstream' > /dev/null 2>&1; then
+    if ! git remote -v | grep -q '^upstream' > /dev/null 2>&1 ; then
         git remote add upstream https://github.com/sorin-ionescu/prezto.git
     fi
 
@@ -147,7 +136,7 @@ else
     git clone --recursive https://github.com/tymcauley/prezto.git "$ZPREZTO_PATH"
 
     # Install ZSH configuration.
-    for rcfile in $ZPREZTO_PATH/runcoms/z*; do
+    for rcfile in $ZPREZTO_PATH/runcoms/z* ; do
         rcfile_name=$(basename $rcfile)
         ln -s -v "$rcfile" "$HOME/.$rcfile_name"
     done
