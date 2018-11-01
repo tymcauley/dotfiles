@@ -1,0 +1,24 @@
+#!/bin/bash
+
+# Custom print methods.
+pretty_time () { date "+%Y-%d-%m|%H:%M:%S"; }
+iecho () { echo "I[$(pretty_time)] $@"; }
+wecho () { echo "W[$(pretty_time)] $@"; }
+eecho () { echo "E[$(pretty_time)] $@"; }
+
+# If a local git repo exists, update it. If it doesn't exist, clone a new repo in the expected location.
+#
+# Inputs:
+#   $1 : path to remote git repository to clone/pull.
+#   $2 : path to local git repository
+git_clone_or_update () {
+    if [[ -d "$2" ]] ; then
+        iecho "Updating $2 from $1"
+        cd $2
+        git pull
+        cd ~
+    else
+        iecho "Cloning $1 into $2"
+        git clone $1 $2
+    fi
+}

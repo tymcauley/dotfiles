@@ -1,10 +1,15 @@
 #!/bin/bash -e
 
-# If the user accidentally ran this as root, tell them that this might be
-# wrong.
+# Keep track of this script's directory.
+cd $(dirname $0)
+export DOTFILES_DIR="$(pwd)"
+
+# Import custom functions.
+source $DOTFILES_DIR/dotfiles_lib
+
+# If the user accidentally ran this as root, tell them that this might be wrong.
 if [[ "$(id -u)" == "0" ]] ; then
-    echo "This script was not designed to run as root. All files will be"
-    echo "installed using the following HOME directory: $HOME"
+    wecho "You're running as root! Installation will occur in this HOME directory: $HOME"
 
     # Give the user the option to exit and re-run the script as a non-root
     # user.
@@ -15,9 +20,6 @@ if [[ "$(id -u)" == "0" ]] ; then
 fi
 
 
-# Keep track of this script's directory.
-cd $(dirname $0)
-export DOTFILES_DIR="$(pwd)"
 
 # Check OS.
 OS=$(uname -s)
@@ -32,11 +34,11 @@ elif [[ "$OS" == "Linux" ]] ; then
     elif cat /etc/system-release | grep -iq ubuntu; then
         UBUNTU=true
     else
-        echo "In Linux, unknown distro: $OS. Aborting."
+        eecho "In Linux, unknown distro: $OS. Aborting."
         exit 1
     fi
 else
-    echo "Unknown operating system: $OS. Aborting."
+    eecho "Unknown operating system: $OS. Aborting."
     exit 1
 fi
 
@@ -45,8 +47,11 @@ fi
 if $MAC; then
     # If homebrew isn't installed, install it.
     if ! command -v brew > /dev/null 2>&1; then
+        iecho "Installing homebrew"
         /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
     fi
+
+    iecho "Updating homebrew packages"
 
     # Update to the most recent version of Homebrew.
     brew update
@@ -73,25 +78,29 @@ if $MAC; then
     #   sudo chown root htop
 
 elif $CENTOS; then
-    echo "Nothing to install for CentOS."
+    iecho "Nothing to install for CentOS."
 elif $UBUNTU; then
     sudo apt-get install vim-gnome zsh git
 fi
 
 
 # Customize git installation.
+iecho "Installing git mods"
 $DOTFILES_DIR/git/install_git
 
 
 # Customize Python3 installation.
+iecho "Installing python mods"
 $DOTFILES_DIR/python/install_python $MAC $CENTOS $UBUNTU
 
 
 # Install local bin scripts.
+iecho "Installing local scripts"
 $DOTFILES_DIR/bin/install_bin
 
 
 # Customize tmux installation.
+iecho "Installing tmux mods"
 $DOTFILES_DIR/tmux/install_tmux
 
 
@@ -107,10 +116,12 @@ fi
 
 
 # Customize vim installation.
+iecho "Installing vim mods"
 $DOTFILES_DIR/vim/install_vim
 
 
 # Customize zsh installation.
+iecho "Installing zsh"
 ZSH_PATH=$(which zsh)
 
 if [[ ! -x "$ZSH_PATH" ]] ; then
@@ -158,3 +169,5 @@ if [[ "$SHELL" != "$ZSH_PATH" ]] ; then
     fi
     chsh -s $ZSH_PATH
 fi
+
+iecho "Finished!"

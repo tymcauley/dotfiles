@@ -5,23 +5,8 @@ if [[ -z "$DOTFILES_DIR" ]] ; then
     exit 2
 fi
 
-# If a local git repo exists, update it. If it doesn't exist, clone a new repo
-# in the expected location.
-#
-# Inputs:
-#   $1 : path to remote git repository to clone/pull.
-#   $2 : path to local git repository
-git_clone_or_update(){
-    if [[ -d "$2" ]] ; then
-        echo "Updating $2 from $1"
-        cd $2
-        git pull
-        cd ~
-    else
-        echo "Cloning $1 into $2"
-        git clone $1 $2
-    fi
-}
+# Import custom functions.
+source $DOTFILES_DIR/dotfiles_lib
 
 # Install vimrc.
 VIMRC="$HOME/.vimrc"

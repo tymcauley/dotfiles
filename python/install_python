@@ -5,10 +5,10 @@ if [[ -z "$DOTFILES_DIR" ]] ; then
     exit 2
 fi
 
-# Install packages for Python3.
+# Import custom functions.
+source $DOTFILES_DIR/dotfiles_lib
 
-# Install inputrc (configuration for readline library) and pystartup. This
-# should happen regardless of OS.
+# Install inputrc (configuration for readline library) and pystartup.
 INPUTRC="$HOME/.inputrc"
 PYSTARTUP="$HOME/.pystartup"
 if [[ ! -e "$INPUTRC" ]] ; then
@@ -53,16 +53,9 @@ elif $UBUNTU; then
 fi
 
 # Install the latest version of pip.
-if ! which pip3 >/dev/null 2>&1; then
-    if $MAC; then
-        echo "pip3 not found, it should be present on Mac platforms. Exiting."
-        exit 1
-    elif $UBUNTU; then
-        # If pip isn't yet installed, then get the newest version.
-        curl -O https://bootstrap.pypa.io/get-pip.py
-        sudo python3 get-pip.py
-        rm get-pip.py
-    fi
+if ! command -v pip3 > /dev/null 2>&1; then
+    eecho "pip3 not found. Please install it."
+    exit 1
 else
     # If pip is already installed, use it to update itself.
     $INSTALL_CMD install --upgrade pip
