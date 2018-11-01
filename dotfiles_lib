@@ -1,5 +1,10 @@
 #!/bin/bash
 
+if [[ -z "$DOTFILES_DIR" ]] ; then
+    echo "DOTFILES_DIR is undefined."
+    exit 2
+fi
+
 # Custom print methods.
 pretty_time () { date "+%Y-%d-%m|%H:%M:%S"; }
 iecho () { echo "I[$(pretty_time)] $@"; }
@@ -16,7 +21,7 @@ git_clone_or_update () {
         iecho "Updating $2 from $1"
         cd $2
         git pull
-        cd ~
+        cd $DOTFILES_DIR
     else
         iecho "Cloning $1 into $2"
         git clone $1 $2
