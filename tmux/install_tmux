@@ -1,8 +1,13 @@
 #!/bin/bash -e
 
+if [[ -z "$DOTFILES_DIR" ]] ; then
+    echo "DOTFILES_DIR is undefined."
+    exit 2
+fi
+
 # Install tmux config.
 TMUX_CONF="$HOME/.tmux.conf"
 
-if [ ! -e $TMUX_CONF ]; then
-    ln -s -v `pwd`/tmux/tmux.conf $TMUX_CONF
+if [[ ! -e "$TMUX_CONF" ]] ; then
+    ln -s -v "$DOTFILES_DIR/tmux/tmux.conf" "$TMUX_CONF"
 fi

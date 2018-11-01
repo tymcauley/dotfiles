@@ -1,16 +1,21 @@
 #!/bin/bash -e
 
+if [[ -z "$DOTFILES_DIR" ]] ; then
+    echo "DOTFILES_DIR is undefined."
+    exit 2
+fi
+
 # Install packages for Python3.
 
 # Install inputrc (configuration for readline library) and pystartup. This
 # should happen regardless of OS.
 INPUTRC="$HOME/.inputrc"
 PYSTARTUP="$HOME/.pystartup"
-if [ ! -e $INPUTRC ]; then
-    ln -s -v `pwd`/python/inputrc $INPUTRC
+if [[ ! -e "$INPUTRC" ]] ; then
+    ln -s -v "$DOTFILES_DIR/python/inputrc" "$INPUTRC"
 fi
-if [ ! -e $PYSTARTUP ]; then
-    ln -s -v `pwd`/python/pystartup $PYSTARTUP
+if [[ ! -e "$PYSTARTUP" ]] ; then
+    ln -s -v "$DOTFILES_DIR/python/pystartup" "$PYSTARTUP"
 fi
 
 # Grab OS-type from inputs.

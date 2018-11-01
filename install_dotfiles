@@ -2,30 +2,31 @@
 
 # If the user accidentally ran this as root, tell them that this might be
 # wrong.
-if [[ $EUID -eq 0 ]]; then
+if [[ "$(id -u)" == "0" ]] ; then
     echo "This script was not designed to run as root. All files will be"
     echo "installed using the following HOME directory: $HOME"
 
     # Give the user the option to exit and re-run the script as a non-root
     # user.
     read -p "Do you want to continue running this script as root? [y/n] " yn
-    if [ "$yn" != "y" ]; then
+    if [[ "$yn" != "y" ]] ; then
         exit 0
     fi
 fi
 
 
-# Keep track of starting directory.
-CWD=`pwd`
+# Keep track of this script's directory.
+export DOTFILES_DIR="$(dirname $0)"
+cd $DOTFILES_DIR
 
 # Check OS.
-OS=`uname -s`
+OS=$(uname -s)
 MAC=false
 CENTOS=false
 UBUNTU=false
-if [[ "$OS" == "Darwin" ]]; then
+if [[ "$OS" == "Darwin" ]] ; then
     MAC=true
-elif [[ "$OS" == "Linux" ]]; then
+elif [[ "$OS" == "Linux" ]] ; then
     if cat /etc/system-release | grep -iq centos; then
         CENTOS=true
     elif cat /etc/system-release | grep -iq ubuntu; then
@@ -63,7 +64,7 @@ if $MAC; then
     done
 
     # NOTE: To get htop to be able to see all processes not owned by the
-    # current user (basically, to get around having to run `sudo htop`), you
+    # current user (basically, to get around having to run 'sudo htop'), you
     # have to do this:
     #   cd /usr/local/Cellar/htop/<VERSION_NUMBER>/bin/
     #   chmod 6555 htop
@@ -94,7 +95,7 @@ fi
 
 # Install Base16 Shell.
 dest_dir="$HOME/.config/base16-shell"
-if [ -d "$dest_dir" ]; then
+if [[ -d "$dest_dir" ]] ; then
     cd $dest_dir
     git pull
     cd $CWD
@@ -107,16 +108,16 @@ fi
 ./vim/install_vim
 
 
-# Clone zprezto repo and install that.
+# Clone zprezto repo and install it.
 ZPREZTO_PATH="$HOME/.zprezto"
-ZSH_PATH=`which zsh`
+ZSH_PATH=$(which zsh)
 
-if [[ -d "$ZPREZTO_PATH" ]]; then
+if [[ -d "$ZPREZTO_PATH" ]] ; then
     cd "$ZPREZTO_PATH"
 
     # Check if we have an upstream remote configured. If we don't then
     # configure one.
-    if ! git remote -v | grep -s '^upstream' >/dev/null 2>&1; then
+    if ! git remote -v | grep -q '^upstream' > /dev/null 2>&1; then
         git remote add upstream https://github.com/sorin-ionescu/prezto.git
     fi
 

@@ -1,5 +1,10 @@
 #!/bin/bash -e
 
+if [[ -z "$DOTFILES_DIR" ]] ; then
+    echo "DOTFILES_DIR is undefined."
+    exit 2
+fi
+
 # If a local git repo exists, update it. If it doesn't exist, clone a new repo
 # in the expected location.
 #
@@ -7,7 +12,7 @@
 #   $1 : path to remote git repository to clone/pull.
 #   $2 : path to local git repository
 git_clone_or_update(){
-    if [ -d "$2" ]; then
+    if [[ -d "$2" ]] ; then
         echo "Updating $2 from $1"
         cd $2
         git pull
@@ -20,19 +25,19 @@ git_clone_or_update(){
 
 # Install vimrc.
 VIMRC="$HOME/.vimrc"
-if [ ! -e "$VIMRC" ]; then
-    ln -s `pwd`/vim/vimrc $VIMRC
+if [[ ! -e "$VIMRC" ]] ; then
+    ln -s -v "$DOTFILES_DIR/vim/vimrc" "$VIMRC"
 fi
 
 VIM_COLORSCHEME="$HOME/.vimrc_background"
-if [ ! -e "$VIM_COLORSCHEME" ]; then
-    ln -s `pwd`/vim/vimrc_background $VIM_COLORSCHEME
+if [[ ! -e "$VIM_COLORSCHEME" ]] ; then
+    ln -s -v "$DOTFILES_DIR/vim/vimrc_background" "$VIM_COLORSCHEME"
 fi
 
-# Install flake8 configuration for vim-flake8.
+# Install flake8 configuration for python syntax checking.
 FLAKE8_CONFIG="$HOME/.config/flake8"
-if [ ! -e "$FLAKE8_CONFIG" ]; then
-    ln -s `pwd`/vim/flake8 $FLAKE8_CONFIG
+if [[ ! -e "$FLAKE8_CONFIG" ]] ; then
+    ln -s -v "$DOTFILES_DIR/vim/flake8" "$FLAKE8_CONFIG"
 fi
 
 # Create necessary directories.

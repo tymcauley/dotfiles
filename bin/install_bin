@@ -1,17 +1,22 @@
 #!/bin/bash -e
 
+if [[ -z "$DOTFILES_DIR" ]] ; then
+    echo "DOTFILES_DIR is undefined."
+    exit 2
+fi
+
 # Install bin directory.
 
 CURRENT_SCRIPT=$(basename $0)
 LOCAL_BIN=$HOME/.local/bin
 
 # Create the local bin directory if necessary.
-if [ ! -d "$LOCAL_BIN" ]; then
+if [[ ! -d "$LOCAL_BIN" ]] ; then
     mkdir -v -p $LOCAL_BIN
 fi
 
 # Loop through all the files in this directory and link them as needed.
-for source_filepath in `pwd`/bin/*; do
+for source_filepath in $DOTFILES_DIR/bin/*; do
     source_filename=$(basename $source_filepath)
     # Don't make a link of this script in the LOCAL_BIN folder.
     if [[ "$source_filename" != "$CURRENT_SCRIPT" ]] ; then
@@ -19,7 +24,7 @@ for source_filepath in `pwd`/bin/*; do
 
         # Only make the link if the destination file doesn't exist and the
         # source file is executable.
-        if [ ! -e "$dest_filepath" ] && [ -x "$source_filepath" ]; then
+        if [[ ! -e "$dest_filepath" ]] && [[ -x "$source_filepath" ]] ; then
             ln -s -v $source_filepath $dest_filepath
         fi
     fi
