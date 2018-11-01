@@ -80,10 +80,6 @@ fi
 ./git/install_git
 
 
-# Customize subversion installation.
-# ./svn/install_svn
-
-
 # Customize Python3 installation.
 ./python/install_python $MAC $CENTOS $UBUNTU
 
