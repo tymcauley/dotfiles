@@ -111,9 +111,16 @@ fi
 $DOTFILES_DIR/vim/install_vim
 
 
+# Customize zsh installation.
+ZSH_PATH=$(which zsh)
+
+if [[ ! -x "$ZSH_PATH" ]] ; then
+    echo "Could not detect a zsh executable (ZSH_PATH='$ZSH_PATH')"
+    exit 1
+fi
+
 # Clone zprezto repo and install it.
 ZPREZTO_PATH="$HOME/.zprezto"
-ZSH_PATH=$(which zsh)
 
 if [[ -d "$ZPREZTO_PATH" ]] ; then
     cd "$ZPREZTO_PATH"
@@ -132,15 +139,25 @@ else
 
     # Install ZSH configuration.
     for rcfile in $ZPREZTO_PATH/runcoms/z*; do
-        rcfile_name=${rcfile##*/}
-        ln -s "$rcfile" "$HOME/.$rcfile_name"
+        rcfile_name=$(basename $rcfile)
+        ln -s -v "$rcfile" "$HOME/.$rcfile_name"
     done
+fi
 
-    # If the users's shell is already ZSH, don't both changing it.
-    if ! echo $SHELL | grep -iq zsh; then
-        echo "Changing shell to $ZSH_PATH. Confirm that it is in /etc/shells"
-        chsh -s $ZSH_PATH
-    else
-        echo "Shell set to $SHELL. No change necessary."
+# If necessary, change the user's shell to zsh.
+if [[ "$SHELL" != "$ZSH_PATH" ]] ; then
+    echo "Changing shell from '$SHELL' to '$ZSH_PATH'"
+    # Only the root user is allowed to use a shell that is not in
+    # /etc/shells.
+    if [[ "$(id -u)" != "0" ]] ; then
+        SHELLS_FILE=/etc/shells
+        # Make sure $ZSH_PATH is in $SHELLS_FILE.
+        if ! grep -q "$ZSH_PATH" $SHELLS_FILE ; then
+            echo "Since you aren't the super-user, '$ZSH_PATH' must be in '$SHELLS_FILE'"
+            echo "Execute this command (as root) to fix that:"
+            echo "  echo $ZSH_PATH >> $SHELLS_FILE"
+            exit 1
+        fi
     fi
+    chsh -s $ZSH_PATH
 fi
