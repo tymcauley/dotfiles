@@ -20,143 +20,35 @@ if [[ "$(id -u)" == "0" ]] ; then
 fi
 
 
-# If Homebrew/Linuxbrew isn't installed, give the user some directions and then exit.
-if ! command -v brew > /dev/null 2>&1 ; then
-    if [[ "$OSTYPE" == darwin* ]] ; then
-        eecho "Looks like Homebrew isn't installed. Please install it before continuing:"
-        echo "  /usr/bin/ruby -e \"\$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)\""
-    else
-        eecho "Looks like Linuxbrew isn't installed. Please install it before continuing:"
-
-        LINUX_DISTRO="$(grep -E '^ID=([a-zA-Z]*)' /etc/os-release | cut -d '=' -f 2)"
-        case $LINUX_DISTRO in
-            *debian*|*ubuntu*)
-                echo "  sudo apt install build-essential curl file git"
-                ;;
-            *centos*)
-                echo "  sudo yum groupinstall 'Development Tools'"
-                echo "  sudo yum install curl file git"
-                ;;
-            *)
-                echo "I don't recognize Linux distribution '$LINUX_DISTRO'. See https://linuxbrew.sh/#dependencies for Linuxbrew dependencies."
-                ;;
-        esac
-
-        echo "  sh -c \"\$(curl -fsSL https://raw.githubusercontent.com/Linuxbrew/install/master/install.sh)\""
-        echo "  test -d ~/.linuxbrew && PATH=\"\$HOME/.linuxbrew/bin:\$HOME/.linuxbrew/sbin:\$PATH\""
-        echo "  test -d /home/linuxbrew/.linuxbrew && PATH=\"/home/linuxbrew/.linuxbrew/bin:/home/linuxbrew/.linuxbrew/sbin:\$PATH\""
-        echo "  echo \"\$(brew --prefix)/bin:\$(brew --prefix)/sbin\""
-        echo "Add the output of this last command to the beginning of your PATH."
-    fi
-    exit 1
-fi
-
-# Make sure the basic set of utilities are installed.
-iecho "Updating brew packages"
-
-# Update to the most recent version of Homebrew/Linuxbrew.
-brew update
-
-# Update all installed Homebrew/Linuxbrew packages.
-brew upgrade
-
-# Make sure the default programs are installed.
-INSTALLED_PROGRAMS=$(brew list -1)
-PROGRAMS_TO_INSTALL="vim zsh git htop python3 rg fzf tmux fd"
-for program_name in $PROGRAMS_TO_INSTALL ; do
-    if ! echo "$INSTALLED_PROGRAMS" | grep -q "^$program_name\$" > /dev/null 2>&1 ; then
-        brew install $program_name
-    fi
-done
-
-# Remove old versions of Homebrew/Linuxbrew files.
-brew cleanup
-
+# Setup/update Homebrew/Linuxbrew packages.
+$DOTFILES_DIR/brew/install_brew
 
 # Customize git installation.
 iecho "Installing git mods"
 $DOTFILES_DIR/git/install_git
 
-
-# Customize Python3 installation.
-iecho "Installing python mods"
-$DOTFILES_DIR/python/install_python
-
+# Install Base16 Shell.
+iecho "Installing Base16 shell"
+$DOTFILES_DIR/base16/install_base16
 
 # Install local bin scripts.
 iecho "Installing local scripts"
 $DOTFILES_DIR/bin/install_bin
 
+# Customize python installation.
+iecho "Installing python mods"
+$DOTFILES_DIR/python/install_python
 
 # Customize tmux installation.
 iecho "Installing tmux mods"
 $DOTFILES_DIR/tmux/install_tmux
 
-
-# Install Base16 Shell.
-dest_dir="$HOME/.config/base16-shell"
-if [[ -d "$dest_dir" ]] ; then
-    cd $dest_dir
-    git pull
-    cd $DOTFILES_DIR
-else
-    git clone https://github.com/chriskempson/base16-shell.git $dest_dir
-fi
-
-
 # Customize vim installation.
 iecho "Installing vim mods"
 $DOTFILES_DIR/vim/install_vim
 
-
 # Customize zsh installation.
 iecho "Installing zsh"
-ZSH_PATH=$(which zsh)
-
-if [[ ! -x "$ZSH_PATH" ]] ; then
-    echo "Could not detect a zsh executable (ZSH_PATH='$ZSH_PATH')"
-    exit 1
-fi
-
-# Clone zprezto repo and install it.
-ZPREZTO_PATH="$HOME/.zprezto"
-
-if [[ -d "$ZPREZTO_PATH" ]] ; then
-    cd "$ZPREZTO_PATH"
-
-    # Check if we have an upstream remote configured. If we don't then
-    # configure one.
-    if ! git remote -v | grep -q '^upstream' > /dev/null 2>&1 ; then
-        git remote add upstream https://github.com/sorin-ionescu/prezto.git
-    fi
-
-    cd $DOTFILES_DIR
-else
-    # Clone ZSH configuration files.
-    git clone --recursive https://github.com/tymcauley/prezto.git "$ZPREZTO_PATH"
-
-    # Install ZSH configuration.
-    for rcfile in $ZPREZTO_PATH/runcoms/z* ; do
-        rcfile_name=$(basename $rcfile)
-        ln -s -v "$rcfile" "$HOME/.$rcfile_name"
-    done
-fi
-
-# If necessary, change the user's shell to zsh.
-if [[ "$SHELL" != "$ZSH_PATH" ]] ; then
-    echo "Changing shell from '$SHELL' to '$ZSH_PATH'"
-    # Only the root user is allowed to use a shell that is not in /etc/shells.
-    if [[ "$(id -u)" != "0" ]] ; then
-        SHELLS_FILE=/etc/shells
-        # Make sure $ZSH_PATH is in $SHELLS_FILE.
-        if ! grep -q "$ZSH_PATH" $SHELLS_FILE ; then
-            echo "Since you aren't the super-user, '$ZSH_PATH' must be in '$SHELLS_FILE'"
-            echo "Execute this command (as root) to fix that:"
-            echo "  echo $ZSH_PATH >> $SHELLS_FILE"
-            exit 1
-        fi
-    fi
-    chsh -s $ZSH_PATH
-fi
+$DOTFILES_DIR/zsh/install_zsh
 
 iecho "Finished!"
