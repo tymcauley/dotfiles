@@ -8,7 +8,7 @@ if [[ -z "$DOTFILES_DIR" ]] ; then
 fi
 
 # Import custom functions.
-source $DOTFILES_DIR/dotfiles_lib
+source $DOTFILES_LIB
 
 
 # If Homebrew/Linuxbrew isn't installed, give the user some directions and then exit.

@@ -5,7 +5,8 @@ cd $(dirname $0)
 export DOTFILES_DIR="$(pwd)"
 
 # Import custom functions.
-source $DOTFILES_DIR/dotfiles_lib
+export DOTFILES_LIB="$DOTFILES_DIR/dotfiles_lib"
+source $DOTFILES_LIB
 
 # If the user accidentally ran this as root, tell them that this might be wrong.
 if [[ "$(id -u)" == "0" ]] ; then

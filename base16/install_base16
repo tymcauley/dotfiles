@@ -8,7 +8,7 @@ if [[ -z "$DOTFILES_DIR" ]] ; then
 fi
 
 # Import custom functions.
-source $DOTFILES_DIR/dotfiles_lib
+source $DOTFILES_LIB
 
 
 git_clone_or_update https://github.com/chriskempson/base16-shell.git "$HOME/.config/base16-shell"
