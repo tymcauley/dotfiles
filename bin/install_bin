@@ -1,11 +1,12 @@
 #!/bin/bash -e
 
+# Install local bin scripts.
+
 if [[ -z "$DOTFILES_DIR" ]] ; then
     echo "DOTFILES_DIR is undefined."
     exit 2
 fi
 
-# Install bin directory.
 
 CURRENT_SCRIPT=$(basename $0)
 LOCAL_BIN=$HOME/.local/bin

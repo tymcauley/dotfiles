@@ -1,5 +1,7 @@
 #!/bin/bash -e
 
+# Customize vim installation.
+
 if [[ -z "$DOTFILES_DIR" ]] ; then
     echo "DOTFILES_DIR is undefined."
     exit 2
@@ -7,6 +9,7 @@ fi
 
 # Import custom functions.
 source $DOTFILES_DIR/dotfiles_lib
+
 
 # Install vimrc.
 VIMRC="$HOME/.vimrc"

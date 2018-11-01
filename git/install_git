@@ -1,11 +1,13 @@
 #!/bin/bash -e
 
+# Customize git installation.
+
 if [[ -z "$DOTFILES_DIR" ]] ; then
     echo "DOTFILES_DIR is undefined."
     exit 2
 fi
 
-# Install gitconfig.
+
 GITCONFIG="$HOME/.gitconfig"
 if [[ ! -e "$GITCONFIG" ]] ; then
     ln -s -v "$DOTFILES_DIR/git/gitconfig" "$GITCONFIG"

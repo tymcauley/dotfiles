@@ -1,5 +1,7 @@
 #!/bin/bash -e
 
+# Customize python installation.
+
 if [[ -z "$DOTFILES_DIR" ]] ; then
     echo "DOTFILES_DIR is undefined."
     exit 2
@@ -7,6 +9,7 @@ fi
 
 # Import custom functions.
 source $DOTFILES_DIR/dotfiles_lib
+
 
 # Install inputrc (configuration for readline library) and pystartup.
 INPUTRC="$HOME/.inputrc"
@@ -18,7 +21,7 @@ if [[ ! -e "$PYSTARTUP" ]] ; then
     ln -s -v "$DOTFILES_DIR/python/pystartup" "$PYSTARTUP"
 fi
 
-# sudo is not necessary on Mac.
+# sudo is not necessary on macOS.
 if [[ "$OSTYPE" == darwin* ]] ; then
     INSTALL_CMD="pip3"
 else
