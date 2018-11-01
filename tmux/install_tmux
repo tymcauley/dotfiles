@@ -1,34 +1,8 @@
 #!/bin/bash -e
 
-# If a local git repo exists, update it. If it doesn't exist, clone a new repo
-# in the expected location.
-#
-# Inputs:
-#   $1 : path to remote git repository to clone/pull.
-#   $2 : path to local git repository
-git_clone_or_update(){
-    if [ -d "$2" ]; then
-        echo "Updating $2 from $1"
-        cd $2
-        git pull
-        cd ~
-    else
-        echo "Cloning $1 into $2"
-        git clone $1 $2
-    fi
-}
-
 # Install tmux config.
 TMUX_CONF="$HOME/.tmux.conf"
+
 if [ ! -e $TMUX_CONF ]; then
     ln -s -v `pwd`/tmux/tmux.conf $TMUX_CONF
 fi
-
-# Create tmux plugin directory if necessary.
-TMUX_PLUGIN_DIR=$HOME/.tmux/plugins
-if [ ! -d "$TMUX_PLUGIN_DIR" ]; then
-    mkdir -p -v $TMUX_PLUGIN_DIR
-fi
-
-# Install/update tmux plugin manager.
-git_clone_or_update https://github.com/tmux-plugins/tpm "$TMUX_PLUGIN_DIR/tpm"
