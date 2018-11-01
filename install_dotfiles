@@ -44,7 +44,7 @@ fi
 # Make sure the basic set of utilities are installed.
 if $MAC; then
     # If homebrew isn't installed, install it.
-    if ! command -v brew >/dev/null 2>&1; then
+    if ! command -v brew > /dev/null 2>&1; then
         /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
     fi
 
@@ -61,14 +61,13 @@ if $MAC; then
     DEFAULT_PROGRAMS="vim zsh git htop rg fzf tmux fd"
     for program_name in $DEFAULT_PROGRAMS
     do
-        if ! command -v $program_name >/dev/null 2>&1; then
+        if ! command -v $program_name > /dev/null 2>&1; then
             brew install $program_name
         fi
     done
 
-    # NOTE: To get htop to be able to see all processes not owned by the
-    # current user (basically, to get around having to run 'sudo htop'), you
-    # have to do this:
+    # NOTE: To get htop to be able to see all processes not owned by the current user (basically, to get around having
+    # to run 'sudo htop'), you have to do this:
     #   cd /usr/local/Cellar/htop/<VERSION_NUMBER>/bin/
     #   chmod 6555 htop
     #   sudo chown root htop
@@ -134,8 +133,7 @@ if [[ -d "$ZPREZTO_PATH" ]] ; then
     cd $DOTFILES_DIR
 else
     # Clone ZSH configuration files.
-    git clone --recursive https://github.com/tymcauley/prezto.git \
-        "$ZPREZTO_PATH"
+    git clone --recursive https://github.com/tymcauley/prezto.git "$ZPREZTO_PATH"
 
     # Install ZSH configuration.
     for rcfile in $ZPREZTO_PATH/runcoms/z*; do
@@ -147,8 +145,7 @@ fi
 # If necessary, change the user's shell to zsh.
 if [[ "$SHELL" != "$ZSH_PATH" ]] ; then
     echo "Changing shell from '$SHELL' to '$ZSH_PATH'"
-    # Only the root user is allowed to use a shell that is not in
-    # /etc/shells.
+    # Only the root user is allowed to use a shell that is not in /etc/shells.
     if [[ "$(id -u)" != "0" ]] ; then
         SHELLS_FILE=/etc/shells
         # Make sure $ZSH_PATH is in $SHELLS_FILE.
