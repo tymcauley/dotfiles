@@ -18,37 +18,10 @@ if [[ ! -e "$PYSTARTUP" ]] ; then
     ln -s -v "$DOTFILES_DIR/python/pystartup" "$PYSTARTUP"
 fi
 
-# Grab OS-type from inputs.
-MAC=$1
-CENTOS=$2
-UBUNTU=$3
-
-# Install everything needed to:
-#   -Build Python code from source
-#   -Run Tk GUIs
-#   -Install matplotlib
-#   -Install numpy
-# TODO: Maybe don't need any of this on mac...
-if $MAC; then
-    if ! command -v python3 >/dev/null 2>&1; then
-        brew install python3
-    fi
-elif $CENTOS; then
-    echo "No python installs necessary for CentOS."
-    exit 0
-elif $UBUNTU; then
-    sudo apt-get install python3-dev tcl8.6-dev tk8.6-dev tcl-dev tk-dev \
-        python3-tk libjpeg-dev libjpeg-turbo8-dev libjpeg8-dev liblcms2-dev \
-        libfreetype6-dev libpng12-dev zlib1g-dev libatlas-base-dev gfortran
-else
-    echo 'No valid operating system specified, exiting.'
-    exit 1
-fi
-
 # sudo is not necessary on Mac.
-if $MAC; then
+if [[ "$OSTYPE" == darwin* ]] ; then
     INSTALL_CMD="pip3"
-elif $UBUNTU; then
+else
     INSTALL_CMD="sudo pip3"
 fi
 
