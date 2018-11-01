@@ -160,7 +160,7 @@ au BufRead,BufNewFile *.vf set filetype=verilog
 set textwidth=79
 
 " Wrap text after a certain number of characters for certain filetypes.
-au FileType c,cpp,make,python,systemverilog,verilog,vim,tcl setlocal textwidth=119
+au FileType c,cpp,make,python,sh,systemverilog,verilog,vim,tcl setlocal textwidth=119
 
 " Add in a ruler for certain filetypes.
 highlight ColorColumn ctermbg=18
