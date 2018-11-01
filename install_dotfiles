@@ -54,6 +54,9 @@ if $MAC; then
     # Update all installed Homebrew packages.
     brew upgrade
 
+    # Remove old versions of Homebrew files.
+    brew cleanup
+
     # Make sure the default programs are installed.
     DEFAULT_PROGRAMS="vim zsh git htop rg fzf tmux fd"
     for program_name in $DEFAULT_PROGRAMS
