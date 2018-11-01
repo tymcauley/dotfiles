@@ -1,2 +1,0 @@
-#!/bin/bash -e
-python3 ~/.local/bin/pip_upgrade.py
