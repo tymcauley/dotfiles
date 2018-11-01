@@ -16,8 +16,8 @@ fi
 
 
 # Keep track of this script's directory.
-export DOTFILES_DIR="$(dirname $0)"
-cd $DOTFILES_DIR
+cd $(dirname $0)
+export DOTFILES_DIR="$(pwd)"
 
 # Check OS.
 OS=$(uname -s)
@@ -78,19 +78,19 @@ fi
 
 
 # Customize git installation.
-./git/install_git
+$DOTFILES_DIR/git/install_git
 
 
 # Customize Python3 installation.
-./python/install_python $MAC $CENTOS $UBUNTU
+$DOTFILES_DIR/python/install_python $MAC $CENTOS $UBUNTU
 
 
 # Install local bin scripts.
-./bin/install_bin
+$DOTFILES_DIR/bin/install_bin
 
 
 # Customize tmux installation.
-./tmux/install_tmux
+$DOTFILES_DIR/tmux/install_tmux
 
 
 # Install Base16 Shell.
@@ -98,14 +98,14 @@ dest_dir="$HOME/.config/base16-shell"
 if [[ -d "$dest_dir" ]] ; then
     cd $dest_dir
     git pull
-    cd $CWD
+    cd $DOTFILES_DIR
 else
     git clone https://github.com/chriskempson/base16-shell.git $dest_dir
 fi
 
 
 # Customize vim installation.
-./vim/install_vim
+$DOTFILES_DIR/vim/install_vim
 
 
 # Clone zprezto repo and install it.
@@ -121,7 +121,7 @@ if [[ -d "$ZPREZTO_PATH" ]] ; then
         git remote add upstream https://github.com/sorin-ionescu/prezto.git
     fi
 
-    cd $CWD
+    cd $DOTFILES_DIR
 else
     # Clone ZSH configuration files.
     git clone --recursive https://github.com/tymcauley/prezto.git \
