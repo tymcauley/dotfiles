@@ -1,4 +1,4 @@
-#!/bin/bash
+# Library functions for dotfiles repo.
 
 if [[ -z "$DOTFILES_DIR" ]] ; then
     echo "DOTFILES_DIR is undefined."
