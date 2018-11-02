@@ -53,8 +53,7 @@ brew upgrade
 
 # Make sure the default programs are installed.
 INSTALLED_PROGRAMS=$(brew list -1)
-PROGRAMS_TO_INSTALL="vim zsh git htop python3 ripgrep fzf tmux fd"
-for program_name in $PROGRAMS_TO_INSTALL ; do
+for program_name in $CFG_BREW_PROGRAMS ; do
     if ! echo "$INSTALLED_PROGRAMS" | grep -q "^$program_name\$" > /dev/null 2>&1 ; then
         brew install $program_name
     fi

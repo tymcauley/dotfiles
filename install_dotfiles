@@ -21,35 +21,57 @@ if [[ "$(id -u)" == "0" ]] ; then
 fi
 
 
+# Install dotfiles configuration file.
+export USER_CONFIG_FILE="$DOTFILES_DIR/dotfiles.cfg"
+$DOTFILES_DIR/config/install_config
+source $USER_CONFIG_FILE
+
+
 # Setup/update Homebrew/Linuxbrew packages.
-$DOTFILES_DIR/brew/install_brew
+if $CFG_ENABLE_BREW ; then
+    $DOTFILES_DIR/brew/install_brew
+fi
 
 # Customize git installation.
-iecho "Installing git mods"
-$DOTFILES_DIR/git/install_git
+if $CFG_INSTALL_GIT ; then
+    iecho "Installing git mods"
+    $DOTFILES_DIR/git/install_git
+fi
 
 # Install Base16 Shell.
-iecho "Installing Base16 shell"
-$DOTFILES_DIR/base16/install_base16
+if $CFG_INSTALL_BASE16_SHELL ; then
+    iecho "Installing Base16 shell"
+    $DOTFILES_DIR/base16/install_base16
+fi
 
 # Install local bin scripts.
-iecho "Installing local scripts"
-$DOTFILES_DIR/bin/install_bin
+if $CFG_INSTALL_LOCAL_BIN ; then
+    iecho "Installing local scripts"
+    $DOTFILES_DIR/bin/install_bin
+fi
 
 # Customize python installation.
-iecho "Installing python mods"
-$DOTFILES_DIR/python/install_python
+if $CFG_INSTALL_PYTHON_MODS ; then
+    iecho "Installing python mods"
+    $DOTFILES_DIR/python/install_python
+fi
 
 # Customize tmux installation.
-iecho "Installing tmux mods"
-$DOTFILES_DIR/tmux/install_tmux
+if $CFG_INSTALL_TMUX_MODS ; then
+    iecho "Installing tmux mods"
+    $DOTFILES_DIR/tmux/install_tmux
+fi
 
 # Customize vim installation.
-iecho "Installing vim mods"
-$DOTFILES_DIR/vim/install_vim
+if $CFG_INSTALL_VIM_MODS ; then
+    iecho "Installing vim mods"
+    $DOTFILES_DIR/vim/install_vim
+fi
 
 # Customize zsh installation.
-iecho "Installing zsh"
-$DOTFILES_DIR/zsh/install_zsh
+if $CFG_INSTALL_ZSH_MODS ; then
+    iecho "Installing zsh"
+    $DOTFILES_DIR/zsh/install_zsh
+fi
 
 iecho "Finished!"

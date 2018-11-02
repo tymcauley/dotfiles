@@ -21,11 +21,21 @@ if [[ ! -e "$PYSTARTUP" ]] ; then
     ln -s -v "$DOTFILES_DIR/python/pystartup" "$PYSTARTUP"
 fi
 
-# sudo is not necessary on macOS.
+# If configured for it, install all python packages to a user-local site-packages directory.
 if [[ "$OSTYPE" == darwin* ]] ; then
-    INSTALL_CMD="pip3"
+    if $CFG_PYTHON_USER_PACKAGES ; then
+        PIP_INSTALL_CMD="pip3 install --user"
+    else
+        # When Homebrew is installed, sudo is not necessary on macOS for system-wide python package installation.
+        PIP_INSTALL_CMD="pip3 install"
+    fi
 else
-    INSTALL_CMD="sudo pip3"
+    PIP_INSTALL_CMD="sudo pip3 install"
+    if $CFG_PYTHON_USER_PACKAGES ; then
+        PIP_INSTALL_CMD="pip3 install --user"
+    else
+        PIP_INSTALL_CMD="sudo pip3 install"
+    fi
 fi
 
 # Install the latest version of pip.
@@ -34,14 +44,8 @@ if ! command -v pip3 > /dev/null 2>&1; then
     exit 1
 else
     # If pip is already installed, use it to update itself.
-    $INSTALL_CMD install --upgrade pip
+    $PIP_INSTALL_CMD --upgrade pip
 fi
 
 # Install all the python packages we want.
-$INSTALL_CMD install --upgrade \
-    jupyter \
-    jupyterlab \
-    numpy \
-    matplotlib \
-    scipy \
-    flake8
+$PIP_INSTALL_CMD --upgrade $CFG_PYTHON_PACKAGES
