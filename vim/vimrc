@@ -1,4 +1,4 @@
-" Load pathogen
+" Load pathogen (Vim package manager)
 filetype off
 call pathogen#infect()
 call pathogen#helptags()
@@ -8,7 +8,7 @@ call pathogen#helptags()
 filetype plugin on
 filetype indent on
 
-" Default to using UTF8 encoding.
+" Default to using UTF-8 encoding.
 set encoding=utf-8
 
 " Load color scheme.
@@ -18,47 +18,26 @@ if filereadable(expand("~/.vimrc_background"))
 endif
 
 " Enable syntax highlighting
-let python_highlight_all=1
 syntax on
 
 " Set 'nocompatible' to ward off unexpected things that your distro might have made, as well as sanely reset options
 " when re-sourcing .vimrc
 set nocompatible
 
-" Enable omni completion
-set omnifunc=syntaxcomplete#Complete
-
 " Make transition from insert mode to normal mode very fast (2 seconds by default).
 set timeoutlen=1000
 set ttimeoutlen=10
 
-" Configure and enable spell checking (w.o. capitalization check)
-set spelllang=en_us
-set spellfile=~/.vim/en.utf-8.add
-set spellcapcheck=''
-set spell
-
-" Set custom highlighting for various spelling mistakes.
-highlight clear SpellBad
-highlight SpellBad cterm=underline
-highlight clear SpellCap
-highlight SpellCap cterm=underline
-highlight clear SpellLocal
-highlight SpellLocal cterm=underline
-highlight clear SpellRare
-highlight SpellRare cterm=underline
-
-" One of the most important options to activate. Allows you to switch from an unsaved buffer without saving it first.
-" Also allows you to keep an undo history for multiple files. Vim will complain if you try to quit without saving, and
-" swap files will keep you safe if your computer crashes.
-set hidden
-
-" Set command-line completion options.
-set wildignore+=.svn,CVS,.git,*.pyc,*.o,*.a,*.class,*.mo,*.la,*.so,*.obj,*.swp,*.jpg,*.png,*.xpm,*.gif,*.pdf,*.bak,*.beam,*/tmp/*,*.zip,log/**,node_modules/**,target/**,tmp/**,*.rbc
-set wildmode=longest,list,full
+" Set the command window height to 2 lines, to avoid many cases of having to 'press <Enter> to continue'
+set cmdheight=2
 
 " Show partial commands in the last line of the screen
 set showcmd
+
+" This allows you to switch from an unsaved buffer without saving it first. Also allows you to keep an undo history for
+" multiple files. Vim will complain if you try to quit without saving, and swap files will keep you safe if your
+" computer crashes.
+set hidden
 
 " Search settings.
 set hlsearch      " highlight search
@@ -69,23 +48,12 @@ set smartcase     " ...except when uppercase letters are given
 " Allow backspacing over autoindent, line breaks and start of insert action
 set backspace=indent,eol,start
 
-" When opening a new line and no filetype-specific indenting is enabled, keep the same indent as the line you're
-" currently on. Useful for READMEs, etc.
-set autoindent
-
-" Instead of failing a command because of unsaved changes, instead raise a dialogue asking if you wish to save changed
-" files.
+" Instead of failing a command because of unsaved changes, raise a dialogue asking if you wish to save changed files.
 set confirm
 
 " Use visual bell instead of beeping when doing something wrong. No more annoying beeps!
 set visualbell
 set noerrorbells
-
-" Enable use of the mouse for all modes
-"set mouse=a
-
-" By default, don't wrap text.
-set nowrap
 
 " Showing special characters:
 set list
@@ -106,18 +74,55 @@ set listchars+=trail:◊,
 " When scrolling to the top or bottom of the screen, keep 2 lines between the cursor and the edge of the screen.
 set scrolloff=2
 
+" Make sure .vf files are interpreted as Verilog.
+au BufRead,BufNewFile *.vf set filetype=verilog
+
+
+"
+" Spellcheck settings
+"
+
+" Configure and enable spell checking (w.o. capitalization check)
+set spelllang=en_us
+set spellfile=~/.vim/en.utf-8.add
+set spellcapcheck=''
+set spell
+
+" Set custom highlighting for various spelling mistakes.
+highlight clear SpellBad
+highlight SpellBad cterm=underline
+highlight clear SpellCap
+highlight SpellCap cterm=underline
+highlight clear SpellLocal
+highlight SpellLocal cterm=underline
+highlight clear SpellRare
+highlight SpellRare cterm=underline
+
+
+"
+" Completion settings
+"
+
 " completion
 set completeopt=longest,menuone
+
+" Enable omni completion
+" TODO: Look into completion a bit more seriously at some point. This could go for a lot more configuration.
+set omnifunc=syntaxcomplete#Complete
 
 " Prevent vim from looking through all included files for autocomplete candidates. This can take a very long time when
 " working with large external libraries.
 set complete-=i
 
-" Don't show what mode we're in on the last line. I'm already using airline.
-set noshowmode
+" Set command-line completion options.
+set wildignore+=.svn,CVS,.git,*.pyc,*.o,*.a,*.class,*.mo,*.la,*.so,*.obj,*.swp,*.jpg,*.png,*.xpm,*.gif,*.pdf,*.bak,
+            \*.beam,*/tmp/*,*.zip,log/**,node_modules/**,target/**,tmp/**,*.rbc
+set wildmode=longest,list,full
 
-" Set the command window height to 2 lines, to avoid many cases of having to 'press <Enter> to continue'
-set cmdheight=2
+
+"
+" Numbering settings
+"
 
 " Display line numbers on the left
 set number
@@ -133,11 +138,43 @@ augroup numbertoggle
     autocmd BufLeave,FocusLost,InsertEnter   * set norelativenumber
 augroup END
 
-" Indentation settings for using hard tabs for indent. Display tabs as four characters wide.
+"
+" Indentation settings
+"
+
+" When opening a new line and no filetype-specific indenting is enabled, keep the same indent as the line you're
+" currently on. Useful for READMEs, etc.
+set autoindent
+
+" Default indentation settings. Display tabs as four characters wide, insert tabs as 4 spaces.
 set tabstop=4
 set softtabstop=4
 set shiftwidth=4
 set expandtab
+
+" File-based indentation settings.
+autocmd Filetype c,cpp,systemverilog,verilog,tcl,zsh setlocal ts=2 sts=2 sw=2 expandtab
+" Assembly files: Use actual <Tab> characters, and make them 8 characters wide.
+autocmd Filetype asm setlocal ts=8 sts=8 sw=8 noexpandtab
+
+
+"
+" Text width settings
+"
+
+" By default, don't wrap text.
+set nowrap
+
+" Default textwidth.
+set textwidth=79
+
+" Wrap text after a certain number of characters for certain filetypes.
+au FileType c,cpp,make,python,sh,systemverilog,tcl,verilog,vim,zsh setlocal textwidth=119
+
+" Add a ruler to visually indicate the file's textwidth setting.
+highlight ColorColumn ctermbg=18
+set colorcolumn=+1
+
 
 " Set the default location of window splits
 set splitbelow
@@ -153,55 +190,10 @@ augroup END
 set foldmethod=indent
 set foldlevel=99
 
-" Make sure .vf files are interpreted as Verilog.
-au BufRead,BufNewFile *.vf set filetype=verilog
 
-" Default textwidth.
-set textwidth=79
-
-" Wrap text after a certain number of characters for certain filetypes.
-au FileType c,cpp,make,python,sh,systemverilog,verilog,vim,tcl setlocal textwidth=119
-
-" Add in a ruler for certain filetypes.
-highlight ColorColumn ctermbg=18
-au FileType c,cpp,gitcommit,make,python,systemverilog,verilog,vim,tcl setlocal colorcolumn=+1
-
-" Intelligent comment formatting.
-"   Python
-"   Verilog
-"   SystemVerilog
-" Options:
-"   r : Insert a new comment leader when inserting a newline in insert mode (hitting <Enter>).
-"   o : Insert a new comment leader when inserting a newline in normal mode (using the 'o' or 'O' command).
-"   c : Insert a new comment leader when wrapping text based on 'textwidth'.
-" au BufRead,BufNewFile *.py,*.v,*.sv,*.svh set formatoptions+=r formatoptions+=o
-"     \ formatoptions+=c
-" Disabling this temporarily. SystemVerilog files have their own indentation settings, so I'm going to wait to see
-" which filetypes actually need these settings.
-
-" File-based indentation settings.
-autocmd Filetype c,cpp,systemverilog,verilog,tcl setlocal ts=2 sts=2 sw=2 expandtab
-autocmd Filetype asm setlocal ts=8 sts=8 sw=8 noexpandtab
-
-" File-based spell check enabling.
-autocmd Filetype gitcommit,markdown,tex setlocal spell
-
-" Add fzf to the runtimepath. Not sure why this is necessary, but I can't get fzf in vim to work without it.
-if isdirectory("/usr/local/opt/fzf")
-    set rtp+=/usr/local/opt/fzf
-elseif isdirectory($HOME . "/.fzf")
-    set rtp+=~/.fzf
-endif
-
-" fzf command to search other files for code using ripgrep.
-command! -bang -nargs=* Rg
-  \ call fzf#vim#grep(
-  \   'rg --column --line-number --no-heading --ignore-case --follow --color always '.shellescape(<q-args>), 1,
-  \   <bang>1 ? fzf#vim#with_preview('up:60%')
-  \           : fzf#vim#with_preview('right:50%:hidden', '?'),
-  \   <bang>0)
-
-"" Map settings
+"
+" Map settings
+"
 
 let mapleader=','       " map by , instead of /
 let maplocalleader='\'  " map local by \
@@ -215,12 +207,6 @@ nnoremap <silent> <leader>s :set spell!<CR>
 " Delete trailing whitespace.
 nnoremap <silent> <leader>w :call TrimWhitespace()<CR>
 
-" Custom key mappings for commands I like.
-set pastetoggle=<F2>  " Toggle paste mode for verbatim pasting.
-" nnoremap <F7> :cd %:p:h<CR>:pwd<CR>
-" nnoremap <F8> :set wrap!<CR>
-" nnoremap <F9> :set paste!<CR>
-
 " Split window navigation
 nnoremap <C-h> <C-w>h
 nnoremap <C-j> <C-w>j
@@ -228,43 +214,16 @@ nnoremap <C-k> <C-w>k
 nnoremap <C-l> <C-w>l
 
 " Buffer navigation
-map ga <C-^>
+map  ga <C-^>
 nmap gn :bn<CR>
 nmap gp :bp<CR>
 nmap gk :bp<bar>bd #<CR>
-
-" complete by tab
-" inoremap <silent> <expr> <tab> Smart_TabComplete()
 
 " Start interactive EasyAlign in visual mode (e.g. vipgs)
 xmap gs <Plug>(EasyAlign)
 
 " Start interactive EasyAlign for a motion/text object (e.g. gsip)
 nmap gs <Plug>(EasyAlign)
-
-" Experimentation with some custom EasyAlign commands.
-if !exists('g:easy_align_delimiters')
-  let g:easy_align_delimiters = {}
-endif
-
-let g:easy_align_delimiters['d'] = {
-\ 'pattern': ' \S\+$',
-\ 'stick_to_left': 0, 'stick_to_right': 1,
-\ 'delimiter_align': 'l',
-\ 'left_margin': 0, 'right_margin': 0
-\ }
-
-let g:easy_align_delimiters['f'] = {
-\ 'pattern': ' [',
-\ 'stick_to_left': 0, 'stick_to_right': 1,
-\ 'delimiter_align': 'l',
-\ 'left_margin': 0, 'right_margin': 0
-\ }
-
-let g:easy_align_delimiters['e'] = {
-\ 'pattern': '\( reg\)\@<! ',
-\ 'delimiter_align': 'l',
-\ }
 
 " Enable code folding with the spacebar
 nnoremap <space> za
@@ -275,105 +234,31 @@ nnoremap <leader>b :Buffers<CR>
 nnoremap <leader>t :Files<CR>
 nnoremap <leader>f :Rg<CR>
 
-" Enable the matchit plugin to make the '%' command jump between text tags in
-" addition to brackets/parentheses.
-packadd! matchit
 
-if !exists('b:match_words')
-  let b:match_words = ''
-endif
+"
+" Custom functions
+"
 
-" Custom delimiters for SystemVerilog.
-" TODO: Make these only get used when a SystemVerilog file is opened.
-let b:match_words = b:match_words
-\. ',\<begin\>:\<end\>'
-\. ',\<module\>:\<endmodule\>'
-\. ',\<function\>:\<endfunction\>'
-\. ',\<task\>:\<endtask\>'
-\. ',\<class\>:\<endclass\>'
-\. ',\<interface\>:\<endinterface\>'
-\. ',\<package\>:\<endpackage\>'
-\. ',\<covergroup\>:\<endgroup\>'
-" TODO: All of the pairs from class and below aren't working...
-
-" TODO: Verilog features I want:
-"   Say I'm in this situation:
-"       ...
-"       .signal_name (),
-"       ...
-"   I'd like to be able to have my cursor somewhere in `.signal_name`, type in
-"   a shortcut, and fill out the parentheses with `signal_name`.
-"
-"   Also, say I have this:
-"       ...
-"       input foo;
-"       input [1:0] bar;
-"       output baz;
-"       output reg bang;
-"       output [31:0] blah;
-"       ...
-"   I'd like to replace that with:
-"       ...
-"       input             foo;
-"       input       [1:0] bar;
-"       output            baz;
-"       output reg        bang;
-"       output     [31:0] blah;
-"       ...
-"   This will require some serious alignment magic... It'll get even more
-"   exciting when there's a bunch of text (think macros/parameters) defining
-"   the width of nets. Also, should the bus width square braces be left or
-"   right aligned?
-"
-"   Special folding functions:
-"       Fold a whole module declaration, not just the I/O ports.
-"
-"   Maybe I should make functions that make a few different things pretty.
-"   Thinking about:
-"       Mass signal declarations (such as above).
-"       Module instantiations.
-"       I/O port declarations in a module definition.
-"
-"   Speaking of alignment stuff, I'd like to be able to control the following:
-"       The `(` and `[` should have 1 padding before and 0 padding after.
-"       The `,` should have 0 padding before and 1 padding after.
-"       The `=` should have 1 padding on either side.
-"   Can I set these options separator-by-separator? I know the Align package
-"   defaults to 1 before, 1 after. Not sure I can set separator-by-separator.
-"   Check out easy-align.
-
-" Function for removing trailing whitespace without affecting the cursor
-" location/search history: http://vi.stackexchange.com/a/456
+" Function for removing trailing whitespace without affecting the cursor location/search history:
+" http://vi.stackexchange.com/a/456
 fun! TrimWhitespace()
   let l:save = winsaveview()
   %s/\s\+$//e
   call winrestview(l:save)
 endfun
 
-" smart tab complete from http://vim.wikia.com/wiki/Smart_mapping_for_tab_completion
-function! Smart_TabComplete()
-  let line = getline('.')                         " current line
 
-  let substr = strpart(line, -1, col('.')+1)      " from the start of the current
-                                                  " line to one character right
-                                                  " of the cursor
-  let substr = matchstr(substr, "[^ \t]*$")       " word till cursor
-  if (strlen(substr)==0)                          " nothing to match on empty string
-    return "\<tab>"
-  endif
-  let has_period = match(substr, '\.') != -1      " position of period, if any
-  let has_slash = match(substr, '\/') != -1       " position of slash, if any
-  if (!has_period && !has_slash)
-    return "\<C-X>\<C-P>"                         " existing text matching
-  elseif ( has_slash )
-    return "\<C-X>\<C-F>"                         " file matching
-  else
-    return "\<C-X>\<C-O>"                         " plugin matching
-  endif
-endfunction
+"
+" Status line settings
+"
 
-" Airline Settings
+" Don't show what mode we're in on the last line. I'm already using airline.
+set noshowmode
+
+" Make sure all windows that aren't in focus always have a status line.
 set laststatus=2
+
+" Customize airline appearance.
 if !exists('g:airline_symbols')
   let g:airline_symbols = {}
 endif
@@ -392,22 +277,29 @@ let g:airline#extensions#tmuxline#enabled = 1
 " Auto-save tmuxline settings to this file.
 let g:airline#extensions#tmuxline#snapshot_file = "~/.tmux-statusline-colors.conf"
 
-" Tmuxline Settings
+
+"
+" Tmuxline settings
+"
 
 " Don't let tmuxline use powerline fonts. Don't have those installed.
 let g:tmuxline_powerline_separators = 0
 
 " Customize the status bar.
 let g:tmuxline_preset = {
-      \'a'    : '#(whoami)',
-      \'b'    : '#h',
-      \'c'    : '#S',
-      \'win'  : '#I #W #F',
-      \'cwin' : '#I #W #F',
-      \'y'    : '%a %b %d %Y',
-      \'z'    : '%H:%M'}
+            \'a'    : '#(whoami)',
+            \'b'    : '#h',
+            \'c'    : '#S',
+            \'win'  : '#I #W #F',
+            \'cwin' : '#I #W #F',
+            \'y'    : '%a %b %d %Y',
+            \'z'    : '%H:%M'}
 
+
+"
 " Syntastic settings
+"
+
 let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_open = 1
@@ -419,7 +311,55 @@ let g:syntastic_cpp_compiler = 'clang++'
 " let g:syntastic_cpp_checkers = ['clang_check', 'clang_tidy']
 let g:syntastic_cpp_compiler_options = "-std=c++11 -Wall -Wextra -Wpedantic"
 
+" Make Syntastic apply the verilog checkers to systemverilog files.
+let g:syntastic_filetype_map = { "systemverilog": "verilog" }
+
+let g:syntastic_verilog_include_dirs = ["include", "rtl/include"]
+
+
+"
+" EasyAlign settings
+"
+
+" Experimentation with some custom EasyAlign commands.
+if !exists('g:easy_align_delimiters')
+  let g:easy_align_delimiters = {}
+endif
+
+" TODO: Explain how this works.
+let g:easy_align_delimiters['('] = {
+            \ 'pattern': '#\?(',
+            \ 'stick_to_left': 0, 'stick_to_right': 1,
+            \ 'delimiter_align': 'l',
+            \ 'left_margin': 1, 'right_margin': 0
+            \ }
+
+
+"
+" fzf settings
+"
+
+" Add fzf to the runtimepath. Not sure why this is necessary, but I can't get fzf in vim to work without it.
+if isdirectory("/usr/local/opt/fzf")
+    set rtp+=/usr/local/opt/fzf
+elseif isdirectory($HOME . "/.fzf")
+    set rtp+=~/.fzf
+endif
+
+" fzf command to search other files for code using ripgrep.
+command! -bang -nargs=* Rg
+            \ call fzf#vim#grep(
+            \ 'rg --column --line-number --no-heading --ignore-case --follow --color always '.shellescape(<q-args>), 1,
+            \ <bang>1 ? fzf#vim#with_preview('up:60%')
+            \         : fzf#vim#with_preview('right:50%:hidden', '?'),
+            \ <bang>0)
+
+
+
+"
 " vimtex settings
+"
+
 let g:tex_flavor = 'latex'
 let g:vimtex_view_method = 'skim'
 let g:vimtex_compiler_latexmk = {
