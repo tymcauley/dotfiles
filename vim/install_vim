@@ -17,6 +17,7 @@ if [[ ! -e "$VIMRC" ]] ; then
     ln -s -v "$DOTFILES_DIR/vim/vimrc" "$VIMRC"
 fi
 
+# Install Base16 color scheme for vim.
 VIM_COLORSCHEME="$HOME/.vimrc_background"
 if [[ ! -e "$VIM_COLORSCHEME" ]] ; then
     ln -s -v "$DOTFILES_DIR/vim/vimrc_background" "$VIM_COLORSCHEME"
@@ -28,65 +29,59 @@ if [[ ! -e "$FLAKE8_CONFIG" ]] ; then
     ln -s -v "$DOTFILES_DIR/vim/flake8" "$FLAKE8_CONFIG"
 fi
 
-# Create necessary directories.
-VIM_AUTOLOAD="$HOME/.vim/autoload"
-VIM_BUNDLE="$HOME/.vim/bundle"
-mkdir -p $VIM_AUTOLOAD $VIM_BUNDLE
-
-# Install pathogen. Taken from:
-#   https://github.com/tpope/vim-pathogen
-curl -LSso "$VIM_AUTOLOAD/pathogen.vim" https://tpo.pe/pathogen.vim
-
-# Lots of customizations taken from:
-#   https://realpython.com/blog/python/vim-and-python-a-match-made-in-heaven/
+# Create necessary directories for vim packages.
+VIM_PKG_ROOT="$HOME/.vim/pack/plugins"
+VIM_PKG_AUTO_LOAD="$VIM_PKG_ROOT/start"  # Packages in this folder are automatically loaded on vim startup.
+VIM_PKG_MANUAL_LOAD="$VIM_PKG_ROOT/opt"  # Packages in this folder must be explicitly loaded using ':packadd'.
+mkdir -p "$VIM_PKG_AUTO_LOAD" "$VIM_PKG_MANUAL_LOAD"
 
 # Syntax checking.
-git_clone_or_update https://github.com/scrooloose/syntastic.git "$VIM_BUNDLE/syntastic"
+git_clone_or_update https://github.com/scrooloose/syntastic.git "$VIM_PKG_AUTO_LOAD/syntastic"
 
 # Awesome status bar.
-git_clone_or_update https://github.com/vim-airline/vim-airline.git "$VIM_BUNDLE/vim-airline"
+git_clone_or_update https://github.com/vim-airline/vim-airline.git "$VIM_PKG_AUTO_LOAD/vim-airline"
 
 # Themes for awesome status bar.
-git_clone_or_update https://github.com/vim-airline/vim-airline-themes.git "$VIM_BUNDLE/vim-airline-themes"
+git_clone_or_update https://github.com/vim-airline/vim-airline-themes.git "$VIM_PKG_AUTO_LOAD/vim-airline-themes"
 
 # Add airline integration with the tmux status line.
-git_clone_or_update https://github.com/edkolev/tmuxline.vim.git "$VIM_BUNDLE/tmuxline.vim"
+git_clone_or_update https://github.com/edkolev/tmuxline.vim.git "$VIM_PKG_AUTO_LOAD/tmuxline.vim"
 
 # Column-align multiple lines.
-git_clone_or_update https://github.com/junegunn/vim-easy-align.git "$VIM_BUNDLE/vim-easy-align"
+git_clone_or_update https://github.com/junegunn/vim-easy-align.git "$VIM_PKG_AUTO_LOAD/vim-easy-align"
 
 # Base16 colors in vim.
-git_clone_or_update https://github.com/chriskempson/base16-vim.git "$VIM_BUNDLE/base16-vim"
+git_clone_or_update https://github.com/chriskempson/base16-vim.git "$VIM_PKG_AUTO_LOAD/base16-vim"
 
 # Improved ability to save vim sessions to disk.
-git_clone_or_update https://github.com/tpope/vim-obsession.git "$VIM_BUNDLE/vim-obsession"
+git_clone_or_update https://github.com/tpope/vim-obsession.git "$VIM_PKG_AUTO_LOAD/vim-obsession"
 
 # Allow user-defined text objects (needed for vim-textobj-line).
-git_clone_or_update https://github.com/kana/vim-textobj-user.git "$VIM_BUNDLE/vim-textobj-user"
+git_clone_or_update https://github.com/kana/vim-textobj-user.git "$VIM_PKG_AUTO_LOAD/vim-textobj-user"
 
 # Make a new text object for the current line.
-git_clone_or_update https://github.com/kana/vim-textobj-line.git "$VIM_BUNDLE/vim-textobj-line"
+git_clone_or_update https://github.com/kana/vim-textobj-line.git "$VIM_PKG_AUTO_LOAD/vim-textobj-line"
 
 # Make a new text object for lines at the same indent level.
-git_clone_or_update https://github.com/michaeljsmith/vim-indent-object.git "$VIM_BUNDLE/vim-indent-object"
+git_clone_or_update https://github.com/michaeljsmith/vim-indent-object.git "$VIM_PKG_AUTO_LOAD/vim-indent-object"
 
 # Add new vim "verb" for surrounding text objects.
-git_clone_or_update https://github.com/tpope/vim-surround.git "$VIM_BUNDLE/vim-surround"
+git_clone_or_update https://github.com/tpope/vim-surround.git "$VIM_PKG_AUTO_LOAD/vim-surround"
 
 # Add new vim "verb" for commenting out lines.
-git_clone_or_update https://github.com/tpope/vim-commentary.git "$VIM_BUNDLE/vim-commentary"
+git_clone_or_update https://github.com/tpope/vim-commentary.git "$VIM_PKG_AUTO_LOAD/vim-commentary"
 
 # Integration for fzf in vim.
-git_clone_or_update https://github.com/junegunn/fzf.vim.git "$VIM_BUNDLE/fzf.vim"
+git_clone_or_update https://github.com/junegunn/fzf.vim.git "$VIM_PKG_AUTO_LOAD/fzf.vim"
 
 # Add ability to easily open new files up to a specific line/column.
-git_clone_or_update https://github.com/kopischke/vim-fetch.git "$VIM_BUNDLE/vim-fetch"
+git_clone_or_update https://github.com/kopischke/vim-fetch.git "$VIM_PKG_AUTO_LOAD/vim-fetch"
 
 # Add ability to use dot operator (.) to repeat plugin map operations.
-git_clone_or_update git://github.com/tpope/vim-repeat.git "$VIM_BUNDLE/vim-repeat"
+git_clone_or_update https://github.com/tpope/vim-repeat.git "$VIM_PKG_AUTO_LOAD/vim-repeat"
 
 # Add nice integration with git.
-git_clone_or_update https://github.com/tpope/vim-fugitive.git "$VIM_BUNDLE/vim-fugitive"
+git_clone_or_update https://github.com/tpope/vim-fugitive.git "$VIM_PKG_AUTO_LOAD/vim-fugitive"
 
 # Latex integration.
-git_clone_or_update https://github.com/lervag/vimtex.git "$VIM_BUNDLE/vimtex"
+git_clone_or_update https://github.com/lervag/vimtex.git "$VIM_PKG_AUTO_LOAD/vimtex"
