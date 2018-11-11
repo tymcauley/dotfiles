@@ -85,3 +85,6 @@ git_clone_or_update https://github.com/tpope/vim-fugitive.git "$VIM_PKG_AUTO_LOA
 
 # Latex integration.
 git_clone_or_update https://github.com/lervag/vimtex.git "$VIM_PKG_AUTO_LOAD/vimtex"
+
+# Rust integration.
+git_clone_or_update https://github.com/rust-lang/rust.vim.git "$VIM_PKG_AUTO_LOAD/rust.vim"
