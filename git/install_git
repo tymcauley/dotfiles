@@ -12,3 +12,8 @@ GITCONFIG="$HOME/.gitconfig"
 if [[ ! -e "$GITCONFIG" ]] ; then
     ln -s -v "$DOTFILES_DIR/git/gitconfig" "$GITCONFIG"
 fi
+
+GITIGNORE_GLOBAL="$HOME/.gitignore_global"
+if [[ ! -e "$GITIGNORE_GLOBAL" ]] ; then
+    ln -s -v "$DOTFILES_DIR/git/gitignore_global" "$GITIGNORE_GLOBAL"
+fi

@@ -23,3 +23,5 @@
     added = difftool --cached
 [include]
     path = ~/.gitconfig.private
+[core]
+    excludesfile = ~/.gitignore_global
