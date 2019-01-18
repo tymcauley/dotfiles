@@ -56,6 +56,11 @@ if $CFG_INSTALL_PYTHON_MODS ; then
     $DOTFILES_DIR/python/install_python
 fi
 
+# Install/update Rust.
+if $CFG_ENABLE_RUST ; then
+    $DOTFILES_DIR/rust/install_rust
+fi
+
 # Customize tmux installation.
 if $CFG_INSTALL_TMUX_MODS ; then
     iecho "Installing tmux mods"

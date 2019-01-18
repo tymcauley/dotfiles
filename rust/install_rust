@@ -1,0 +1,31 @@
+#!/bin/bash -e
+
+# Install Rust.
+
+if [[ -z "$DOTFILES_DIR" ]] ; then
+    echo "DOTFILES_DIR is undefined."
+    exit 2
+fi
+
+# Import custom functions.
+source $DOTFILES_LIB
+
+# If Rust isn't installed, install it.
+if ! command -v rustup > /dev/null 2>&1 ; then
+    iecho "Rust not detected, installing it"
+    curl https://sh.rustup.rs -sSf | sh
+    eecho "Rust has been installed. Please add it to your PATH before continuing."
+    exit 2
+fi
+
+# Update existing Rust installation.
+iecho "Updating Rust"
+
+# Update installed Rust components/toolchains.
+rustup update
+
+# Install completion scripts for zsh.
+if [[ -e "~/.zfunc/_rustup" ]] ; then
+    rm -f ~/.zfunc/_rustup
+fi
+rustup completions zsh > ~/.zfunc/_rustup
