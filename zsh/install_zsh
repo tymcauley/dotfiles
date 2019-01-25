@@ -11,12 +11,18 @@ fi
 source $DOTFILES_LIB
 
 
-
 # Make sure there's a zsh executable installed.
 ZSH_PATH=$(which zsh)
 if [[ ! -x "$ZSH_PATH" ]] ; then
     eecho "Could not detect a zsh executable (ZSH_PATH='$ZSH_PATH')"
     exit 1
+fi
+
+# Make sure the custom fpath directory exists. This directory holds completion scripts for zsh that the user can
+# install.
+ZFUNC_PATH="$HOME/.zfunc"
+if [[ ! -e "$ZFUNC_PATH" ]] ; then
+    mkdir ~/.zfunc
 fi
 
 # Clone zprezto repo and install it.

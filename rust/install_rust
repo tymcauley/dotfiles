@@ -25,7 +25,8 @@ iecho "Updating Rust"
 rustup update
 
 # Install completion scripts for zsh.
-if [[ -e "~/.zfunc/_rustup" ]] ; then
-    rm -f ~/.zfunc/_rustup
+RUST_ZSH_COMPLETION_FILE="$HOME/.zfunc/_rustup"
+if [[ -e "$RUST_ZSH_COMPLETION_FILE" ]] ; then
+    rm -f "$RUST_ZSH_COMPLETION_FILE"
 fi
-rustup completions zsh > ~/.zfunc/_rustup
+rustup completions zsh > "$RUST_ZSH_COMPLETION_FILE"
