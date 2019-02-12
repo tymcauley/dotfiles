@@ -6,10 +6,15 @@
 	default = simple
 	recurseSubmodules = check
 [merge]
-	tool = vimdiff
+	tool = diffconflicts
 [alias]
 	privateprofile = config user.email \"16469394+tymcauley@users.noreply.github.com\"
 [include]
 	path = ~/.gitconfig.private
 [core]
 	excludesfile = ~/.gitignore_global
+[mergetool "diffconflicts"]
+	cmd = vim -c DiffConflictsWithHistory \"$MERGED\" \"$BASE\" \"$LOCAL\" \"$REMOTE\"
+	trustExitCode = true
+[mergetool]
+	keepBackup = false

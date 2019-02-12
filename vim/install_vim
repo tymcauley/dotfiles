@@ -88,3 +88,6 @@ git_clone_or_update https://github.com/lervag/vimtex.git "$VIM_PKG_AUTO_LOAD/vim
 
 # Rust integration.
 git_clone_or_update https://github.com/rust-lang/rust.vim.git "$VIM_PKG_AUTO_LOAD/rust.vim"
+
+# Improved vimdiff git mergetool.
+git_clone_or_update https://github.com/whiteinge/diffconflicts "$VIM_PKG_AUTO_LOAD/diffconflicts"
