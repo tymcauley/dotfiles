@@ -272,6 +272,8 @@ let g:airline#extensions#tmuxline#enabled = 1
 " Auto-save tmuxline settings to this file.
 let g:airline#extensions#tmuxline#snapshot_file = "~/.tmux-statusline-colors.conf"
 
+" Show ALE status in the status bar.
+let g:airline#extensions#ale#enabled = 1
 
 "
 " Tmuxline settings
@@ -289,27 +291,6 @@ let g:tmuxline_preset = {
             \'cwin' : '#I #W #F',
             \'y'    : '%a %b %d %Y',
             \'z'    : '%H:%M'}
-
-
-"
-" Syntastic settings
-"
-
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list = 1
-let g:syntastic_check_on_open = 1
-let g:syntastic_check_on_wq = 0
-let g:syntastic_python_python_exec = '/usr/bin/python3'  " Proper Python3 syntax checking
-
-let g:syntastic_c_compiler = 'clang'
-let g:syntastic_cpp_compiler = 'clang++'
-" let g:syntastic_cpp_checkers = ['clang_check', 'clang_tidy']
-let g:syntastic_cpp_compiler_options = "-std=c++11 -Wall -Wextra -Wpedantic"
-
-" Make Syntastic apply the verilog checkers to systemverilog files.
-let g:syntastic_filetype_map = { "systemverilog": "verilog" }
-
-let g:syntastic_verilog_include_dirs = ["include", "rtl/include"]
 
 
 "
@@ -371,3 +352,31 @@ let g:vimtex_compiler_latexmk = {
             \   '-interaction=nonstopmode',
             \ ],
             \}
+
+"
+" ALE (Asynchronous Lint Engine) settings
+"
+
+let g:ale_fixers = {
+\   '*': ['remove_trailing_lines', 'trim_whitespace'],
+\   'rust': ['rustfmt'],
+\}
+
+let g:ale_linters = {
+\   'rust': ['rls'],
+\}
+
+let g:ale_rust_rls_toolchain = 'stable'
+
+"
+" Generate documentation tags automatically
+"
+
+" Put these lines at the very end of your vimrc file.
+
+" Load all plugins now.
+" Plugins need to be added to runtimepath before helptags can be generated.
+packloadall
+" Load all of the helptags now, after plugins have been loaded.
+" All messages and errors will be ignored.
+silent! helptags ALL
