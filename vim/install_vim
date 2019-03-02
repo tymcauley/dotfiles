@@ -53,9 +53,6 @@ git_clone_or_update https://github.com/junegunn/vim-easy-align.git "$VIM_PKG_AUT
 # Base16 colors in vim.
 git_clone_or_update https://github.com/chriskempson/base16-vim.git "$VIM_PKG_AUTO_LOAD/base16-vim"
 
-# Improved ability to save vim sessions to disk.
-git_clone_or_update https://github.com/tpope/vim-obsession.git "$VIM_PKG_AUTO_LOAD/vim-obsession"
-
 # Allow user-defined text objects (needed for vim-textobj-line).
 git_clone_or_update https://github.com/kana/vim-textobj-user.git "$VIM_PKG_AUTO_LOAD/vim-textobj-user"
 
