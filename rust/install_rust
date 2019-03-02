@@ -18,6 +18,14 @@ if ! command -v rustup > /dev/null 2>&1 ; then
     exit 2
 fi
 
+# Install Rust components (clippy, rustfmt, and RLS).
+rustup component add \
+    clippy \
+    rls \
+    rust-analysis \
+    rust-src \
+    rustfmt
+
 # Update existing Rust installation.
 iecho "Updating Rust"
 
