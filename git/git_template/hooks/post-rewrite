@@ -1,0 +1,7 @@
+#!/bin/sh
+
+# The post-rewrite hook is invoked upon `git commit --amend` and `git rebase`.
+# Invoke the post-merge hook upon rebase.
+case "$1" in
+    rebase) exec .git/hooks/post-merge ;;
+esac
