@@ -32,6 +32,12 @@ if $CFG_ENABLE_BREW ; then
     $DOTFILES_DIR/brew/install_brew
 fi
 
+# Setup/update Homebrew/Linuxbrew packages.
+if $CFG_ENABLE_CTAGS ; then
+    iecho "Installing ctags mods"
+    $DOTFILES_DIR/ctags/install_ctags
+fi
+
 # Customize git installation.
 if $CFG_INSTALL_GIT ; then
     iecho "Installing git mods"

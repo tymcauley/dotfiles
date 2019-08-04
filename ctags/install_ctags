@@ -1,0 +1,14 @@
+#!/bin/bash -e
+
+# Customize ctags installation.
+
+if [[ -z "$DOTFILES_DIR" ]] ; then
+    echo "DOTFILES_DIR is undefined."
+    exit 2
+fi
+
+
+CTAGS_CONFIG="$HOME/.ctags"
+if [[ ! -e "$CTAGS_CONFIG" ]] ; then
+    ln -s -v "$DOTFILES_DIR/ctags/ctags" "$CTAGS_CONFIG"
+fi
