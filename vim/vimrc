@@ -224,10 +224,12 @@ nmap gs <Plug>(EasyAlign)
 nnoremap <space> za
 
 " fzf mappings.
-nnoremap <leader>p :History<CR>
-nnoremap <leader>b :Buffers<CR>
-nnoremap <leader>t :Files<CR>
-nnoremap <leader>f :Rg<CR>
+nnoremap <leader>p :FzfHistory<CR>
+nnoremap <leader>b :FzfBuffers<CR>
+nnoremap <leader>t :FzfFiles<CR>
+nnoremap <leader>f :FzfRg<CR>
+nnoremap <leader>u :FzfTags<CR>
+nnoremap <leader>j :call fzf#vim#tags("'".expand('<cword>'))<CR>
 
 
 "
@@ -241,6 +243,52 @@ fun! TrimWhitespace()
   %s/\s\+$//e
   call winrestview(l:save)
 endfun
+
+" Attempt to find the ctags file located at `.git/tags` for the git repository containing the current file.
+function! AddGitCtags()
+    " Exit early if we've already run this function on this buffer.
+    if exists('b:modified_ctags')
+        return
+    endif
+
+    " Find the `.git` directory for the open buffer.
+    cd %:p:h
+    silent let git_dir = system("git rev-parse --git-dir")
+    cd -
+
+    " Exit early if we couldn't find the `.git` directory (most likely because we're editing a file that's not in a git
+    " repo).
+    if v:shell_error != 0
+        return
+    endif
+
+    " Remove any trailing null characters from the `.git` directory path.
+    let git_dir = trim(git_dir)
+
+    " If we're in a submodule, then the real `.git` directory should be two levels above `git_dir`.
+    if fnamemodify(git_dir, ':t') != ".git"
+        let git_dir = fnamemodify(git_dir, ':h:h')
+        " Exit early if for some reason we didn't end up finding the `.git` directory.
+        if fnamemodify(git_dir, ':t') != ".git"
+            return
+        endif
+    endif
+
+    " If the ctags file exists, add it to `tags` option.
+    let ctags_path = git_dir . '/tags'
+    if filereadable(ctags_path)
+        let &l:tags = escape(ctags_path, ', ').','.&tags
+    endif
+
+    " Set a signal variable on this buffer so we only execute this function once-per-buffer.
+    let b:modified_ctags = 1
+endfunction
+
+" Setup ctags
+augroup setup_ctags
+    autocmd!
+    autocmd BufReadPost * call AddGitCtags()
+augroup END
 
 
 "
@@ -315,6 +363,8 @@ let g:easy_align_delimiters['('] = {
 " fzf settings
 "
 
+let g:fzf_command_prefix = 'Fzf'
+
 " Add fzf to the runtimepath. Not sure why this is necessary, but I can't get fzf in vim to work without it.
 if isdirectory("/usr/local/opt/fzf")
     set rtp+=/usr/local/opt/fzf
@@ -323,7 +373,7 @@ elseif isdirectory($HOME . "/.fzf")
 endif
 
 " fzf command to search other files for code using ripgrep.
-command! -bang -nargs=* Rg
+command! -bang -nargs=* FzfRg
             \ call fzf#vim#grep(
             \ 'rg --column --line-number --no-heading --ignore-case --follow --color always '.shellescape(<q-args>), 1,
             \ <bang>1 ? fzf#vim#with_preview('up:60%')
