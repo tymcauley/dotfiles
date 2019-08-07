@@ -1,0 +1,18 @@
+#!/bin/bash -e
+
+cd $(dirname $0)
+
+# Customize alacritty installation.
+#   https://github.com/jwilm/alacritty
+
+ALACRITTY_CONFIG="$HOME/.config/alacritty/alacritty.yml"
+# If the config file isn't a link, get rid of it so we can override it with a link.
+if [[ -f "$ALACRITTY_CONFIG" && ! -L "$ALACRITTY_CONFIG" ]]; then
+    rm -f "$ALACRITTY_CONFIG"
+fi
+# Create the link if we haven't already done so previously.
+if [[ ! -e "$ALACRITTY_CONFIG" ]] ; then
+    ln -s -v "$(pwd)/alacritty.yml" "$ALACRITTY_CONFIG"
+fi
+
+cd - > /dev/null

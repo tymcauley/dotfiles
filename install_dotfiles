@@ -27,13 +27,19 @@ $DOTFILES_DIR/config/install_config
 source $USER_CONFIG_FILE
 
 
+# Customize alacritty installation.
+if $CFG_INSTALL_ALACRITTY ; then
+    iecho "Installing alacritty mods"
+    $DOTFILES_DIR/alacritty/install_alacritty
+fi
+
 # Setup/update Homebrew/Linuxbrew packages.
 if $CFG_ENABLE_BREW ; then
     $DOTFILES_DIR/brew/install_brew
 fi
 
-# Setup/update Homebrew/Linuxbrew packages.
-if $CFG_ENABLE_CTAGS ; then
+# Customize ctags installation.
+if $CFG_INSTALL_CTAGS ; then
     iecho "Installing ctags mods"
     $DOTFILES_DIR/ctags/install_ctags
 fi
