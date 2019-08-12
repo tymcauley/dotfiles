@@ -161,7 +161,7 @@ autocmd Filetype asm setlocal ts=8 sts=8 sw=8 noexpandtab
 set nowrap
 
 " Default textwidth.
-set textwidth=79
+set textwidth=99
 
 " Wrap text after a certain number of characters for certain filetypes.
 au FileType c,cpp,make,python,sh,systemverilog,tcl,verilog,vim,zsh setlocal textwidth=119
