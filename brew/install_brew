@@ -58,6 +58,3 @@ for program_name in $CFG_BREW_PROGRAMS ; do
         brew install $program_name
     fi
 done
-
-# Remove old versions of Homebrew/Linuxbrew files.
-brew cleanup
