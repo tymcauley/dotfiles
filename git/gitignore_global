@@ -41,3 +41,7 @@ Thumbs.db
 
 # Rust and Scala build directories
 target/
+
+# Ignore Scala language server folders
+.metals/
+.bloop/
