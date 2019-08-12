@@ -21,9 +21,56 @@ git_clone_or_update () {
         iecho "Updating $2 from $1"
         cd $2
         git pull
-        cd $DOTFILES_DIR
+        cd - > /dev/null
     else
         iecho "Cloning $1 into $2"
         git clone $1 $2
+    fi
+}
+
+# Install a file with a symbolic link.
+#
+# Check to see if the destination file exists. If it does, delete it and overwrite it with a link
+# to the source file. If the destination file is a link, check to see if it's a link to the source
+# file already. If not, overwrite it with a new link.
+#
+# Inputs:
+#   $1 : path to destination for link.
+#   $2 : path to source file to be installed.
+install_file () {
+    local DEST_F=$1
+    local SOURCE_F=$2
+
+    # If the destination file isn't a link, get rid of it so we can override it with a link.
+    if [[ -f "$DEST_F" && ! -L "$DEST_F" ]] ; then
+        prompt_user_yn "Remove destination file '$DEST_F' before linking to '$SOURCE_F'?"
+        rm -f "$DEST_F"
+    fi
+
+    # If the destination file is a link, and it doesn't point to the source file, get rid of it so
+    # we can link it to the source file.
+    if [[ -L "$DEST_F" && "$(readlink -- "$DEST_F")" != "$SOURCE_F" ]] ; then
+        prompt_user_yn "Change destination link '$DEST_F' to point to '$SOURCE_F' instead of '$(readlink -- "$DEST_F")'?"
+        rm -f "$DEST_F"
+    fi
+
+    # If the destination file's parent directory doesn't exist, create it.
+    if [[ ! -d "$(dirname "$DEST_F")" ]] ; then
+        mkdir -p "$(dirname "$DEST_F")"
+    fi
+
+    # Create the link if we haven't already done so previously.
+    if [[ ! -e "$DEST_F" ]] ; then
+        ln -s -v "$SOURCE_F" "$DEST_F"
+    fi
+}
+
+# Prompt a user with a yes-no prompt. If they don't answer "yes", then exit the script.
+prompt_user_yn () {
+    read -p "$1 [y/n] " -n 1 -r
+    echo
+    if [[ ! $REPLY =~ ^[Yy]$ ]] ; then
+        echo "Exiting..."
+        exit 1
     fi
 }
