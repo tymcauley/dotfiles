@@ -2,6 +2,8 @@
 
 # Install local bin scripts.
 
+cd $(dirname $0)
+
 if [[ -z "$DOTFILES_DIR" ]] ; then
     echo "DOTFILES_DIR is undefined."
     exit 2
@@ -29,3 +31,5 @@ for source_filepath in $DOTFILES_DIR/bin/*; do
         fi
     fi
 done
+
+cd - > /dev/null

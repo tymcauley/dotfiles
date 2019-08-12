@@ -23,72 +23,72 @@ fi
 
 # Install dotfiles configuration file.
 export USER_CONFIG_FILE="$DOTFILES_DIR/dotfiles.cfg"
-$DOTFILES_DIR/config/install_config
+$DOTFILES_DIR/config/install.sh
 source $USER_CONFIG_FILE
 
 
 # Customize alacritty installation.
 if $CFG_INSTALL_ALACRITTY ; then
     iecho "Installing alacritty mods"
-    $DOTFILES_DIR/alacritty/install_alacritty
+    $DOTFILES_DIR/alacritty/install.sh
 fi
 
 # Setup/update Homebrew/Linuxbrew packages.
 if $CFG_ENABLE_BREW ; then
-    $DOTFILES_DIR/brew/install_brew
+    $DOTFILES_DIR/brew/install.sh
 fi
 
 # Customize ctags installation.
 if $CFG_INSTALL_CTAGS ; then
     iecho "Installing ctags mods"
-    $DOTFILES_DIR/ctags/install_ctags
+    $DOTFILES_DIR/ctags/install.sh
 fi
 
 # Customize git installation.
 if $CFG_INSTALL_GIT ; then
     iecho "Installing git mods"
-    $DOTFILES_DIR/git/install_git
+    $DOTFILES_DIR/git/install.sh
 fi
 
 # Install Base16 Shell.
 if $CFG_INSTALL_BASE16_SHELL ; then
     iecho "Installing Base16 shell"
-    $DOTFILES_DIR/base16/install_base16
+    $DOTFILES_DIR/base16/install.sh
 fi
 
 # Install local bin scripts.
 if $CFG_INSTALL_LOCAL_BIN ; then
     iecho "Installing local scripts"
-    $DOTFILES_DIR/bin/install_bin
+    $DOTFILES_DIR/bin/install.sh
 fi
 
 # Customize python installation.
 if $CFG_INSTALL_PYTHON_MODS ; then
     iecho "Installing python mods"
-    $DOTFILES_DIR/python/install_python
+    $DOTFILES_DIR/python/install.sh
 fi
 
 # Customize tmux installation.
 if $CFG_INSTALL_TMUX_MODS ; then
     iecho "Installing tmux mods"
-    $DOTFILES_DIR/tmux/install_tmux
+    $DOTFILES_DIR/tmux/install.sh
 fi
 
 # Customize vim installation.
 if $CFG_INSTALL_VIM_MODS ; then
     iecho "Installing vim mods"
-    $DOTFILES_DIR/vim/install_vim
+    $DOTFILES_DIR/vim/install.sh
 fi
 
 # Customize zsh installation.
 if $CFG_INSTALL_ZSH_MODS ; then
     iecho "Installing zsh"
-    $DOTFILES_DIR/zsh/install_zsh
+    $DOTFILES_DIR/zsh/install.sh
 fi
 
 # Install/update Rust.
 if $CFG_ENABLE_RUST ; then
-    $DOTFILES_DIR/rust/install_rust
+    $DOTFILES_DIR/rust/install.sh
 fi
 
 iecho "Finished!"

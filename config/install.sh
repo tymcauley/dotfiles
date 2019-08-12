@@ -2,6 +2,8 @@
 
 # Install dotfiles configuration file.
 
+cd $(dirname $0)
+
 if [[ -z "$DOTFILES_DIR" ]] ; then
     echo "DOTFILES_DIR is undefined."
     exit 2
@@ -25,3 +27,5 @@ if [[ ! -e $USER_CONFIG_FILE ]] ; then
     iecho "Afterwards, you can rerun the installation script."
     exit 1
 fi
+
+cd - > /dev/null
