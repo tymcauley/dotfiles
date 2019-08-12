@@ -1,33 +1,26 @@
 #!/bin/bash -e
 
-cd $(dirname $0)
-
 # Customize git installation.
 
-GITCONFIG="$HOME/.gitconfig"
-if [[ ! -e "$GITCONFIG" ]] ; then
-    ln -s -v "$(pwd)/gitconfig" "$GITCONFIG"
+cd $(dirname $0)
+
+if [[ -z "$DOTFILES_DIR" ]] ; then
+    echo "DOTFILES_DIR is undefined."
+    exit 2
 fi
 
-GITIGNORE_GLOBAL="$HOME/.gitignore_global"
-if [[ ! -e "$GITIGNORE_GLOBAL" ]] ; then
-    ln -s -v "$(pwd)/gitignore_global" "$GITIGNORE_GLOBAL"
-fi
+# Import custom functions.
+source $DOTFILES_LIB
+
+# Install git config file.
+install_file "$HOME/.gitconfig" "$(pwd)/gitconfig"
+
+# Install global git ignore file.
+install_file "$HOME/.gitignore_global" "$(pwd)/gitignore_global"
 
 # Recursively link all files in `./git_template/` to `~/.git_template/`.
 for source_f in $(find git_template -type f); do
-    # Make sure the destination file's directories exist.
-    dest_f="$HOME/.$source_f"
-    dest_d=$(dirname "$dest_f")
-    mkdir -p "$dest_d"
-    # If the destination file isn't a link, get rid of it so we can override it.
-    if [[ -f "$dest_f" && ! -L "$dest_f" ]] ; then
-        rm -f "$dest_f"
-    fi
-    # Link the file if the destination doesn't exist.
-    if [[ ! -e "$dest_f" ]] ; then
-        ln -s -v "$(pwd)/$source_f" "$dest_f"
-    fi
+    install_file "$HOME/.$source_f" "$(pwd)/$source_f"
 done
 
 cd - > /dev/null

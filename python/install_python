@@ -2,6 +2,8 @@
 
 # Customize python installation.
 
+cd $(dirname $0)
+
 if [[ -z "$DOTFILES_DIR" ]] ; then
     echo "DOTFILES_DIR is undefined."
     exit 2
@@ -10,16 +12,11 @@ fi
 # Import custom functions.
 source $DOTFILES_LIB
 
+# Install inputrc (configuration for readline library).
+install_file "$HOME/.inputrc" "$(pwd)/inputrc"
 
-# Install inputrc (configuration for readline library) and pystartup.
-INPUTRC="$HOME/.inputrc"
-PYSTARTUP="$HOME/.pystartup"
-if [[ ! -e "$INPUTRC" ]] ; then
-    ln -s -v "$DOTFILES_DIR/python/inputrc" "$INPUTRC"
-fi
-if [[ ! -e "$PYSTARTUP" ]] ; then
-    ln -s -v "$DOTFILES_DIR/python/pystartup" "$PYSTARTUP"
-fi
+# Install pystartup.
+install_file "$HOME/.pystartup" "$(pwd)/pystartup"
 
 # If configured for it, install all python packages to a user-local site-packages directory.
 if [[ "$OSTYPE" == darwin* ]] ; then
@@ -49,3 +46,5 @@ fi
 
 # Install all the python packages we want.
 $PIP_INSTALL_CMD --upgrade $CFG_PYTHON_PACKAGES
+
+cd - > /dev/null

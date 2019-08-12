@@ -2,6 +2,8 @@
 
 # Install Rust.
 
+cd $(dirname $0)
+
 if [[ -z "$DOTFILES_DIR" ]] ; then
     echo "DOTFILES_DIR is undefined."
     exit 2
@@ -38,3 +40,5 @@ if [[ -e "$RUST_ZSH_COMPLETION_FILE" ]] ; then
     rm -f "$RUST_ZSH_COMPLETION_FILE"
 fi
 rustup completions zsh > "$RUST_ZSH_COMPLETION_FILE"
+
+cd - > /dev/null

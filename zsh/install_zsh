@@ -2,6 +2,8 @@
 
 # Customize zsh installation.
 
+cd $(dirname $0)
+
 if [[ -z "$DOTFILES_DIR" ]] ; then
     echo "DOTFILES_DIR is undefined."
     exit 2
@@ -9,7 +11,6 @@ fi
 
 # Import custom functions.
 source $DOTFILES_LIB
-
 
 # Make sure there's a zsh executable installed.
 ZSH_PATH=$(which zsh)
@@ -24,6 +25,9 @@ ZFUNC_PATH="$HOME/.zfunc"
 if [[ ! -e "$ZFUNC_PATH" ]] ; then
     mkdir ~/.zfunc
 fi
+
+# Install powerline10k config file.
+install_file "$HOME/.p10k.zsh" "$(pwd)/p10k.zsh"
 
 # Clone zprezto repo and install it.
 ZPREZTO_PATH="$HOME/.zprezto"
@@ -44,7 +48,7 @@ if [[ -d "$ZPREZTO_PATH" ]] ; then
     echo "  git rebase upstream/master"
     echo "  git push -f origin master"
 
-    cd $DOTFILES_DIR
+    cd - > /dev/null
 else
     # Clone ZSH configuration files.
     git clone --recursive https://github.com/tymcauley/prezto.git "$ZPREZTO_PATH"
@@ -74,3 +78,5 @@ if $CFG_CHANGE_SHELL_TO_ZSH ; then
         chsh -s $ZSH_PATH
     fi
 fi
+
+cd - > /dev/null

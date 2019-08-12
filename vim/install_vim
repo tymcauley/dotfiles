@@ -2,6 +2,8 @@
 
 # Customize vim installation.
 
+cd $(dirname $0)
+
 if [[ -z "$DOTFILES_DIR" ]] ; then
     echo "DOTFILES_DIR is undefined."
     exit 2
@@ -10,24 +12,14 @@ fi
 # Import custom functions.
 source $DOTFILES_LIB
 
-
 # Install vimrc.
-VIMRC="$HOME/.vimrc"
-if [[ ! -e "$VIMRC" ]] ; then
-    ln -s -v "$DOTFILES_DIR/vim/vimrc" "$VIMRC"
-fi
+install_file "$HOME/.vimrc" "$(pwd)/vimrc"
 
 # Install Base16 color scheme for vim.
-VIM_COLORSCHEME="$HOME/.vimrc_background"
-if [[ ! -e "$VIM_COLORSCHEME" ]] ; then
-    ln -s -v "$DOTFILES_DIR/vim/vimrc_background" "$VIM_COLORSCHEME"
-fi
+install_file "$HOME/.vimrc_background" "$(pwd)/vimrc_background"
 
 # Install flake8 configuration for python syntax checking.
-FLAKE8_CONFIG="$HOME/.config/flake8"
-if [[ ! -e "$FLAKE8_CONFIG" ]] ; then
-    ln -s -v "$DOTFILES_DIR/vim/flake8" "$FLAKE8_CONFIG"
-fi
+install_file "$HOME/.config/flake8" "$(pwd)/flake8"
 
 # Create necessary directories for vim packages.
 VIM_PKG_ROOT="$HOME/.vim/pack/plugins"
@@ -88,3 +80,5 @@ git_clone_or_update https://github.com/whiteinge/diffconflicts "$VIM_PKG_AUTO_LO
 
 # Asynchronous linting/fixing for Vim and Language Server Protocol (LSP) integration.
 git_clone_or_update https://github.com/w0rp/ale "$VIM_PKG_AUTO_LOAD/ale"
+
+cd - > /dev/null
