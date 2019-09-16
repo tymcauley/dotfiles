@@ -101,10 +101,6 @@ highlight SpellRare cterm=underline
 " completion
 set completeopt=longest,menuone
 
-" Enable omni completion
-" TODO: Look into completion a bit more seriously at some point. This could go for a lot more configuration.
-set omnifunc=syntaxcomplete#Complete
-
 " Prevent vim from looking through all included files for autocomplete candidates. This can take a very long time when
 " working with large external libraries.
 set complete-=i
@@ -228,8 +224,13 @@ nnoremap <leader>p :FzfHistory<CR>
 nnoremap <leader>b :FzfBuffers<CR>
 nnoremap <leader>t :FzfFiles<CR>
 nnoremap <leader>f :FzfRg<CR>
-nnoremap <leader>u :FzfTags<CR>
-nnoremap <leader>j :call fzf#vim#tags("'".expand('<cword>'))<CR>
+
+" ALE mappings.
+nnoremap <leader>d :ALEGoToDefinition<CR>
+nnoremap <leader>r :ALEFindReferences<CR>
+nnoremap <leader>h :ALEHover<CR>
+nnoremap <leader>i :ALEFix<CR>
+nmap <silent> gj <Plug>(ale_next_wrap)
 
 
 "
@@ -357,9 +358,19 @@ let g:vimtex_compiler_latexmk = {
             \ ],
             \}
 
+
 "
 " ALE (Asynchronous Lint Engine) settings
 "
+
+" De-prioritize all lint commands.
+let g:ale_command_wrapper = 'nice -n4'
+
+" Open ALE preview window when the cursor moves onto lines with problems.
+let g:ale_cursor_detail = 1
+
+" Enable auto-complete with ALE.
+let g:ale_completion_enabled = 1
 
 let g:ale_fixers = {
 \   '*': ['remove_trailing_lines', 'trim_whitespace'],
@@ -370,7 +381,13 @@ let g:ale_linters = {
 \   'rust': ['rls'],
 \}
 
-let g:ale_rust_rls_toolchain = 'stable'
+" Enable clippy lints.
+let g:ale_rust_rls_config = {
+\   'rust': {
+\     'clippy_preference': 'on'
+\   }
+\}
+
 
 "
 " Generate documentation tags automatically
