@@ -9,27 +9,15 @@ if [[ -z "$DOTFILES_DIR" ]] ; then
     exit 2
 fi
 
+# Import custom functions.
+source $DOTFILES_LIB
 
-CURRENT_SCRIPT=$(basename $0)
 LOCAL_BIN=$HOME/.local/bin
 
-# Create the local bin directory if necessary.
-if [[ ! -d "$LOCAL_BIN" ]] ; then
-    mkdir -v -p $LOCAL_BIN
-fi
-
-# Loop through all the files in this directory and link them as needed.
-for source_filepath in $DOTFILES_DIR/bin/*; do
-    source_filename=$(basename $source_filepath)
-    # Don't make a link of this script in the LOCAL_BIN folder.
-    if [[ "$source_filename" != "$CURRENT_SCRIPT" ]] ; then
-        dest_filepath=$LOCAL_BIN/$source_filename
-
-        # Only make the link if the destination file doesn't exist and the source file is executable.
-        if [[ ! -e "$dest_filepath" ]] && [[ -x "$source_filepath" ]] ; then
-            ln -s -v $source_filepath $dest_filepath
-        fi
-    fi
+# Install all executable files in the `./bin/` folder.
+for absolute_source_f in $(find $(pwd)/bin -type f -depth 1 -perm +u+x) ; do
+    f_name=$(basename $absolute_source_f)
+    install_file "$LOCAL_BIN/$f_name" "$absolute_source_f"
 done
 
 cd - > /dev/null
