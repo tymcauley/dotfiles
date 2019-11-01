@@ -159,8 +159,8 @@ set nowrap
 " Default textwidth.
 set textwidth=99
 
-" Wrap text after a certain number of characters for certain filetypes.
-au FileType c,cpp,make,python,sh,systemverilog,tcl,verilog,vim,zsh setlocal textwidth=119
+" " Wrap text after a certain number of characters for certain filetypes.
+" au FileType c,cpp,make,python,sh,systemverilog,tcl,verilog,vim,zsh setlocal textwidth=119
 
 " Add a ruler to visually indicate the file's textwidth setting.
 highlight ColorColumn ctermbg=18
