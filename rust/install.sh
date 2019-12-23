@@ -15,7 +15,7 @@ source $DOTFILES_LIB
 # If Rust isn't installed, install it.
 if ! command -v rustup > /dev/null 2>&1 ; then
     iecho "Rust not detected, installing it"
-    curl https://sh.rustup.rs -sSf | sh -s -- --no-modify-path -y
+    curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- --no-modify-path -y
     eecho "Rust has been installed. Please add it to your PATH before continuing."
     exit 2
 fi
