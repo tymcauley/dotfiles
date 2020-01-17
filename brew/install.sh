@@ -42,14 +42,15 @@ if ! command -v brew > /dev/null 2>&1 ; then
     exit 1
 fi
 
-# Make sure the basic set of utilities are installed.
-iecho "Updating brew packages"
-
 # Update to the most recent version of Homebrew/Linuxbrew.
+iecho "Updating Homebrew"
 brew update
 
 # Update all installed packages.
+iecho "Upgrading Homebrew packages"
 brew upgrade
+iecho "Upgrading Homebrew casks"
+brew cask upgrade
 
 # Make sure the default programs are installed.
 INSTALLED_PROGRAMS=$(brew list -1)
