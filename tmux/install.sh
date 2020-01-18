@@ -15,6 +15,9 @@ source $DOTFILES_LIB
 # Install tmux config file.
 install_file "$HOME/.tmux.conf" "$(pwd)/tmux.conf"
 
+# Install tmux yank script.
+install_file "$HOME/.tmux/yank.sh" "$(pwd)/yank.sh"
+
 # Install Tmux Plugin Manager
 TPM_DIR="$HOME/.tmux/plugins/tpm"
 if [[ ! -e "$TPM_DIR" ]] ; then
