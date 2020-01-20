@@ -374,6 +374,7 @@ let g:ale_completion_enabled = 1
 
 let g:ale_fixers = {
 \   '*': ['remove_trailing_lines', 'trim_whitespace'],
+\   'python': ['black'],
 \   'rust': ['rustfmt'],
 \}
 
