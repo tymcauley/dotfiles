@@ -18,9 +18,6 @@ install_file "$HOME/.vimrc" "$(pwd)/vimrc"
 # Install Base16 color scheme for vim.
 install_file "$HOME/.vimrc_background" "$(pwd)/vimrc_background"
 
-# Install flake8 configuration for python syntax checking.
-install_file "$HOME/.config/flake8" "$(pwd)/flake8"
-
 # Create necessary directories for vim packages.
 VIM_PKG_ROOT="$HOME/.vim/pack/plugins"
 VIM_PKG_AUTO_LOAD="$VIM_PKG_ROOT/start"  # Packages in this folder are automatically loaded on vim startup.
