@@ -143,8 +143,6 @@ set softtabstop=4
 set shiftwidth=4
 set expandtab
 
-" File-based indentation settings.
-autocmd Filetype c,cpp,systemverilog,verilog,tcl,zsh setlocal ts=2 sts=2 sw=2 expandtab
 " Assembly files: Use actual <Tab> characters, and make them 8 characters wide.
 autocmd Filetype asm setlocal ts=8 sts=8 sw=8 noexpandtab
 
