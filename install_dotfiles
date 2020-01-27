@@ -38,12 +38,6 @@ if $CFG_ENABLE_BREW ; then
     $DOTFILES_DIR/brew/install.sh
 fi
 
-# Customize ctags installation.
-if $CFG_INSTALL_CTAGS ; then
-    iecho "Installing ctags mods"
-    $DOTFILES_DIR/ctags/install.sh
-fi
-
 # Customize git installation.
 if $CFG_INSTALL_GIT ; then
     iecho "Installing git mods"
