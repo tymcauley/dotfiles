@@ -377,6 +377,8 @@ let g:ale_fixers = {
 \   '*': ['remove_trailing_lines', 'trim_whitespace'],
 \   'python': ['black'],
 \   'rust': ['rustfmt'],
+\   'scala': ['scalafmt'],
+\   'sh': ['shfmt'],
 \}
 
 let g:ale_linters = {
