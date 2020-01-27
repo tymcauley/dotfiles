@@ -286,13 +286,14 @@ let g:airline#extensions#ale#enabled = 1
 let g:tmuxline_powerline_separators = 0
 
 " Customize the status bar.
+let s:tmux_widget_are_keys_off = '#([ "$(tmux show-option -qv key-table)" = "off" ] && echo "[OFF] ")'
 let g:tmuxline_preset = {
             \'a'    : '#(whoami)',
             \'b'    : '#h',
             \'c'    : '#S',
             \'win'  : '#I #W #F',
             \'cwin' : '#I #W #F',
-            \'y'    : '%a %b %d %Y',
+            \'y'    : s:tmux_widget_are_keys_off . '%a %b %d %Y',
             \'z'    : '%H:%M'}
 
 
