@@ -292,7 +292,7 @@ let g:tmuxline_preset = {
             \'win'  : '#I #W #F',
             \'cwin' : '#I #W #F',
             \'y'    : s:tmux_widget_are_keys_off . '%a %b %d %Y',
-            \'z'    : '%H:%M'}
+            \'z'    : '%H:%M %Z'}
 
 
 "
