@@ -320,10 +320,10 @@ let g:easy_align_delimiters['('] = {
 let g:fzf_command_prefix = 'Fzf'
 
 " Add fzf to the runtimepath. Not sure why this is necessary, but I can't get fzf in vim to work without it.
-if isdirectory("/usr/local/opt/fzf")
-    set rtp+=/usr/local/opt/fzf
+if isdirectory($HOMEBREW_PREFIX . "/opt/fzf")
+    execute 'set rtp+=' . expand($HOMEBREW_PREFIX . "/opt/fzf")
 elseif isdirectory($HOME . "/.fzf")
-    set rtp+=~/.fzf
+    execute 'set rtp+=' . expand($HOME . "/.fzf")
 endif
 
 " fzf command to search other files for code using ripgrep.
