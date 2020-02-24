@@ -76,6 +76,6 @@ git_clone_or_update https://github.com/rust-lang/rust.vim.git "$VIM_PKG_AUTO_LOA
 git_clone_or_update https://github.com/whiteinge/diffconflicts "$VIM_PKG_AUTO_LOAD/diffconflicts"
 
 # Asynchronous linting/fixing for Vim and Language Server Protocol (LSP) integration.
-git_clone_or_update https://github.com/w0rp/ale "$VIM_PKG_AUTO_LOAD/ale"
+git_clone_or_update https://github.com/dense-analysis/ale.git "$VIM_PKG_AUTO_LOAD/ale"
 
 cd - > /dev/null
