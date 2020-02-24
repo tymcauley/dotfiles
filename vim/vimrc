@@ -69,8 +69,11 @@ set listchars+=trail:◊,
 " When scrolling to the top or bottom of the screen, keep 2 lines between the cursor and the edge of the screen.
 set scrolloff=2
 
-" Make sure .vf files are interpreted as Verilog.
+" '*.vf' files are interpreted as Verilog.
 au BufRead,BufNewFile *.vf set filetype=verilog
+
+" Files starting with 'Makefrag' are interpreted as Makefiles.
+au BufRead,BufNewFile Makefrag* set filetype=make
 
 
 "
