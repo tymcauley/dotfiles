@@ -373,6 +373,7 @@ let g:ale_completion_enabled = 1
 
 let g:ale_fixers = {
 \   '*': ['remove_trailing_lines', 'trim_whitespace'],
+\   'json': ['jq'],
 \   'python': ['black'],
 \   'rust': ['rustfmt'],
 \   'scala': ['scalafmt'],
@@ -389,6 +390,10 @@ let g:ale_rust_rls_config = {
 \     'clippy_preference': 'on'
 \   }
 \}
+
+" Options for JSON fixer, jq:
+" * Indents should be 4 spaces.
+let g:ale_json_jq_options = '--indent 4'
 
 
 "
