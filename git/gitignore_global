@@ -45,3 +45,10 @@ target/
 # Ignore Scala language server folders
 .metals/
 .bloop/
+
+# Ignore C Language Server (ccls) cache
+.ccls-cache/
+.ccls
+
+# JSON compilation databases.
+compile_commands.json

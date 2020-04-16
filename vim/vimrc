@@ -386,6 +386,8 @@ let g:ale_fixers = {
 \}
 
 let g:ale_linters = {
+\   'c': ['ccls'],
+\   'cpp': ['ccls'],
 \   'rust': ['rls'],
 \}
 
@@ -404,6 +406,13 @@ let g:ale_json_jq_options = '--indent 4'
 " * Indents should be 4 spaces.
 let g:ale_sh_shfmt_options = '-i 4'
 
+let g:ale_c_ccls_init_options = {
+\   'compilationDatabaseCommand': 'compiledb make'
+\ }
+
+let g:ale_cpp_ccls_init_options = {
+\   'compilationDatabaseCommand': 'compiledb make'
+\ }
 
 "
 " Generate documentation tags automatically
