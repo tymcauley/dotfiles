@@ -1,5 +1,4 @@
 [user]
-	email = 16469394+tymcauley@users.noreply.github.com
 	name = Tynan McAuley
 [push]
 	# When you use 'git push', push only the current branch, not all branches.
@@ -8,7 +7,7 @@
 [merge]
 	tool = diffconflicts
 [alias]
-	privateprofile = config user.email \"16469394+tymcauley@users.noreply.github.com\"
+	emailpersonal = config user.email \"16469394+tymcauley@users.noreply.github.com\"
 [include]
 	path = ~/.gitconfig.private
 [core]
