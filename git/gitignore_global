@@ -52,3 +52,6 @@ target/
 
 # JSON compilation databases.
 compile_commands.json
+
+# Ignore clang-format config files
+.clang-format
