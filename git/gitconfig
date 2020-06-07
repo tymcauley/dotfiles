@@ -19,3 +19,5 @@
 	keepBackup = false
 [diff]
 	submodule = log
+[pull]
+	rebase = false
