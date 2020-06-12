@@ -27,10 +27,10 @@ $DOTFILES_DIR/config/install.sh
 source $USER_CONFIG_FILE
 
 
-# Customize alacritty installation.
-if $CFG_INSTALL_ALACRITTY ; then
-    iecho "Installing alacritty mods"
-    $DOTFILES_DIR/alacritty/install.sh
+# Customize terminal installation.
+if $CFG_INSTALL_TERMINAL ; then
+    iecho "Installing terminal mods"
+    $DOTFILES_DIR/terminal/install.sh
 fi
 
 # Setup/update Homebrew/Linuxbrew packages.

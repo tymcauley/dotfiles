@@ -1,7 +1,7 @@
 #!/bin/bash -e
 
-# Customize alacritty installation.
-#   https://github.com/jwilm/alacritty
+# Customize terminal configuration.
+#   Alacritty: https://github.com/jwilm/alacritty
 
 cd $(dirname $0)
 
