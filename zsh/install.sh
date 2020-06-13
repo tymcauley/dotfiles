@@ -29,6 +29,9 @@ fi
 # Install powerline10k config file.
 install_file "$HOME/.p10k.zsh" "$(pwd)/p10k.zsh"
 
+# Install starship config file.
+install_file "$HOME/.config/starship.toml" "$(pwd)/starship.toml"
+
 # Clone zprezto repo and install it.
 ZPREZTO_PATH="$HOME/.zprezto"
 
