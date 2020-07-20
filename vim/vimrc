@@ -388,14 +388,7 @@ let g:ale_fixers = {
 let g:ale_linters = {
 \   'c': ['ccls'],
 \   'cpp': ['ccls'],
-\   'rust': ['rls'],
-\}
-
-" Enable clippy lints.
-let g:ale_rust_rls_config = {
-\   'rust': {
-\     'clippy_preference': 'on'
-\   }
+\   'rust': ['analyzer'],
 \}
 
 " Options for JSON fixer, jq:
