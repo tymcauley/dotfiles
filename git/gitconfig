@@ -12,6 +12,7 @@
 	path = ~/.gitconfig.private
 [core]
 	excludesfile = ~/.gitignore_global
+	pager = delta
 [mergetool "diffconflicts"]
 	cmd = vim -c DiffConflictsWithHistory \"$MERGED\" \"$BASE\" \"$LOCAL\" \"$REMOTE\"
 	trustExitCode = true
@@ -21,3 +22,9 @@
 	submodule = log
 [pull]
 	rebase = false
+[delta]
+	features = whitespace-error-style
+[delta "decorations"]
+	commit-decoration-style = bold yellow box ul
+	file-style = bold yellow ul
+	file-decoration-style = none
