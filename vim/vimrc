@@ -263,12 +263,14 @@ if !exists('g:airline_symbols')
 endif
 
 let g:airline_theme = 'base16_classic'
+let g:airline_powerline_fonts = 1
 
-let g:airline_symbols.branch = '⎇'
-let g:airline_symbols.paste  = 'ρ'
+" let g:airline_symbols.branch = '⎇'
+" let g:airline_symbols.paste  = 'ρ'
 
 " Enable enhanced tabline.
 let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#formatter = 'default'
 
 " Enable tmuxline integration.
 let g:airline#extensions#tmuxline#enabled = 1
@@ -282,9 +284,6 @@ let g:airline#extensions#ale#enabled = 1
 "
 " Tmuxline settings
 "
-
-" Don't let tmuxline use powerline fonts. Don't have those installed.
-let g:tmuxline_powerline_separators = 0
 
 " Customize the status bar.
 let s:tmux_widget_are_keys_off = '#([ "$(tmux show-option -qv key-table)" = "off" ] && echo "[OFF] ")'
