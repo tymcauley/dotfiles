@@ -46,11 +46,9 @@ fi
 iecho "Updating Homebrew"
 brew update
 
-# Update all installed packages.
-iecho "Upgrading Homebrew packages"
+# Update all installed packages and casks.
+iecho "Upgrading Homebrew packages and casks"
 brew upgrade
-iecho "Upgrading Homebrew casks"
-brew upgrade --cask
 
 # Make sure the default programs are installed.
 INSTALLED_PROGRAMS=$(brew list -1)
