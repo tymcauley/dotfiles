@@ -51,7 +51,7 @@ iecho "Upgrading Homebrew packages and casks"
 brew upgrade
 
 # Make sure the default programs are installed.
-INSTALLED_PROGRAMS=$(brew list -1)
+INSTALLED_PROGRAMS=$(brew list --formula -1)
 for program_name in $CFG_BREW_PROGRAMS ; do
     if ! echo "$INSTALLED_PROGRAMS" | grep -q "^$program_name\$" > /dev/null 2>&1 ; then
         brew install $program_name
