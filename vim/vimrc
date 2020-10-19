@@ -407,6 +407,14 @@ let g:ale_cpp_ccls_init_options = {
 \ }
 
 "
+" gitgutter settings
+"
+
+set updatetime=100
+
+let g:gitgutter_grep = 'rg --color=never'
+
+"
 " Generate documentation tags automatically
 "
 

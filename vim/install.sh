@@ -78,4 +78,7 @@ git_clone_or_update https://github.com/whiteinge/diffconflicts "$VIM_PKG_AUTO_LO
 # Asynchronous linting/fixing for Vim and Language Server Protocol (LSP) integration.
 git_clone_or_update https://github.com/dense-analysis/ale.git "$VIM_PKG_AUTO_LOAD/ale"
 
+# Git status in the sign column
+git_clone_or_update https://github.com/airblade/vim-gitgutter.git "$VIM_PKG_AUTO_LOAD/vim-gitgutter"
+
 cd - > /dev/null
