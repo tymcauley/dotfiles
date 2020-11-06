@@ -394,6 +394,7 @@ let g:ale_linters = {
 \   'c': ['ccls'],
 \   'cpp': ['ccls'],
 \   'rust': ['analyzer'],
+\   'scala': ['metals', 'scalastyle'],
 \}
 
 " Options for JSON fixer, jq:
