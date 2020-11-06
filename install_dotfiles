@@ -74,6 +74,12 @@ if $CFG_INSTALL_VIM_MODS ; then
     $DOTFILES_DIR/vim/install.sh
 fi
 
+# Customize neovim installation.
+if $CFG_INSTALL_NVIM_MODS ; then
+    iecho "Installing neovim mods"
+    $DOTFILES_DIR/nvim/install.sh
+fi
+
 # Customize zsh installation.
 if $CFG_INSTALL_ZSH_MODS ; then
     iecho "Installing zsh"
