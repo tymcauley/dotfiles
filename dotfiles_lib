@@ -41,6 +41,12 @@ install_file () {
     local DEST_F=$1
     local SOURCE_F=$2
 
+    # Confirm the file-to-be-installed exists.
+    if [[ ! -f "$SOURCE_F" ]] ; then
+        echo "Source file '$SOURCE_F' doesn't exist"
+        exit 1
+    fi
+
     # If the destination file isn't a link, get rid of it so we can override it with a link.
     if [[ -f "$DEST_F" && ! -L "$DEST_F" ]] ; then
         prompt_user_yn "Remove destination file '$DEST_F' before linking to '$SOURCE_F'?"
