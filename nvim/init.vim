@@ -12,16 +12,11 @@ function! VimrcLoadPlugins()
 
     call plug#begin(stdpath('data') . '/plugged')
 
-    " Status bar
-    Plug 'vim-airline/vim-airline'
-    Plug 'vim-airline/vim-airline-themes'
-    Plug 'edkolev/tmuxline.vim'
-
     " Column-align multiple lines
     Plug 'junegunn/vim-easy-align'
 
-    " Base16 colors in vim
-    Plug 'chriskempson/base16-vim'
+    " Tempus colors in vim
+    Plug 'https://gitlab.com/protesilaos/tempus-themes-vim.git'
 
     " Allow user-defined text objects (needed for vim-textobj-line)
     Plug 'kana/vim-textobj-user'
@@ -71,31 +66,6 @@ function! VimrcLoadPlugins()
 endfunction
 
 function! VimrcLoadPluginSettings()
-    " airline
-
-    if !exists('g:airline_symbols')
-        let g:airline_symbols = {}
-    endif
-
-    let g:airline_theme = 'base16_classic'
-
-    let g:airline_left_sep = ''
-    let g:airline_left_alt_sep = ''
-    let g:airline_right_sep = ''
-    let g:airline_right_alt_sep = ''
-    let g:airline_symbols.branch = ''
-    let g:airline_symbols.readonly = ''
-    let g:airline_symbols.paste = 'ρ'
-    let g:airline_symbols.spell = 'Ꞩ'
-
-    let g:airline#extensions#tabline#enabled = 1
-    let g:airline#extensions#tabline#formatter = 'default'
-
-    let g:airline#extensions#tmuxline#enabled = 1
-    let g:airline#extensions#tmuxline#snapshot_file = "~/.tmux-statusline-colors.conf"
-
-    let g:airline#extensions#ale#enabled = 1
-
     " fzf
 
     let g:fzf_command_prefix = 'Fzf'
@@ -107,17 +77,6 @@ function! VimrcLoadPluginSettings()
                 \ <bang>1 ? fzf#vim#with_preview('up:60%')
                 \         : fzf#vim#with_preview('right:50%:hidden', '?'),
                 \ <bang>0)
-
-    " tmuxline
-
-    let l:tmux_widget_are_keys_off = '#([ "$(tmux show-option -qv key-table)" = "off" ] && echo "[OFF] ")'
-    let g:tmuxline_preset = {
-        \'a'    : '#S',
-        \'win'  : ['#I', '#W#F'],
-        \'cwin' : ['#I', '#W'],
-        \'y'    : [l:tmux_widget_are_keys_off . '%a %b %d %Y', '%H:%M %Z'],
-        \'z'    : '#h',
-        \'options' : {'status-justify' : 'left'}}
 
     " ale
 
@@ -230,10 +189,6 @@ function! VimrcLoadSettings()
     " to 'press <Enter> to continue'
     set cmdheight=2
 
-    " Don't show what mode we're in on the last line, I'm already using
-    " airline
-    set noshowmode
-
     " Make sure all windows that aren't in focus always have a status line
     set laststatus=2
 
@@ -333,10 +288,9 @@ function! VimrcLoadSettings()
 endfunction
 
 function! VimrcLoadColors()
-    if filereadable(expand("~/.vimrc_background"))
-      let g:base16colorspace=256
-      source ~/.vimrc_background
-    endif
+    colorscheme tempus_summer
+
+    set termguicolors
 
     " Set custom highlighting for various spelling mistakes
     highlight clear SpellBad
