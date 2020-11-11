@@ -21,6 +21,6 @@ install_file "$HOME/.config/alacritty/alacritty.yml" "$(pwd)/alacritty.yml"
 install_file "$HOME/.config/kitty/kitty.conf" "$(pwd)/kitty.conf"
 
 # Install tempus shell color themes.
-git_clone_or_update https://gitlab.com/protesilaos/tempus-themes-kitty "$HOME/.config/kitty/tempus-themes-kitty"
+git_clone_or_update https://gitlab.com/protesilaos/tempus-themes-kitty.git "$HOME/.config/kitty/tempus-themes-kitty"
 
 cd - > /dev/null
