@@ -50,11 +50,23 @@ function! VimrcLoadPlugins()
     " Languages
     Plug 'rust-lang/rust.vim'
 
-    " LSP
-    Plug 'dense-analysis/ale'
-
     " Neovim in the browser
     Plug 'glacambre/firenvim', { 'do': { _ -> firenvim#install(0) } }
+
+    " Treesitter integration into neovim
+    Plug 'nvim-treesitter/nvim-treesitter'
+
+    " Collection of common configurations for the Nvim LSP client
+    Plug 'neovim/nvim-lspconfig'
+
+    " Extensions to built-in LSP, for example, providing type inlay hints
+    Plug 'nvim-lua/lsp_extensions.nvim'
+
+    " Autocompletion framework for built-in LSP
+    Plug 'nvim-lua/completion-nvim'
+
+    " Diagnostic navigation and settings for built-in LSP
+    Plug 'nvim-lua/diagnostic-nvim'
 
     call plug#end()
 
@@ -78,54 +90,31 @@ function! VimrcLoadPluginSettings()
                 \         : fzf#vim#with_preview('right:50%:hidden', '?'),
                 \ <bang>0)
 
-    " ale
-
-    " De-prioritize all lint commands.
-    let g:ale_command_wrapper = 'nice -n4'
-
-    " Open ALE preview window when the cursor moves onto lines with problems.
-    let g:ale_cursor_detail = 1
-
-    " Enable auto-complete with ALE.
-    let g:ale_completion_enabled = 1
-
-    let g:ale_fixers = {
-    \   '*': ['remove_trailing_lines', 'trim_whitespace'],
-    \   'c': ['clang-format'],
-    \   'cpp': ['clang-format'],
-    \   'json': ['jq'],
-    \   'python': ['black'],
-    \   'rust': ['rustfmt'],
-    \   'scala': ['scalafmt'],
-    \   'sh': ['shfmt'],
-    \}
-
-    let g:ale_linters = {
-    \   'c': ['ccls'],
-    \   'cpp': ['ccls'],
-    \   'rust': ['analyzer'],
-    \   'scala': ['metals', 'scalastyle'],
-    \}
-
-    " Options for JSON fixer, jq:
-    " * Indents should be 4 spaces.
-    let g:ale_json_jq_options = '--indent 4'
-
-    " Options for Shell script fixer, shfmt:
-    " * Indents should be 4 spaces.
-    let g:ale_sh_shfmt_options = '-i 4'
-
-    let g:ale_c_ccls_init_options = {
-    \   'compilationDatabaseCommand': 'compiledb make'
-    \ }
-
-    let g:ale_cpp_ccls_init_options = {
-    \   'compilationDatabaseCommand': 'compiledb make'
-    \ }
-
     " gitgutter
 
     let g:gitgutter_grep = 'rg --color=never'
+
+    " LSP diagnostics (nvim-lua/diagnostic-nvim)
+
+    " Visualize diagnostics
+    let g:diagnostic_enable_virtual_text = 1
+    let g:diagnostic_trimmed_virtual_text = '40'
+
+    " Don't show diagnostics while in insert mode
+    let g:diagnostic_insert_delay = 1
+
+    " LSP extensions (nvim-lua/lsp_extensions.nvim)
+
+    " Enable type inlay hints
+    autocmd CursorMoved,InsertLeave,BufEnter,BufWinEnter,TabEnter,BufWritePost *
+        \ lua require'lsp_extensions'.inlay_hints {
+        \   prefix = ' » ',
+        \   highlight = "NonText"
+        \ }
+
+    " Treesitter
+
+    luafile ~/.config/nvim/lua/treesitter.lua
 endfunction
 
 function! VimrcLoadMappings()
@@ -163,25 +152,41 @@ function! VimrcLoadMappings()
     nnoremap <space> za
 
     " fzf mappings
-    nnoremap <leader>p :FzfHistory<CR>
-    nnoremap <leader>b :FzfBuffers<CR>
-    nnoremap <leader>t :FzfFiles<CR>
-    nnoremap <leader>f :FzfRg<CR>
+    nnoremap <leader>h       <Cmd>FzfHistory<CR>
+    nnoremap <leader>b       <Cmd>FzfBuffers<CR>
+    nnoremap <leader>f       <Cmd>FzfFiles<CR>
+    nnoremap <leader><space> <Cmd>FzfRg<CR>
 
-    " ALE mappings
-    nnoremap <leader>d :ALEGoToDefinition<CR>
-    nnoremap <leader>r :ALEFindReferences<CR>
-    nnoremap <leader>h :ALEHover<CR>
-    nnoremap <leader>i :ALEFix<CR>
-    nmap <silent> gj <Plug>(ale_next_wrap)
+    " LSP
 
-    " Function for removing trailing whitespace without affecting the cursor
-    " location/search history:
-    fun! TrimWhitespace()
+    nnoremap <silent> gd <Cmd>lua vim.lsp.buf.definition()<CR>
+    nnoremap <silent> gh <Cmd>lua vim.lsp.buf.hover()<CR>
+    nnoremap <silent> gD <Cmd>lua vim.lsp.buf.implementation()<CR>
+    nnoremap <silent> gH <Cmd>lua vim.lsp.buf.signature_help()<CR>
+    nnoremap <silent> gr <Cmd>lua vim.lsp.buf.references()<CR>
+    nnoremap <silent> gi <Cmd>lua vim.lsp.buf.formatting()<CR>
+
+    nnoremap <silent> g[ <Cmd>PrevDiagnosticCycle<CR>
+    nnoremap <silent> g] <Cmd>NextDiagnosticCycle<CR>
+
+    " Trigger completion with <tab>
+    inoremap <silent><expr> <TAB>
+        \ pumvisible() ? "\<C-n>" :
+        \ <SID>CheckBackSpace() ? "\<TAB>" :
+        \ completion#trigger_completion()
+
+    " Remove trailing whitespace without affecting the cursor location/search
+    " history.
+    function! TrimWhitespace()
         let l:save = winsaveview()
         %s/\s\+$//e
         call winrestview(l:save)
     endfun
+
+    function! s:CheckBackSpace() abort
+        let col = col('.') - 1
+        return !col || getline('.')[col - 1] =~ '\s'
+    endfunction
 endfunction
 
 function! VimrcLoadSettings()
@@ -285,6 +290,22 @@ function! VimrcLoadSettings()
 
     " Rapidly write swap file to disk, which speeds up gitgutter updates
     set updatetime=100
+
+    " Set pop-up-menu transparency.
+    set pumblend=30
+
+    " LSP settings
+
+    luafile ~/.config/nvim/lua/lsp.lua
+
+    " Show diagnostic popup on cursor hover
+    autocmd CursorHold * lua vim.lsp.util.show_line_diagnostics()
+
+    " Set completeopt to have a better completion experience
+    set completeopt=menuone,noinsert,noselect
+
+    " Avoid showing extra messages when using completion
+    set shortmess+=c
 endfunction
 
 function! VimrcLoadColors()

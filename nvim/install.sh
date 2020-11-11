@@ -15,4 +15,12 @@ source $DOTFILES_LIB
 # Install neovim config file.
 install_file "$HOME/.config/nvim/init.vim" "$(pwd)/init.vim"
 
+# Install lua config files.
+if [[ -d "lua" ]]; then
+    for f in $(pwd)/lua/*; do
+        base_f="$(basename "$f")"
+        install_file "$HOME/.config/nvim/lua/$base_f" "$f"
+    done
+fi
+
 cd - > /dev/null
