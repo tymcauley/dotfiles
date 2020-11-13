@@ -137,7 +137,6 @@ function! VimrcLoadMappings()
     nnoremap <C-l> <C-w>l
 
     " Buffer navigation
-    map  ga <C-^>
     nmap gn :bn<CR>
     nmap gp :bp<CR>
     nmap gk :bp<bar>bd #<CR>
@@ -165,6 +164,7 @@ function! VimrcLoadMappings()
     nnoremap <silent> gH <Cmd>lua vim.lsp.buf.signature_help()<CR>
     nnoremap <silent> gr <Cmd>lua vim.lsp.buf.references()<CR>
     nnoremap <silent> gi <Cmd>lua vim.lsp.buf.formatting()<CR>
+    nnoremap <silent> ga <Cmd>lua vim.lsp.buf.code_action()<CR>
 
     nnoremap <silent> g[ <Cmd>PrevDiagnosticCycle<CR>
     nnoremap <silent> g] <Cmd>NextDiagnosticCycle<CR>
