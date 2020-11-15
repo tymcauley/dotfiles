@@ -44,12 +44,6 @@ if $CFG_INSTALL_GIT ; then
     $DOTFILES_DIR/git/install.sh
 fi
 
-# Install Base16 Shell.
-if $CFG_INSTALL_BASE16_SHELL ; then
-    iecho "Installing Base16 shell"
-    $DOTFILES_DIR/base16/install.sh
-fi
-
 # Install local bin scripts.
 if $CFG_INSTALL_LOCAL_BIN ; then
     iecho "Installing local scripts"
