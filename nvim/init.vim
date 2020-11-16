@@ -374,15 +374,11 @@ function! VimrcLoadColors()
 
     set termguicolors
 
-    " Set custom highlighting for various spelling mistakes
-    highlight clear SpellBad
-    highlight SpellBad cterm=underline
-    highlight clear SpellCap
-    highlight SpellCap cterm=underline
-    highlight clear SpellLocal
-    highlight SpellLocal cterm=underline
-    highlight clear SpellRare
-    highlight SpellRare cterm=underline
+    " Only underline spelling mistakes
+    highlight SpellBad ctermfg=NONE ctermbg=NONE guifg=NONE guibg=NONE guisp=NONE
+    highlight SpellCap ctermfg=NONE ctermbg=NONE guifg=NONE guibg=NONE guisp=NONE
+    highlight SpellLocal ctermfg=NONE ctermbg=NONE guifg=NONE guibg=NONE guisp=NONE
+    highlight SpellRare ctermfg=NONE ctermbg=NONE guifg=NONE guibg=NONE guisp=NONE
 
     " Highlight ruler
     highlight ColorColumn ctermbg=18
