@@ -1,11 +1,10 @@
--- nvim_lsp object
-local nvim_lsp = require'nvim_lsp'
+-- lspconfig object
+local lspconfig = require'lspconfig'
 
--- function to attach completion and diagnostics when setting up lsp
+-- function to attach completion when setting up lsp
 local on_attach = function(client)
     require'completion'.on_attach(client)
-    require'diagnostic'.on_attach(client)
 end
 
 -- Enable rust_analyzer
-nvim_lsp.rust_analyzer.setup({ on_attach=on_attach })
+lspconfig.rust_analyzer.setup({ on_attach=on_attach })

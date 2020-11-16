@@ -65,9 +65,6 @@ function! VimrcLoadPlugins()
     " Autocompletion framework for built-in LSP
     Plug 'nvim-lua/completion-nvim'
 
-    " Diagnostic navigation and settings for built-in LSP
-    Plug 'nvim-lua/diagnostic-nvim'
-
     call plug#end()
 
     " Run PlugInstall if there are missing plugins
@@ -93,15 +90,6 @@ function! VimrcLoadPluginSettings()
     " gitgutter
 
     let g:gitgutter_grep = 'rg --color=never'
-
-    " LSP diagnostics (nvim-lua/diagnostic-nvim)
-
-    " Visualize diagnostics
-    let g:diagnostic_enable_virtual_text = 1
-    let g:diagnostic_trimmed_virtual_text = '40'
-
-    " Don't show diagnostics while in insert mode
-    let g:diagnostic_insert_delay = 1
 
     " LSP extensions (nvim-lua/lsp_extensions.nvim)
 
@@ -166,8 +154,8 @@ function! VimrcLoadMappings()
     nnoremap <silent> gi <Cmd>lua vim.lsp.buf.formatting()<CR>
     nnoremap <silent> ga <Cmd>lua vim.lsp.buf.code_action()<CR>
 
-    nnoremap <silent> g[ <Cmd>PrevDiagnosticCycle<CR>
-    nnoremap <silent> g] <Cmd>NextDiagnosticCycle<CR>
+    nnoremap <silent> g[ <Cmd>lua vim.lsp.diagnostic.goto_prev()<CR>
+    nnoremap <silent> g] <Cmd>lua vim.lsp.diagnostic.goto_next()<CR>
 
     " Trigger completion with <tab>
     inoremap <silent><expr> <TAB>
@@ -297,9 +285,6 @@ function! VimrcLoadSettings()
     " LSP settings
 
     luafile ~/.config/nvim/lua/lsp.lua
-
-    " Show diagnostic popup on cursor hover
-    autocmd CursorHold * lua vim.lsp.util.show_line_diagnostics()
 
     " Set completeopt to have a better completion experience
     set completeopt=menuone,noinsert,noselect
