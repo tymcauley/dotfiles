@@ -47,6 +47,10 @@ function! VimrcLoadPlugins()
     Plug 'tpope/vim-fugitive'
     Plug 'airblade/vim-gitgutter'
 
+    " Airline (statusline package)
+    Plug 'vim-airline/vim-airline'
+    Plug 'vim-airline/vim-airline-themes'
+
     " Languages
     Plug 'rust-lang/rust.vim'
 
@@ -103,6 +107,74 @@ function! VimrcLoadPluginSettings()
     " Treesitter
 
     luafile ~/.config/nvim/lua/treesitter.lua
+
+    " airline
+
+    if !exists('g:airline_symbols')
+      let g:airline_symbols = {}
+    endif
+
+    let g:airline_theme = 'solarized'
+    let g:airline_solarized_bg = 'dark'
+
+    let g:airline_powerline_fonts = 1
+    let g:airline_symbols.paste = 'ρ'
+    let g:airline_symbols.spell = 'Ꞩ'
+    let g:airline_symbols.dirty = '!'
+
+    " Don't both showing the enabled spell-check language.
+    let g:airline_detect_spelllang = 0
+
+    " Display the current vim mode (insert, normal, replace, etc) with a
+    " single character.
+    let g:airline_mode_map = {
+        \ '__'     : '-',
+        \ 'c'      : 'C',
+        \ 'i'      : 'I',
+        \ 'ic'     : 'I',
+        \ 'ix'     : 'I',
+        \ 'n'      : 'N',
+        \ 'multi'  : 'M',
+        \ 'ni'     : 'N',
+        \ 'no'     : 'N',
+        \ 'R'      : 'R',
+        \ 'Rv'     : 'R',
+        \ 's'      : 'S',
+        \ 'S'      : 'S',
+        \ ''     : 'S',
+        \ 't'      : 'T',
+        \ 'v'      : 'V',
+        \ 'V'      : 'V',
+        \ ''     : 'V',
+        \ }
+
+    " Speed up airline startup by not checking the runtimepath for extensions.
+    " This means we need to manually specify which airline extensions to load.
+    let g:airline#extensions#disable_rtp_load = 1
+    let g:airline_extensions = [
+        \ 'branch',
+        \ 'fugitiveline',
+        \ 'fzf',
+        \ 'hunks',
+        \ 'keymap',
+        \ 'netrw',
+        \ 'nvimlsp',
+        \ 'po',
+        \ 'quickfix',
+        \ 'tabline',
+        \ 'term',
+        \ 'whitespace',
+        \ 'wordcount',
+        \ ]
+
+    let g:airline#extensions#tabline#enabled = 1
+    let g:airline#extensions#tabline#formatter = 'default'
+
+    " Trim the git hunk display information.
+    let g:airline#extensions#hunks#non_zero_only = 1
+
+    " Only display the file format if it's something unexpected.
+    let g:airline#parts#ffenc#skip_expected_string = 'utf-8[unix]'
 endfunction
 
 function! VimrcLoadMappings()
@@ -181,6 +253,10 @@ function! VimrcLoadSettings()
     " Set the command window height to 2 lines, to avoid many cases of having
     " to 'press <Enter> to continue'
     set cmdheight=2
+
+    " Don't show what mode we're in on the last line, the status line takes
+    " care of that
+    set noshowmode
 
     " Make sure all windows that aren't in focus always have a status line
     set laststatus=2
