@@ -33,6 +33,9 @@ function! VimrcLoadPlugins()
     " Add new vim verb for commenting out lines
     Plug 'tpope/vim-commentary'
 
+    " Add commands smart text substitution
+    Plug 'tpope/vim-abolish'
+
     " Integration for fzf in vim
     Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
     Plug 'junegunn/fzf.vim'
