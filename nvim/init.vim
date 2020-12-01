@@ -62,6 +62,7 @@ function! VimrcLoadPlugins()
 
     " Treesitter integration into neovim
     Plug 'nvim-treesitter/nvim-treesitter'
+    Plug 'nvim-treesitter/completion-treesitter'
 
     " Collection of common configurations for the Nvim LSP client
     Plug 'neovim/nvim-lspconfig'
@@ -110,6 +111,11 @@ function! VimrcLoadPluginSettings()
     " Treesitter
 
     luafile ~/.config/nvim/lua/treesitter.lua
+
+    " completion-nvim
+
+    " Use completion-nvim in every buffer
+    autocmd BufEnter * lua require'completion'.on_attach()
 
     " airline
 
@@ -231,12 +237,6 @@ function! VimrcLoadMappings()
 
     nnoremap <silent> g[ <Cmd>lua vim.lsp.diagnostic.goto_prev()<CR>
     nnoremap <silent> g] <Cmd>lua vim.lsp.diagnostic.goto_next()<CR>
-
-    " Trigger completion with <tab>
-    inoremap <silent><expr> <TAB>
-        \ pumvisible() ? "\<C-n>" :
-        \ <SID>CheckBackSpace() ? "\<TAB>" :
-        \ completion#trigger_completion()
 
     " Remove trailing whitespace without affecting the cursor location/search
     " history.
@@ -370,6 +370,9 @@ function! VimrcLoadSettings()
 
     " Avoid showing extra messages when using completion
     set shortmess+=c
+
+    " Use the LSP's omni function
+    set omnifunc=v:lua.vim.lsp.omnifunc
 endfunction
 
 function! VimrcLoadColors()
