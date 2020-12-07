@@ -57,9 +57,6 @@ function! VimrcLoadPlugins()
     " Languages
     Plug 'rust-lang/rust.vim'
 
-    " Neovim in the browser
-    Plug 'glacambre/firenvim', { 'do': { _ -> firenvim#install(0) } }
-
     " Treesitter integration into neovim
     Plug 'nvim-treesitter/nvim-treesitter'
     Plug 'nvim-treesitter/completion-treesitter'
