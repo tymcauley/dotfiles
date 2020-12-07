@@ -58,7 +58,7 @@ function! VimrcLoadPlugins()
     Plug 'rust-lang/rust.vim'
 
     " Treesitter integration into neovim
-    Plug 'nvim-treesitter/nvim-treesitter'
+    Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
     Plug 'nvim-treesitter/completion-treesitter'
 
     " Collection of common configurations for the Nvim LSP client
