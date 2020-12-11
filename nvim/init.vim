@@ -70,6 +70,9 @@ function! VimrcLoadPlugins()
     " Autocompletion framework for built-in LSP
     Plug 'nvim-lua/completion-nvim'
 
+    " Metals (Scala language server) integration for Nvim LSP
+    Plug 'scalameta/nvim-metals'
+
     call plug#end()
 
     " Run PlugInstall if there are missing plugins
