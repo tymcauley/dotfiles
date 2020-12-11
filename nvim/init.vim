@@ -98,8 +98,8 @@ function! VimrcLoadPluginSettings()
 
     " LSP extensions (nvim-lua/lsp_extensions.nvim)
 
-    " Enable type inlay hints
-    autocmd CursorMoved,InsertLeave,BufEnter,BufWinEnter,TabEnter,BufWritePost *
+    " Enable type inlay hints for Rust files
+    autocmd InsertLeave,BufEnter,BufWinEnter,TabEnter,BufWritePost *.rs
         \ lua require'lsp_extensions'.inlay_hints {
         \   prefix = ' » ',
         \   highlight = "NonText",
