@@ -189,6 +189,34 @@ function! VimrcLoadPluginSettings()
 
     " Only display the file format if it's something unexpected.
     let g:airline#parts#ffenc#skip_expected_string = 'utf-8[unix]'
+
+
+    " nvim-metals
+
+    :lua << EOF
+        metals_config = {}
+        metals_config.handlers = {}
+        metals_config.init_options = {}
+
+        metals_config.on_attach = function()
+            require'completion'.on_attach();
+        end
+
+        metals_config.init_options.statusBarProvider = 'on'
+
+        metals_config.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
+            vim.lsp.diagnostic.on_publish_diagnostics, {
+                virtual_text = {
+                    prefix = '-',
+                }
+            }
+        )
+EOF
+
+    augroup lsp
+        au!
+        au FileType scala lua require('metals').initialize_or_attach(metals_config)
+    augroup end
 endfunction
 
 function! VimrcLoadMappings()
@@ -375,6 +403,9 @@ function! VimrcLoadSettings()
 
     " Avoid showing extra messages when using completion
     set shortmess+=c
+
+    " Required by 'scalameta/nvim-metals'
+    set shortmess-=F
 
     " Use the LSP's omni function
     set omnifunc=v:lua.vim.lsp.omnifunc
