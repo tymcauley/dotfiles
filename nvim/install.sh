@@ -20,4 +20,9 @@ if [[ -d "lua" ]]; then
     install_dir "$HOME/.config/nvim/lua" "$(pwd)/lua"
 fi
 
+# Install syntax override files.
+if [[ -d "after/ftplugin" ]]; then
+    install_dir "$HOME/.config/nvim/after/ftplugin" "$(pwd)/after/ftplugin"
+fi
+
 cd - > /dev/null
