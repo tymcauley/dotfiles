@@ -71,6 +71,20 @@ install_file () {
     fi
 }
 
+# Install all files within a directory (non-recursive)
+#
+# Runs 'install_file' on every file within a directory.
+#
+# Inputs:
+#   $1 : path to destination directory.
+#   $2 : path to source directory.
+install_dir () {
+    for f in $2/*; do
+        base_f="$(basename "$f")"
+        install_file "$1/$base_f" "$f"
+    done
+}
+
 # Prompt a user with a yes-no prompt. If they don't answer "yes", then exit the script.
 prompt_user_yn () {
     read -p "$1 [y/n] " -n 1 -r
