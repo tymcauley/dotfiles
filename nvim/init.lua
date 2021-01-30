@@ -11,6 +11,7 @@ local function opt(scope, key, value)
     if scope ~= 'o' then scopes['o'][key] = value end
 end
 
+-- Define key mappings with 'noremap' option enabled
 local function map(mode, lhs, rhs, opts)
     local options = {noremap = true}
     if opts then options = vim.tbl_extend('force', options, opts) end
@@ -50,12 +51,7 @@ cmd('autocmd InsertLeave,BufEnter,BufWinEnter,TabEnter,BufWritePost *.rs'..
 
 require'nvim-treesitter.configs'.setup {
     ensure_installed = "maintained",
-    highlight = {
-        enable = true,
-    },
-    indent = {
-        enable = true,
-    },
+    highlight = {enable = true},
 }
 
 -- completion-nvim
@@ -100,11 +96,14 @@ map('n', 'gn', '<Cmd>bn<CR>')
 map('n', 'gp', '<Cmd>bp<CR>')
 map('n', 'gk', '<Cmd>bp<bar>bd #<CR>')
 
--- Start interactive EasyAlign in visual mode (e.g. vipgs)
-map('x', 'gs', '<Plug>(EasyAlign)')
+-- EasyAlign
+-- Note that '<Plug>' mappings depend on the 'noremap' option being unset, so
+-- we can't use the 'map' function.
 
+-- Start interactive EasyAlign in visual mode (e.g. vipgs)
+vim.api.nvim_set_keymap('x', 'gs', '<Plug>(EasyAlign)', {})
 -- Start interactive EasyAlign for a motion/text object (e.g. gsip)
-map('n', 'gs', '<Plug>(EasyAlign)')
+vim.api.nvim_set_keymap('n', 'gs', '<Plug>(EasyAlign)', {})
 
 -- Enable code folding with the spacebar
 map('n', '<space>', 'za')
@@ -218,9 +217,10 @@ opt('b', 'autoindent', true)
 
 -- Default indentation settings. Display tabs as four characters wide, insert
 -- tabs as 4 spaces
-opt('b', 'tabstop', 4)
-opt('b', 'softtabstop', 4)
-opt('b', 'shiftwidth', 4)
+local indent = 4
+opt('b', 'tabstop', indent)
+opt('b', 'softtabstop', indent)
+opt('b', 'shiftwidth', indent)
 opt('b', 'expandtab', true)
 
 -- By default, don't wrap text
