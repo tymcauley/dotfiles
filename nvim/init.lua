@@ -28,18 +28,6 @@ require 'plugins'
 -- Plugin settings
 --
 
--- fzf
-
-g.fzf_command_prefix = 'Fzf'
-
--- Search other files for code using ripgrep
-cmd('command! -bang -nargs=* FzfRg'..
-        ' call fzf#vim#grep('..
-        ' "rg --column --line-number --no-heading --ignore-case --follow --color always ".shellescape(<q-args>), 1,'..
-        ' <bang>1 ? fzf#vim#with_preview("up:60%")'..
-        '         : fzf#vim#with_preview("right:50%:hidden", "?"),'..
-        ' <bang>0)')
-
 -- gitgutter
 
 g.gitgutter_grep = 'rg --color=never'
@@ -78,6 +66,12 @@ cmd [[autocmd BufEnter * lua require'completion'.on_attach()]]
 -- galaxyline
 require('statusline').setup()
 
+-- telescope.nvim
+require('telescope').setup({
+    defaults = {
+        winblend = 10,
+    }
+})
 
 --
 -- Mappings
@@ -115,12 +109,6 @@ map('n', 'gs', '<Plug>(EasyAlign)')
 -- Enable code folding with the spacebar
 map('n', '<space>', 'za')
 
--- fzf mappings
-map('n', '<leader>h',       '<Cmd>FzfHistory<CR>')
-map('n', '<leader>b',       '<Cmd>FzfBuffers<CR>')
-map('n', '<leader>f',       '<Cmd>FzfFiles<CR>')
-map('n', '<leader><space>', '<Cmd>FzfRg<CR>')
-
 -- LSP
 map('n', 'gd', '<Cmd>lua vim.lsp.buf.definition()<CR>',       {silent = true})
 map('n', 'gh', '<Cmd>lua vim.lsp.buf.hover()<CR>',            {silent = true})
@@ -131,6 +119,13 @@ map('n', 'gi', '<Cmd>lua vim.lsp.buf.formatting()<CR>',       {silent = true})
 map('n', 'ga', '<Cmd>lua vim.lsp.buf.code_action()<CR>',      {silent = true})
 map('n', 'g[', '<Cmd>lua vim.lsp.diagnostic.goto_prev()<CR>', {silent = true})
 map('n', 'g]', '<Cmd>lua vim.lsp.diagnostic.goto_next()<CR>', {silent = true})
+
+-- telescope.nvim
+
+map('n', '<leader>ff', '<Cmd>lua require("telescope.builtin").find_files()<CR>')
+map('n', '<leader>fg', '<Cmd>lua require("telescope.builtin").live_grep()<CR>')
+map('n', '<leader>fb', '<Cmd>lua require("telescope.builtin").buffers()<CR>')
+map('n', '<leader>fh', '<Cmd>lua require("telescope.builtin").help_tags()<CR>')
 
 -- Remove trailing whitespace without affecting the cursor location/search
 -- history.

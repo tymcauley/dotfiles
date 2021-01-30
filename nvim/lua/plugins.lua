@@ -26,10 +26,6 @@ return require('packer').startup(function(use)
     -- Add commands smart text substitution
     use {'tpope/vim-abolish'}
 
-    -- Integration for fzf in vim
-    use {'junegunn/fzf', run = function() vim.fn['fzf#install']() end}
-    use {'junegunn/fzf.vim'}
-
     -- Add ability to easily open new files up to a specific line/column
     use {'kopischke/vim-fetch'}
 
@@ -58,6 +54,12 @@ return require('packer').startup(function(use)
 
     -- Metals (Scala language server) integration for nvim LSP
     use {'scalameta/nvim-metals'}
+
+    -- Fuzzy finder
+    use {
+        'nvim-telescope/telescope.nvim',
+        requires = {{'nvim-lua/popup.nvim'}, {'nvim-lua/plenary.nvim'}}
+    }
 
     -- Statusline
     use {
