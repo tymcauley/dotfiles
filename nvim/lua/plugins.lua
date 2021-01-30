@@ -40,10 +40,6 @@ return require('packer').startup(function(use)
     use {'tpope/vim-fugitive'}
     use {'airblade/vim-gitgutter'}
 
-    -- Airline (statusline package)
-    use {'vim-airline/vim-airline'}
-    use {'vim-airline/vim-airline-themes'}
-
     -- Languages
     use {'rust-lang/rust.vim'}
 
@@ -62,4 +58,10 @@ return require('packer').startup(function(use)
 
     -- Metals (Scala language server) integration for nvim LSP
     use {'scalameta/nvim-metals'}
+
+    -- Statusline
+    use {
+        'glepnir/galaxyline.nvim',
+        requires = {'kyazdani42/nvim-web-devicons'}
+    }
 end)

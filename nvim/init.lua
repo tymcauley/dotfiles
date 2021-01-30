@@ -75,34 +75,9 @@ require'nvim-treesitter.configs'.setup {
 -- Use completion-nvim in every buffer
 cmd [[autocmd BufEnter * lua require'completion'.on_attach()]]
 
--- airline
+-- galaxyline
+require('statusline').setup()
 
-local airline_symbols = g.airline_symbols
-if (airline_symbols == nil)
-then
-    airline_symbols = {}
-end
-
-g.airline_theme = 'solarized'
-g.airline_solarized_bg = 'dark'
-
-g.airline_powerline_fonts = 1
-airline_symbols.paste = 'ρ'
-airline_symbols.spell = 'Ꞩ'
-airline_symbols.dirty = '!'
-g.airline_symbols = airline_symbols
-
--- Don't both showing the enabled spell-check language.
-g.airline_detect_spelllang = 0
-
-g['airline#extensions#tabline#enabled'] = 1
-g['airline#extensions#tabline#formatter'] = 'default'
-
--- Trim the git hunk display information.
-g['airline#extensions#hunks#non_zero_only'] = 1
-
--- Only display the file format if it's something unexpected.
-g['airline#parts#ffenc#skip_expected_string'] = 'utf-8[unix]'
 
 --
 -- Mappings
