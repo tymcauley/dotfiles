@@ -197,23 +197,29 @@ M.setup = function()
             provider = 'DiagnosticError',
             condition = is_buffer_not_empty,
             icon = ' ',
-            highlight = {colors.red, colors.line_bg}
+            highlight = {colors.red, colors.line_bg},
+            separator = '',
+            separator_highlight = {colors.line_bg, colors.line_bg},
         }
     }
     gls.left[14] = {
         DiagnosticWarn = {
             provider = 'DiagnosticWarn',
             condition = is_buffer_not_empty,
-            icon = '  ',
+            icon = ' ',
             highlight = {colors.orange, colors.line_bg},
+            separator = '',
+            separator_highlight = {colors.line_bg, colors.line_bg},
         }
     }
     gls.left[15] = {
         DiagnosticInfo = {
             provider = 'DiagnosticInfo',
             condition = is_buffer_not_empty,
-            icon = '  ',
+            icon = ' ',
             highlight = {colors.blue, colors.line_bg},
+            separator = '',
+            separator_highlight = {colors.line_bg, colors.line_bg},
         }
     }
     gls.left[16] = {
@@ -242,7 +248,7 @@ M.setup = function()
         LineInfo = {
             provider = {'LinePercent', 'LineColumn'},
             highlight = {colors.fg, colors.line_bg, 'bold'},
-            separator = ' |',
+            separator = ' ▋',
             separator_highlight = {colors.blue, colors.line_bg},
         }
     }
@@ -251,7 +257,7 @@ M.setup = function()
             provider = 'FileSize',
             condition = is_buffer_not_empty,
             highlight = {colors.fg, colors.line_bg, 'bold'},
-            separator = ' | ',
+            separator = ' ▋ ',
             separator_highlight = {colors.blue, colors.line_bg},
         }
     }
