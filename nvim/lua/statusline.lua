@@ -105,7 +105,7 @@ M.setup = function()
                 vim.api.nvim_command('hi GalaxyFirstElement guifg=' .. mode_color())
                 return '▋'
             end,
-            highlight = {colors.cyan, colors.line_bg}
+            highlight = {colors.cyan, colors.bg},
         },
     }
     gls.left[2] = {
