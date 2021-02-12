@@ -90,4 +90,9 @@ if $CFG_INSTALL_SCALA_MODS ; then
     $DOTFILES_DIR/scala/install.sh
 fi
 
+# Customize NodeJS installation.
+if $CFG_INSTALL_NODE_MODS ; then
+    $DOTFILES_DIR/node/install.sh
+fi
+
 iecho "Finished!"
