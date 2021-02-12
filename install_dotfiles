@@ -85,4 +85,9 @@ if $CFG_ENABLE_RUST ; then
     $DOTFILES_DIR/rust/install.sh
 fi
 
+# Customize scala installation.
+if $CFG_INSTALL_SCALA_MODS ; then
+    $DOTFILES_DIR/scala/install.sh
+fi
+
 iecho "Finished!"
