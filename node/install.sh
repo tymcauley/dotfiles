@@ -19,9 +19,10 @@ pyright \
 "
 
 for program_name in $NODE_PACKAGES ; do
-    if ! command -v $program_name > /dev/null 2>&1 ; then
-        npm install -g $program_name
-    fi
+    npm install -g $program_name
 done
+
+# Update node packages
+npm update -g
 
 cd - > /dev/null
