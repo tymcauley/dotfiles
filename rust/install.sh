@@ -20,25 +20,29 @@ if ! command -v rustup > /dev/null 2>&1 ; then
     exit 2
 fi
 
-# Install Rust components (clippy, rustfmt, and RLS).
+# Install Rust components
 rustup component add \
     clippy \
-    rls \
-    rust-analysis \
     rust-src \
     rustfmt
 
-# Update existing Rust installation.
+# Update existing Rust installation
 iecho "Updating Rust"
 
-# Update installed Rust components/toolchains.
+# Update installed Rust components/toolchains
 rustup update
 
-# Install completion scripts for zsh.
-RUST_ZSH_COMPLETION_FILE="$HOME/.zfunc/_rustup"
-if [[ -e "$RUST_ZSH_COMPLETION_FILE" ]] ; then
-    rm -f "$RUST_ZSH_COMPLETION_FILE"
+# Install completion scripts for zsh
+rustup completions zsh > "$HOME/.zfunc/_rustup"
+
+# Install/update rust-analyzer
+if [[ "$OSTYPE" == darwin* ]] ; then
+    RUST_ANALYZER_SUFFIX="mac"
+else
+    RUST_ANALYZER_SUFFIX="linux"
 fi
-rustup completions zsh > "$RUST_ZSH_COMPLETION_FILE"
+
+curl -L https://github.com/rust-analyzer/rust-analyzer/releases/latest/download/rust-analyzer-$RUST_ANALYZER_SUFFIX -o ~/.local/bin/rust-analyzer
+chmod +x ~/.local/bin/rust-analyzer
 
 cd - > /dev/null
