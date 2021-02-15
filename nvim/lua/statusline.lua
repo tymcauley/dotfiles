@@ -1,6 +1,7 @@
 local M = {}
 local gl = require('galaxyline')
 local gls = gl.section
+local condition = require('galaxyline.condition')
 gl.short_line_list = {'packer'}
 
 local colors = {
@@ -26,25 +27,6 @@ local colors = {
 -- Helper functions
 
 local empty_section = function() return '' end
-
--- Returns 'true' if current buffer is not empty
-local is_buffer_not_empty = function()
-    return vim.fn.empty(vim.fn.expand('%:t')) ~= 1
-end
-
--- Returns 'true' if the current buffer is not empty and is in a git workspace
-local is_nonempty_git_buffer = function()
-    return is_buffer_not_empty() and require('galaxyline.provider_vcs').check_git_workspace()
-end
-
--- Returns 'true' if the window width is greater than the given number of columns
-local is_win_width_gt = function(cols)
-    return vim.fn.winwidth(0) > cols
-end
-
-local checkwidth = function(cols)
-    return is_win_width_gt(cols) and is_buffer_not_empty()
-end
 
 local mode_color = function()
     local mode_colors = {
@@ -86,14 +68,6 @@ local mode_string = function()
     return mode_strings[vim.fn.mode()] or default_string
 end
 
--- Width definitions
--- TODO: These should also be a function of available width, not just window
--- width. Any easy way to get that?
-local min_width_1 = 60
-local min_width_2 = 50
-local checkwidth_1 = function() return checkwidth(min_width_1) end
-local checkwidth_2 = function() return checkwidth(min_width_2) end
-
 -- Statusline definition
 
 M.setup = function()
@@ -127,21 +101,21 @@ M.setup = function()
     gls.left[4] = {
         FileIcon = {
             provider = 'FileIcon',
-            condition = is_buffer_not_empty,
+            condition = condition.buffer_not_empty,
             highlight = {require('galaxyline.provider_fileinfo').get_file_icon_color, colors.line_bg},
         }
     }
     gls.left[5] = {
         FileName = {
             provider = 'FileName',
-            condition = is_buffer_not_empty,
+            condition = condition.buffer_not_empty,
             highlight = {colors.fg, colors.line_bg, 'bold'},
         }
     }
     gls.left[6] = {
         SeparatorLeft2 = {
             provider = empty_section,
-            condition = is_buffer_not_empty,
+            condition = condition.buffer_not_empty,
             separator = ' ',
             separator_highlight = {colors.line_bg, colors.bg},
         }
@@ -149,21 +123,21 @@ M.setup = function()
     gls.left[7] = {
         GitIcon = {
             provider = function() return ' ' end,
-            condition = is_nonempty_git_buffer,
+            condition = condition.check_git_workspace,
             highlight = {colors.orange, colors.bg},
         }
     }
     gls.left[8] = {
         GitBranch = {
             provider = 'GitBranch',
-            condition = is_nonempty_git_buffer,
+            condition = condition.check_git_workspace,
             highlight = {colors.fg, colors.bg, 'bold'},
         }
     }
     gls.left[9] = {
         DiffAdd = {
             provider = 'DiffAdd',
-            condition = checkwidth_1,
+            condition = condition.hide_in_width,
             icon = ' ',
             highlight = {colors.green, colors.bg},
         }
@@ -171,7 +145,7 @@ M.setup = function()
     gls.left[10] = {
         DiffModified = {
             provider = 'DiffModified',
-            condition = checkwidth_1,
+            condition = condition.hide_in_width,
             icon = ' ',
             highlight = {colors.orange, colors.bg},
         }
@@ -179,7 +153,7 @@ M.setup = function()
     gls.left[11] = {
         DiffRemove = {
             provider = 'DiffRemove',
-            condition = checkwidth_1,
+            condition = condition.hide_in_width,
             icon = ' ',
             highlight = {colors.red, colors.bg},
         }
@@ -187,7 +161,7 @@ M.setup = function()
     gls.left[12] = {
         SeparatorLeft3 = {
             provider = empty_section,
-            condition = is_buffer_not_empty,
+            condition = condition.buffer_not_empty,
             separator = ' ',
             separator_highlight = {colors.bg, colors.line_bg},
         }
@@ -195,7 +169,7 @@ M.setup = function()
     gls.left[13] = {
         DiagnosticError = {
             provider = 'DiagnosticError',
-            condition = is_buffer_not_empty,
+            condition = condition.buffer_not_empty,
             icon = ' ',
             highlight = {colors.red, colors.line_bg},
             separator = '',
@@ -205,7 +179,7 @@ M.setup = function()
     gls.left[14] = {
         DiagnosticWarn = {
             provider = 'DiagnosticWarn',
-            condition = is_buffer_not_empty,
+            condition = condition.buffer_not_empty,
             icon = ' ',
             highlight = {colors.orange, colors.line_bg},
             separator = '',
@@ -215,7 +189,7 @@ M.setup = function()
     gls.left[15] = {
         DiagnosticInfo = {
             provider = 'DiagnosticInfo',
-            condition = is_buffer_not_empty,
+            condition = condition.buffer_not_empty,
             icon = ' ',
             highlight = {colors.blue, colors.line_bg},
             separator = '',
@@ -240,7 +214,7 @@ M.setup = function()
     gls.right[1]= {
         FileType = {
             provider = function() return vim.bo.filetype end,
-            condition = checkwidth_2,
+            condition = condition.hide_in_width,
             highlight = {colors.fg, colors.line_bg},
         }
     }
@@ -255,7 +229,7 @@ M.setup = function()
     gls.right[3] = {
         FileSize = {
             provider = 'FileSize',
-            condition = is_buffer_not_empty,
+            condition = condition.buffer_not_empty,
             highlight = {colors.fg, colors.line_bg, 'bold'},
             separator = ' ▋ ',
             separator_highlight = {colors.blue, colors.line_bg},
@@ -267,14 +241,14 @@ M.setup = function()
     gls.short_line_left[1] = {
         ShortFileIcon = {
             provider = 'FileIcon',
-            condition = is_buffer_not_empty,
+            condition = condition.buffer_not_empty,
             highlight = {require('galaxyline.provider_fileinfo').get_file_icon_color, colors.bg},
         }
     }
     gls.short_line_left[2] = {
         ShortFileName = {
             provider = 'FileName',
-            condition = is_buffer_not_empty,
+            condition = condition.buffer_not_empty,
             highlight = {colors.fg, colors.bg, 'bold'},
         }
     }
@@ -282,7 +256,7 @@ M.setup = function()
     gls.short_line_right[1]= {
         ShortFileType = {
             provider = function() return vim.bo.filetype end,
-            condition = checkwidth_2,
+            condition = condition.hide_in_width,
             highlight = {colors.fg, colors.bg},
         }
     }
