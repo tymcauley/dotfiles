@@ -2,7 +2,7 @@ local lspconfig = require'lspconfig'
 
 local shared_diagnostic_settings = vim.lsp.with(
     vim.lsp.diagnostic.on_publish_diagnostics,
-    {virtual_text = {prefix = '', truncated = true}}
+    {virtual_text = {prefix = ''}}
 )
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities.textDocument.completion.completionItem.snippetSupport = true
@@ -11,11 +11,11 @@ lspconfig.util.default_config = vim.tbl_extend(
     'force',
     lspconfig.util.default_config,
     {
-      handlers = {
-          ['textDocument/publishDiagnostics'] = shared_diagnostic_settings,
-      },
-      on_attach = require'completion'.on_attach,
-      capabilities = capabilities
+        handlers = {
+            ['textDocument/publishDiagnostics'] = shared_diagnostic_settings,
+        },
+        on_attach = require'completion'.on_attach,
+        capabilities = capabilities
     }
 )
 
