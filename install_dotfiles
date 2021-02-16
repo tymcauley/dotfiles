@@ -95,4 +95,9 @@ if $CFG_INSTALL_NODE_MODS ; then
     $DOTFILES_DIR/node/install.sh
 fi
 
+# Install/update Haskell.
+if $CFG_ENABLE_HASKELL ; then
+    $DOTFILES_DIR/haskell/install.sh
+fi
+
 iecho "Finished!"
