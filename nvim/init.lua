@@ -53,7 +53,30 @@ cmd('autocmd InsertLeave,BufEnter,BufWinEnter,TabEnter,BufWritePost *.rs'..
 -- Treesitter
 
 require'nvim-treesitter.configs'.setup {
-    ensure_installed = "maintained",
+    ensure_installed = {
+        "bash",
+        "c",
+        "comment",
+        "cpp",
+        "devicetree",
+        -- "haskell", -- Currently failing to build (2021-03-23)
+        "html",
+        "java",
+        "javascript",
+        "json",
+        "latex",
+        "lua",
+        "nix",
+        "python",
+        "regex",
+        "rst",
+        "ruby",
+        "rust",
+        "scala",
+        "toml",
+        "verilog",
+        "yaml",
+    },
     highlight = {enable = true},
 }
 
