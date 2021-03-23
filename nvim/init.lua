@@ -78,6 +78,7 @@ require'nvim-treesitter.configs'.setup {
         "yaml",
     },
     highlight = {enable = true},
+    rainbow = {enable = true},
 }
 
 -- completion-nvim

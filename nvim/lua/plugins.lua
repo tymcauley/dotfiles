@@ -42,6 +42,8 @@ return require('packer').startup(function(use)
     -- Treesitter integration into neovim
     use {'nvim-treesitter/nvim-treesitter', run = ':TSUpdate'}
     use {'nvim-treesitter/completion-treesitter'}
+    use {'p00f/nvim-ts-rainbow'}
+    use {'romgrk/nvim-treesitter-context'}
 
     -- Collection of common configurations for the nvim LSP client
     use {'neovim/nvim-lspconfig'}
