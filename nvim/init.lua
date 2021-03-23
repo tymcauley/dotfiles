@@ -25,6 +25,9 @@ end
 cmd [[packadd packer.nvim]]
 require 'plugins'
 
+-- Compile packer config whenever 'plugins.lua' changes
+cmd [[autocmd BufWritePost plugins.lua PackerCompile]]
+
 --
 -- Plugin settings
 --
@@ -258,7 +261,7 @@ opt('o', 'completeopt', 'menuone,noinsert,noselect')
 vim.o.shortmess = string.gsub(vim.o.shortmess, 'F', '') .. 'c'
 
 -- Highlight text after yanking it
-cmd 'au TextYankPost * lua vim.highlight.on_yank {on_visual = false}'
+cmd 'autocmd TextYankPost * lua vim.highlight.on_yank {on_visual = false}'
 
 --
 -- Colors
