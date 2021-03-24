@@ -51,8 +51,11 @@ return require('packer').startup(function(use)
     -- Extensions to built-in LSP, for example, providing type inlay hints
     use {'nvim-lua/lsp_extensions.nvim'}
 
-    -- Autocompletion framework for built-in LSP
-    use {'nvim-lua/completion-nvim'}
+    -- Autocompletion plugin
+    use {
+        'hrsh7th/nvim-compe',
+        requires = {'hrsh7th/vim-vsnip'}
+    }
 
     -- Metals (Scala language server) integration for nvim LSP
     use {'scalameta/nvim-metals'}

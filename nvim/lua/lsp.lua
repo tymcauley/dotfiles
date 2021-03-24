@@ -14,7 +14,6 @@ lspconfig.util.default_config = vim.tbl_extend(
         handlers = {
             ['textDocument/publishDiagnostics'] = shared_diagnostic_settings,
         },
-        on_attach = require'completion'.on_attach,
         capabilities = capabilities
     }
 )
@@ -42,10 +41,6 @@ metals_config.settings = {
   showImplicitArguments = true,
   excludedPackages = {'akka.actor.typed.javadsl', 'com.github.swagger.akka.javadsl'}
 }
-
-metals_config.on_attach = function()
-  require'completion'.on_attach();
-end
 
 metals_config.init_options.statusBarProvider = 'on'
 metals_config.handlers['textDocument/publishDiagnostics'] = shared_diagnostic_settings

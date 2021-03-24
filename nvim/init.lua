@@ -81,10 +81,30 @@ require'nvim-treesitter.configs'.setup {
     rainbow = {enable = true},
 }
 
--- completion-nvim
+-- nvim-compe
+require'compe'.setup {
+    enabled = true;
+    autocomplete = true;
+    debug = false;
+    min_length = 1;
+    preselect = 'enable';
+    throttle_time = 80;
+    source_timeout = 200;
+    incomplete_delay = 400;
+    max_abbr_width = 100;
+    max_kind_width = 100;
+    max_menu_width = 100;
+    documentation = true;
 
--- Use completion-nvim in every buffer
-cmd [[autocmd BufEnter * lua require'completion'.on_attach()]]
+    source = {
+        path = true;
+        buffer = true;
+        calc = true;
+        nvim_lsp = true;
+        nvim_lua = true;
+        vsnip = true;
+    };
+}
 
 -- galaxyline
 require('statusline').setup()
@@ -147,11 +167,18 @@ map('n', 'g[', '<Cmd>lua vim.lsp.diagnostic.goto_prev()<CR>', {silent = true})
 map('n', 'g]', '<Cmd>lua vim.lsp.diagnostic.goto_next()<CR>', {silent = true})
 
 -- telescope.nvim
-
 map('n', '<leader>ff', '<Cmd>lua require("telescope.builtin").find_files()<CR>')
 map('n', '<leader>fg', '<Cmd>lua require("telescope.builtin").live_grep()<CR>')
 map('n', '<leader>fb', '<Cmd>lua require("telescope.builtin").buffers()<CR>')
 map('n', '<leader>fh', '<Cmd>lua require("telescope.builtin").help_tags()<CR>')
+
+-- nvim-compe
+local compe_options = {silent = true, expr = true}
+map('i', '<C-Space>', 'compe#complete()',              compe_options)
+map('i', '<CR>',      'compe#confirm("<CR>")',         compe_options)
+map('i', '<C-e>',     'compe#close("<C-e>")',          compe_options)
+map('i', '<C-f>',     'compe#scroll({ "delta": +4 })', compe_options)
+map('i', '<C-d>',     'compe#scroll({ "delta": -4 })', compe_options)
 
 -- Remove trailing whitespace without affecting the cursor location/search
 -- history.
