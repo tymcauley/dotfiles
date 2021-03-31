@@ -45,6 +45,7 @@ target/
 # Ignore Scala language server folders
 .metals/
 .bloop/
+.bsp/
 
 # Ignore C Language Server (ccls) cache
 .ccls-cache/
