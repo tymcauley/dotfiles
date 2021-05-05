@@ -275,11 +275,10 @@ opt('w', 'relativenumber', true)
 -- Auto-toggling of relative numbers. This will disable relative numbers for
 -- panes that do not have focus, and will also disable relative numbers in
 -- insert mode
-cmd [[augroup numbertoggle]]
-cmd [[    autocmd!]]
-cmd [[    autocmd BufEnter,FocusGained,InsertLeave * set relativenumber]]
-cmd [[    autocmd BufLeave,FocusLost,InsertEnter   * set norelativenumber]]
-cmd [[augroup END]]
+create_augroup("numbertoggle", {
+    {"BufEnter,FocusGained,InsertLeave", "*", "set relativenumber"},
+    {"BufLeave,FocusLost,InsertEnter",   "*", "set norelativenumber"},
+})
 
 -- When opening a new line and no filetype-specific indenting is enabled,
 -- keep the same indent as the line you're currently on. Useful for
