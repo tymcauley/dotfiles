@@ -12,8 +12,9 @@ fi
 # Import custom functions.
 source $DOTFILES_LIB
 
-# Install node packages
+# Install node packages (and update npm)
 NODE_PACKAGES="\
+npm \
 neovim \
 pyright \
 "
