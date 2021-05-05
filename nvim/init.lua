@@ -18,6 +18,24 @@ local function map(mode, lhs, rhs, opts)
     vim.api.nvim_set_keymap(mode, lhs, rhs, options)
 end
 
+-- Define highlight settings
+local function hi(group, opts)
+    local c = "highlight " .. group
+    for k, v in pairs(opts) do
+        c = c .. " " .. k .. "=" .. v
+    end
+    cmd(c)
+end
+
+local function create_augroup(name, autocmds)
+    cmd('augroup ' .. name)
+    cmd('autocmd!')
+    for _, autocmd in ipairs(autocmds) do
+        cmd('autocmd ' .. table.concat(autocmd, ' '))
+    end
+    cmd('augroup END')
+end
+
 --
 -- Plugins
 --
@@ -248,9 +266,7 @@ opt('o', 'scrolloff', 2)
 opt('b', 'spelllang', 'en_us')
 opt('b', 'spellfile', '~/.local/share/nvim/en.utf-8.add')
 opt('b', 'spellcapcheck', '')
--- TODO: Enable 'spell' by default once spell group highlighting is working
--- opt('w', 'spell', true)
-opt('w', 'spell', false)
+opt('w', 'spell', true)
 
 -- Display line numbers with relative line numbers
 opt('w', 'number', true)
@@ -323,12 +339,18 @@ cmd 'colorscheme tempus_summer'
 
 opt('o', 'termguicolors', true)
 
--- Only underline spelling mistakes
--- TODO: this isn't working...
-cmd 'highlight SpellBad   ctermfg=NONE ctermbg=NONE guifg=NONE guibg=NONE guisp=NONE'
-cmd 'highlight SpellCap   ctermfg=NONE ctermbg=NONE guifg=NONE guibg=NONE guisp=NONE'
-cmd 'highlight SpellLocal ctermfg=NONE ctermbg=NONE guifg=NONE guibg=NONE guisp=NONE'
-cmd 'highlight SpellRare  ctermfg=NONE ctermbg=NONE guifg=NONE guibg=NONE guisp=NONE'
-
--- Highlight ruler
-cmd 'highlight ColorColumn ctermbg=18'
+-- For some reason, highlight settings require this strange workaround (an
+-- autocmd which executes a function to set highlight settings after the color
+-- scheme is loaded). All highlight settings should go in this function.
+function MyHighlightSettings()
+    -- Only underline spelling mistakes
+    hi("SpellBad",    {ctermfg = "NONE", ctermbg = "NONE", guifg = "NONE", guibg = "NONE", guisp = "NONE"})
+    hi("SpellCap",    {ctermfg = "NONE", ctermbg = "NONE", guifg = "NONE", guibg = "NONE", guisp = "NONE"})
+    hi("SpellLocal",  {ctermfg = "NONE", ctermbg = "NONE", guifg = "NONE", guibg = "NONE", guisp = "NONE"})
+    hi("SpellRare",   {ctermfg = "NONE", ctermbg = "NONE", guifg = "NONE", guibg = "NONE", guisp = "NONE"})
+    -- Highlight ruler
+    hi("ColorColumn", {ctermbg = "18"})
+end
+create_augroup("MyHighlightSettings", {
+    {"ColorScheme", "*", "lua MyHighlightSettings()"},
+})
