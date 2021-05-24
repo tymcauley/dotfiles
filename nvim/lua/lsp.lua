@@ -21,16 +21,6 @@ lspconfig.util.default_config = vim.tbl_extend(
 -- Enable/configure LSPs
 lspconfig.clangd.setup{}
 
-lspconfig.rust_analyzer.setup({
-    settings = {
-        ["rust-analyzer"] = {
-            checkOnSave = {
-                command = "clippy"
-            }
-        }
-    }
-})
-
 lspconfig.pyright.setup{}
 
 lspconfig.hls.setup{}

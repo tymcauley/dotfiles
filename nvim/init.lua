@@ -54,19 +54,55 @@ cmd [[autocmd BufWritePost plugins.lua PackerCompile]]
 
 g.gitgutter_grep = 'rg --color=never'
 
--- LSP extensions (nvim-lua/lsp_extensions.nvim)
+-- rust-tools (simrat39/rust-tools.nvim)
 
--- Enable type inlay hints for Rust files
-cmd('autocmd InsertLeave,BufEnter,BufWinEnter,TabEnter,BufWritePost *.rs'..
-        ' lua require"lsp_extensions".inlay_hints {'..
-        '   prefix = " » ",'..
-        '   highlight = "NonText",'..
-        '   enabled = {'..
-        '       "ChainingHint",'..
-        '       "TypeHint",'..
-        '       "ParameterHint"'..
-        '   }'..
-        ' }')
+-- This configures the rust-analyzer LSP, so we don't need to set that up in
+-- lsp.lua.
+require'rust-tools'.setup {
+    tools = { -- rust-tools options
+        inlay_hints = {
+            -- prefix for parameter hints
+            parameter_hints_prefix = "<- ",
+
+            -- prefix for all the other hints (type, chaining)
+            other_hints_prefix  = "=> ",
+
+            -- whether to align to the length of the longest line in the file
+            max_len_align = false,
+
+            -- whether to align to the extreme right or not
+            right_align = false,
+        },
+
+        hover_actions = {
+            -- the border that is used for the hover window
+            -- see vim.api.nvim_open_win()
+            border = {
+              {"╭", "FloatBorder"},
+              {"─", "FloatBorder"},
+              {"╮", "FloatBorder"},
+              {"│", "FloatBorder"},
+              {"╯", "FloatBorder"},
+              {"─", "FloatBorder"},
+              {"╰", "FloatBorder"},
+              {"│", "FloatBorder"}
+            },
+        }
+    },
+
+    -- all the opts to send to nvim-lspconfig
+    -- these override the defaults set by rust-tools.nvim
+    -- see https://github.com/neovim/nvim-lspconfig/blob/master/CONFIG.md#rust_analyzer
+    server = {
+        settings = {
+            ["rust-analyzer"] = {
+                checkOnSave = {
+                    command = "clippy"
+                }
+            }
+        }
+    }, -- rust-analyer options
+}
 
 -- Treesitter
 

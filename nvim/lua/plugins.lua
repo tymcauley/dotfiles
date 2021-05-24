@@ -48,8 +48,8 @@ return require('packer').startup(function(use)
     -- Collection of common configurations for the nvim LSP client
     use {'neovim/nvim-lspconfig'}
 
-    -- Extensions to built-in LSP, for example, providing type inlay hints
-    use {'nvim-lua/lsp_extensions.nvim'}
+    -- Extra tools for using rust-analyzer with nvim LSP client.
+    use {'simrat39/rust-tools.nvim'}
 
     -- Autocompletion plugin
     use {
