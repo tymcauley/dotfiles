@@ -57,7 +57,7 @@ g.gitgutter_grep = 'rg --color=never'
 -- rust-tools (simrat39/rust-tools.nvim)
 
 -- This configures the rust-analyzer LSP, so we don't need to set that up in
--- lsp.lua.
+-- lsp.lua
 require'rust-tools'.setup {
     tools = { -- rust-tools options
         inlay_hints = {
@@ -199,7 +199,7 @@ map('n', 'gk', '<Cmd>bp<bar>bd #<CR>')
 
 -- EasyAlign
 -- Note that '<Plug>' mappings depend on the 'noremap' option being unset, so
--- we can't use the 'map' function.
+-- we can't use the 'map' function
 
 -- Start interactive EasyAlign in visual mode (e.g. vipgs)
 vim.api.nvim_set_keymap('x', 'gs', '<Plug>(EasyAlign)', {})
@@ -236,7 +236,7 @@ map('i', '<C-f>',     'compe#scroll({ "delta": +4 })', compe_options)
 map('i', '<C-d>',     'compe#scroll({ "delta": -4 })', compe_options)
 
 -- Remove trailing whitespace without affecting the cursor location/search
--- history.
+-- history
 function _G.trim_whitespace()
     -- TODO: How can we restore the window view after executing this command?
     cmd [[%s/\s\+$//e]]
@@ -349,8 +349,12 @@ opt('w', 'foldtext', 'gitgutter#fold#foldtext()')
 -- Rapidly write swap file to disk, which speeds up gitgutter updates
 opt('o', 'updatetime', 100)
 
--- Set pop-up-menu transparency.
+-- Set pop-up-menu transparency
 opt('o', 'pumblend', 30)
+
+-- Disable netrw (see ':help netrw-noload')
+g.loaded_netrw       = 1
+g.loaded_netrwPlugin = 1
 
 -- LSP settings
 
