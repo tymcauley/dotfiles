@@ -71,4 +71,10 @@ return require('packer').startup(function(use)
         'glepnir/galaxyline.nvim',
         requires = {'kyazdani42/nvim-web-devicons'}
     }
+
+    -- Buffer line
+    use {
+        'romgrk/barbar.nvim',
+        requires = {'kyazdani42/nvim-web-devicons'}
+    }
 end)

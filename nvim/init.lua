@@ -192,10 +192,10 @@ map('n', '<C-j>', '<C-w>j')
 map('n', '<C-k>', '<C-w>k')
 map('n', '<C-l>', '<C-w>l')
 
--- Buffer navigation
-map('n', 'gn', '<Cmd>bn<CR>')
-map('n', 'gp', '<Cmd>bp<CR>')
-map('n', 'gk', '<Cmd>bp<bar>bd #<CR>')
+-- Buffer navigation (barbar.nvim commands)
+map('n', 'gn', '<Cmd>BufferNext<CR>')
+map('n', 'gp', '<Cmd>BufferPrevious<CR>')
+map('n', 'gk', '<Cmd>BufferClose<CR>')
 
 -- EasyAlign
 -- Note that '<Plug>' mappings depend on the 'noremap' option being unset, so
@@ -389,6 +389,11 @@ function MyHighlightSettings()
     hi("SpellRare",   {ctermfg = "NONE", ctermbg = "NONE", guifg = "NONE", guibg = "NONE", guisp = "NONE"})
     -- Highlight ruler
     hi("ColorColumn", {ctermbg = "18"})
+    -- barbar.nvim
+    -- Set 'Buffer*Mod' to the same highlighting as 'Buffer*', but make it bold
+    hi("BufferCurrentMod",  {gui = "bold", guifg = g.terminal_color_15, guibg = g.terminal_color_0})
+    hi("BufferInactiveMod", {gui = "bold", guifg = "#888888",           guibg = g.terminal_color_15})
+    hi("BufferVisibleMod",  {gui = "bold", guifg = g.terminal_color_0,  guibg = g.terminal_color_6})
 end
 create_augroup("MyHighlightSettings", {
     {"ColorScheme", "*", "lua MyHighlightSettings()"},
