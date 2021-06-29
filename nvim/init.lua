@@ -1,5 +1,7 @@
 -- Prelude
 
+local utils = require 'utils'
+
 local cmd = vim.cmd  -- to execute Vim commands e.g. cmd('pwd')
 local fn = vim.fn    -- to call Vim functions e.g. fn.bufnr()
 local g = vim.g      -- a table to access global variables
@@ -16,24 +18,6 @@ local function map(mode, lhs, rhs, opts)
     local options = {noremap = true}
     if opts then options = vim.tbl_extend('force', options, opts) end
     vim.api.nvim_set_keymap(mode, lhs, rhs, options)
-end
-
--- Define highlight settings
-local function hi(group, opts)
-    local c = "highlight " .. group
-    for k, v in pairs(opts) do
-        c = c .. " " .. k .. "=" .. v
-    end
-    cmd(c)
-end
-
-local function create_augroup(name, autocmds)
-    cmd('augroup ' .. name)
-    cmd('autocmd!')
-    for _, autocmd in ipairs(autocmds) do
-        cmd('autocmd ' .. table.concat(autocmd, ' '))
-    end
-    cmd('augroup END')
 end
 
 --
@@ -261,7 +245,7 @@ opt('w', 'relativenumber', true)
 -- Auto-toggling of relative numbers. This will disable relative numbers for
 -- panes that do not have focus, and will also disable relative numbers in
 -- insert mode
-create_augroup("numbertoggle", {
+utils.create_augroup("numbertoggle", {
     {"BufEnter,FocusGained,InsertLeave", "*", "set relativenumber"},
     {"BufLeave,FocusLost,InsertEnter",   "*", "set norelativenumber"},
 })
@@ -333,18 +317,18 @@ opt('o', 'termguicolors', true)
 -- scheme is loaded). All highlight settings should go in this function.
 function MyHighlightSettings()
     -- Only underline spelling mistakes
-    hi("SpellBad",    {ctermfg = "NONE", ctermbg = "NONE", guifg = "NONE", guibg = "NONE", guisp = "NONE"})
-    hi("SpellCap",    {ctermfg = "NONE", ctermbg = "NONE", guifg = "NONE", guibg = "NONE", guisp = "NONE"})
-    hi("SpellLocal",  {ctermfg = "NONE", ctermbg = "NONE", guifg = "NONE", guibg = "NONE", guisp = "NONE"})
-    hi("SpellRare",   {ctermfg = "NONE", ctermbg = "NONE", guifg = "NONE", guibg = "NONE", guisp = "NONE"})
+    utils.hi("SpellBad",    {ctermfg = "NONE", ctermbg = "NONE", guifg = "NONE", guibg = "NONE", guisp = "NONE"})
+    utils.hi("SpellCap",    {ctermfg = "NONE", ctermbg = "NONE", guifg = "NONE", guibg = "NONE", guisp = "NONE"})
+    utils.hi("SpellLocal",  {ctermfg = "NONE", ctermbg = "NONE", guifg = "NONE", guibg = "NONE", guisp = "NONE"})
+    utils.hi("SpellRare",   {ctermfg = "NONE", ctermbg = "NONE", guifg = "NONE", guibg = "NONE", guisp = "NONE"})
     -- Highlight ruler
-    hi("ColorColumn", {ctermbg = "18"})
+    utils.hi("ColorColumn", {ctermbg = "18"})
     -- barbar.nvim
     -- Set 'Buffer*Mod' to the same highlighting as 'Buffer*', but make it bold
-    hi("BufferCurrentMod",  {gui = "bold", guifg = g.terminal_color_15, guibg = g.terminal_color_0})
-    hi("BufferInactiveMod", {gui = "bold", guifg = "#888888",           guibg = g.terminal_color_15})
-    hi("BufferVisibleMod",  {gui = "bold", guifg = g.terminal_color_0,  guibg = g.terminal_color_6})
+    utils.hi("BufferCurrentMod",  {gui = "bold", guifg = g.terminal_color_15, guibg = g.terminal_color_0})
+    utils.hi("BufferInactiveMod", {gui = "bold", guifg = "#888888",           guibg = g.terminal_color_15})
+    utils.hi("BufferVisibleMod",  {gui = "bold", guifg = g.terminal_color_0,  guibg = g.terminal_color_6})
 end
-create_augroup("MyHighlightSettings", {
+utils.create_augroup("MyHighlightSettings", {
     {"ColorScheme", "*", "lua MyHighlightSettings()"},
 })
