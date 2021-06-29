@@ -328,6 +328,10 @@ function MyHighlightSettings()
     utils.hi("BufferCurrentMod",  {gui = "bold", guifg = g.terminal_color_15, guibg = g.terminal_color_0})
     utils.hi("BufferInactiveMod", {gui = "bold", guifg = "#888888",           guibg = g.terminal_color_15})
     utils.hi("BufferVisibleMod",  {gui = "bold", guifg = g.terminal_color_0,  guibg = g.terminal_color_6})
+    -- Enable LSP highlighting
+    cmd([[hi! link LspReferenceText CursorColumn]])
+    cmd([[hi! link LspReferenceRead CursorColumn]])
+    cmd([[hi! link LspReferenceWrite CursorColumn]])
 end
 utils.create_augroup("MyHighlightSettings", {
     {"ColorScheme", "*", "lua MyHighlightSettings()"},

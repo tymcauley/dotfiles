@@ -1,4 +1,5 @@
 local lspconfig = require'lspconfig'
+local utils = require 'utils'
 
 local shared_diagnostic_settings = vim.lsp.with(
     vim.lsp.diagnostic.on_publish_diagnostics,
@@ -18,15 +19,29 @@ lspconfig.util.default_config = vim.tbl_extend(
     }
 )
 
+-- Buffer-local setup function
+local function custom_lsp_attach(client, bufnr)
+    -- Find the client's capabilities
+    local cap = client.resolved_capabilities
+
+    if cap.document_highlight then
+        utils.create_augroup("LspHighlight", {
+            {"CursorHold", "<buffer>", "lua vim.lsp.buf.document_highlight()"},
+            {"CursorMoved", "<buffer>", "lua vim.lsp.buf.clear_references()"},
+        })
+    end
+end
+
 -- Enable/configure LSPs
-lspconfig.clangd.setup{}
+lspconfig.clangd.setup { on_attach = custom_lsp_attach }
 
-lspconfig.pyright.setup{}
+lspconfig.pyright.setup { on_attach = custom_lsp_attach }
 
-lspconfig.hls.setup{}
+lspconfig.hls.setup { on_attach = custom_lsp_attach }
 
 -- nvim-metals (Scala LSP)
 metals_config = require'metals'.bare_config
+metals_config.on_attach = custom_lsp_attach
 metals_config.settings = {
   showImplicitArguments = true,
   excludedPackages = {'akka.actor.typed.javadsl', 'com.github.swagger.akka.javadsl'}
@@ -79,6 +94,7 @@ require'rust-tools'.setup {
     -- these override the defaults set by rust-tools.nvim
     -- see https://github.com/neovim/nvim-lspconfig/blob/master/CONFIG.md#rust_analyzer
     server = {
+        on_attach = custom_lsp_attach,
         settings = {
             ["rust-analyzer"] = {
                 checkOnSave = {
