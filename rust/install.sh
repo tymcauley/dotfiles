@@ -37,12 +37,13 @@ rustup completions zsh > "$HOME/.zfunc/_rustup"
 
 # Install/update rust-analyzer
 if [[ "$OSTYPE" == darwin* ]] ; then
-    RUST_ANALYZER_SUFFIX="mac"
+    RUST_ANALYZER_NAME=rust-analyzer-x86_64-apple-darwin
 else
-    RUST_ANALYZER_SUFFIX="linux"
+    RUST_ANALYZER_NAME=rust-analyzer-x86_64-unknown-linux-gnu
 fi
 
-curl -L https://github.com/rust-analyzer/rust-analyzer/releases/latest/download/rust-analyzer-$RUST_ANALYZER_SUFFIX -o ~/.local/bin/rust-analyzer
+RUST_ANALYZER_URL=https://github.com/rust-analyzer/rust-analyzer/releases/latest/download/$RUST_ANALYZER_NAME.gz
+curl -L $RUST_ANALYZER_URL | gunzip -c - > ~/.local/bin/rust-analyzer
 chmod +x ~/.local/bin/rust-analyzer
 
 cd - > /dev/null
