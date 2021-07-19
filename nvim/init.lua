@@ -101,7 +101,7 @@ require'compe'.setup {
     };
 }
 
--- galaxyline
+-- Setup status line (lualine)
 require('statusline').setup()
 
 -- telescope.nvim

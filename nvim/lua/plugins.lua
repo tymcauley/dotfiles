@@ -68,7 +68,7 @@ return require('packer').startup(function(use)
 
     -- Statusline
     use {
-        'glepnir/galaxyline.nvim',
+        'hoob3rt/lualine.nvim',
         requires = {'kyazdani42/nvim-web-devicons'}
     }
 
