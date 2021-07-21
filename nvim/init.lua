@@ -13,13 +13,6 @@ local function opt(scope, key, value)
     if scope ~= 'o' then scopes['o'][key] = value end
 end
 
--- Define key mappings with 'noremap' option enabled
-local function map(mode, lhs, rhs, opts)
-    local options = {noremap = true}
-    if opts then options = vim.tbl_extend('force', options, opts) end
-    vim.api.nvim_set_keymap(mode, lhs, rhs, options)
-end
-
 --
 -- Plugins
 --
@@ -119,24 +112,24 @@ g.mapleader = [[,]]       -- map by , instead of /
 g.maplocalleader = [[\]]  -- map local by \
 
 -- clear search
-map('n', '<leader>/', '<Cmd>nohlsearch<CR>', {silent = true})
+utils.map('n', '<leader>/', '<Cmd>nohlsearch<CR>', {silent = true})
 
 -- spelling
-map('n', '<leader>s', '<Cmd>set spell!<CR>', {silent = true})
+utils.map('n', '<leader>s', '<Cmd>set spell!<CR>', {silent = true})
 
 -- Delete trailing whitespace
-map('n', '<leader>w', '<Cmd>call v:lua.trim_whitespace()<CR>', {silent = true})
+utils.map('n', '<leader>w', '<Cmd>call v:lua.trim_whitespace()<CR>', {silent = true})
 
 -- Split window navigation
-map('n', '<C-h>', '<C-w>h')
-map('n', '<C-j>', '<C-w>j')
-map('n', '<C-k>', '<C-w>k')
-map('n', '<C-l>', '<C-w>l')
+utils.map('n', '<C-h>', '<C-w>h')
+utils.map('n', '<C-j>', '<C-w>j')
+utils.map('n', '<C-k>', '<C-w>k')
+utils.map('n', '<C-l>', '<C-w>l')
 
 -- Buffer navigation (barbar.nvim commands)
-map('n', 'gn', '<Cmd>BufferNext<CR>')
-map('n', 'gp', '<Cmd>BufferPrevious<CR>')
-map('n', 'gk', '<Cmd>BufferClose<CR>')
+utils.map('n', 'gn', '<Cmd>BufferNext<CR>')
+utils.map('n', 'gp', '<Cmd>BufferPrevious<CR>')
+utils.map('n', 'gk', '<Cmd>BufferClose<CR>')
 
 -- EasyAlign
 -- Note that '<Plug>' mappings depend on the 'noremap' option being unset, so
@@ -148,33 +141,33 @@ vim.api.nvim_set_keymap('x', 'gs', '<Plug>(EasyAlign)', {})
 vim.api.nvim_set_keymap('n', 'gs', '<Plug>(EasyAlign)', {})
 
 -- Enable code folding with the spacebar
-map('n', '<space>', 'za')
+utils.map('n', '<space>', 'za')
 
 -- LSP
-map('n', 'gd', '<Cmd>lua vim.lsp.buf.definition()<CR>',        {silent = true})
-map('n', 'gh', '<Cmd>lua vim.lsp.buf.hover()<CR>',             {silent = true})
-map('n', 'gD', '<Cmd>lua vim.lsp.buf.implementation()<CR>',    {silent = true})
-map('n', 'gH', '<Cmd>lua vim.lsp.buf.signature_help()<CR>',    {silent = true})
-map('n', 'gr', '<Cmd>lua vim.lsp.buf.references()<CR>',        {silent = true})
-map('n', 'gi', '<Cmd>lua vim.lsp.buf.formatting()<CR>',        {silent = true})
-map('n', 'ga', '<Cmd>lua vim.lsp.buf.code_action()<CR>',       {silent = true})
-map('v', 'ga', '<Cmd>lua vim.lsp.buf.range_code_action()<CR>', {silent = true})
-map('n', 'g[', '<Cmd>lua vim.lsp.diagnostic.goto_prev()<CR>',  {silent = true})
-map('n', 'g]', '<Cmd>lua vim.lsp.diagnostic.goto_next()<CR>',  {silent = true})
+utils.map('n', 'gd', '<Cmd>lua vim.lsp.buf.definition()<CR>',        {silent = true})
+utils.map('n', 'gh', '<Cmd>lua vim.lsp.buf.hover()<CR>',             {silent = true})
+utils.map('n', 'gD', '<Cmd>lua vim.lsp.buf.implementation()<CR>',    {silent = true})
+utils.map('n', 'gH', '<Cmd>lua vim.lsp.buf.signature_help()<CR>',    {silent = true})
+utils.map('n', 'gr', '<Cmd>lua vim.lsp.buf.references()<CR>',        {silent = true})
+utils.map('n', 'gi', '<Cmd>lua vim.lsp.buf.formatting()<CR>',        {silent = true})
+utils.map('n', 'ga', '<Cmd>lua vim.lsp.buf.code_action()<CR>',       {silent = true})
+utils.map('v', 'ga', '<Cmd>lua vim.lsp.buf.range_code_action()<CR>', {silent = true})
+utils.map('n', 'g[', '<Cmd>lua vim.lsp.diagnostic.goto_prev()<CR>',  {silent = true})
+utils.map('n', 'g]', '<Cmd>lua vim.lsp.diagnostic.goto_next()<CR>',  {silent = true})
 
 -- telescope.nvim
-map('n', '<leader>ff', '<Cmd>lua require("telescope.builtin").find_files()<CR>')
-map('n', '<leader>fg', '<Cmd>lua require("telescope.builtin").live_grep()<CR>')
-map('n', '<leader>fb', '<Cmd>lua require("telescope.builtin").buffers()<CR>')
-map('n', '<leader>fh', '<Cmd>lua require("telescope.builtin").help_tags()<CR>')
+utils.map('n', '<leader>ff', '<Cmd>lua require("telescope.builtin").find_files()<CR>')
+utils.map('n', '<leader>fg', '<Cmd>lua require("telescope.builtin").live_grep()<CR>')
+utils.map('n', '<leader>fb', '<Cmd>lua require("telescope.builtin").buffers()<CR>')
+utils.map('n', '<leader>fh', '<Cmd>lua require("telescope.builtin").help_tags()<CR>')
 
 -- nvim-compe
 local compe_options = {silent = true, expr = true}
-map('i', '<C-Space>', 'compe#complete()',              compe_options)
-map('i', '<CR>',      'compe#confirm("<CR>")',         compe_options)
-map('i', '<C-e>',     'compe#close("<C-e>")',          compe_options)
-map('i', '<C-f>',     'compe#scroll({ "delta": +4 })', compe_options)
-map('i', '<C-d>',     'compe#scroll({ "delta": -4 })', compe_options)
+utils.map('i', '<C-Space>', 'compe#complete()',              compe_options)
+utils.map('i', '<CR>',      'compe#confirm("<CR>")',         compe_options)
+utils.map('i', '<C-e>',     'compe#close("<C-e>")',          compe_options)
+utils.map('i', '<C-f>',     'compe#scroll({ "delta": +4 })', compe_options)
+utils.map('i', '<C-d>',     'compe#scroll({ "delta": -4 })', compe_options)
 
 -- Remove trailing whitespace without affecting the cursor location/search
 -- history
