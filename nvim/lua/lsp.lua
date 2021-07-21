@@ -24,12 +24,30 @@ local function custom_lsp_attach(client, bufnr)
     -- Find the client's capabilities
     local cap = client.resolved_capabilities
 
+    -- Setup LSP highlighting
     if cap.document_highlight then
         utils.create_augroup("LspHighlight", {
             {"CursorHold", "<buffer>", "lua vim.lsp.buf.document_highlight()"},
             {"CursorMoved", "<buffer>", "lua vim.lsp.buf.clear_references()"},
         })
     end
+
+    -- Setup key mappings
+    utils.map('n', 'gla',  '<Cmd>lua vim.lsp.buf.code_action()<CR>',                                {silent = true})
+    utils.map('v', 'gla',  '<Cmd>lua vim.lsp.buf.range_code_action()<CR>',                          {silent = true})
+    utils.map('n', 'gld',  '<Cmd>lua vim.lsp.buf.definition()<CR>',                                 {silent = true})
+    utils.map('n', 'glD',  '<Cmd>lua vim.lsp.buf.declaration()<CR>',                                {silent = true})
+    utils.map('n', 'glf',  '<Cmd>lua vim.lsp.buf.formatting()<CR>',                                 {silent = true})
+    utils.map('n', 'glh',  '<Cmd>lua vim.lsp.buf.hover()<CR>',                                      {silent = true})
+    utils.map('n', 'glH',  '<Cmd>lua vim.lsp.buf.signature_help()<CR>',                             {silent = true})
+    utils.map('n', 'gli',  '<Cmd>lua vim.lsp.buf.implementation()<CR>',                             {silent = true})
+    utils.map('n', 'glj',  '<Cmd>lua vim.lsp.diagnostic.goto_next()<CR>',                           {silent = true})
+    utils.map('n', 'glk',  '<Cmd>lua vim.lsp.diagnostic.goto_prev()<CR>',                           {silent = true})
+    utils.map('n', 'gln',  '<Cmd>lua vim.lsp.buf.rename()<CR>',                                     {silent = true})
+    utils.map('n', 'glr',  '<Cmd>lua vim.lsp.buf.references()<CR>',                                 {silent = true})
+    utils.map('n', 'gltd', '<Cmd>lua vim.lsp.buf.type_definition()<CR>',                            {silent = true})
+    utils.map('n', 'glwl', '<Cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>', {silent = true})
+    utils.map('n', 'glx',  '<Cmd>lua vim.lsp.stop_client(vim.lsp.get_active_clients())<CR>',        {silent = true})
 end
 
 -- Enable/configure LSPs
@@ -40,6 +58,7 @@ lspconfig.pyright.setup { on_attach = custom_lsp_attach }
 lspconfig.hls.setup { on_attach = custom_lsp_attach }
 
 -- nvim-metals (Scala LSP)
+
 metals_config = require'metals'.bare_config
 metals_config.on_attach = custom_lsp_attach
 metals_config.settings = {

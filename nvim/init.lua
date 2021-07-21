@@ -143,18 +143,6 @@ vim.api.nvim_set_keymap('n', 'gs', '<Plug>(EasyAlign)', {})
 -- Enable code folding with the spacebar
 utils.map('n', '<space>', 'za')
 
--- LSP
-utils.map('n', 'gd', '<Cmd>lua vim.lsp.buf.definition()<CR>',        {silent = true})
-utils.map('n', 'gh', '<Cmd>lua vim.lsp.buf.hover()<CR>',             {silent = true})
-utils.map('n', 'gD', '<Cmd>lua vim.lsp.buf.implementation()<CR>',    {silent = true})
-utils.map('n', 'gH', '<Cmd>lua vim.lsp.buf.signature_help()<CR>',    {silent = true})
-utils.map('n', 'gr', '<Cmd>lua vim.lsp.buf.references()<CR>',        {silent = true})
-utils.map('n', 'gi', '<Cmd>lua vim.lsp.buf.formatting()<CR>',        {silent = true})
-utils.map('n', 'ga', '<Cmd>lua vim.lsp.buf.code_action()<CR>',       {silent = true})
-utils.map('v', 'ga', '<Cmd>lua vim.lsp.buf.range_code_action()<CR>', {silent = true})
-utils.map('n', 'g[', '<Cmd>lua vim.lsp.diagnostic.goto_prev()<CR>',  {silent = true})
-utils.map('n', 'g]', '<Cmd>lua vim.lsp.diagnostic.goto_next()<CR>',  {silent = true})
-
 -- telescope.nvim
 utils.map('n', '<leader>ff', '<Cmd>lua require("telescope.builtin").find_files()<CR>')
 utils.map('n', '<leader>fg', '<Cmd>lua require("telescope.builtin").live_grep()<CR>')
