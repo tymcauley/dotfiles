@@ -1,5 +1,6 @@
 local M = {}
 local ll = require('lualine')
+local lsp_status = require('lsp-status')
 
 -- Returns a single character representing the current Vim mode.
 --
@@ -24,6 +25,11 @@ local function mode_single_character()
     return mode_strings[vim.fn.mode()] or default_string
 end
 
+-- Returns true if the buffer is connected to at least one LSP client
+local function is_lsp_active()
+    return #vim.lsp.buf_get_clients() > 0
+end
+
 M.setup = function()
     local ll_options = {
         section_separators = {'', ''},
@@ -41,7 +47,6 @@ M.setup = function()
             'diff',
         },
         lualine_x = {
-            {'diagnostics', sources = {'nvim_lsp'}},
             -- Display nvim-metals status for Scala files
             {
                 function()
@@ -51,7 +56,21 @@ M.setup = function()
                     local filetype = vim.bo.filetype
                     return filetype == 'scala' or filetype == 'sbt'
                 end,
-            }
+            },
+            -- Display LSP status
+            {
+                lsp_status.status_progress,
+                condition = is_lsp_active,
+            },
+            -- Display current function from LSP
+            {
+                function()
+                    return vim.b.lsp_current_function or ''
+                end,
+                condition = is_lsp_active,
+            },
+            -- LSP diagnostics
+            {'diagnostics', sources = {'nvim_lsp'}},
         },
         lualine_y = {'filetype'},
         lualine_z = {'progress', 'location'},

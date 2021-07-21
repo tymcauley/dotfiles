@@ -48,6 +48,9 @@ return require('packer').startup(function(use)
     -- Collection of common configurations for the nvim LSP client
     use {'neovim/nvim-lspconfig'}
 
+    -- LSP statusline components
+    use {'nvim-lua/lsp-status.nvim'}
+
     -- Extra tools for using rust-analyzer with nvim LSP client.
     use {'simrat39/rust-tools.nvim'}
 

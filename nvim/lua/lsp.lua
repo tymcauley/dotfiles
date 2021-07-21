@@ -1,5 +1,10 @@
-local lspconfig = require'lspconfig'
-local utils = require 'utils'
+local lspconfig = require('lspconfig')
+local utils = require('utils')
+local lsp_status = require('lsp-status')
+
+-- Register the progress handler, so we can print LSP server progress messages
+-- in the statusline.
+lsp_status.register_progress()
 
 -- Customize diagnostic symbols in the gutter
 local signs = { Error = " ", Warning = " ", Hint = " ", Information = " " }
@@ -31,6 +36,9 @@ local shared_hover_settings = vim.lsp.with(
 )
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities.textDocument.completion.completionItem.snippetSupport = true
+
+-- Extend default capabilities with 'window/workDoneProgress'
+capabilities = vim.tbl_extend('keep', capabilities or {}, lsp_status.capabilities)
 
 lspconfig.util.default_config = vim.tbl_extend(
     'force',
@@ -74,6 +82,10 @@ local function custom_lsp_attach(client, bufnr)
     utils.map('n', 'gltd', '<Cmd>lua vim.lsp.buf.type_definition()<CR>',                            {silent = true})
     utils.map('n', 'glwl', '<Cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>', {silent = true})
     utils.map('n', 'glx',  '<Cmd>lua vim.lsp.stop_client(vim.lsp.get_active_clients())<CR>',        {silent = true})
+
+    -- Register client for messages and set up buffer autocommands to update
+    -- the statusline and the current function.
+    lsp_status.on_attach(client)
 end
 
 -- Enable/configure LSPs
