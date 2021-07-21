@@ -60,11 +60,16 @@ local function custom_lsp_attach(client, bufnr)
 end
 
 -- Enable/configure LSPs
-lspconfig.clangd.setup { on_attach = custom_lsp_attach }
 
-lspconfig.pyright.setup { on_attach = custom_lsp_attach }
-
-lspconfig.hls.setup { on_attach = custom_lsp_attach }
+local servers = { "clangd", "pyright", "hls" }
+for _, lsp in ipairs(servers) do
+    lspconfig[lsp].setup {
+        on_attach = custom_lsp_attach,
+        flags = {
+            debounce_text_changes = 150,
+        }
+    }
+end
 
 -- nvim-metals (Scala LSP)
 
@@ -122,6 +127,9 @@ require'rust-tools'.setup {
     -- see https://github.com/neovim/nvim-lspconfig/blob/master/CONFIG.md#rust_analyzer
     server = {
         on_attach = custom_lsp_attach,
+        flags = {
+            debounce_text_changes = 150,
+        },
         settings = {
             ["rust-analyzer"] = {
                 checkOnSave = {
