@@ -10,9 +10,24 @@ end
 
 -- Default LSP settings
 
+local border = {
+    {"╭", "FloatBorder"},
+    {"─", "FloatBorder"},
+    {"╮", "FloatBorder"},
+    {"│", "FloatBorder"},
+    {"╯", "FloatBorder"},
+    {"─", "FloatBorder"},
+    {"╰", "FloatBorder"},
+    {"│", "FloatBorder"},
+}
+
 local shared_diagnostic_settings = vim.lsp.with(
     vim.lsp.diagnostic.on_publish_diagnostics,
     {virtual_text = {prefix = "■ "}}
+)
+local shared_hover_settings = vim.lsp.with(
+    vim.lsp.handlers.hover,
+    {border = border}
 )
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities.textDocument.completion.completionItem.snippetSupport = true
@@ -23,6 +38,8 @@ lspconfig.util.default_config = vim.tbl_extend(
     {
         handlers = {
             ['textDocument/publishDiagnostics'] = shared_diagnostic_settings,
+            ['textDocument/hover']              = shared_hover_settings,
+            ['textDocument/signatureHelp']      = shared_hover_settings,
         },
         capabilities = capabilities
     }
@@ -109,16 +126,7 @@ require'rust-tools'.setup {
         hover_actions = {
             -- the border that is used for the hover window
             -- see vim.api.nvim_open_win()
-            border = {
-              {"╭", "FloatBorder"},
-              {"─", "FloatBorder"},
-              {"╮", "FloatBorder"},
-              {"│", "FloatBorder"},
-              {"╯", "FloatBorder"},
-              {"─", "FloatBorder"},
-              {"╰", "FloatBorder"},
-              {"│", "FloatBorder"}
-            },
+            border = border,
         }
     },
 
