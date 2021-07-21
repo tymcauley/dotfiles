@@ -1,9 +1,18 @@
 local lspconfig = require'lspconfig'
 local utils = require 'utils'
 
+-- Customize diagnostic symbols in the gutter
+local signs = { Error = " ", Warning = " ", Hint = " ", Information = " " }
+for type, icon in pairs(signs) do
+    local hl = "LspDiagnosticsSign" .. type
+    vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = "" })
+end
+
+-- Default LSP settings
+
 local shared_diagnostic_settings = vim.lsp.with(
     vim.lsp.diagnostic.on_publish_diagnostics,
-    {virtual_text = {prefix = ''}}
+    {virtual_text = {prefix = "■ "}}
 )
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities.textDocument.completion.completionItem.snippetSupport = true
@@ -70,10 +79,9 @@ metals_config.init_options.statusBarProvider = 'on'
 metals_config.handlers['textDocument/publishDiagnostics'] = shared_diagnostic_settings
 metals_config.capabilities = capabilities
 
-vim.cmd [[augroup lsp]]
-vim.cmd [[autocmd!]]
-vim.cmd [[autocmd FileType scala,sbt lua require("metals").initialize_or_attach(metals_config)]]
-vim.cmd [[augroup end]]
+utils.create_augroup("LspMetals", {
+    {"FileType", "scala,sbt", "lua require(\"metals\").initialize_or_attach(metals_config)"},
+})
 
 -- rust-tools (simrat39/rust-tools.nvim)
 
