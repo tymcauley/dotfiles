@@ -34,9 +34,18 @@ cmd [[autocmd BufWritePost plugins.lua PackerCompile]]
 -- Plugin settings
 --
 
--- gitgutter
+-- gitsigns.nvim
 
-g.gitgutter_grep = 'rg --color=never'
+require('gitsigns').setup {
+    signs = {
+        add          = { text = '+' },
+        change       = { text = '~' },
+        delete       = { text = '_' },
+        topdelete    = { text = '‾' },
+        changedelete = { text = '~' },
+    },
+    numhl = true,
+}
 
 -- Treesitter
 
@@ -268,12 +277,6 @@ opt('o', 'splitright', true)
 -- Enable code folding, initialize with folds disabled
 opt('w', 'foldmethod', 'indent')
 opt('w', 'foldlevel', 99)
-
--- Indicate if folded lines have been changed
-opt('w', 'foldtext', 'gitgutter#fold#foldtext()')
-
--- Rapidly write swap file to disk, which speeds up gitgutter updates
-opt('o', 'updatetime', 100)
 
 -- Set pop-up-menu transparency
 opt('o', 'pumblend', 30)

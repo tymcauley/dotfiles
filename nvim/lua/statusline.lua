@@ -43,8 +43,8 @@ M.setup = function()
         -- TODO: It would be nice to prefix the file name with the file icon
         lualine_b = {'filename'},
         lualine_c = {
-            {'branch', icon = ''},
-            'diff',
+            {'b:gitsigns_head', icon = ''},
+            'b:gitsigns_status'
         },
         lualine_x = {
             -- Display nvim-metals status for Scala files

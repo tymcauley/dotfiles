@@ -34,7 +34,10 @@ return require('packer').startup(function(use)
 
     -- Add nice integration with git
     use {'tpope/vim-fugitive'}
-    use {'airblade/vim-gitgutter'}
+    use {
+        'lewis6991/gitsigns.nvim',
+        requires = {'nvim-lua/plenary.nvim'}
+    }
 
     -- Languages
     use {'rust-lang/rust.vim'}
