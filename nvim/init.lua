@@ -18,13 +18,12 @@ end
 --
 
 -- Bootstrap packer installation
-local install_path = fn.stdpath('data')..'/site/pack/packer/opt/packer.nvim'
+local install_path = fn.stdpath('data')..'/site/pack/packer/start/packer.nvim'
 if fn.empty(fn.glob(install_path)) > 0 then
     fn.system({'git', 'clone', 'https://github.com/wbthomason/packer.nvim', install_path})
     vim.api.nvim_command 'packadd packer.nvim'
 end
 
-cmd [[packadd packer.nvim]]
 require 'plugins'
 
 -- Compile packer config whenever 'plugins.lua' changes

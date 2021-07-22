@@ -1,6 +1,6 @@
-return require('packer').startup(function(use)
+return require('packer').startup({function()
     -- Plugin manager
-    use {'wbthomason/packer.nvim', opt = true}
+    use {'wbthomason/packer.nvim'}
 
     -- Column-align multiple lines
     use {'junegunn/vim-easy-align'}
@@ -83,4 +83,11 @@ return require('packer').startup(function(use)
         'romgrk/barbar.nvim',
         requires = {'kyazdani42/nvim-web-devicons'}
     }
-end)
+end,
+config = {
+    display = {
+        open_fn = function()
+            return require('packer.util').float({ border = 'single' })
+        end
+    },
+}})
