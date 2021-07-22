@@ -28,7 +28,7 @@ local border = {
 
 local shared_diagnostic_settings = vim.lsp.with(
     vim.lsp.diagnostic.on_publish_diagnostics,
-    {virtual_text = {prefix = "■ "}}
+    {virtual_text = false}
 )
 local shared_hover_settings = vim.lsp.with(
     vim.lsp.handlers.hover,
