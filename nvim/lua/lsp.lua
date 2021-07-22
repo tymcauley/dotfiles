@@ -66,21 +66,27 @@ local function custom_lsp_attach(client, bufnr)
         })
     end
 
+    -- Shortcut for using telescope as the picker
+    local function telescope(picker)
+        return string.format("<Cmd>lua require('telescope.builtin').%s()<CR>", picker)
+    end
+
     -- Setup key mappings
-    utils.map('n', 'gla',  '<Cmd>lua vim.lsp.buf.code_action()<CR>',                                {silent = true})
-    utils.map('v', 'gla',  '<Cmd>lua vim.lsp.buf.range_code_action()<CR>',                          {silent = true})
-    utils.map('n', 'gld',  '<Cmd>lua vim.lsp.buf.definition()<CR>',                                 {silent = true})
+    utils.map('n', 'gla',  telescope('lsp_code_actions'),                                           {silent = true})
+    utils.map('v', 'gla',  telescope('lsp_range_code_actions'),                                     {silent = true})
+    utils.map('n', 'gld',  telescope('lsp_definitions'),                                            {silent = true})
     utils.map('n', 'glD',  '<Cmd>lua vim.lsp.buf.declaration()<CR>',                                {silent = true})
     utils.map('n', 'glf',  '<Cmd>lua vim.lsp.buf.formatting()<CR>',                                 {silent = true})
     utils.map('n', 'glh',  '<Cmd>lua vim.lsp.buf.hover()<CR>',                                      {silent = true})
     utils.map('n', 'glH',  '<Cmd>lua vim.lsp.buf.signature_help()<CR>',                             {silent = true})
-    utils.map('n', 'gli',  '<Cmd>lua vim.lsp.buf.implementation()<CR>',                             {silent = true})
+    utils.map('n', 'gli',  telescope('lsp_implementations'),                                        {silent = true})
     utils.map('n', 'glj',  '<Cmd>lua vim.lsp.diagnostic.goto_next()<CR>',                           {silent = true})
     utils.map('n', 'glk',  '<Cmd>lua vim.lsp.diagnostic.goto_prev()<CR>',                           {silent = true})
     utils.map('n', 'gln',  '<Cmd>lua vim.lsp.buf.rename()<CR>',                                     {silent = true})
-    utils.map('n', 'glr',  '<Cmd>lua vim.lsp.buf.references()<CR>',                                 {silent = true})
+    utils.map('n', 'glr',  telescope('lsp_references'),                                             {silent = true})
     utils.map('n', 'gltd', '<Cmd>lua vim.lsp.buf.type_definition()<CR>',                            {silent = true})
     utils.map('n', 'glwl', '<Cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>', {silent = true})
+    utils.map('n', 'glws', telescope('lsp_workspace_symbols'),                                      {silent = true})
     utils.map('n', 'glx',  '<Cmd>lua vim.lsp.stop_client(vim.lsp.get_active_clients())<CR>',        {silent = true})
 
     -- Register client for messages and set up buffer autocommands to update
