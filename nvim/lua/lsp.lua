@@ -133,6 +133,9 @@ require'rust-tools'.setup {
 
             -- whether to align to the extreme right or not
             right_align = false,
+
+            -- the highlight color of the hints
+            highlight = "Comment",
         },
 
         hover_actions = {
