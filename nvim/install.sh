@@ -12,11 +12,6 @@ fi
 # Import custom functions.
 source $DOTFILES_LIB
 
-# Install neovim package manager if it isn't present.
-if [[ ! -d "$HOME/.local/share/nvim/site/pack/packer/opt/packer.nvim" ]]; then
-    git clone https://github.com/wbthomason/packer.nvim "$HOME/.local/share/nvim/site/pack/packer/opt/packer.nvim"
-fi
-
 # Install neovim config file.
 install_file "$HOME/.config/nvim/init.lua" "$(pwd)/init.lua"
 
