@@ -1,6 +1,6 @@
 #!/bin/bash -e
 
-# Customize zsh installation.
+# Customize zsh installation
 
 cd $(dirname $0)
 
@@ -9,48 +9,31 @@ if [[ -z "$DOTFILES_DIR" ]] ; then
     exit 2
 fi
 
-# Import custom functions.
+# Import custom functions
 source $DOTFILES_LIB
 
-# Make sure the custom fpath directory exists. This directory holds completion scripts for zsh that the user can
-# install.
-ZFUNC_PATH="$HOME/.zfunc"
-if [[ ! -e "$ZFUNC_PATH" ]] ; then
-    mkdir ~/.zfunc
+# Install/update oh-my-zsh
+OMZ="$HOME/.oh-my-zsh"
+if [[ ! -d "$OMZ" ]] ; then
+    sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
+else
+    omz update
 fi
 
-# Install powerline10k config file.
+# Make sure the custom fpath directory exists
+FPATH_DIR="$OMZ/completions"
+if [[ ! -e "$FPATH_DIR" ]] ; then
+    mkdir "$FPATH_DIR"
+fi
+
+# Install powerline10k config file
 install_file "$HOME/.p10k.zsh" "$(pwd)/p10k.zsh"
 
-# Clone zprezto repo and install it.
-ZPREZTO_PATH="$HOME/.zprezto"
+# Install zshrc
+install_file "$HOME/.zshrc" "$(pwd)/zshrc"
 
-if [[ -d "$ZPREZTO_PATH" ]] ; then
-    cd "$ZPREZTO_PATH"
-
-    # Check if we have an upstream remote configured. If we don't then
-    # configure one.
-    if ! git remote -v | grep -q '^upstream' > /dev/null 2>&1 ; then
-        git remote add upstream https://github.com/sorin-ionescu/prezto.git
-    fi
-
-    iecho "To update prezto from upstream:"
-    echo "  cd $ZPREZTO_PATH"
-    echo "  git fetch upstream"
-    echo "  git checkout master"
-    echo "  git rebase upstream/master"
-    echo "  git push -f origin master"
-
-    cd - > /dev/null
-else
-    # Clone ZSH configuration files.
-    git clone --recursive https://github.com/tymcauley/prezto.git "$ZPREZTO_PATH"
-
-    # Install ZSH configuration.
-    for rcfile in $ZPREZTO_PATH/runcoms/z* ; do
-        rcfile_name=$(basename $rcfile)
-        ln -s -v "$rcfile" "$HOME/.$rcfile_name"
-    done
-fi
+# Install/update oh-my-zsh add-ons
+git_clone_or_update https://github.com/romkatv/powerlevel10k.git "$OMZ/custom/themes/powerlevel10k"
+git_clone_or_update https://github.com/jeffreytse/zsh-vi-mode "$OMZ/custom/plugins/zsh-vi-mode"
 
 cd - > /dev/null

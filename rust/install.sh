@@ -32,8 +32,10 @@ iecho "Updating Rust"
 # Update installed Rust components/toolchains
 rustup update
 
-# Install completion scripts for zsh
-rustup completions zsh > "$HOME/.zfunc/_rustup"
+# Install zsh completions
+if [[ ! -z "$ZSH" ]] ; then
+    rustup completions zsh > "$ZSH/completions/_rustup"
+fi
 
 # Install/update rust-analyzer
 if [[ "$OSTYPE" == darwin* ]] ; then

@@ -22,7 +22,9 @@ if ! command -v cs > /dev/null 2>&1 ; then
 fi
 
 # Install zsh completions
-cs --completions zsh > "$HOME/.zfunc/cs"
+if [[ ! -z "$ZSH" ]] ; then
+    cs --completions zsh > "$ZSH/completions/cs"
+fi
 
 # Install cousier tools
 COURSIER_TOOLS="\
