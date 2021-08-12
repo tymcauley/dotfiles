@@ -19,12 +19,10 @@ eecho () { echo "E[$(pretty_time)] $@"; }
 git_clone_or_update () {
     if [[ -d "$2" ]] ; then
         iecho "Updating $2 from $1"
-        cd $2
-        git pull
-        cd - > /dev/null
+        git -C "$2" pull
     else
         iecho "Cloning $1 into $2"
-        git clone $1 $2
+        git clone "$1" "$2"
     fi
 }
 
