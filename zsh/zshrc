@@ -76,6 +76,12 @@ HIST_STAMPS="yyyy-mm-dd"
 export HISTSIZE=100000
 export SAVEHIST=100000
 
+# Don't share history between all sessions
+unsetopt SHARE_HISTORY
+
+# Report the status of background and suspended jobs before exiting
+setopt CHECK_JOBS
+
 # Customize zsh-vi-mode plugin
 function zvm_config() {
   # Go to insert mode with each new shell prompt
@@ -151,9 +157,6 @@ fi
 
 # Setup git aliases
 [[ -f "$HOME/.config/git.zsh" ]] && source "$HOME/.config/git.zsh"
-
-# Report the status of background and suspended jobs before exiting
-setopt CHECK_JOBS
 
 # Setup default text editor
 if command -v nvim > /dev/null 2>&1 ; then
