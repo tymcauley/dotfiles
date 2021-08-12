@@ -86,6 +86,8 @@ setopt CHECK_JOBS
 function zvm_config() {
   # Go to insert mode with each new shell prompt
   ZVM_LINE_INIT_MODE=$ZVM_MODE_INSERT
+  # Speed up the insert-to-normal-mode transition
+  ZVM_ESCAPE_KEYTIMEOUT=0.001
 }
 
 # Which plugins would you like to load?
