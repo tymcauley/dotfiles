@@ -60,3 +60,9 @@ compile_commands.json
 # Direnv files
 .direnv
 .envrc
+
+# Haskell/Cabal
+dist/
+dist-*/
+cabal.project.local
+cabal.project.local~
