@@ -12,13 +12,6 @@ fi
 # Import custom functions.
 source $DOTFILES_LIB
 
-# Make sure there's a zsh executable installed.
-ZSH_PATH=$(which zsh)
-if [[ ! -x "$ZSH_PATH" ]] ; then
-    eecho "Could not detect a zsh executable (ZSH_PATH='$ZSH_PATH')"
-    exit 1
-fi
-
 # Make sure the custom fpath directory exists. This directory holds completion scripts for zsh that the user can
 # install.
 ZFUNC_PATH="$HOME/.zfunc"
@@ -58,25 +51,6 @@ else
         rcfile_name=$(basename $rcfile)
         ln -s -v "$rcfile" "$HOME/.$rcfile_name"
     done
-fi
-
-if $CFG_CHANGE_SHELL_TO_ZSH ; then
-    # If necessary, change the user's shell to zsh.
-    if [[ "$SHELL" != "$ZSH_PATH" ]] ; then
-        iecho "Changing shell from '$SHELL' to '$ZSH_PATH'"
-        # Only the root user is allowed to use a shell that is not in /etc/shells.
-        if [[ "$(id -u)" != "0" ]] ; then
-            SHELLS_FILE=/etc/shells
-            # Make sure $ZSH_PATH is in $SHELLS_FILE.
-            if ! grep -q "$ZSH_PATH" $SHELLS_FILE ; then
-                eecho "Since you aren't the super-user, '$ZSH_PATH' must be in '$SHELLS_FILE'"
-                eecho "Execute this command to fix that:"
-                echo "  sudo echo $ZSH_PATH >> $SHELLS_FILE"
-                exit 1
-            fi
-        fi
-        chsh -s $ZSH_PATH
-    fi
 fi
 
 cd - > /dev/null
