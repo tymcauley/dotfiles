@@ -43,7 +43,6 @@ require('gitsigns').setup {
         topdelete    = { text = '‾' },
         changedelete = { text = '~' },
     },
-    numhl = true,
 }
 
 -- Treesitter
