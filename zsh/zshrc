@@ -76,12 +76,6 @@ HIST_STAMPS="yyyy-mm-dd"
 export HISTSIZE=100000
 export SAVEHIST=100000
 
-# Don't share history between all sessions
-unsetopt SHARE_HISTORY
-
-# Report the status of background and suspended jobs before exiting
-setopt CHECK_JOBS
-
 # Customize zsh-vi-mode plugin
 function zvm_config() {
   # Go to insert mode with each new shell prompt
@@ -126,6 +120,12 @@ source $ZSH/oh-my-zsh.sh
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
+
+# Don't share history between all sessions
+unsetopt SHARE_HISTORY
+
+# Report the status of background and suspended jobs before exiting
+setopt CHECK_JOBS
 
 # Load system-specific modifications to the shell
 [[ -f "$HOME/.zshrc.local" ]] && source "$HOME/.zshrc.local"
