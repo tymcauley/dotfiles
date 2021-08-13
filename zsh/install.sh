@@ -12,12 +12,10 @@ fi
 # Import custom functions
 source $DOTFILES_LIB
 
-# Install/update oh-my-zsh
+# Install oh-my-zsh
 OMZ="$HOME/.oh-my-zsh"
 if [[ ! -d "$OMZ" ]] ; then
     sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
-else
-    omz update
 fi
 
 # Make sure the custom fpath directory exists
