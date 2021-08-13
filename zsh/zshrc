@@ -84,6 +84,25 @@ function zvm_config() {
   ZVM_ESCAPE_KEYTIMEOUT=0.001
 }
 
+# zsh-vi-mode overwrites key bindings, so all key bindings should go here
+function zvm_after_init() {
+  # fzf setup
+  [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+  if command -v fzf > /dev/null 2>&1 ; then
+    if command -v fd > /dev/null 2>&1 ; then
+      export FZF_DEFAULT_COMMAND="fd --type f --hidden --follow"
+      export FZF_CTRL_T_COMMAND="fd --type f --follow"
+    fi
+
+    # Search history with fzf if it is present
+    bindkey -M vicmd "/" fzf-history-widget
+
+    # Use fzf to find files/directories
+    bindkey -M vicmd "gf" fzf-file-widget
+    bindkey -M vicmd "gd" fzf-cd-widget
+  fi
+}
+
 # Which plugins would you like to load?
 # Standard plugins can be found in $ZSH/plugins/
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
@@ -189,22 +208,6 @@ if command -v exa > /dev/null 2>&1 ; then
   alias llt="ll --tree"
   alias llst="ll --sort=newest" # Sort by modified time, most recent at the bottom
   alias llss="ll --sort=size"   # Sort by size, largest at the bottom
-fi
-
-# fzf setup
-[[ -f ~/.fzf.zsh ]] && source ~/.fzf.zsh
-if command -v fzf > /dev/null 2>&1 ; then
-  if command -v fd > /dev/null 2>&1 ; then
-    export FZF_DEFAULT_COMMAND="fd --type f --hidden --follow"
-    export FZF_CTRL_T_COMMAND="fd --type f --follow"
-  fi
-
-  # Search history with fzf if it is present
-  bindkey -M vicmd "/" fzf-history-widget
-
-  # Use fzf to find files/directories
-  bindkey -M vicmd "gf" fzf-file-widget
-  bindkey -M vicmd "gd" fzf-cd-widget
 fi
 
 # Setup shell prompt
