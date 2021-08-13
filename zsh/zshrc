@@ -127,9 +127,14 @@ source $ZSH/oh-my-zsh.sh
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
+# Load system-specific modifications to the shell
+[[ -f "$HOME/.zshrc.local" ]] && source "$HOME/.zshrc.local"
+
 # Add Scala tools to PATH
 export COURSIER_BIN_DIR="$HOME/.local/share/coursier/bin"
 [[ -d "$COURSIER_BIN_DIR" ]] && path=("$COURSIER_BIN_DIR" $path)
+[ -z ${SDKMAN_DIR+x} ] && export SDKMAN_DIR="$HOME/.sdkman"
+[[ -s "$SDKMAN_DIR/bin/sdkman-init.sh" ]] && source "$SDKMAN_DIR/bin/sdkman-init.sh"
 
 # Add Haskell tools to PATH
 [[ -f "$HOME/.ghcup/env" ]] && source "$HOME/.ghcup/env"
@@ -153,9 +158,6 @@ fi
 
 # Set up modifications for Python REPL
 [[ -f "$HOME/.pystartup" ]] && export PYTHONSTARTUP="$HOME/.pystartup"
-
-# Load system-specific modifications to the shell
-[[ -f "$HOME/.zshrc.local" ]] && source "$HOME/.zshrc.local"
 
 # Setup git aliases
 [[ -f "$HOME/.config/git.zsh" ]] && source "$HOME/.config/git.zsh"
