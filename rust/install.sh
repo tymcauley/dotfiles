@@ -48,4 +48,13 @@ RUST_ANALYZER_URL=https://github.com/rust-analyzer/rust-analyzer/releases/latest
 curl -L $RUST_ANALYZER_URL | gunzip -c - > ~/.local/bin/rust-analyzer
 chmod +x ~/.local/bin/rust-analyzer
 
+# Install/update cargo utilities
+CARGO_UTILS="\
+cargo-edit \
+"
+
+for util_name in $CARGO_UTILS ; do
+    cargo install $util_name
+done
+
 cd - > /dev/null
