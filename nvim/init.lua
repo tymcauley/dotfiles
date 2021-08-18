@@ -276,6 +276,9 @@ opt('o', 'splitright', true)
 opt('w', 'foldmethod', 'indent')
 opt('w', 'foldlevel', 99)
 
+-- Speed up CursorHold autocommand events
+opt('o', 'updatetime', 300)
+
 -- Set pop-up-menu transparency
 opt('o', 'pumblend', 30)
 
