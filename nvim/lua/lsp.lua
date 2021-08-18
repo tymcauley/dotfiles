@@ -40,18 +40,11 @@ capabilities.textDocument.completion.completionItem.snippetSupport = true
 -- Extend default capabilities with 'window/workDoneProgress'
 capabilities = vim.tbl_extend('keep', capabilities or {}, lsp_status.capabilities)
 
-lspconfig.util.default_config = vim.tbl_extend(
-    'force',
-    lspconfig.util.default_config,
-    {
-        handlers = {
-            ['textDocument/publishDiagnostics'] = shared_diagnostic_settings,
-            ['textDocument/hover']              = shared_hover_settings,
-            ['textDocument/signatureHelp']      = shared_hover_settings,
-        },
-        capabilities = capabilities
-    }
-)
+local handlers = {
+    ['textDocument/publishDiagnostics'] = shared_diagnostic_settings,
+    ['textDocument/hover']              = shared_hover_settings,
+    ['textDocument/signatureHelp']      = shared_hover_settings,
+}
 
 -- Buffer-local setup function
 local function custom_lsp_attach(client, bufnr)
@@ -109,6 +102,8 @@ local servers = { "clangd", "pyright", "hls" }
 for _, lsp in ipairs(servers) do
     lspconfig[lsp].setup {
         on_attach = custom_lsp_attach,
+        capabilities = capabilities,
+        handlers = handlers,
         flags = {
             debounce_text_changes = 150,
         }
@@ -125,8 +120,8 @@ metals_config.settings = {
 }
 
 metals_config.init_options.statusBarProvider = 'on'
-metals_config.handlers['textDocument/publishDiagnostics'] = shared_diagnostic_settings
 metals_config.capabilities = capabilities
+metals_config.handlers = handlers
 
 utils.create_augroup("LspMetals", {
     {"FileType", "scala,sbt", "lua require(\"metals\").initialize_or_attach(metals_config)"},
@@ -165,6 +160,8 @@ require'rust-tools'.setup {
     -- see https://github.com/neovim/nvim-lspconfig/blob/master/CONFIG.md#rust_analyzer
     server = {
         on_attach = custom_lsp_attach,
+        capabilities = capabilities,
+        handlers = handlers,
         flags = {
             debounce_text_changes = 150,
         },
