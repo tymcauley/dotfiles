@@ -148,7 +148,7 @@ require'rust-tools'.setup {
             right_align = false,
 
             -- the highlight color of the hints
-            highlight = "Comment",
+            highlight = "NonText",
         },
 
         hover_actions = {
