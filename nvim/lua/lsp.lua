@@ -66,6 +66,9 @@ local function custom_lsp_attach(client, bufnr)
             {"CursorHold", "<buffer>", "lua vim.lsp.buf.document_highlight()"},
             {"CursorMoved", "<buffer>", "lua vim.lsp.buf.clear_references()"},
         })
+        for _, name in ipairs({"Text", "Read", "Write"}) do
+            vim.cmd("hi! link LspReference" .. name .. " CursorColumn")
+        end
     end
 
     -- Shortcut for using telescope as the picker

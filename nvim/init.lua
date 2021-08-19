@@ -345,10 +345,6 @@ function MyHighlightSettings()
     utils.hi("BufferCurrentMod",  {gui = "bold", guifg = g.terminal_color_15, guibg = g.terminal_color_0})
     utils.hi("BufferInactiveMod", {gui = "bold", guifg = "#888888",           guibg = g.terminal_color_15})
     utils.hi("BufferVisibleMod",  {gui = "bold", guifg = g.terminal_color_0,  guibg = g.terminal_color_6})
-    -- Enable LSP highlighting
-    for _, name in ipairs({"Text", "Read", "Write"}) do
-        cmd("hi! link LspReference" .. name .. " CursorColumn")
-    end
     -- Make LSP diagnostic signs blend into the sign column
     for _, name in ipairs({"Error", "Warning", "Hint", "Information"}) do
         cmd("hi! link LspDiagnosticsSign" .. name .. " SignColumn")
