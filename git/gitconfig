@@ -1,5 +1,6 @@
 [user]
 	name = Tynan McAuley
+	useConfigOnly = true
 [push]
 	# When you use 'git push', push only the current branch, not all branches.
 	default = simple
