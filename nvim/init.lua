@@ -115,6 +115,9 @@ require('telescope').setup({
     }
 })
 
+-- Use 'nvim-telescope/telescope-fzf-native.nvim' as telescope's sorter
+require('telescope').load_extension('fzf')
+
 --
 -- Mappings
 --
