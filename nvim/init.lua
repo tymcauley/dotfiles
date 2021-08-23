@@ -47,14 +47,20 @@ require('gitsigns').setup {
 
 -- Treesitter
 
-require'nvim-treesitter.configs'.setup {
+-- Haskell treesitter plugin uses C++11 features, but macOS clang doesn't
+-- enable those by default.
+if fn.has('mac') == 1 then
+    require('nvim-treesitter.install').compilers = { "gcc-11" }
+end
+
+require('nvim-treesitter.configs').setup {
     ensure_installed = {
         "bash",
         "c",
         "comment",
         "cpp",
         "devicetree",
-        -- "haskell", -- Currently failing to build (2021-03-23)
+        "haskell",
         "html",
         "java",
         "javascript",
