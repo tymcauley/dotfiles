@@ -198,7 +198,7 @@ export PAGER="less"
 if command -v exa > /dev/null 2>&1 ; then
   alias exa="exa --classify"
   alias ls="exa"
-  alias ll="ls --long --binary --group"
+  alias ll="ls --long --binary --group --icons"
   alias llg="ll --git"
   alias la="ll --all"
   alias l="ls --oneline --all"
