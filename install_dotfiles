@@ -62,12 +62,6 @@ if $CFG_INSTALL_TMUX_MODS ; then
     $DOTFILES_DIR/tmux/install.sh
 fi
 
-# Customize vim installation.
-if $CFG_INSTALL_VIM_MODS ; then
-    iecho "Installing vim mods"
-    $DOTFILES_DIR/vim/install.sh
-fi
-
 # Customize neovim installation.
 if $CFG_INSTALL_NVIM_MODS ; then
     iecho "Installing neovim mods"
