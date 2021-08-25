@@ -59,8 +59,15 @@ return require('packer').startup({function()
 
     -- Autocompletion plugin
     use {
-        'hrsh7th/nvim-compe',
-        requires = {'hrsh7th/vim-vsnip'}
+        'hrsh7th/nvim-cmp',
+        requires = {
+            {'hrsh7th/cmp-buffer'},
+            {'hrsh7th/cmp-nvim-lsp'},
+            {'hrsh7th/cmp-nvim-lua'},
+            {'hrsh7th/cmp-path'},
+            {'hrsh7th/cmp-vsnip'},
+            {'hrsh7th/vim-vsnip'}
+        }
     }
 
     -- Metals (Scala language server) integration for nvim LSP

@@ -35,7 +35,7 @@ local shared_hover_settings = vim.lsp.with(
     {border = border}
 )
 local capabilities = vim.lsp.protocol.make_client_capabilities()
-capabilities.textDocument.completion.completionItem.snippetSupport = true
+capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
 
 -- Extend default capabilities with 'window/workDoneProgress'
 capabilities = vim.tbl_extend('keep', capabilities or {}, lsp_status.capabilities)
@@ -55,6 +55,16 @@ local function custom_lsp_attach(client, bufnr)
     local opts = {
         noremap = true,
         silent = true,
+    }
+
+    -- Setup LSP completion
+    require('cmp').setup.buffer {
+        sources = {
+            { name = 'nvim_lsp' },
+            { name = 'vsnip' },
+            { name = 'buffer' },
+            { name = 'path' },
+        },
     }
 
     -- Find the client's capabilities

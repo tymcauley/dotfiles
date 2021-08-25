@@ -82,29 +82,69 @@ require('nvim-treesitter.configs').setup {
     rainbow = {enable = true},
 }
 
--- nvim-compe
-require'compe'.setup {
-    enabled = true;
-    autocomplete = true;
-    debug = false;
-    min_length = 1;
-    preselect = 'enable';
-    throttle_time = 80;
-    source_timeout = 200;
-    incomplete_delay = 400;
-    max_abbr_width = 100;
-    max_kind_width = 100;
-    max_menu_width = 100;
-    documentation = true;
+-- nvim-cmp
+local cmp = require('cmp')
+cmp.setup {
+    snippet = {
+        expand = function(args)
+            vim.fn['vsnip#anonymous'](args.body)
+        end
+    },
 
-    source = {
-        path = true;
-        buffer = true;
-        calc = true;
-        nvim_lsp = true;
-        nvim_lua = true;
-        vsnip = true;
-    };
+    mapping = {
+        ['<C-p>']     = cmp.mapping.select_prev_item(),
+        ['<C-n>']     = cmp.mapping.select_next_item(),
+        ['<C-d>']     = cmp.mapping.scroll_docs(-4),
+        ['<C-f>']     = cmp.mapping.scroll_docs(4),
+        ['<C-Space>'] = cmp.mapping.complete(),
+        ['<C-e>']     = cmp.mapping.close(),
+        ['<CR>']      = cmp.mapping.confirm({
+            behavior = cmp.ConfirmBehavior.Insert,
+            select = true,
+        })
+    },
+
+    sources = {
+        { name = 'buffer' },
+        { name = 'path' },
+    },
+
+    formatting = {
+        format = function(entry, vim_item)
+            vim_item.menu = ({
+                nvim_lsp = '',
+                buffer   = '',
+            })[entry.source.name]
+            vim_item.kind = ({
+                Text          = '',
+                Method        = '',
+                Function      = '',
+                Constructor   = '',
+                Field         = '',
+                Variable      = '',
+                Class         = '',
+                Interface     = 'ﰮ',
+                Module        = '',
+                Property      = '',
+                Unit          = '',
+                Value         = '',
+                Enum          = '',
+                Keyword       = '',
+                Snippet       = '﬌',
+                Color         = '',
+                File          = '',
+                Reference     = '',
+                Folder        = '',
+                EnumMember    = '',
+                Constant      = '',
+                Struct        = '',
+                Event         = '',
+                Operator      = 'ﬦ',
+                TypeParameter = '',
+            })[vim_item.kind] .. ' ' .. vim_item.kind
+            return vim_item
+        end
+    },
 }
 
 -- Setup status line (lualine)
@@ -168,14 +208,6 @@ utils.map('n', '<leader>ff', '<Cmd>lua require("telescope.builtin").find_files()
 utils.map('n', '<leader>fg', '<Cmd>lua require("telescope.builtin").live_grep()<CR>')
 utils.map('n', '<leader>fb', '<Cmd>lua require("telescope.builtin").buffers()<CR>')
 utils.map('n', '<leader>fh', '<Cmd>lua require("telescope.builtin").help_tags()<CR>')
-
--- nvim-compe
-local compe_options = {silent = true, expr = true}
-utils.map('i', '<C-Space>', 'compe#complete()',              compe_options)
-utils.map('i', '<CR>',      'compe#confirm("<CR>")',         compe_options)
-utils.map('i', '<C-e>',     'compe#close("<C-e>")',          compe_options)
-utils.map('i', '<C-f>',     'compe#scroll({ "delta": +4 })', compe_options)
-utils.map('i', '<C-d>',     'compe#scroll({ "delta": -4 })', compe_options)
 
 -- Remove trailing whitespace without affecting the cursor location/search
 -- history
@@ -319,9 +351,6 @@ end
 -- LSP settings
 
 require 'lsp'
-
--- Set completeopt to have a better completion experience
-opt('o', 'completeopt', 'menuone,noinsert,noselect')
 
 -- Avoid showing extra messages when using completion: append 'c'
 -- Remove 'F' (required by 'scalameta/nvim-metals')
