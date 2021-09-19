@@ -32,8 +32,8 @@ end
 
 M.setup = function()
     local ll_options = {
-        section_separators = {'', ''},
-        component_separators = {'', ''},
+        section_separators = {left = '', right = ''},
+        component_separators = {left = '', right = ''},
         theme = 'auto',
         disabled_filetypes = {'packer'},
     }
@@ -52,7 +52,7 @@ M.setup = function()
                 function()
                     return vim.g['metals_status'] or ''
                 end,
-                condition = function()
+                cond = function()
                     local filetype = vim.bo.filetype
                     return filetype == 'scala' or filetype == 'sbt'
                 end,
@@ -60,14 +60,14 @@ M.setup = function()
             -- Display LSP status
             {
                 lsp_status.status_progress,
-                condition = is_lsp_active,
+                cond = is_lsp_active,
             },
             -- Display current function from LSP
             {
                 function()
                     return vim.b.lsp_current_function or ''
                 end,
-                condition = is_lsp_active,
+                cond = is_lsp_active,
             },
             -- LSP diagnostics
             {'diagnostics', sources = {'nvim_lsp'}},
