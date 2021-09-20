@@ -212,8 +212,11 @@ utils.map('n', '<leader>fh', '<Cmd>lua require("telescope.builtin").help_tags()<
 -- Remove trailing whitespace without affecting the cursor location/search
 -- history
 function _G.trim_whitespace()
-    -- TODO: How can we restore the window view after executing this command?
-    cmd [[%s/\s\+$//e]]
+    if not vim.o.binary and vim.o.filetype ~= 'diff' then
+        local current_view = fn.winsaveview()
+        cmd([[keeppatterns %s/\s\+$//e]])
+        fn.winrestview(current_view)
+    end
 end
 
 --
