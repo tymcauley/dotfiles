@@ -33,7 +33,6 @@ return require('packer').startup({function()
     use {'tpope/vim-repeat'}
 
     -- Add nice integration with git
-    use {'tpope/vim-fugitive'}
     use {
         'lewis6991/gitsigns.nvim',
         requires = {'nvim-lua/plenary.nvim'}
