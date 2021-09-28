@@ -39,12 +39,28 @@ M.setup = function()
     }
 
     local ll_sections = {
-        lualine_a = {mode_single_character},
-        -- TODO: It would be nice to prefix the file name with the file icon
-        lualine_b = {'filename'},
+        lualine_a = { mode_single_character },
+        lualine_b = {
+            -- Prefix file name with file icon
+            {
+                'filetype',
+                icon_only = true,
+                separator = '',
+                padding = { left = 1, right = 0 },
+            },
+            {
+                'filename',
+                path = 1,
+            }
+        },
         lualine_c = {
-            {'b:gitsigns_head', icon = ''},
-            'b:gitsigns_status'
+            {
+                'b:gitsigns_head',
+                icon = '',
+            },
+            {
+                'b:gitsigns_status',
+            }
         },
         lualine_x = {
             -- Display nvim-metals status for Scala files
@@ -70,15 +86,33 @@ M.setup = function()
                 cond = is_lsp_active,
             },
             -- LSP diagnostics
-            {'diagnostics', sources = {'nvim_lsp'}},
+            {
+                'diagnostics',
+                sources = { 'nvim_lsp' }
+            },
         },
-        lualine_y = {'filetype'},
-        lualine_z = {'progress', 'location'},
+        lualine_y = {
+            {
+                'filetype',
+                icons_enabled = false,
+            }
+        },
+        lualine_z = {
+            -- Display file format for non-unix files
+            {
+                'fileformat',
+                cond = function()
+                    return vim.bo.fileformat ~= 'unix'
+                end,
+            },
+            'progress',
+            'location',
+        },
     }
 
     local ll_inactive_sections = {
-        lualine_c = {'filename'},
-        lualine_x = {'location'},
+        lualine_c = { 'filename' },
+        lualine_x = { 'location' },
     }
 
     ll.setup {
