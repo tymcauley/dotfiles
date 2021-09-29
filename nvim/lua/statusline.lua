@@ -50,7 +50,7 @@ M.setup = function()
             },
             {
                 'filename',
-                path = 1,
+                path = 0,
             }
         },
         lualine_c = {
