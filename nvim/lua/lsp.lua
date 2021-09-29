@@ -57,16 +57,6 @@ local function custom_lsp_attach(client, bufnr)
         silent = true,
     }
 
-    -- Setup LSP completion
-    require('cmp').setup.buffer {
-        sources = {
-            { name = 'nvim_lsp' },
-            { name = 'vsnip' },
-            { name = 'buffer' },
-            { name = 'path' },
-        },
-    }
-
     -- Find the client's capabilities
     local cap = client.resolved_capabilities
 

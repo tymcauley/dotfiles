@@ -99,14 +99,18 @@ cmp.setup {
         ['<C-Space>'] = cmp.mapping.complete(),
         ['<C-e>']     = cmp.mapping.close(),
         ['<CR>']      = cmp.mapping.confirm({
-            behavior = cmp.ConfirmBehavior.Insert,
+            behavior = cmp.ConfirmBehavior.Replace,
             select = true,
         })
     },
 
     sources = {
+        { name = 'nvim_lsp' },
+        { name = 'vsnip' },
         { name = 'buffer' },
         { name = 'path' },
+        { name = 'calc' },
+        { name = 'spell' },
     },
 
     formatting = {
