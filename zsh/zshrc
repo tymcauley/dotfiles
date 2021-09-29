@@ -173,15 +173,20 @@ command -v brew > /dev/null 2>&1 && eval $(brew shellenv)
 if [[ -n "$HOMEBREW_PREFIX" ]]; then
   # If LLVM is installed, add all of the LLVM utilities to the end of the path.
   [[ -d "$HOMEBREW_PREFIX/opt/llvm/bin" ]] && path=($path "$HOMEBREW_PREFIX/opt/llvm/bin")
+
+  # If ruby is installed, add to the start of the path, to override the
+  # OS-provided version.
+  [[ -d "$HOMEBREW_PREFIX/opt/ruby/bin" ]] && path=("$HOMEBREW_PREFIX/opt/ruby/bin" $path)
+  [[ -d "$HOMEBREW_PREFIX/lib/ruby/gems/3.0.0/bin" ]] && path=("$HOMEBREW_PREFIX/lib/ruby/gems/3.0.0/bin" $path)
 fi
 
 # Set up modifications for Python REPL
 [[ -f "$HOME/.pystartup" ]] && export PYTHONSTARTUP="$HOME/.pystartup"
 
-# Setup git aliases
+# Set up git aliases
 [[ -f "$HOME/.config/git.zsh" ]] && source "$HOME/.config/git.zsh"
 
-# Setup default text editor
+# Set up default text editor
 if command -v nvim > /dev/null 2>&1 ; then
   alias vim="nvim"
   alias vimdiff="nvim -d"
@@ -210,5 +215,5 @@ if command -v exa > /dev/null 2>&1 ; then
   alias llss="ll --sort=size"   # Sort by size, largest at the bottom
 fi
 
-# Setup shell prompt
+# Set up shell prompt
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
