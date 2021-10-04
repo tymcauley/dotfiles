@@ -1,4 +1,4 @@
-return require('packer').startup({function()
+return require('packer').startup(function()
     -- Plugin manager
     use {'wbthomason/packer.nvim'}
 
@@ -97,11 +97,4 @@ return require('packer').startup({function()
         'romgrk/barbar.nvim',
         requires = {'kyazdani42/nvim-web-devicons'}
     }
-end,
-config = {
-    display = {
-        open_fn = function()
-            return require('packer.util').float({ border = 'single' })
-        end
-    },
-}})
+end)
