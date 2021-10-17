@@ -116,7 +116,7 @@ end
 
 -- nvim-metals (Scala LSP)
 
-metals_config = require'metals'.bare_config
+metals_config = require('metals').bare_config()
 metals_config.on_attach = custom_lsp_attach
 metals_config.settings = {
   showImplicitArguments = true,
