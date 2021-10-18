@@ -157,6 +157,10 @@ require('statusline').setup()
 -- telescope.nvim
 require('telescope').setup({
     defaults = {
+        mappings = {
+            i = { ["<c-t>"] = require("trouble.providers.telescope").open_with_trouble },
+            n = { ["<c-t>"] = require("trouble.providers.telescope").open_with_trouble },
+        },
         layout_strategy = "vertical",
         layout_config = {
             width = 0.8,
@@ -167,6 +171,9 @@ require('telescope').setup({
 
 -- Use 'nvim-telescope/telescope-fzf-native.nvim' as telescope's sorter
 require('telescope').load_extension('fzf')
+
+-- trouble.nvim
+require('trouble').setup({})
 
 --
 -- Mappings

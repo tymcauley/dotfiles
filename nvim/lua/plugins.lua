@@ -83,6 +83,12 @@ return require('packer').startup(function()
         }
     }
 
+    -- Pretty list for showing all sorts of diagnostics and search results
+    use {
+        'folke/trouble.nvim',
+        requires = {'kyazdani42/nvim-web-devicons'},
+    }
+
     -- Statusline
     use {
         'shadmansaleh/lualine.nvim',
