@@ -76,7 +76,7 @@ return require("packer").startup(function()
     })
 
     -- Metals (Scala language server) integration for nvim LSP
-    use({ "scalameta/nvim-metals" })
+    use({ "scalameta/nvim-metals", requires = { "nvim-lua/plenary.nvim" } })
 
     -- Fuzzy finder
     use({
