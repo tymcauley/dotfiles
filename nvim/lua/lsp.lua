@@ -111,10 +111,28 @@ end
 
 null_ls.config({
     sources = {
+        -- Python code formatter
+        null_ls.builtins.formatting.black,
+
+        -- Code formatter for many languages, such as Markdown
+        null_ls.builtins.formatting.prettier,
+
+        -- Code formatter for shell scripts
+        null_ls.builtins.formatting.shfmt,
+
         -- Lua code formatter
         null_ls.builtins.formatting.stylua.with({
             extra_args = { "--indent-type", "Spaces" },
         }),
+
+        -- Linter for Dockerfiles
+        null_ls.builtins.diagnostics.hadolint,
+
+        -- Static analysis tool for shell scripts
+        null_ls.builtins.diagnostics.shellcheck,
+
+        -- Add code actions for git operations at current cursor position
+        null_ls.builtins.code_actions.gitsigns,
     },
 })
 lspconfig["null-ls"].setup({
