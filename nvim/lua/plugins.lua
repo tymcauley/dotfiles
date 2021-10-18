@@ -8,26 +8,22 @@ return require("packer").startup(function()
     -- Tempus colors in vim
     use({ "https://gitlab.com/protesilaos/tempus-themes-vim.git" })
 
-    -- Allow user-defined text objects (needed for vim-textobj-line)
-    use({ "kana/vim-textobj-user" })
-
-    -- Make a new text object for the current line
-    use({ "kana/vim-textobj-line" })
-
     -- Make a new text object for lines at the same indent level
     use({ "michaeljsmith/vim-indent-object" })
 
     -- Add new vim verb for surrounding text objects
     use({ "tpope/vim-surround" })
 
-    -- Add new vim verb for commenting out lines
-    use({ "tpope/vim-commentary" })
+    -- Commenting plugin
+    use({
+        "numToStr/Comment.nvim",
+        config = function()
+            require("Comment").setup()
+        end,
+    })
 
-    -- Add commands smart text substitution
+    -- Add commands for smart text substitution
     use({ "tpope/vim-abolish" })
-
-    -- Add ability to easily open new files up to a specific line/column
-    use({ "kopischke/vim-fetch" })
 
     -- Add ability to use dot operator (.) to repeat plugin map operations
     use({ "tpope/vim-repeat" })
