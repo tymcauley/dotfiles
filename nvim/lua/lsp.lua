@@ -1,4 +1,5 @@
 local lspconfig = require('lspconfig')
+local null_ls = require('null-ls')
 local utils = require('utils')
 local lsp_status = require('lsp-status')
 
@@ -113,6 +114,20 @@ for _, lsp in ipairs(servers) do
         }
     }
 end
+
+-- null-ls
+
+null_ls.config({
+    sources = {
+        -- Lua code formatter
+        null_ls.builtins.formatting.stylua.with({
+            extra_args = { "--indent-type", "Spaces" },
+        }),
+    },
+})
+lspconfig["null-ls"].setup({
+    on_attach = custom_lsp_attach,
+})
 
 -- nvim-metals (Scala LSP)
 

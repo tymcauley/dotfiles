@@ -53,6 +53,15 @@ return require('packer').startup(function()
     -- LSP statusline components
     use {'nvim-lua/lsp-status.nvim'}
 
+    -- Connect non-LSP sources into nvim's LSP client
+    use {
+        'jose-elias-alvarez/null-ls.nvim',
+        requires = {
+            {'nvim-lua/plenary.nvim'},
+            {'neovim/nvim-lspconfig'},
+        }
+    }
+
     -- Extra tools for using rust-analyzer with nvim LSP client.
     use {'simrat39/rust-tools.nvim'}
 
