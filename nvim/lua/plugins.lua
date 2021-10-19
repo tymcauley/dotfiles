@@ -2,6 +2,9 @@ return require("packer").startup(function()
     -- Plugin manager
     use({ "wbthomason/packer.nvim" })
 
+    -- Useful lua functions for nvim
+    use({ "nvim-lua/plenary.nvim" })
+
     -- Column-align multiple lines
     use({ "junegunn/vim-easy-align" })
 
