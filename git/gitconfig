@@ -13,7 +13,6 @@
 	path = ~/.gitconfig.private
 [core]
 	excludesfile = ~/.gitignore_global
-	pager = delta
 [mergetool "diffconflicts"]
 	cmd = vim -c DiffConflictsWithHistory \"$MERGED\" \"$BASE\" \"$LOCAL\" \"$REMOTE\"
 	trustExitCode = true
@@ -24,20 +23,25 @@
 	submodule = log
 [pull]
 	rebase = false
+[pager]
+	diff = delta
+	log = delta
+	reflog = delta
+	show = delta
 [interactive]
-	diffFilter = delta --color-only
+	diffFilter = delta --color-only --features=interactive
 [delta]
-	features = side-by-side line-numbers decorations navigate
+	features = decorations navigate
+	line-numbers = true
+	side-by-side = true
 	syntax-theme = Dracula
 	plus-style = syntax "#003800"
 	minus-style = syntax "#3f0001"
 [delta "decorations"]
-	commit-decoration-style = bold yellow box ul
-	file-style = bold yellow ul
-	file-decoration-style = none
-	hunk-header-decoration-style = cyan box ul
-[delta "line-numbers"]
-	line-numbers-left-style = cyan
-	line-numbers-right-style = cyan
-	line-numbers-minus-style = 124
-	line-numbers-plus-style = 28
+	commit-decoration-style = blue ol
+	commit-style = raw
+	file-style = omit
+	hunk-header-decoration-style = blue box
+	hunk-header-file-style = red
+	hunk-header-line-number-style = "#067a00"
+	hunk-header-style = file line-number syntax
