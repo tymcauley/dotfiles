@@ -199,6 +199,9 @@ fi
 
 export PAGER="less"
 
+# Customize 'less' options
+export LESS="-i -M -R -S -w -X -z-4"
+
 # Replace ls with exa
 if command -v exa > /dev/null 2>&1 ; then
   alias exa="exa --classify"
