@@ -98,7 +98,7 @@ return require("packer").startup(function()
 
     -- Statusline
     use({
-        "shadmansaleh/lualine.nvim",
+        "nvim-lualine/lualine.nvim",
         requires = {
             "kyazdani42/nvim-web-devicons",
             "lewis6991/gitsigns.nvim",
