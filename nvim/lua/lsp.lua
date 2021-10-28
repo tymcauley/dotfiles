@@ -137,9 +137,6 @@ null_ls.config({
 
         -- Static analysis tool for shell scripts
         null_ls.builtins.diagnostics.shellcheck,
-
-        -- Add code actions for git operations at current cursor position
-        null_ls.builtins.code_actions.gitsigns,
     },
 })
 lspconfig["null-ls"].setup({
