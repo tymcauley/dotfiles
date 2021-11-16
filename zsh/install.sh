@@ -30,6 +30,7 @@ install_file "$HOME/.p10k.zsh" "$(pwd)/p10k.zsh"
 # Install zshrc
 install_file "$HOME/.zshrc" "$(pwd)/zshrc"
 install_file "$HOME/.config/git.zsh" "$(pwd)/git.zsh"
+install_file "$HOME/.config/editor.zsh" "$(pwd)/editor.zsh"
 
 # Install/update oh-my-zsh add-ons
 git_clone_or_update https://github.com/romkatv/powerlevel10k.git "$OMZ/custom/themes/powerlevel10k"

@@ -186,6 +186,9 @@ fi
 # Set up git aliases
 [[ -f "$HOME/.config/git.zsh" ]] && source "$HOME/.config/git.zsh"
 
+# Configure line editor
+[[ -f "$HOME/.config/editor.zsh" ]] && source "$HOME/.config/editor.zsh"
+
 # Set up default text editor
 if command -v nvim > /dev/null 2>&1 ; then
   alias vim="nvim"
