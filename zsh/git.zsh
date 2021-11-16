@@ -3,9 +3,6 @@ _git_log_medium_format='%C(bold)Commit:%C(reset) %C(green)%H%C(red)%d%n%C(bold)A
 _git_log_oneline_format='%C(green)%h%C(reset) %s%C(red)%d%C(reset)%n'
 _git_log_brief_format='%C(green)%h%C(reset) %s%n%C(blue)(%ar by %an)%C(red)%d%C(reset)%n'
 
-# Status
-_git_status_ignore_submodules='none'
-
 #
 # Aliases
 #
@@ -169,8 +166,8 @@ alias gts='git tag --sign'
 alias gtv='git verify-tag'
 
 # Working Copy (w)
-alias gws='git status --ignore-submodules=$_git_status_ignore_submodules --short'
-alias gwS='git status --ignore-submodules=$_git_status_ignore_submodules'
+alias gws='git status --short'
+alias gwS='git status '
 alias gwd='git diff --no-ext-diff'
 alias gwD='git diff --no-ext-diff --word-diff'
 alias gwr='git restore'

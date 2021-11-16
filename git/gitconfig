@@ -21,6 +21,7 @@
 [diff]
 	colorMoved = default
 	submodule = log
+	ignoreSubmodules = dirty
 [pull]
 	rebase = false
 [pager]
