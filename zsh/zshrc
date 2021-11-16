@@ -219,6 +219,11 @@ if command -v exa > /dev/null 2>&1 ; then
   alias llt="ll --tree"
   alias llst="ll --sort=newest" # Sort by modified time, most recent at the bottom
   alias llss="ll --sort=size"   # Sort by size, largest at the bottom
+
+  # 'git status' in tree view
+  alias gwst="exa -l --tree --git --git-ignore \
+    --no-filesize --no-permissions --no-user --no-time --color=always \
+    | awk '\$1 !~ /--/ { print }'"
 fi
 
 # Set up shell prompt
