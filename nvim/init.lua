@@ -399,26 +399,19 @@ cmd("colorscheme tempus_summer")
 
 opt("o", "termguicolors", true)
 
--- For some reason, highlight settings require this strange workaround (an autocmd which executes a function to set
--- highlight settings after the color scheme is loaded). All highlight settings should go in this function.
-function MyHighlightSettings()
-    -- Only underline spelling mistakes
-    utils.hi("SpellBad", { ctermfg = "NONE", ctermbg = "NONE", guifg = "NONE", guibg = "NONE", guisp = "NONE" })
-    utils.hi("SpellCap", { ctermfg = "NONE", ctermbg = "NONE", guifg = "NONE", guibg = "NONE", guisp = "NONE" })
-    utils.hi("SpellLocal", { ctermfg = "NONE", ctermbg = "NONE", guifg = "NONE", guibg = "NONE", guisp = "NONE" })
-    utils.hi("SpellRare", { ctermfg = "NONE", ctermbg = "NONE", guifg = "NONE", guibg = "NONE", guisp = "NONE" })
-    -- Highlight ruler
-    utils.hi("ColorColumn", { ctermbg = "18" })
-    -- barbar.nvim
-    -- Set 'Buffer*Mod' to the same highlighting as 'Buffer*', but make it bold
-    utils.hi("BufferCurrentMod", { gui = "bold", guifg = g.terminal_color_15, guibg = g.terminal_color_0 })
-    utils.hi("BufferInactiveMod", { gui = "bold", guifg = "#888888", guibg = g.terminal_color_15 })
-    utils.hi("BufferVisibleMod", { gui = "bold", guifg = g.terminal_color_0, guibg = g.terminal_color_6 })
-    -- Make LSP diagnostic signs blend into the sign column
-    for _, name in ipairs({ "Error", "Warning", "Hint", "Information" }) do
-        cmd("hi! link LspDiagnosticsSign" .. name .. " SignColumn")
-    end
+-- Only underline spelling mistakes
+utils.hi("SpellBad", { ctermfg = "NONE", ctermbg = "NONE", guifg = "NONE", guibg = "NONE", guisp = "NONE" })
+utils.hi("SpellCap", { ctermfg = "NONE", ctermbg = "NONE", guifg = "NONE", guibg = "NONE", guisp = "NONE" })
+utils.hi("SpellLocal", { ctermfg = "NONE", ctermbg = "NONE", guifg = "NONE", guibg = "NONE", guisp = "NONE" })
+utils.hi("SpellRare", { ctermfg = "NONE", ctermbg = "NONE", guifg = "NONE", guibg = "NONE", guisp = "NONE" })
+-- Highlight ruler
+utils.hi("ColorColumn", { ctermbg = "18" })
+-- barbar.nvim
+-- Set 'Buffer*Mod' to the same highlighting as 'Buffer*', but make it bold
+utils.hi("BufferCurrentMod", { gui = "bold", guifg = g.terminal_color_15, guibg = g.terminal_color_0 })
+utils.hi("BufferInactiveMod", { gui = "bold", guifg = "#888888", guibg = g.terminal_color_15 })
+utils.hi("BufferVisibleMod", { gui = "bold", guifg = g.terminal_color_0, guibg = g.terminal_color_6 })
+-- Make LSP diagnostic signs blend into the sign column
+for _, name in ipairs({ "Error", "Warn", "Hint", "Info" }) do
+    cmd("hi! link DiagnosticSign" .. name .. " SignColumn")
 end
-utils.create_augroup("MyHighlightSettings", {
-    { "ColorScheme", "*", "lua MyHighlightSettings()" },
-})
