@@ -201,6 +201,9 @@ require("telescope").setup({
 -- Use 'nvim-telescope/telescope-fzf-native.nvim' as telescope's sorter
 require("telescope").load_extension("fzf")
 
+-- Use telescope as the viewer for more nvim core operations
+require("telescope").load_extension("ui-select")
+
 -- trouble.nvim
 require("trouble").setup({})
 
