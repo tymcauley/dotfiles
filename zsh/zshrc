@@ -87,19 +87,8 @@ function zvm_config() {
 # zsh-vi-mode overwrites key bindings, so all key bindings should go here
 function zvm_after_init() {
   # fzf setup
-  [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
   if command -v fzf > /dev/null 2>&1 ; then
-    if command -v fd > /dev/null 2>&1 ; then
-      export FZF_DEFAULT_COMMAND="fd --type f --hidden --follow"
-      export FZF_CTRL_T_COMMAND="fd --type f --follow"
-    fi
-
-    # Search history with fzf if it is present
-    bindkey -M vicmd "/" fzf-history-widget
-
-    # Use fzf to find files/directories
-    bindkey -M vicmd "gf" fzf-file-widget
-    bindkey -M vicmd "gd" fzf-cd-widget
+    [[ -f "$HOME/.config/fzf-config.zsh" ]] && source "$HOME/.config/fzf-config.zsh"
   fi
 }
 
