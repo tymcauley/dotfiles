@@ -87,9 +87,7 @@ function zvm_config() {
 # zsh-vi-mode overwrites key bindings, so all key bindings should go here
 function zvm_after_init() {
   # fzf setup
-  if command -v fzf > /dev/null 2>&1 ; then
-    [[ -f "$HOME/.config/fzf-config.zsh" ]] && source "$HOME/.config/fzf-config.zsh"
-  fi
+  [ -f ~/.fzf.zsh ] && [[ -f "$HOME/.config/fzf-config.zsh" ]] && source "$HOME/.config/fzf-config.zsh"
 }
 
 # Which plugins would you like to load?
