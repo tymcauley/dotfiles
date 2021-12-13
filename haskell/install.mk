@@ -7,8 +7,8 @@ $(error Please install ghcup: >>> \
 	<<<)
 endif
 
-GHCUP_INSTALLED_TOOLS := $(shell ghcup list --show-criteria installed --raw-format 2> /dev/null | cut -f 1 -d " " | uniq)
-GHCUP_TOOLS_TO_INSTALL := $(filter-out $(GHCUP_INSTALLED_TOOLS),$(GHCUP_TOOLS))
+GHCUP_INSTALLED_TOOLS = $(shell ghcup list --show-criteria installed --raw-format 2> /dev/null | cut -f 1 -d " " | uniq)
+GHCUP_TOOLS_TO_INSTALL = $(filter-out $(GHCUP_INSTALLED_TOOLS),$(GHCUP_TOOLS))
 
 haskell:
 	ghcup upgrade

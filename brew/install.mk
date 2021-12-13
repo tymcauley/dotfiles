@@ -7,11 +7,11 @@ $(error Please install homebrew: >>> \
 	<<<)
 endif
 
-BREW_INSTALLED_FORMULAE := $(shell brew list --formula -1)
-BREW_INSTALLED_CASKS    := $(shell brew list --cask -1)
+BREW_INSTALLED_FORMULAE = $(shell brew list --formula -1)
+BREW_INSTALLED_CASKS    = $(shell brew list --cask -1)
 
-BREW_FORMULAE_TO_INSTALL := $(filter-out $(BREW_INSTALLED_FORMULAE),$(BREW_FORMULAE))
-BREW_CASKS_TO_INSTALL    := $(filter-out $(BREW_INSTALLED_CASKS),$(BREW_CASKS))
+BREW_FORMULAE_TO_INSTALL = $(filter-out $(BREW_INSTALLED_FORMULAE),$(BREW_FORMULAE))
+BREW_CASKS_TO_INSTALL    = $(filter-out $(BREW_INSTALLED_CASKS),$(BREW_CASKS))
 
 brew:
 	brew update
