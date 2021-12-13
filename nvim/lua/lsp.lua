@@ -125,7 +125,9 @@ null_ls.config({
         null_ls.builtins.formatting.prettier,
 
         -- Code formatter for shell scripts
-        null_ls.builtins.formatting.shfmt,
+        null_ls.builtins.formatting.shfmt.with({
+            extra_args = { "-i", "4", "-bn", "-ci", "-sr" },
+        }),
 
         -- Lua code formatter
         null_ls.builtins.formatting.stylua.with({
