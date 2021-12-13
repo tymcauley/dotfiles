@@ -6,4 +6,4 @@
 [._]sw[a-p]
 
 # Deployed configuration file.
-/dotfiles.cfg
+/cfg.mk

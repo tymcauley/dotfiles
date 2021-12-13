@@ -14,5 +14,5 @@ My collection of configuration files.
 
    ```console
    cd $HOME/.dotfiles
-   ./install_dotfiles
+   make
    ```

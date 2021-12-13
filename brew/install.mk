@@ -1,0 +1,24 @@
+.PHONY: brew
+ALL_TARGETS += brew
+
+ifeq ($(shell which brew 2> /dev/null),)
+$(error Please install homebrew: >>> \
+	/bin/bash -c "$$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)" \
+	<<<)
+endif
+
+BREW_INSTALLED_FORMULAE := $(shell brew list --formula -1)
+BREW_INSTALLED_CASKS    := $(shell brew list --cask -1)
+
+BREW_FORMULAE_TO_INSTALL := $(filter-out $(BREW_INSTALLED_FORMULAE),$(BREW_FORMULAE))
+BREW_CASKS_TO_INSTALL    := $(filter-out $(BREW_INSTALLED_CASKS),$(BREW_CASKS))
+
+brew:
+	brew update
+	brew upgrade --greedy
+	@for formula in $(BREW_FORMULAE_TO_INSTALL) ; do \
+		brew install $$formula ; \
+	done
+	@for cask in $(BREW_CASKS_TO_INSTALL) ; do \
+		brew install $$cask ; \
+	done
