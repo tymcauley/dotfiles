@@ -57,9 +57,8 @@ fi
 
 # If the destination file is a link, and it doesn't point to the source file,
 # get rid of it so we can link it to the source file
-DST_F_TARGET="$(readlink -- "$DST_F")"
-if [[ -L "$DST_F" && "$DST_F_TARGET" != "$SRC_F" ]]; then
-    prompt_user_yn "Change destination link '$DST_F' to point to '$SRC_F' instead of '$DST_F_TARGET'?"
+if [[ -L "$DST_F" && "$(readlink -- "$DST_F")" != "$SRC_F" ]]; then
+    prompt_user_yn "Change destination link '$DST_F' to point to '$SRC_F' instead of '$(readlink -- "$DST_F")'?"
     rm -f "$DST_F"
 fi
 
