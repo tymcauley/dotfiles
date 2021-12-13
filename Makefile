@@ -33,6 +33,10 @@ ifeq ($(PYTHON),1)
 include python/install.mk
 endif
 
+ifeq ($(RUST),1)
+include rust/install.mk
+endif
+
 ifeq ($(SCALA),1)
 include scala/install.mk
 endif
