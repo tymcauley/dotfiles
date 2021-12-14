@@ -116,7 +116,7 @@ end
 
 -- null-ls
 
-null_ls.config({
+null_ls.setup({
     sources = {
         -- Python code formatter
         null_ls.builtins.formatting.black,
@@ -140,8 +140,6 @@ null_ls.config({
         -- Static analysis tool for shell scripts
         null_ls.builtins.diagnostics.shellcheck,
     },
-})
-lspconfig["null-ls"].setup({
     on_attach = custom_lsp_attach,
 })
 
