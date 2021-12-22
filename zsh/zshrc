@@ -76,27 +76,13 @@ HIST_STAMPS="yyyy-mm-dd"
 export HISTSIZE=100000
 export SAVEHIST=100000
 
-# Customize zsh-vi-mode plugin
-function zvm_config() {
-  # Go to insert mode with each new shell prompt
-  ZVM_LINE_INIT_MODE=$ZVM_MODE_INSERT
-  # Speed up the insert-to-normal-mode transition
-  ZVM_ESCAPE_KEYTIMEOUT=0.001
-}
-
-# zsh-vi-mode overwrites key bindings, so all key bindings should go here
-function zvm_after_init() {
-  # fzf setup
-  [ -f ~/.fzf.zsh ] && [[ -f "$HOME/.config/fzf-config.zsh" ]] && source "$HOME/.config/fzf-config.zsh"
-}
-
 # Which plugins would you like to load?
 # Standard plugins can be found in $ZSH/plugins/
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
 plugins=( \
-  zsh-vi-mode \
+  vi-mode \
 )
 
 source $ZSH/oh-my-zsh.sh
@@ -132,6 +118,10 @@ unsetopt SHARE_HISTORY
 
 # Report the status of background and suspended jobs before exiting
 setopt CHECK_JOBS
+
+# Shorten the transition from vi-insert to vi-normal mode (this variable is in
+# units of milliseconds)
+export KEYTIMEOUT=1
 
 # Load system-specific modifications to the shell
 [[ -f "$HOME/.zshrc.local" ]] && source "$HOME/.zshrc.local"
@@ -212,6 +202,9 @@ if command -v exa > /dev/null 2>&1 ; then
     --no-filesize --no-permissions --no-user --no-time --color=always \
     | awk '\$1 !~ /--/ { print }'"
 fi
+
+# Set up fzf
+[ -f ~/.fzf.zsh ] && [[ -f "$HOME/.config/fzf-config.zsh" ]] && source "$HOME/.config/fzf-config.zsh"
 
 # Set up shell prompt
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
