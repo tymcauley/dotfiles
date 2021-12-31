@@ -8,8 +8,8 @@ return require("packer").startup(function()
     -- Column-align multiple lines
     use({ "junegunn/vim-easy-align" })
 
-    -- Tempus colors in vim
-    use({ "https://gitlab.com/protesilaos/tempus-themes-vim.git" })
+    -- colorscheme
+    use({ "folke/tokyonight.nvim" })
 
     -- Make a new text object for lines at the same indent level
     use({ "michaeljsmith/vim-indent-object" })

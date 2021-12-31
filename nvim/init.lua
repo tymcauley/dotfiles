@@ -402,23 +402,12 @@ cmd("autocmd TextYankPost * lua vim.highlight.on_yank {on_visual = false}")
 -- Colors
 --
 
-cmd("colorscheme tempus_summer")
+cmd("colorscheme tokyonight")
 
 opt("o", "termguicolors", true)
 
--- Only underline spelling mistakes
-utils.hi("SpellBad", { ctermfg = "NONE", ctermbg = "NONE", guifg = "NONE", guibg = "NONE", guisp = "NONE" })
-utils.hi("SpellCap", { ctermfg = "NONE", ctermbg = "NONE", guifg = "NONE", guibg = "NONE", guisp = "NONE" })
-utils.hi("SpellLocal", { ctermfg = "NONE", ctermbg = "NONE", guifg = "NONE", guibg = "NONE", guisp = "NONE" })
-utils.hi("SpellRare", { ctermfg = "NONE", ctermbg = "NONE", guifg = "NONE", guibg = "NONE", guisp = "NONE" })
--- Highlight ruler
-utils.hi("ColorColumn", { ctermbg = "18" })
 -- barbar.nvim
--- Set 'Buffer*Mod' to the same highlighting as 'Buffer*', but make it bold
-utils.hi("BufferCurrentMod", { gui = "bold", guifg = g.terminal_color_15, guibg = g.terminal_color_0 })
-utils.hi("BufferInactiveMod", { gui = "bold", guifg = "#888888", guibg = g.terminal_color_15 })
-utils.hi("BufferVisibleMod", { gui = "bold", guifg = g.terminal_color_0, guibg = g.terminal_color_6 })
--- Make LSP diagnostic signs blend into the sign column
-for _, name in ipairs({ "Error", "Warn", "Hint", "Info" }) do
-    cmd("hi! link DiagnosticSign" .. name .. " SignColumn")
-end
+-- Make all modified buffers bold
+utils.hi("BufferCurrentMod", { gui = "bold" })
+utils.hi("BufferInactiveMod", { gui = "bold" })
+utils.hi("BufferVisibleMod", { gui = "bold" })

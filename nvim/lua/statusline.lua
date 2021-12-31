@@ -34,7 +34,7 @@ M.setup = function()
     local ll_options = {
         section_separators = { left = "", right = "" },
         component_separators = { left = "", right = "" },
-        theme = "auto",
+        theme = "tokyonight",
         disabled_filetypes = { "packer" },
     }
 
