@@ -55,34 +55,7 @@ if fn.has("mac") == 1 then
 end
 
 require("nvim-treesitter.configs").setup({
-    ensure_installed = {
-        "bash",
-        "c",
-        "comment",
-        "cpp",
-        "devicetree",
-        "haskell",
-        "html",
-        "java",
-        "javascript",
-        "json",
-        "latex",
-        "lua",
-        "make",
-        "markdown",
-        "nix",
-        "perl",
-        "python",
-        "regex",
-        "rst",
-        "ruby",
-        "rust",
-        "scala",
-        "toml",
-        "verilog",
-        "vim",
-        "yaml",
-    },
+    ensure_installed = "all",
     highlight = { enable = true },
     rainbow = { enable = true },
 })
@@ -355,8 +328,9 @@ opt("w", "colorcolumn", "+1")
 opt("o", "splitbelow", true)
 opt("o", "splitright", true)
 
--- Enable code folding, initialize with folds disabled
-opt("w", "foldmethod", "indent")
+-- Enable code folding using Treesitter, initialize with folds disabled
+opt("w", "foldmethod", "expr")
+opt("w", "foldexpr", "nvim_treesitter#foldexpr()")
 opt("w", "foldlevel", 99)
 
 -- Speed up CursorHold autocommand events
