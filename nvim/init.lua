@@ -87,6 +87,9 @@ require("nvim-treesitter.configs").setup({
     rainbow = { enable = true },
 })
 
+-- spellsitter.nvim
+require("spellsitter").setup()
+
 -- nvim-cmp
 
 local has_words_before = function()

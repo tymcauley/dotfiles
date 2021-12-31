@@ -47,6 +47,9 @@ return require("packer").startup(function()
     use({ "p00f/nvim-ts-rainbow" })
     use({ "romgrk/nvim-treesitter-context" })
 
+    -- Better spell-checking for buffers with Treesitter highlighting
+    use({ "lewis6991/spellsitter.nvim" })
+
     -- Collection of common configurations for the nvim LSP client
     use({ "neovim/nvim-lspconfig" })
 
