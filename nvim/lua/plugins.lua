@@ -8,7 +8,7 @@ return require("packer").startup(function()
     -- Column-align multiple lines
     use({ "junegunn/vim-easy-align" })
 
-    -- colorscheme
+    -- Color scheme
     use({ "folke/tokyonight.nvim" })
 
     -- Make a new text object for lines at the same indent level
@@ -46,7 +46,6 @@ return require("packer").startup(function()
 
     -- Treesitter integration into neovim
     use({ "nvim-treesitter/nvim-treesitter", run = ":TSUpdate" })
-    use({ "nvim-treesitter/completion-treesitter" })
     use({ "p00f/nvim-ts-rainbow" })
     use({ "romgrk/nvim-treesitter-context" })
 
