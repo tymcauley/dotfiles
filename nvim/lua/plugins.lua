@@ -17,6 +17,9 @@ return require("packer").startup(function()
     -- Operators for surrounding/sandwiching text objects
     use({ "machakann/vim-sandwich" })
 
+    -- Automatic closing of quotes, parens, brackets, etc
+    use({ "Raimondi/delimitMate" })
+
     -- Commenting plugin
     use({
         "numToStr/Comment.nvim",
