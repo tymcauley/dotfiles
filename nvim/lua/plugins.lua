@@ -37,7 +37,10 @@ return require("packer").startup(function()
     -- Add nice integration with git
     use({
         "lewis6991/gitsigns.nvim",
-        requires = { "nvim-lua/plenary.nvim" },
+        after = "plenary.nvim",
+        config = function()
+            require("config.gitsigns")
+        end,
     })
 
     -- Languages
@@ -45,18 +48,53 @@ return require("packer").startup(function()
     use({ "azidar/firrtl-syntax" })
 
     -- Treesitter integration into neovim
-    use({ "nvim-treesitter/nvim-treesitter", run = ":TSUpdate" })
-    use({ "p00f/nvim-ts-rainbow" })
-    use({ "romgrk/nvim-treesitter-context" })
+    use({
+        "nvim-treesitter/nvim-treesitter",
+        config = function()
+            require("config.treesitter")
+        end,
+        run = ":TSUpdate",
+    })
+    use({ "p00f/nvim-ts-rainbow", after = "nvim-treesitter" })
+    use({ "romgrk/nvim-treesitter-context", after = "nvim-treesitter" })
 
     -- Better spell-checking for buffers with Treesitter highlighting
-    use({ "lewis6991/spellsitter.nvim" })
+    use({
+        "lewis6991/spellsitter.nvim",
+        config = function()
+            require("spellsitter").setup()
+        end,
+    })
 
-    -- Collection of common configurations for the nvim LSP client
-    use({ "neovim/nvim-lspconfig" })
+    -- Autocompletion plugin
+    use({
+        "hrsh7th/nvim-cmp",
+        config = function()
+            require("config.nvim-cmp")
+        end,
+    })
+    use({ "hrsh7th/cmp-buffer", after = "nvim-cmp" })
+    use({ "hrsh7th/cmp-calc", after = "nvim-cmp" })
+    use({ "hrsh7th/cmp-nvim-lsp", after = "nvim-cmp" })
+    use({ "hrsh7th/cmp-nvim-lua", after = "nvim-cmp" })
+    use({ "hrsh7th/cmp-path", after = "nvim-cmp" })
+    use({ "hrsh7th/cmp-vsnip", after = "nvim-cmp" })
+    use({ "hrsh7th/vim-vsnip", after = "nvim-cmp" })
 
     -- LSP statusline components
     use({ "nvim-lua/lsp-status.nvim" })
+
+    -- Collection of common configurations for the nvim LSP client
+    use({
+        "neovim/nvim-lspconfig",
+        after = {
+            "cmp-nvim-lsp",
+            "lsp-status.nvim",
+        },
+        config = function()
+            require("config.lsp")
+        end,
+    })
 
     -- Connect non-LSP sources into nvim's LSP client
     use({
@@ -70,26 +108,15 @@ return require("packer").startup(function()
     -- Extra tools for using rust-analyzer with nvim LSP client.
     use({ "simrat39/rust-tools.nvim" })
 
-    -- Autocompletion plugin
-    use({
-        "hrsh7th/nvim-cmp",
-        requires = {
-            { "hrsh7th/cmp-buffer" },
-            { "hrsh7th/cmp-calc" },
-            { "hrsh7th/cmp-nvim-lsp" },
-            { "hrsh7th/cmp-nvim-lua" },
-            { "hrsh7th/cmp-path" },
-            { "hrsh7th/cmp-vsnip" },
-            { "hrsh7th/vim-vsnip" },
-        },
-    })
-
     -- Metals (Scala language server) integration for nvim LSP
     use({ "scalameta/nvim-metals", requires = { "nvim-lua/plenary.nvim" } })
 
     -- Fuzzy finder
     use({
         "nvim-telescope/telescope.nvim",
+        config = function()
+            require("config.telescope")
+        end,
         requires = {
             { "nvim-lua/plenary.nvim" },
             { "nvim-telescope/telescope-fzf-native.nvim", run = "make" },
@@ -101,15 +128,24 @@ return require("packer").startup(function()
     -- Pretty list for showing all sorts of diagnostics and search results
     use({
         "folke/trouble.nvim",
+        config = function()
+            require("trouble").setup({})
+        end,
         requires = { "kyazdani42/nvim-web-devicons" },
     })
 
     -- Statusline
     use({
         "nvim-lualine/lualine.nvim",
+        after = {
+            "gitsigns.nvim",
+            "lsp-status.nvim",
+        },
+        config = function()
+            require("config.lualine").setup()
+        end,
         requires = {
             "kyazdani42/nvim-web-devicons",
-            "lewis6991/gitsigns.nvim",
         },
     })
 
