@@ -14,8 +14,8 @@ return require("packer").startup(function()
     -- Make a new text object for lines at the same indent level
     use({ "michaeljsmith/vim-indent-object" })
 
-    -- Add new vim verb for surrounding text objects
-    use({ "tpope/vim-surround" })
+    -- Operators for surrounding/sandwiching text objects
+    use({ "machakann/vim-sandwich" })
 
     -- Commenting plugin
     use({
