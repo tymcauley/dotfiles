@@ -43,6 +43,22 @@ return require("packer").startup(function()
         end,
     })
 
+    -- Add context to search results
+    use({
+        "kevinhwang91/nvim-hlslens",
+        keys = {
+            { "n", "n" },
+            { "n", "N" },
+            { "n", "*" },
+            { "n", "#" },
+            { "n", "g*" },
+            { "n", "g#" },
+        },
+        config = function()
+            require("config.hlslens")
+        end,
+    })
+
     -- Languages
     use({ "rust-lang/rust.vim" })
     use({ "azidar/firrtl-syntax" })

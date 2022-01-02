@@ -41,7 +41,7 @@ g.mapleader = [[,]] -- map by , instead of /
 g.maplocalleader = [[\]] -- map local by \
 
 -- clear search
-utils.map("n", "<leader>/", "<Cmd>nohlsearch<CR>", { silent = true })
+utils.map("n", "<leader>/", ":nohlsearch<CR>", { silent = true })
 
 -- spelling
 utils.map("n", "<leader>s", "<Cmd>set spell!<CR>", { silent = true })
