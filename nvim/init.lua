@@ -165,6 +165,11 @@ opt("b", "softtabstop", indent)
 opt("b", "shiftwidth", indent)
 opt("b", "expandtab", true)
 
+-- Filetype-specific overrides for indentation
+utils.create_augroup("override_indents", {
+    { "FileType", "haskell", "setlocal softtabstop=2 shiftwidth=2" },
+})
+
 -- By default, don't wrap text
 opt("w", "wrap", false)
 
