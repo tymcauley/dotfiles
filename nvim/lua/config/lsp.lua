@@ -15,6 +15,7 @@ end
 
 -- Default LSP settings
 
+-- Customize border of floating windows
 local border = {
     { "╭", "FloatBorder" },
     { "─", "FloatBorder" },
@@ -26,19 +27,23 @@ local border = {
     { "│", "FloatBorder" },
 }
 
-local shared_diagnostic_settings = vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, { virtual_text = false })
-local shared_hover_settings = vim.lsp.with(vim.lsp.handlers.hover, { border = border })
+-- Set how diagnostics are displayed
+vim.diagnostic.config({
+    underline = true,
+    virtual_text = false,
+    signs = true,
+    update_in_insert = false,
+    severity_sort = false,
+    float = { border = border },
+})
+
 local capabilities = vim.lsp.protocol.make_client_capabilities()
+
+-- Extend default capabilities with everything 'nvim-cmp' can do
 capabilities = require("cmp_nvim_lsp").update_capabilities(capabilities)
 
 -- Extend default capabilities with 'window/workDoneProgress'
 capabilities = vim.tbl_extend("keep", capabilities or {}, lsp_status.capabilities)
-
-local handlers = {
-    ["textDocument/publishDiagnostics"] = shared_diagnostic_settings,
-    ["textDocument/hover"] = shared_hover_settings,
-    ["textDocument/signatureHelp"] = shared_hover_settings,
-}
 
 -- Buffer-local setup function
 local function custom_lsp_attach(client, bufnr)
@@ -113,7 +118,6 @@ for _, lsp in ipairs(servers) do
     lspconfig[lsp].setup({
         on_attach = custom_lsp_attach,
         capabilities = capabilities,
-        handlers = handlers,
         flags = {
             debounce_text_changes = 150,
         },
@@ -183,7 +187,6 @@ end
 
 metals_config.init_options.statusBarProvider = "on"
 metals_config.capabilities = capabilities
-metals_config.handlers = handlers
 
 utils.create_augroup("LspMetals", {
     { "FileType", "scala,sbt", 'lua require("metals").initialize_or_attach(metals_config)' },
@@ -209,12 +212,6 @@ require("rust-tools").setup({
             -- the highlight color of the hints
             highlight = "NonText",
         },
-
-        hover_actions = {
-            -- the border that is used for the hover window
-            -- see vim.api.nvim_open_win()
-            border = border,
-        },
     },
 
     -- all the opts to send to nvim-lspconfig
@@ -223,7 +220,6 @@ require("rust-tools").setup({
     server = {
         on_attach = custom_lsp_attach,
         capabilities = capabilities,
-        handlers = handlers,
         flags = {
             debounce_text_changes = 150,
         },
