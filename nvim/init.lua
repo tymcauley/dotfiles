@@ -147,10 +147,11 @@ opt("w", "number", true)
 opt("w", "relativenumber", true)
 
 -- Auto-toggling of relative numbers. This will disable relative numbers for panes that do not have focus, and will
--- also disable relative numbers in insert mode
+-- also disable relative numbers in insert mode. Don't mess with relative numbers if the buffer doesn't have numbers
+-- enabled.
 utils.create_augroup("numbertoggle", {
-    { "BufEnter,FocusGained,InsertLeave", "*", "set relativenumber" },
-    { "BufLeave,FocusLost,InsertEnter", "*", "set norelativenumber" },
+    { "BufEnter,FocusGained,InsertLeave", "*", "if &number | set relativenumber | endif" },
+    { "BufLeave,FocusLost,InsertEnter", "*", "if &number | set norelativenumber | endif" },
 })
 
 -- When opening a new line and no filetype-specific indenting is enabled, keep the same indent as the line you're
