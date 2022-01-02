@@ -134,6 +134,11 @@ null_ls.setup({
             extra_args = { "--indent-type", "Spaces" },
         }),
 
+        -- Linter for git commits
+        null_ls.builtins.diagnostics.gitlint.with({
+            extra_args = { "--ignore", "body-is-missing" },
+        }),
+
         -- Linter for Dockerfiles
         null_ls.builtins.diagnostics.hadolint,
 
