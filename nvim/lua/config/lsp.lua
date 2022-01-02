@@ -51,18 +51,24 @@ local function custom_lsp_attach(client, bufnr)
         silent = true,
     }
 
+    -- Show diagnostics under the cursor
+    utils.create_augroup("LspDiagnosticCursor", {
+        {
+            "CursorHold,CursorHoldI",
+            "<buffer>",
+            "lua vim.diagnostic.open_float(nil, { focus=false, scope='cursor' })",
+        },
+    })
+
     -- Find the client's capabilities
     local cap = client.resolved_capabilities
 
-    -- Setup LSP highlighting
+    -- Highlight the symbol under the cursor
     if cap.document_highlight then
-        utils.create_augroup("LspHighlight", {
+        utils.create_augroup("LspHighlightCursor", {
             { "CursorHold", "<buffer>", "lua vim.lsp.buf.document_highlight()" },
             { "CursorMoved", "<buffer>", "lua vim.lsp.buf.clear_references()" },
         })
-        for _, name in ipairs({ "Text", "Read", "Write" }) do
-            vim.cmd("hi! link LspReference" .. name .. " CursorColumn")
-        end
     end
 
     -- Shortcut for using telescope as the picker
@@ -70,7 +76,7 @@ local function custom_lsp_attach(client, bufnr)
         return string.format("<Cmd>lua require('telescope.builtin').%s()<CR>", picker)
     end
 
-    -- Setup key mappings
+    -- Set up key mappings
     buf_set_keymap("n", "gla", telescope("lsp_code_actions"), opts)
     buf_set_keymap("v", "gla", telescope("lsp_range_code_actions"), opts)
     buf_set_keymap("n", "gld", telescope("lsp_definitions"), opts)
