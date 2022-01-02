@@ -59,6 +59,14 @@ return require("packer").startup(function()
         end,
     })
 
+    -- File type icons for various plugins
+    use({
+        "kyazdani42/nvim-web-devicons",
+        config = function()
+            require("config.nvim-web-devicons")
+        end,
+    })
+
     -- Languages
     use({ "rust-lang/rust.vim" })
     use({ "azidar/firrtl-syntax" })
@@ -147,7 +155,6 @@ return require("packer").startup(function()
         config = function()
             require("trouble").setup({})
         end,
-        requires = { "kyazdani42/nvim-web-devicons" },
     })
 
     -- Statusline
@@ -160,14 +167,8 @@ return require("packer").startup(function()
         config = function()
             require("config.lualine").setup()
         end,
-        requires = {
-            "kyazdani42/nvim-web-devicons",
-        },
     })
 
     -- Buffer line
-    use({
-        "romgrk/barbar.nvim",
-        requires = { "kyazdani42/nvim-web-devicons" },
-    })
+    use({ "romgrk/barbar.nvim" })
 end)
