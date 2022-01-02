@@ -168,6 +168,12 @@ opt("b", "expandtab", true)
 -- By default, don't wrap text
 opt("w", "wrap", false)
 
+-- Filetype-specific overrides for 'textwidth'
+utils.create_augroup("override_textwidth", {
+    { "FileType", "lua", "setlocal textwidth=119" },
+    { "FileType", "scala", "setlocal textwidth=119" },
+})
+
 -- Add a ruler to visually indicate the file's textwidth setting
 opt("w", "colorcolumn", "+1")
 
