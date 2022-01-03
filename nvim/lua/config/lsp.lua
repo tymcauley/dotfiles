@@ -100,6 +100,7 @@ local function custom_lsp_attach(client, bufnr)
     buf_set_keymap("n", "glws", telescope("lsp_workspace_symbols"), opts)
     buf_set_keymap("n", "glx", "<Cmd>lua vim.lsp.stop_client(vim.lsp.get_active_clients())<CR>", opts)
 
+    -- trouble.nvim
     buf_set_keymap("n", "<leader>xx", "<Cmd>Trouble<CR>", opts)
     buf_set_keymap("n", "<leader>xw", "<Cmd>Trouble lsp_workspace_diagnostics<CR>", opts)
     buf_set_keymap("n", "<leader>xd", "<Cmd>Trouble lsp_document_diagnostics<CR>", opts)
@@ -113,7 +114,12 @@ end
 
 -- Enable/configure LSPs
 
-local servers = { "clangd", "pyright", "hls" }
+local servers = {
+    "clangd",
+    "denols",
+    "hls",
+    "pyright",
+}
 for _, lsp in ipairs(servers) do
     lspconfig[lsp].setup({
         on_attach = custom_lsp_attach,
