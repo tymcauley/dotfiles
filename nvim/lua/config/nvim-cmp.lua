@@ -26,7 +26,7 @@ cmp.setup({
             else
                 fallback()
             end
-        end, { "i", "s" }),
+        end, { "i" }),
 
         ["<C-p>"] = cmp.mapping(function()
             if cmp.visible() then
@@ -34,26 +34,26 @@ cmp.setup({
             elseif vim.fn["vsnip#jumpable"](-1) == 1 then
                 feedkey("<Plug>(vsnip-jump-prev)", "")
             end
-        end, { "i", "s" }),
+        end, { "i" }),
 
-        ["<C-d>"] = cmp.mapping.scroll_docs(-4),
-        ["<C-f>"] = cmp.mapping.scroll_docs(4),
-        ["<C-Space>"] = cmp.mapping.complete(),
-        ["<C-e>"] = cmp.mapping.close(),
+        ["<C-b>"] = cmp.mapping(cmp.mapping.scroll_docs(-4), { "i" }),
+        ["<C-f>"] = cmp.mapping(cmp.mapping.scroll_docs(4), { "i" }),
+        ["<C-Space>"] = cmp.mapping(cmp.mapping.complete(), { "i" }),
+        ["<C-e>"] = cmp.mapping(cmp.mapping.abort(), { "i" }),
         ["<CR>"] = cmp.mapping.confirm({
             behavior = cmp.ConfirmBehavior.Replace,
-            select = true,
+            select = false,
         }),
     },
 
-    sources = {
+    sources = cmp.config.sources({
         { name = "nvim_lsp" },
         { name = "nvim_lua" },
         { name = "vsnip" },
         { name = "buffer" },
         { name = "path" },
         { name = "calc" },
-    },
+    }),
 
     formatting = {
         format = function(entry, vim_item)
