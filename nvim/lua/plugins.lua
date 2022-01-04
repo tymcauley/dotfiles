@@ -68,8 +68,9 @@ return require("packer").startup(function()
     })
 
     -- Languages
-    use({ "rust-lang/rust.vim" })
     use({ "azidar/firrtl-syntax" })
+    use({ "fladson/vim-kitty" })
+    use({ "rust-lang/rust.vim" })
 
     -- Treesitter integration into neovim
     use({
