@@ -43,19 +43,11 @@ return require("packer").startup(function()
         end,
     })
 
-    -- Add context to search results
+    -- Improved match motions
     use({
-        "kevinhwang91/nvim-hlslens",
-        keys = {
-            { "n", "n" },
-            { "n", "N" },
-            { "n", "*" },
-            { "n", "#" },
-            { "n", "g*" },
-            { "n", "g#" },
-        },
+        "haya14busa/vim-asterisk",
         config = function()
-            require("config.hlslens")
+            require("config.vim-asterisk")
         end,
     })
 
