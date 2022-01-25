@@ -47,9 +47,13 @@ capabilities = vim.tbl_extend("keep", capabilities or {}, lsp_status.capabilitie
 
 -- Buffer-local setup function
 local function custom_lsp_attach(client, bufnr)
+    local tsb = require("telescope.builtin")
+
     -- Define buffer-local mapping
-    local function buf_set_keymap(...)
-        vim.api.nvim_buf_set_keymap(bufnr, ...)
+    local function map(mode, l, r, opts)
+        opts = opts or {}
+        opts.buffer = bufnr
+        vim.keymap.set(mode, l, r, opts)
     end
     local opts = {
         noremap = true,
@@ -76,37 +80,36 @@ local function custom_lsp_attach(client, bufnr)
         })
     end
 
-    -- Shortcut for using telescope as the picker
-    local function telescope(picker)
-        return string.format("<Cmd>lua require('telescope.builtin').%s()<CR>", picker)
-    end
-
     -- Set up key mappings
-    buf_set_keymap("n", "gla", telescope("lsp_code_actions"), opts)
-    buf_set_keymap("v", "gla", telescope("lsp_range_code_actions"), opts)
-    buf_set_keymap("n", "gld", telescope("lsp_definitions"), opts)
-    buf_set_keymap("n", "glD", "<Cmd>lua vim.lsp.buf.declaration()<CR>", opts)
-    buf_set_keymap("n", "glf", "<Cmd>lua vim.lsp.buf.formatting()<CR>", opts)
-    buf_set_keymap("n", "glh", "<Cmd>lua vim.lsp.buf.hover()<CR>", opts)
-    buf_set_keymap("n", "glH", "<Cmd>lua vim.lsp.buf.signature_help()<CR>", opts)
-    buf_set_keymap("n", "gli", telescope("lsp_implementations"), opts)
-    buf_set_keymap("n", "glj", "<Cmd>lua vim.diagnostic.goto_next()<CR>", opts)
-    buf_set_keymap("n", "glk", "<Cmd>lua vim.diagnostic.goto_prev()<CR>", opts)
-    buf_set_keymap("n", "gln", "<Cmd>lua vim.lsp.buf.rename()<CR>", opts)
-    buf_set_keymap("n", "glr", telescope("lsp_references"), opts)
-    buf_set_keymap("n", "gltd", "<Cmd>lua vim.lsp.buf.type_definition()<CR>", opts)
-    buf_set_keymap("n", "glwd", telescope("lsp_workspace_diagnostics"), opts)
-    buf_set_keymap("n", "glwl", "<Cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>", opts)
-    buf_set_keymap("n", "glws", telescope("lsp_workspace_symbols"), opts)
-    buf_set_keymap("n", "glx", "<Cmd>lua vim.lsp.stop_client(vim.lsp.get_active_clients())<CR>", opts)
+    map("n", "gla", tsb.lsp_code_actions, opts)
+    map("v", "gla", tsb.lsp_range_code_actions, opts)
+    map("n", "gld", tsb.lsp_definitions, opts)
+    map("n", "glD", vim.lsp.buf.declaration, opts)
+    map("n", "glf", vim.lsp.buf.formatting, opts)
+    map("n", "glh", vim.lsp.buf.hover, opts)
+    map("n", "glH", vim.lsp.buf.signature_help, opts)
+    map("n", "gli", tsb.lsp_implementations, opts)
+    map("n", "glj", vim.diagnostic.goto_next, opts)
+    map("n", "glk", vim.diagnostic.goto_prev, opts)
+    map("n", "gln", vim.lsp.buf.rename, opts)
+    map("n", "glr", tsb.lsp_references, opts)
+    map("n", "gltd", vim.lsp.buf.type_definition, opts)
+    map("n", "glwd", tsb.diagnostics, opts)
+    map("n", "glwl", function()
+        print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
+    end, opts)
+    map("n", "glws", tsb.lsp_workspace_symbols, opts)
+    map("n", "glx", function()
+        vim.lsp.stop_client(vim.lsp.get_active_clients())
+    end, opts)
 
     -- trouble.nvim
-    buf_set_keymap("n", "<leader>xx", "<Cmd>Trouble<CR>", opts)
-    buf_set_keymap("n", "<leader>xw", "<Cmd>Trouble lsp_workspace_diagnostics<CR>", opts)
-    buf_set_keymap("n", "<leader>xd", "<Cmd>Trouble lsp_document_diagnostics<CR>", opts)
-    buf_set_keymap("n", "<leader>xl", "<Cmd>Trouble loclist<CR>", opts)
-    buf_set_keymap("n", "<leader>xq", "<Cmd>Trouble quickfix<CR>", opts)
-    buf_set_keymap("n", "<leader>xr", "<Cmd>Trouble lsp_references<CR>", opts)
+    map("n", "<leader>xx", "<Cmd>Trouble<CR>", opts)
+    map("n", "<leader>xw", "<Cmd>Trouble lsp_workspace_diagnostics<CR>", opts)
+    map("n", "<leader>xd", "<Cmd>Trouble lsp_document_diagnostics<CR>", opts)
+    map("n", "<leader>xl", "<Cmd>Trouble loclist<CR>", opts)
+    map("n", "<leader>xq", "<Cmd>Trouble quickfix<CR>", opts)
+    map("n", "<leader>xr", "<Cmd>Trouble lsp_references<CR>", opts)
 
     -- Register client for messages and set up buffer autocommands to update the statusline and the current function.
     lsp_status.on_attach(client)

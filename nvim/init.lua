@@ -41,50 +41,41 @@ g.mapleader = [[,]] -- map by , instead of /
 g.maplocalleader = [[\]] -- map local by \
 
 -- clear search
-utils.map("n", "<leader>/", ":nohlsearch<CR>", { silent = true })
+vim.keymap.set("n", "<leader>/", ":nohlsearch<CR>", { silent = true })
 
 -- spelling
-utils.map("n", "<leader>s", "<Cmd>set spell!<CR>", { silent = true })
+vim.keymap.set("n", "<leader>s", "<Cmd>set spell!<CR>", { silent = true })
 
 -- Delete trailing whitespace
-utils.map("n", "<leader>w", "<Cmd>call v:lua.trim_whitespace()<CR>", { silent = true })
-
--- Split window navigation
-utils.map("n", "<C-h>", "<C-w>h")
-utils.map("n", "<C-j>", "<C-w>j")
-utils.map("n", "<C-k>", "<C-w>k")
-utils.map("n", "<C-l>", "<C-w>l")
-
--- Buffer navigation (barbar.nvim commands)
-utils.map("n", "gn", "<Cmd>BufferNext<CR>")
-utils.map("n", "gp", "<Cmd>BufferPrevious<CR>")
-utils.map("n", "gk", "<Cmd>BufferClose<CR>")
-
--- EasyAlign
--- Note that '<Plug>' mappings depend on the 'noremap' option being unset, so we can't use the 'map' function
-
--- Start interactive EasyAlign in visual mode (e.g. vipgs)
-vim.api.nvim_set_keymap("x", "gs", "<Plug>(EasyAlign)", {})
--- Start interactive EasyAlign for a motion/text object (e.g. gsip)
-vim.api.nvim_set_keymap("n", "gs", "<Plug>(EasyAlign)", {})
-
--- Enable code folding with the spacebar
-utils.map("n", "<space>", "za")
-
--- telescope.nvim
-utils.map("n", "<leader>ff", '<Cmd>lua require("telescope.builtin").find_files()<CR>')
-utils.map("n", "<leader>fg", '<Cmd>lua require("telescope.builtin").live_grep()<CR>')
-utils.map("n", "<leader>fb", '<Cmd>lua require("telescope.builtin").buffers()<CR>')
-utils.map("n", "<leader>fh", '<Cmd>lua require("telescope.builtin").help_tags()<CR>')
-
--- Remove trailing whitespace without affecting the cursor location/search history
-function _G.trim_whitespace()
+vim.keymap.set("n", "<leader>w", function()
     if not vim.o.binary and vim.o.filetype ~= "diff" then
         local current_view = fn.winsaveview()
         cmd([[keeppatterns %s/\s\+$//e]])
         fn.winrestview(current_view)
     end
-end
+end, { silent = true })
+
+-- Split window navigation
+vim.keymap.set("n", "<C-h>", "<C-w>h")
+vim.keymap.set("n", "<C-j>", "<C-w>j")
+vim.keymap.set("n", "<C-k>", "<C-w>k")
+vim.keymap.set("n", "<C-l>", "<C-w>l")
+
+-- Buffer navigation (barbar.nvim commands)
+vim.keymap.set("n", "gn", "<Cmd>BufferNext<CR>")
+vim.keymap.set("n", "gp", "<Cmd>BufferPrevious<CR>")
+vim.keymap.set("n", "gk", "<Cmd>BufferClose<CR>")
+
+-- EasyAlign
+-- Note that '<Plug>' mappings depend on the 'noremap' option being unset, so we can't use the 'map' function
+
+-- Start interactive EasyAlign in visual mode (e.g. vipgs)
+vim.keymap.set("x", "gs", "<Plug>(EasyAlign)")
+-- Start interactive EasyAlign for a motion/text object (e.g. gsip)
+vim.keymap.set("n", "gs", "<Plug>(EasyAlign)")
+
+-- Enable code folding with the spacebar
+vim.keymap.set("n", "<space>", "za")
 
 --
 -- Settings
