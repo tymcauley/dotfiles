@@ -1,6 +1,5 @@
 local M = {}
 local ll = require("lualine")
-local lsp_status = require("lsp-status")
 
 -- Returns a single character representing the current Vim mode.
 --
@@ -72,11 +71,6 @@ M.setup = function()
                     local filetype = vim.bo.filetype
                     return filetype == "scala" or filetype == "sbt"
                 end,
-            },
-            -- Display LSP status
-            {
-                lsp_status.status_progress,
-                cond = is_lsp_active,
             },
             -- Display current function from LSP
             {

@@ -99,14 +99,18 @@ return require("packer").startup(function()
     use({ "hrsh7th/vim-vsnip", after = "nvim-cmp" })
 
     -- LSP statusline components
-    use({ "nvim-lua/lsp-status.nvim" })
+    use({
+        "j-hui/fidget.nvim",
+        config = function()
+            require("fidget").setup({})
+        end,
+    })
 
     -- Collection of common configurations for the nvim LSP client
     use({
         "neovim/nvim-lspconfig",
         after = {
             "cmp-nvim-lsp",
-            "lsp-status.nvim",
         },
         config = function()
             require("config.lsp")
@@ -155,7 +159,6 @@ return require("packer").startup(function()
         "nvim-lualine/lualine.nvim",
         after = {
             "gitsigns.nvim",
-            "lsp-status.nvim",
         },
         config = function()
             require("config.lualine").setup()

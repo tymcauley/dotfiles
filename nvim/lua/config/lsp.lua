@@ -1,10 +1,6 @@
 local lspconfig = require("lspconfig")
 local null_ls = require("null-ls")
 local utils = require("utils")
-local lsp_status = require("lsp-status")
-
--- Register the progress handler, so we can print LSP server progress messages in the statusline.
-lsp_status.register_progress()
 
 -- Customize diagnostic symbols in the gutter
 local signs = { Error = " ", Warn = " ", Hint = " ", Info = " " }
@@ -41,9 +37,6 @@ local capabilities = vim.lsp.protocol.make_client_capabilities()
 
 -- Extend default capabilities with everything 'nvim-cmp' can do
 capabilities = require("cmp_nvim_lsp").update_capabilities(capabilities)
-
--- Extend default capabilities with 'window/workDoneProgress'
-capabilities = vim.tbl_extend("keep", capabilities or {}, lsp_status.capabilities)
 
 -- Buffer-local setup function
 local function custom_lsp_attach(client, bufnr)
@@ -110,9 +103,6 @@ local function custom_lsp_attach(client, bufnr)
     map("n", "<leader>xl", "<Cmd>Trouble loclist<CR>", opts)
     map("n", "<leader>xq", "<Cmd>Trouble quickfix<CR>", opts)
     map("n", "<leader>xr", "<Cmd>Trouble lsp_references<CR>", opts)
-
-    -- Register client for messages and set up buffer autocommands to update the statusline and the current function.
-    lsp_status.on_attach(client)
 end
 
 -- Enable/configure LSPs
