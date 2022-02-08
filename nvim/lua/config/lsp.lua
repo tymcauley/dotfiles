@@ -194,40 +194,20 @@ utils.create_augroup("LspMetals", {
 -- rust-tools (simrat39/rust-tools.nvim)
 
 require("rust-tools").setup({
-    tools = { -- rust-tools options
-        inlay_hints = {
-            -- prefix for parameter hints
-            parameter_hints_prefix = "<- ",
-
-            -- prefix for all the other hints (type, chaining)
-            other_hints_prefix = "=> ",
-
-            -- whether to align to the length of the longest line in the file
-            max_len_align = false,
-
-            -- whether to align to the extreme right or not
-            right_align = false,
-
-            -- the highlight color of the hints
-            highlight = "NonText",
-        },
-    },
-
-    -- all the opts to send to nvim-lspconfig
-    -- these override the defaults set by rust-tools.nvim
-    -- see https://github.com/neovim/nvim-lspconfig/blob/master/CONFIG.md#rust_analyzer
     server = {
         on_attach = custom_lsp_attach,
         capabilities = capabilities,
         flags = {
             debounce_text_changes = 150,
         },
-        settings = {
-            ["rust-analyzer"] = {
-                checkOnSave = {
-                    command = "clippy",
-                },
-            },
-        },
-    }, -- rust-analyer options
+
+        -- TODO: When I enable this setting, all diagnostics disappear
+        -- settings = {
+        --     ["rust-analyzer"] = {
+        --         checkOnSave = {
+        --             command = "clippy",
+        --         },
+        --     },
+        -- },
+    },
 })
