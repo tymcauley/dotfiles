@@ -21,6 +21,3 @@ vim.keymap.set("n", "<leader>fh", tsb.help_tags)
 
 -- Use 'nvim-telescope/telescope-fzf-native.nvim' as telescope's sorter
 require("telescope").load_extension("fzf")
-
--- Use telescope as the viewer for more nvim core operations
-require("telescope").load_extension("ui-select")

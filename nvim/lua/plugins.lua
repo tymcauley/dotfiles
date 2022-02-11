@@ -141,10 +141,11 @@ return require("packer").startup(function()
         requires = {
             { "nvim-lua/plenary.nvim" },
             { "nvim-telescope/telescope-fzf-native.nvim", run = "make" },
-            -- Use telescope as the viewer for more nvim core operations
-            { "nvim-telescope/telescope-ui-select.nvim" },
         },
     })
+
+    -- Improve the default vim.ui interfaces
+    use({ "stevearc/dressing.nvim" })
 
     -- Pretty list for showing all sorts of diagnostics and search results
     use({
