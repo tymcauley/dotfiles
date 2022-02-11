@@ -74,6 +74,14 @@ local function custom_lsp_attach(client, bufnr)
         })
     end
 
+    -- Set up code lens support
+    if cap.code_lens then
+        utils.create_augroup("LspCodeLens", {
+            { "BufEnter,CursorHold,InsertLeave", "<buffer>", "lua vim.lsp.codelens.refresh()" },
+        })
+        map("n", "glcl", vim.lsp.codelens.run, opts)
+    end
+
     -- Set up key mappings
     map("n", "gla", function()
         ts_builtin.lsp_code_actions(ts_themes.get_cursor())
