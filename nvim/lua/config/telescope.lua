@@ -4,10 +4,12 @@ require("telescope").setup({
             i = { ["<C-t>"] = require("trouble.providers.telescope").open_with_trouble },
             n = { ["<C-t>"] = require("trouble.providers.telescope").open_with_trouble },
         },
-        layout_strategy = "vertical",
+        layout_strategy = "horizontal",
         layout_config = {
+            prompt_position = "top",
             width = 0.8,
         },
+        sorting_strategy = "ascending",
         winblend = 10,
     },
 })
