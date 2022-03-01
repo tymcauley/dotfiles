@@ -12,15 +12,14 @@ alias g='git'
 
 # Branch (b)
 alias gb='git branch'
-alias gbc='git checkout -b'
 alias gbd='git branch --delete'
 alias gbD='git branch --delete --force'
-alias gbl='git branch --verbose --verbose'
-alias gbL='git branch --all --verbose --verbose'
+alias gbl='git branch -vv'
+alias gbL='git branch --all -vv'
 alias gbm='git branch --move'
 alias gbM='git branch --move --force'
-alias gbs='git show-branch'
-alias gbS='git show-branch --all'
+alias gbc='git switch --create'
+alias gbs='git switch'
 
 # Commit (c)
 alias gc='git commit --verbose'
@@ -139,7 +138,7 @@ alias gRp='git remote prune'
 alias gRs='git remote show'
 
 # Stash (s)
-alias gs='git stash'
+alias gs='git stash push'
 alias gsa='git stash apply'
 alias gsx='git stash drop'
 alias gsl='git stash list'
