@@ -55,12 +55,13 @@ local function custom_lsp_attach(client, bufnr)
     }
 
     -- Show diagnostics under the cursor
-    utils.create_augroup("LspDiagnosticCursor", {
-        {
-            "CursorHold,CursorHoldI",
-            "<buffer>",
-            "lua vim.diagnostic.open_float(nil, { focus=false, scope='cursor' })",
-        },
+    local lsp_diagnostic_cursor = vim.api.nvim_create_augroup("lsp_diagnostic_cursor", {})
+    vim.api.nvim_create_autocmd({ "CursorHold", "CursorHoldI" }, {
+        callback = function()
+            vim.diagnostic.open_float(nil, { focus = false, scope = "cursor" })
+        end,
+        buffer = 0,
+        group = lsp_diagnostic_cursor,
     })
 
     -- Find the client's capabilities
@@ -68,16 +69,32 @@ local function custom_lsp_attach(client, bufnr)
 
     -- Highlight the symbol under the cursor
     if cap.document_highlight then
-        utils.create_augroup("LspHighlightCursor", {
-            { "CursorHold", "<buffer>", "lua vim.lsp.buf.document_highlight()" },
-            { "CursorMoved", "<buffer>", "lua vim.lsp.buf.clear_references()" },
+        local lsp_highlight_cursor = vim.api.nvim_create_augroup("lsp_highlight_cursor", {})
+        vim.api.nvim_create_autocmd("CursorHold", {
+            callback = function()
+                vim.lsp.buf.document_highlight()
+            end,
+            buffer = 0,
+            group = lsp_highlight_cursor,
+        })
+        vim.api.nvim_create_autocmd("CursorMoved", {
+            callback = function()
+                vim.lsp.buf.clear_references()
+            end,
+            buffer = 0,
+            group = lsp_highlight_cursor,
         })
     end
 
     -- Set up code lens support
     if cap.code_lens then
-        utils.create_augroup("LspCodeLens", {
-            { "BufEnter,CursorHold,InsertLeave", "<buffer>", "lua vim.lsp.codelens.refresh()" },
+        local lsp_code_lens = vim.api.nvim_create_augroup("lsp_code_lens", {})
+        vim.api.nvim_create_autocmd({ "BufEnter", "CursorHold", "InsertLeave" }, {
+            callback = function()
+                vim.lsp.codelens.refresh()
+            end,
+            buffer = 0,
+            group = lsp_code_lens,
         })
         map("n", "glcl", vim.lsp.codelens.run, opts)
     end
@@ -174,7 +191,8 @@ null_ls.setup({
 
 local Path = require("plenary.path")
 
-metals_config = require("metals").bare_config()
+local metals = require("metals")
+metals_config = metals.bare_config()
 metals_config.on_attach = custom_lsp_attach
 metals_config.settings = {
     showImplicitArguments = true,
@@ -200,8 +218,13 @@ end
 metals_config.init_options.statusBarProvider = "on"
 metals_config.capabilities = capabilities
 
-utils.create_augroup("LspMetals", {
-    { "FileType", "scala,sbt", 'lua require("metals").initialize_or_attach(metals_config)' },
+local lsp_metals = vim.api.nvim_create_augroup("lsp_metals", {})
+vim.api.nvim_create_autocmd("FileType", {
+    pattern = "scala,sbt",
+    callback = function()
+        metals.initialize_or_attach(metals_config)
+    end,
+    group = lsp_metals,
 })
 
 -- rust-tools (simrat39/rust-tools.nvim)

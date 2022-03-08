@@ -11,14 +11,4 @@ function utils.hi(group, opts)
     cmd(c)
 end
 
--- Create an autogroup
-function utils.create_augroup(name, autocmds)
-    cmd("augroup " .. name)
-    cmd("autocmd!")
-    for _, autocmd in ipairs(autocmds) do
-        cmd("autocmd " .. table.concat(autocmd, " "))
-    end
-    cmd("augroup END")
-end
-
 return utils

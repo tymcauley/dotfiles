@@ -29,9 +29,11 @@ end
 require("plugins")
 
 -- Compile packer config whenever 'plugins.lua' changes
-utils.create_augroup("packer_user_config", {
-    { "BufWritePost", "plugins.lua", "source <afile> | PackerCompile" },
-})
+local packer_user_config = vim.api.nvim_create_augroup("packer_user_config", {})
+vim.api.nvim_create_autocmd(
+    "BufWritePost",
+    { pattern = "plugins.lua", command = "source <afile> | PackerCompile", group = packer_user_config }
+)
 
 --
 -- Mappings
@@ -140,9 +142,22 @@ opt("w", "relativenumber", true)
 -- Auto-toggling of relative numbers. This will disable relative numbers for panes that do not have focus, and will
 -- also disable relative numbers in insert mode. Don't mess with relative numbers if the buffer doesn't have numbers
 -- enabled.
-utils.create_augroup("numbertoggle", {
-    { "BufEnter,FocusGained,InsertLeave", "*", "if &number | set relativenumber | endif" },
-    { "BufLeave,FocusLost,InsertEnter", "*", "if &number | set norelativenumber | endif" },
+local numbertoggle = vim.api.nvim_create_augroup("numbertoggle", {})
+vim.api.nvim_create_autocmd({ "BufEnter", "FocusGained", "InsertLeave" }, {
+    callback = function()
+        if vim.wo.number then
+            vim.wo.relativenumber = true
+        end
+    end,
+    group = numbertoggle,
+})
+vim.api.nvim_create_autocmd({ "BufLeave", "FocusLost", "InsertEnter" }, {
+    callback = function()
+        if vim.wo.number then
+            vim.wo.relativenumber = false
+        end
+    end,
+    group = numbertoggle,
 })
 
 -- When opening a new line and no filetype-specific indenting is enabled, keep the same indent as the line you're
@@ -157,18 +172,25 @@ opt("b", "shiftwidth", indent)
 opt("b", "expandtab", true)
 
 -- Filetype-specific overrides for indentation
-utils.create_augroup("override_indents", {
-    { "FileType", "haskell", "setlocal softtabstop=2 shiftwidth=2" },
-})
+local override_indents = vim.api.nvim_create_augroup("override_indents", {})
+vim.api.nvim_create_autocmd(
+    "FileType",
+    { pattern = "haskell", command = "setlocal softtabstop=2 shiftwidth=2", group = override_indents }
+)
 
 -- By default, don't wrap text
 opt("w", "wrap", false)
 
 -- Filetype-specific overrides for 'textwidth'
-utils.create_augroup("override_textwidth", {
-    { "FileType", "lua", "setlocal textwidth=119" },
-    { "FileType", "scala", "setlocal textwidth=119" },
-})
+local override_textwidth = vim.api.nvim_create_augroup("override_textwidth", {})
+vim.api.nvim_create_autocmd(
+    "FileType",
+    { pattern = "lua", command = "setlocal textwidth=119", group = override_textwidth }
+)
+vim.api.nvim_create_autocmd(
+    "FileType",
+    { pattern = "scala", command = "setlocal textwidth=119", group = override_textwidth }
+)
 
 -- Add a ruler to visually indicate the file's textwidth setting
 opt("w", "colorcolumn", "+1")
