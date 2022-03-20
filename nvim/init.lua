@@ -89,8 +89,8 @@ opt("o", "cmdheight", 2)
 -- Don't show what mode we're in on the last line, the status line takes care of that
 opt("o", "showmode", false)
 
--- Make sure all windows that aren't in focus always have a status line
-opt("o", "laststatus", 2)
+-- Enable global statusline
+opt("o", "laststatus", 3)
 
 -- This allows you to switch from an unsaved buffer without saving it first. Also allows you to keep an undo history
 -- for multiple files. Vim will complain if you try to quit without saving, and swap files will keep you safe if your

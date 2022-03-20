@@ -31,6 +31,7 @@ M.setup = function()
         component_separators = { left = "", right = "" },
         theme = "tokyonight",
         disabled_filetypes = { "packer" },
+        globalstatus = true,
     }
 
     local ll_sections = {
