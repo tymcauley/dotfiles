@@ -1,5 +1,6 @@
 local M = {}
 local ll = require("lualine")
+local gps = require("nvim-gps")
 
 -- Returns a single character representing the current Vim mode.
 --
@@ -22,11 +23,6 @@ local function mode_single_character()
     }
     local default_string = "?"
     return mode_strings[vim.fn.mode()] or default_string
-end
-
--- Returns true if the buffer is connected to at least one LSP client
-local function is_lsp_active()
-    return #vim.lsp.buf_get_clients() > 0
 end
 
 M.setup = function()
@@ -60,6 +56,11 @@ M.setup = function()
             {
                 "b:gitsigns_status",
             },
+            -- Display code context
+            {
+                gps.get_location,
+                cond = gps.is_available,
+            },
         },
         lualine_x = {
             -- Display nvim-metals status for Scala files
@@ -71,13 +72,6 @@ M.setup = function()
                     local filetype = vim.bo.filetype
                     return filetype == "scala" or filetype == "sbt"
                 end,
-            },
-            -- Display current function from LSP
-            {
-                function()
-                    return vim.b.lsp_current_function or ""
-                end,
-                cond = is_lsp_active,
             },
             -- LSP diagnostics
             {
