@@ -57,12 +57,6 @@ vim.keymap.set("n", "<leader>w", function()
     end
 end, { silent = true })
 
--- Split window navigation
-vim.keymap.set("n", "<C-h>", "<C-w>h")
-vim.keymap.set("n", "<C-j>", "<C-w>j")
-vim.keymap.set("n", "<C-k>", "<C-w>k")
-vim.keymap.set("n", "<C-l>", "<C-w>l")
-
 -- Buffer navigation (barbar.nvim commands)
 vim.keymap.set("n", "gn", "<Cmd>BufferNext<CR>")
 vim.keymap.set("n", "gp", "<Cmd>BufferPrevious<CR>")

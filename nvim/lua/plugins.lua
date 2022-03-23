@@ -176,4 +176,12 @@ return require("packer").startup(function()
 
     -- Buffer line
     use({ "romgrk/barbar.nvim" })
+
+    -- Smart window-split resizing and navigation
+    use({
+        "mrjones2014/smart-splits.nvim",
+        config = function()
+            require("config.smart-splits")
+        end,
+    })
 end)
