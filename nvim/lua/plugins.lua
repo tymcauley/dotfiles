@@ -184,4 +184,14 @@ return require("packer").startup(function()
             require("config.smart-splits")
         end,
     })
+
+    -- Indent guides
+    use({
+        "lukas-reineke/indent-blankline.nvim",
+        config = function()
+            require("indent_blankline").setup({
+                show_current_context = true,
+            })
+        end,
+    })
 end)
