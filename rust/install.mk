@@ -12,7 +12,7 @@ RUST_ANALYZER_NAME := rust-analyzer-x86_64-apple-darwin
 else
 RUST_ANALYZER_NAME := rust-analyzer-x86_64-unknown-linux-gnu
 endif
-RUST_ANALYZER_URL := https://github.com/rust-analyzer/rust-analyzer/releases/latest/download/$(RUST_ANALYZER_NAME).gz
+RUST_ANALYZER_URL := https://github.com/rust-lang/rust-analyzer/releases/latest/download/$(RUST_ANALYZER_NAME).gz
 
 # TODO: Install zsh completions for rustup?
 # TODO: `cargo install cargo-edit`?
