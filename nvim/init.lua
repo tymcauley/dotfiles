@@ -100,11 +100,11 @@ vim.opt.listchars = {
     -- Place a '#' in the first column when 'wrap' is off and there is text preceding the character visible in the
     -- first column
     precedes = "#",
-    -- Show non-breaking space characters as ¬
+    -- Show non-breaking space characters
     nbsp = "¬",
-    -- Show tabs as ▸ followed by spaces
-    tab = "▸ ",
-    -- Show trailing spaces as ◊
+    -- Show tabs
+    tab = ".→",
+    -- Show trailing spaces
     trail = "◊",
 }
 
