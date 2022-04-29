@@ -194,4 +194,7 @@ return require("packer").startup(function()
             })
         end,
     })
+
+    -- Automatic table creator
+    use({ "dhruvasagar/vim-table-mode" })
 end)
