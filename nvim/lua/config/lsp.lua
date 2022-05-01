@@ -65,7 +65,7 @@ local function custom_lsp_attach(client, bufnr)
     })
 
     -- Find the client's capabilities
-    local cap = client.resolved_capabilities
+    local cap = client.server_capabilities
 
     -- Highlight the symbol under the cursor
     if cap.document_highlight then
