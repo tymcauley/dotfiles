@@ -41,7 +41,6 @@ capabilities = require("cmp_nvim_lsp").update_capabilities(capabilities)
 -- Buffer-local setup function
 local function custom_lsp_attach(client, bufnr)
     local ts_builtin = require("telescope.builtin")
-    local ts_themes = require("telescope.themes")
 
     -- Define buffer-local mapping
     local function map(mode, l, r, opts)
@@ -100,12 +99,8 @@ local function custom_lsp_attach(client, bufnr)
     end
 
     -- Set up key mappings
-    map("n", "gla", function()
-        ts_builtin.lsp_code_actions(ts_themes.get_cursor())
-    end, opts)
-    map("v", "gla", function()
-        ts_builtin.lsp_range_code_actions(ts_themes.get_cursor())
-    end, opts)
+    map("n", "gla", vim.lsp.buf.code_action, opts)
+    map("v", "gla", vim.lsp.buf.range_code_action, opts)
     map("n", "gld", ts_builtin.lsp_definitions, opts)
     map("n", "glD", vim.lsp.buf.declaration, opts)
     map("n", "glf", vim.lsp.buf.formatting, opts)
