@@ -228,6 +228,11 @@ vim.cmd("autocmd TextYankPost * lua vim.highlight.on_yank {on_visual = false}")
 -- Colors
 --
 
+-- Set window separator color to 'colors.blue'
+vim.g.tokyonight_colors = { border = "#7aa2f7" }
+vim.g.tokyonight_sidebars = { "qf", "terminal", "packer" }
+vim.g.tokyonight_lualine_bold = true
+
 vim.cmd("colorscheme tokyonight")
 
 vim.opt.termguicolors = true
