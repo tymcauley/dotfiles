@@ -197,4 +197,21 @@ return require("packer").startup(function()
 
     -- Automatic table creator
     use({ "dhruvasagar/vim-table-mode" })
+
+    -- Fancy notification manager
+    use({
+        "rcarriga/nvim-notify",
+        config = function()
+            local notify = require("notify")
+            notify.setup({
+                timeout = 3000,
+                stages = "fade",
+                on_open = function(win)
+                    -- Don't let user move cursor to notification windows
+                    vim.api.nvim_win_set_config(win, { focusable = false })
+                end,
+            })
+            vim.notify = notify
+        end,
+    })
 end)
