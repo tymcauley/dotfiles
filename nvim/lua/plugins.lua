@@ -1,4 +1,4 @@
-return require("packer").startup(function()
+local plugins_fn = function()
     -- Plugin manager
     use({ "wbthomason/packer.nvim" })
 
@@ -214,4 +214,13 @@ return require("packer").startup(function()
             vim.notify = notify
         end,
     })
-end)
+end
+
+return require("packer").startup({
+    plugins_fn,
+    config = {
+        display = {
+            open_cmd = "vnew",
+        },
+    },
+})
