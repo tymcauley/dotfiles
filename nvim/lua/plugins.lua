@@ -214,6 +214,15 @@ local plugins_fn = function()
             vim.notify = notify
         end,
     })
+
+    -- Improved code folding
+    use({
+        "kevinhwang91/nvim-ufo",
+        requires = "kevinhwang91/promise-async",
+        config = function()
+            require("config.nvim-ufo")
+        end,
+    })
 end
 
 return require("packer").startup({

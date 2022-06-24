@@ -181,10 +181,18 @@ vim.opt.colorcolumn = "+1"
 vim.opt.splitbelow = true
 vim.opt.splitright = true
 
--- Enable code folding using Treesitter, initialize with folds disabled
-vim.opt.foldmethod = "expr"
-vim.opt.foldexpr = "nvim_treesitter#foldexpr()"
+-- Set up code folding for 'nvim-ufo'
+vim.opt.foldcolumn = "auto:9"
 vim.opt.foldlevel = 99
+vim.opt.foldenable = true
+
+vim.opt.fillchars = {
+    -- Customize how folds are displayed
+    fold = " ",
+    foldopen = "",
+    foldsep = "│",
+    foldclose = "",
+}
 
 -- Speed up CursorHold autocommand events
 vim.opt.updatetime = 300

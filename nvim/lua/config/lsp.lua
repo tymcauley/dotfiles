@@ -38,6 +38,12 @@ local capabilities = vim.lsp.protocol.make_client_capabilities()
 -- Extend default capabilities with everything 'nvim-cmp' can do
 capabilities = require("cmp_nvim_lsp").update_capabilities(capabilities)
 
+-- Extend capabilities with folding functionality from 'nvim-ufo'
+capabilities.textDocument.foldingRange = {
+    dynamicRegistration = false,
+    lineFoldingOnly = true,
+}
+
 -- Buffer-local setup function
 local function custom_lsp_attach(client, bufnr)
     local ts_builtin = require("telescope.builtin")
