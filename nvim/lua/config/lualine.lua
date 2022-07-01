@@ -1,6 +1,6 @@
 local M = {}
 local ll = require("lualine")
-local gps = require("nvim-gps")
+local navic = require("nvim-navic")
 
 -- Returns a single character representing the current Vim mode.
 --
@@ -59,8 +59,8 @@ M.setup = function()
             },
             -- Display code context
             {
-                gps.get_location,
-                cond = gps.is_available,
+                navic.get_location,
+                cond = navic.is_available,
             },
         },
         lualine_x = {

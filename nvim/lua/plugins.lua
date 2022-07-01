@@ -74,13 +74,6 @@ local plugins_fn = function()
     })
     use({ "p00f/nvim-ts-rainbow", after = "nvim-treesitter" })
     use({ "romgrk/nvim-treesitter-context", after = "nvim-treesitter" })
-    use({
-        "SmiteshP/nvim-gps",
-        after = "nvim-treesitter",
-        config = function()
-            require("nvim-gps").setup()
-        end,
-    })
 
     -- Better spell-checking for buffers with Treesitter highlighting
     use({
@@ -122,6 +115,12 @@ local plugins_fn = function()
         config = function()
             require("config.lsp")
         end,
+    })
+
+    -- Display code context from LSP
+    use({
+        "SmiteshP/nvim-navic",
+        requires = "neovim/nvim-lspconfig",
     })
 
     -- Connect non-LSP sources into nvim's LSP client
@@ -167,7 +166,7 @@ local plugins_fn = function()
         "nvim-lualine/lualine.nvim",
         after = {
             "gitsigns.nvim",
-            "nvim-gps",
+            "nvim-navic",
         },
         config = function()
             require("config.lualine").setup()

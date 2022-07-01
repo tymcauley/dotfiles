@@ -1,4 +1,5 @@
 local lspconfig = require("lspconfig")
+local navic = require("nvim-navic")
 local null_ls = require("null-ls")
 local utils = require("utils")
 
@@ -71,6 +72,11 @@ local function custom_lsp_attach(client, bufnr)
 
     -- Find the client's capabilities
     local cap = client.server_capabilities
+
+    -- Set up code-context plugin
+    if cap.documentSymbolProvider then
+        navic.attach(client, bufnr)
+    end
 
     -- Highlight the symbol under the cursor
     if cap.document_highlight then
