@@ -45,6 +45,9 @@ vim.keymap.set("n", "<leader>w", function()
     end
 end, { silent = true })
 
+-- Re-sync treesitter highlighting
+vim.keymap.set("n", "<leader>tss", "<Cmd>write | edit | TSBufEnable highlight<CR>")
+
 -- Buffer navigation (barbar.nvim commands)
 vim.keymap.set("n", "gn", "<Cmd>BufferNext<CR>")
 vim.keymap.set("n", "gp", "<Cmd>BufferPrevious<CR>")
