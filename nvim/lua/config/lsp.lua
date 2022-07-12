@@ -66,7 +66,7 @@ local function custom_lsp_attach(client, bufnr)
         callback = function()
             vim.diagnostic.open_float(nil, { focus = false, scope = "cursor" })
         end,
-        buffer = 0,
+        buffer = bufnr,
         group = lsp_diagnostic_cursor,
     })
 
@@ -79,20 +79,16 @@ local function custom_lsp_attach(client, bufnr)
     end
 
     -- Highlight the symbol under the cursor
-    if cap.document_highlight then
+    if cap.documentHighlightProvider then
         local lsp_highlight_cursor = vim.api.nvim_create_augroup("lsp_highlight_cursor", {})
         vim.api.nvim_create_autocmd("CursorHold", {
-            callback = function()
-                vim.lsp.buf.document_highlight()
-            end,
-            buffer = 0,
+            callback = vim.lsp.buf.document_highlight,
+            buffer = bufnr,
             group = lsp_highlight_cursor,
         })
         vim.api.nvim_create_autocmd("CursorMoved", {
-            callback = function()
-                vim.lsp.buf.clear_references()
-            end,
-            buffer = 0,
+            callback = vim.lsp.buf.clear_references,
+            buffer = bufnr,
             group = lsp_highlight_cursor,
         })
     end
@@ -104,7 +100,7 @@ local function custom_lsp_attach(client, bufnr)
             callback = function()
                 vim.lsp.codelens.refresh()
             end,
-            buffer = 0,
+            buffer = bufnr,
             group = lsp_code_lens,
         })
         map("n", "glcl", vim.lsp.codelens.run, opts)
