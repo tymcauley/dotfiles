@@ -73,7 +73,15 @@ local plugins_fn = function()
         run = ":TSUpdate",
     })
     use({ "p00f/nvim-ts-rainbow", after = "nvim-treesitter" })
-    use({ "romgrk/nvim-treesitter-context", after = "nvim-treesitter" })
+    use({
+        "nvim-treesitter/nvim-treesitter-context",
+        after = "nvim-treesitter",
+        config = function()
+            require("treesitter-context").setup({
+                max_lines = 3,
+            })
+        end,
+    })
 
     -- Better spell-checking for buffers with Treesitter highlighting
     use({
