@@ -45,6 +45,15 @@ vim.keymap.set("n", "<leader>w", function()
     end
 end, { silent = true })
 
+-- If you run "dd" on a blank line (or a line with only whitespace), don't copy the line into the unnamed register
+vim.keymap.set("n", "dd", function()
+    if vim.api.nvim_get_current_line():match("^%s*$") then
+        return '"_dd'
+    else
+        return "dd"
+    end
+end, { expr = true })
+
 -- Re-sync treesitter highlighting
 vim.keymap.set("n", "<leader>tss", "<Cmd>write | edit | TSBufEnable highlight<CR>")
 
