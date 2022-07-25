@@ -60,16 +60,6 @@ local function custom_lsp_attach(client, bufnr)
         silent = true,
     }
 
-    -- Show diagnostics under the cursor
-    local lsp_diagnostic_cursor = vim.api.nvim_create_augroup("lsp_diagnostic_cursor", {})
-    vim.api.nvim_create_autocmd({ "CursorHold", "CursorHoldI" }, {
-        callback = function()
-            vim.diagnostic.open_float(nil, { focus = false, scope = "cursor" })
-        end,
-        buffer = bufnr,
-        group = lsp_diagnostic_cursor,
-    })
-
     -- Find the client's capabilities
     local cap = client.server_capabilities
 

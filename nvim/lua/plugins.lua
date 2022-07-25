@@ -146,6 +146,14 @@ local plugins_fn = function()
     -- Metals (Scala language server) integration for nvim LSP
     use({ "scalameta/nvim-metals", requires = { "nvim-lua/plenary.nvim" } })
 
+    -- Render LSP diagnostics inline with code
+    use({
+        "https://git.sr.ht/~whynothugo/lsp_lines.nvim",
+        config = function()
+            require("lsp_lines").setup()
+        end,
+    })
+
     -- Fuzzy finder
     use({
         "nvim-telescope/telescope.nvim",
