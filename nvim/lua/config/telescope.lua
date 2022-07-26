@@ -9,6 +9,9 @@ require("telescope").setup({
             prompt_position = "top",
             width = 0.8,
         },
+        path_display = {
+            "smart",
+        },
         sorting_strategy = "ascending",
         winblend = 10,
     },
