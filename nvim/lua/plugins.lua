@@ -206,6 +206,8 @@ local plugins_fn = function()
         config = function()
             require("indent_blankline").setup({
                 show_current_context = true,
+                show_trailing_blankline_indent = false,
+                disable_with_nolist = true,
             })
         end,
     })
