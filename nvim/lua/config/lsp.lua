@@ -1,4 +1,5 @@
 local lspconfig = require("lspconfig")
+local ih = require("inlay-hints")
 local navic = require("nvim-navic")
 local null_ls = require("null-ls")
 local utils = require("utils")
@@ -59,6 +60,9 @@ local function custom_lsp_attach(client, bufnr)
         noremap = true,
         silent = true,
     }
+
+    -- Set up inlay hints
+    ih.on_attach(client, bufnr)
 
     -- Find the client's capabilities
     local cap = client.server_capabilities
@@ -225,6 +229,14 @@ vim.api.nvim_create_autocmd("FileType", {
 -- rust-tools (simrat39/rust-tools.nvim)
 
 require("rust-tools").setup({
+    tools = {
+        on_initialized = function()
+            ih.set_all()
+        end,
+        inlay_hints = {
+            auto = false,
+        },
+    },
     server = {
         on_attach = custom_lsp_attach,
         capabilities = capabilities,

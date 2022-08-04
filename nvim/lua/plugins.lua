@@ -140,6 +140,24 @@ local plugins_fn = function()
         },
     })
 
+    -- Show inlay hints from the LSP server
+    use({
+        "simrat39/inlay-hints.nvim",
+        config = function()
+            require("inlay-hints").setup({
+                renderer = "inlay-hints/render/eol",
+                hints = {
+                    parameter = {
+                        show = false,
+                    },
+                    type = {
+                        highlight = "NonText",
+                    },
+                },
+            })
+        end,
+    })
+
     -- Extra tools for using rust-analyzer with nvim LSP client.
     use({ "simrat39/rust-tools.nvim" })
 
