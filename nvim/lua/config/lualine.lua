@@ -2,29 +2,6 @@ local M = {}
 local ll = require("lualine")
 local navic = require("nvim-navic")
 
--- Returns a single character representing the current Vim mode.
---
--- See ':help mode()' for context.
-local function mode_single_character()
-    local mode_strings = {
-        n = "N",
-        i = "I",
-        v = "V",
-        V = "V",
-        [""] = "V", -- visual block
-        c = "C",
-        s = "S",
-        S = "S",
-        [""] = "S", -- select block
-        R = "R",
-        r = "P",
-        ["!"] = "!",
-        t = "T",
-    }
-    local default_string = "?"
-    return mode_strings[vim.fn.mode()] or default_string
-end
-
 M.setup = function()
     ll.setup({
         options = {
@@ -35,7 +12,15 @@ M.setup = function()
         },
 
         sections = {
-            lualine_a = { mode_single_character },
+            lualine_a = {
+                -- Return a single character representing the current Vim mode.
+                {
+                    "mode",
+                    fmt = function(str)
+                        return str:sub(1, 1)
+                    end,
+                },
+            },
             lualine_b = {
                 -- Prefix file name with file icon
                 {
@@ -66,9 +51,7 @@ M.setup = function()
             lualine_x = {
                 -- Display nvim-metals status for Scala files
                 {
-                    function()
-                        return vim.g["metals_status"] or ""
-                    end,
+                    "g:metals_status",
                     cond = function()
                         local filetype = vim.bo.filetype
                         return filetype == "scala" or filetype == "sbt"
