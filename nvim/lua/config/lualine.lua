@@ -49,14 +49,6 @@ M.setup = function()
                 },
             },
             lualine_x = {
-                -- Display nvim-metals status for Scala files
-                {
-                    "g:metals_status",
-                    cond = function()
-                        local filetype = vim.bo.filetype
-                        return filetype == "scala" or filetype == "sbt"
-                    end,
-                },
                 -- LSP diagnostics
                 {
                     "diagnostics",

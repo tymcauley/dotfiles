@@ -214,8 +214,52 @@ metals_config.find_root_dir = function(patterns, startpath)
     return root_dir
 end
 
+local metals_spinner_chars = {
+    "⠋",
+    "⠙",
+    "⠸",
+    "⠴",
+    "⠦",
+    "⠇",
+}
+
+-- Translate Metals status messages to a format that fidget.nvim can understand
+local function metals_status_handler(_, status, ctx)
+    -- Strip off trailing spinner character (which is 3 characters wide)
+    if status.text then
+        local maybe_spinner_char = status.text:sub(-3, -1)
+        for _, v in pairs(metals_spinner_chars) do
+            if v == maybe_spinner_char then
+                status.text = status.text:sub(1, -4)
+                break
+            end
+        end
+    end
+
+    -- https://github.com/scalameta/nvim-metals/blob/main/lua/metals/status.lua#L36-L50
+    local val = {}
+    if status.hide then
+        val = { kind = "end" }
+    elseif status.show then
+        val = { kind = "begin", message = status.text, title = "Running" }
+    elseif status.text then
+        val = { kind = "report", message = status.text }
+    else
+        return
+    end
+
+    local info = { client_id = ctx.client_id }
+    local msg = { token = "metals", value = val }
+    -- call fidget progress handler
+    vim.lsp.handlers["$/progress"](nil, msg, info)
+end
+
+local handlers = {}
+handlers["metals/status"] = metals_status_handler
+
 metals_config.init_options.statusBarProvider = "on"
 metals_config.capabilities = capabilities
+metals_config.handlers = handlers
 
 local lsp_metals = vim.api.nvim_create_augroup("lsp_metals", {})
 vim.api.nvim_create_autocmd("FileType", {
