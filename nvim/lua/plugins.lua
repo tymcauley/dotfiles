@@ -43,6 +43,9 @@ local plugins_fn = function()
         end,
     })
 
+    -- Git diff viewer
+    use({ "sindrets/diffview.nvim", requires = "nvim-lua/plenary.nvim" })
+
     -- Improved match motions
     use({
         "haya14busa/vim-asterisk",
