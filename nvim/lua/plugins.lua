@@ -83,14 +83,6 @@ local plugins_fn = function()
         end,
     })
 
-    -- Better spell-checking for buffers with Treesitter highlighting
-    use({
-        "lewis6991/spellsitter.nvim",
-        config = function()
-            require("spellsitter").setup()
-        end,
-    })
-
     -- Autocompletion plugin
     use({
         "hrsh7th/nvim-cmp",
