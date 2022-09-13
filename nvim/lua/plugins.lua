@@ -196,6 +196,7 @@ local plugins_fn = function()
         after = {
             "gitsigns.nvim",
             "nvim-navic",
+            "tokyonight.nvim",
         },
         config = function()
             require("config.lualine").setup()

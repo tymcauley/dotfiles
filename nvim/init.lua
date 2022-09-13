@@ -248,10 +248,16 @@ vim.cmd("autocmd TextYankPost * lua vim.highlight.on_yank {on_visual = false}")
 -- Colors
 --
 
--- Set window separator color to 'colors.blue'
-vim.g.tokyonight_colors = { border = "#7aa2f7" }
-vim.g.tokyonight_sidebars = { "qf", "terminal", "packer" }
-vim.g.tokyonight_lualine_bold = true
+require("tokyonight").setup({
+    -- Set a darker background on sidebar-like windows
+    sidebars = { "qf", "help", "terminal", "packer" },
+    -- Section headers in the lualine theme will be bold
+    lualine_bold = true,
+    -- Change the window separator color to 'colors.blue'
+    on_colors = function(colors)
+        colors.border = colors.blue
+    end,
+})
 
 vim.cmd("colorscheme tokyonight")
 
