@@ -101,8 +101,7 @@ local function custom_lsp_attach(client, bufnr)
     end
 
     -- Set up key mappings
-    map("n", "gla", vim.lsp.buf.code_action, opts)
-    map("v", "gla", vim.lsp.buf.range_code_action, opts)
+    map({ "n", "v" }, "gla", vim.lsp.buf.code_action, opts)
     map("n", "gld", ts_builtin.lsp_definitions, opts)
     map("n", "glD", vim.lsp.buf.declaration, opts)
     map("n", "glf", function()
