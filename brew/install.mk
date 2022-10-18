@@ -7,11 +7,14 @@ $(error Please install homebrew: >>> \
 	<<<)
 endif
 
-BREW_INSTALLED_FORMULAE = $(shell brew list --formula -1)
-BREW_INSTALLED_CASKS    = $(shell brew list --cask -1)
-
+BREW_INSTALLED_FORMULAE  = $(shell brew list --formula -1)
 BREW_FORMULAE_TO_INSTALL = $(filter-out $(BREW_INSTALLED_FORMULAE),$(BREW_FORMULAE))
-BREW_CASKS_TO_INSTALL    = $(filter-out $(BREW_INSTALLED_CASKS),$(BREW_CASKS))
+
+# Casks are only supported on macOS, not Linux
+ifeq ($(shell uname),Darwin)
+BREW_INSTALLED_CASKS  = $(shell brew list --cask -1)
+BREW_CASKS_TO_INSTALL = $(filter-out $(BREW_INSTALLED_CASKS),$(BREW_CASKS))
+endif
 
 brew:
 	brew update
@@ -19,6 +22,8 @@ brew:
 	@for formula in $(BREW_FORMULAE_TO_INSTALL) ; do \
 		brew install $$formula ; \
 	done
+ifeq ($(shell uname),Darwin)
 	@for cask in $(BREW_CASKS_TO_INSTALL) ; do \
 		brew install $$cask ; \
 	done
+endif
