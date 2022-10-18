@@ -34,10 +34,8 @@ vim.diagnostic.config({
     float = { border = border },
 })
 
-local capabilities = vim.lsp.protocol.make_client_capabilities()
-
 -- Extend default capabilities with everything 'nvim-cmp' can do
-capabilities = require("cmp_nvim_lsp").update_capabilities(capabilities)
+local capabilities = require('cmp_nvim_lsp').default_capabilities()
 
 -- Extend capabilities with folding functionality from 'nvim-ufo'
 capabilities.textDocument.foldingRange = {
