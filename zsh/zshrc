@@ -155,6 +155,10 @@ if [[ -n "$HOMEBREW_PREFIX" ]]; then
   # OS-provided version.
   [[ -d "$HOMEBREW_PREFIX/opt/ruby/bin" ]] && path=("$HOMEBREW_PREFIX/opt/ruby/bin" $path)
   [[ -d "$HOMEBREW_PREFIX/lib/ruby/gems/3.0.0/bin" ]] && path=("$HOMEBREW_PREFIX/lib/ruby/gems/3.0.0/bin" $path)
+
+  # If 'make' is installed, add it to the start of the path, so we can use more
+  # modern 'make' features.
+  [[ -d "$HOMEBREW_PREFIX/opt/make/libexec/gnubin" ]] && path=("$HOMEBREW_PREFIX/opt/make/libexec/gnubin" $path)
 fi
 
 # Set up modifications for Python REPL
