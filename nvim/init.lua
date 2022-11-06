@@ -2,7 +2,6 @@
 
 local utils = require("utils")
 
-
 --
 -- Plugins
 --
@@ -169,6 +168,10 @@ vim.opt.expandtab = true
 local override_indents = vim.api.nvim_create_augroup("override_indents", {})
 vim.api.nvim_create_autocmd(
     "FileType",
+    { pattern = "cpp", command = "setlocal softtabstop=2 shiftwidth=2", group = override_indents }
+)
+vim.api.nvim_create_autocmd(
+    "FileType",
     { pattern = "haskell", command = "setlocal softtabstop=2 shiftwidth=2", group = override_indents }
 )
 
@@ -177,6 +180,10 @@ vim.opt.wrap = false
 
 -- Filetype-specific overrides for 'textwidth'
 local override_textwidth = vim.api.nvim_create_augroup("override_textwidth", {})
+vim.api.nvim_create_autocmd(
+    "FileType",
+    { pattern = "cpp", command = "setlocal textwidth=79", group = override_textwidth }
+)
 vim.api.nvim_create_autocmd(
     "FileType",
     { pattern = "lua", command = "setlocal textwidth=119", group = override_textwidth }
