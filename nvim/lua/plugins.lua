@@ -66,6 +66,7 @@ local plugins_fn = function()
     use({ "azidar/firrtl-syntax" })
     use({ "fladson/vim-kitty" })
     use({ "rust-lang/rust.vim" })
+    use({ "tymcauley/llvm-vim-syntax" })
 
     -- Treesitter integration into neovim
     use({
