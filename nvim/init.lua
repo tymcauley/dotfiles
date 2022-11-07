@@ -132,6 +132,9 @@ vim.opt.spell = true
 vim.opt.number = true
 vim.opt.relativenumber = true
 
+-- Use new second stage diff option to improve nvim diff view
+vim.opt.diffopt:append("linematch:60")
+
 -- Auto-toggling of relative numbers. This will disable relative numbers for panes that do not have focus, and will
 -- also disable relative numbers in insert mode. Don't mess with relative numbers if the buffer doesn't have numbers
 -- enabled.
