@@ -187,7 +187,27 @@ local plugins_fn = function()
     })
 
     -- Buffer line
-    use({ "romgrk/barbar.nvim" })
+    use({
+        "romgrk/barbar.nvim",
+        config = function()
+            local utils = require("utils")
+
+            -- Move between buffers
+            vim.keymap.set("n", "gn", "<Cmd>BufferNext<CR>")
+            vim.keymap.set("n", "gp", "<Cmd>BufferPrevious<CR>")
+
+            -- Re-order buffers
+            vim.keymap.set("n", "gN", "<Cmd>BufferMoveNext<CR>")
+            vim.keymap.set("n", "gP", "<Cmd>BufferMovePrevious<CR>")
+
+            vim.keymap.set("n", "gk", "<Cmd>BufferClose<CR>")
+
+            -- Make all modified buffers bold
+            utils.hi("BufferCurrentMod", { gui = "bold" })
+            utils.hi("BufferInactiveMod", { gui = "bold" })
+            utils.hi("BufferVisibleMod", { gui = "bold" })
+        end,
+    })
 
     -- Smart window-split resizing and navigation
     use({

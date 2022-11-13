@@ -56,11 +56,6 @@ end, { expr = true })
 -- Re-sync treesitter highlighting
 vim.keymap.set("n", "<leader>tss", "<Cmd>write | edit | TSBufEnable highlight<CR>")
 
--- Buffer navigation (barbar.nvim commands)
-vim.keymap.set("n", "gn", "<Cmd>BufferNext<CR>")
-vim.keymap.set("n", "gp", "<Cmd>BufferPrevious<CR>")
-vim.keymap.set("n", "gk", "<Cmd>BufferClose<CR>")
-
 -- EasyAlign
 -- Note that '<Plug>' mappings depend on the 'noremap' option being unset, so we can't use the 'map' function
 
@@ -272,9 +267,3 @@ require("tokyonight").setup({
 vim.cmd("colorscheme tokyonight")
 
 vim.opt.termguicolors = true
-
--- barbar.nvim
--- Make all modified buffers bold
-utils.hi("BufferCurrentMod", { gui = "bold" })
-utils.hi("BufferInactiveMod", { gui = "bold" })
-utils.hi("BufferVisibleMod", { gui = "bold" })
