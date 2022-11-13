@@ -229,6 +229,14 @@ local plugins_fn = function()
         end,
     })
 
+    -- Scrollbar
+    use({
+        "lewis6991/satellite.nvim",
+        config = function()
+            require("satellite").setup()
+        end,
+    })
+
     -- Automatic table creator
     use({ "dhruvasagar/vim-table-mode" })
 
