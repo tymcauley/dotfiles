@@ -89,18 +89,32 @@ local plugins_fn = function()
 
     -- Autocompletion plugin
     use({
-        "hrsh7th/nvim-cmp",
+        "ms-jpq/coq_nvim",
+        branch = "coq",
         config = function()
-            require("config.nvim-cmp")
+            require("config.coq")
         end,
     })
-    use({ "hrsh7th/cmp-buffer", after = "nvim-cmp" })
-    use({ "hrsh7th/cmp-calc", after = "nvim-cmp" })
-    use({ "hrsh7th/cmp-nvim-lsp", after = "nvim-cmp" })
-    use({ "hrsh7th/cmp-nvim-lua", after = "nvim-cmp" })
-    use({ "hrsh7th/cmp-path", after = "nvim-cmp" })
-    use({ "hrsh7th/cmp-vsnip", after = "nvim-cmp" })
-    use({ "hrsh7th/vim-vsnip", after = "nvim-cmp" })
+    use({
+        "ms-jpq/coq.artifacts",
+        branch = "artifacts",
+        after = {
+            "coq_nvim",
+        },
+    })
+    use({
+        "ms-jpq/coq.thirdparty",
+        branch = "3p",
+        after = {
+            "coq_nvim",
+        },
+        config = function()
+            require("coq_3p")({
+                { src = "nvimlua", short_name = "nLUA" },
+                { src = "bc", short_name = "MATH", precision = 6 },
+            })
+        end,
+    })
 
     -- LSP statusline components
     use({
@@ -114,7 +128,7 @@ local plugins_fn = function()
     use({
         "neovim/nvim-lspconfig",
         after = {
-            "cmp-nvim-lsp",
+            "coq_nvim",
         },
         config = function()
             require("config.lsp")

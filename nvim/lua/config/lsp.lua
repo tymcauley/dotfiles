@@ -2,6 +2,7 @@ local lspconfig = require("lspconfig")
 local navic = require("nvim-navic")
 local null_ls = require("null-ls")
 local utils = require("utils")
+local coq = require("coq")
 
 -- Customize diagnostic symbols in the gutter
 local signs = { Error = " ", Warn = " ", Hint = " ", Info = " " }
@@ -34,8 +35,7 @@ vim.diagnostic.config({
     float = { border = border },
 })
 
--- Extend default capabilities with everything 'nvim-cmp' can do
-local capabilities = require('cmp_nvim_lsp').default_capabilities()
+local capabilities = vim.lsp.protocol.make_client_capabilities()
 
 -- Extend capabilities with folding functionality from 'nvim-ufo'
 capabilities.textDocument.foldingRange = {
@@ -136,13 +136,13 @@ local servers = {
     "pyright",
 }
 for _, lsp in ipairs(servers) do
-    lspconfig[lsp].setup({
+    lspconfig[lsp].setup(coq.lsp_ensure_capabilities({
         on_attach = custom_lsp_attach,
         capabilities = capabilities,
         flags = {
             debounce_text_changes = 150,
         },
-    })
+    }))
 end
 
 -- null-ls
@@ -258,7 +258,7 @@ local lsp_metals = vim.api.nvim_create_augroup("lsp_metals", {})
 vim.api.nvim_create_autocmd("FileType", {
     pattern = "scala,sbt",
     callback = function()
-        metals.initialize_or_attach(metals_config)
+        metals.initialize_or_attach(coq.lsp_ensure_capabilities({ metals_config }))
     end,
     group = lsp_metals,
 })
@@ -272,7 +272,7 @@ require("rust-tools").setup({
             highlight = "NonText",
         },
     },
-    server = {
+    server = coq.lsp_ensure_capabilities({
         on_attach = custom_lsp_attach,
         capabilities = capabilities,
         flags = {
@@ -287,5 +287,5 @@ require("rust-tools").setup({
         --         },
         --     },
         -- },
-    },
+    }),
 })
