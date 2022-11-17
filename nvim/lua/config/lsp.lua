@@ -35,7 +35,8 @@ vim.diagnostic.config({
     float = { border = border },
 })
 
-local capabilities = vim.lsp.protocol.make_client_capabilities()
+-- Initialize capabilities with all the completions that `coq` can perform.
+local capabilities = coq.lsp_ensure_capabilities().capabilities
 
 -- Extend capabilities with folding functionality from 'nvim-ufo'
 capabilities.textDocument.foldingRange = {
@@ -136,13 +137,13 @@ local servers = {
     "pyright",
 }
 for _, lsp in ipairs(servers) do
-    lspconfig[lsp].setup(coq.lsp_ensure_capabilities({
+    lspconfig[lsp].setup({
         on_attach = custom_lsp_attach,
         capabilities = capabilities,
         flags = {
             debounce_text_changes = 150,
         },
-    }))
+    })
 end
 
 -- null-ls
@@ -258,7 +259,7 @@ local lsp_metals = vim.api.nvim_create_augroup("lsp_metals", {})
 vim.api.nvim_create_autocmd("FileType", {
     pattern = "scala,sbt",
     callback = function()
-        metals.initialize_or_attach(coq.lsp_ensure_capabilities({ metals_config }))
+        metals.initialize_or_attach(metals_config)
     end,
     group = lsp_metals,
 })
@@ -272,7 +273,7 @@ require("rust-tools").setup({
             highlight = "NonText",
         },
     },
-    server = coq.lsp_ensure_capabilities({
+    server = {
         on_attach = custom_lsp_attach,
         capabilities = capabilities,
         flags = {
@@ -287,5 +288,5 @@ require("rust-tools").setup({
         --         },
         --     },
         -- },
-    }),
+    },
 })
