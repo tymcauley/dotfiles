@@ -269,8 +269,7 @@ vim.api.nvim_create_autocmd("FileType", {
 require("rust-tools").setup({
     tools = {
         inlay_hints = {
-            show_parameter_hints = false,
-            highlight = "NonText",
+            auto = false,
         },
     },
     server = {
