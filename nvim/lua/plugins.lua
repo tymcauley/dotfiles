@@ -93,15 +93,17 @@ local plugins_fn = function()
         config = function()
             require("config.nvim-cmp")
         end,
+        requires = {
+            { "hrsh7th/cmp-vsnip" },
+            { "hrsh7th/vim-vsnip" },
+            { "hrsh7th/cmp-nvim-lsp" },
+            { "hrsh7th/cmp-nvim-lsp-signature-help" },
+            { "hrsh7th/cmp-nvim-lua" },
+            { "hrsh7th/cmp-buffer" },
+            { "hrsh7th/cmp-path" },
+            { "hrsh7th/cmp-calc" },
+        },
     })
-    use({ "hrsh7th/cmp-vsnip", after = "nvim-cmp" })
-    use({ "hrsh7th/vim-vsnip", after = "nvim-cmp" })
-    use({ "hrsh7th/cmp-nvim-lsp", after = "nvim-cmp" })
-    use({ "hrsh7th/cmp-nvim-lsp-signature-help", after = "nvim-cmp" })
-    use({ "hrsh7th/cmp-nvim-lua", after = "nvim-cmp" })
-    use({ "hrsh7th/cmp-buffer", after = "nvim-cmp" })
-    use({ "hrsh7th/cmp-path", after = "nvim-cmp" })
-    use({ "hrsh7th/cmp-calc", after = "nvim-cmp" })
 
     -- LSP statusline components
     use({
