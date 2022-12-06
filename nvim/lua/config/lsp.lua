@@ -2,7 +2,6 @@ local lspconfig = require("lspconfig")
 local navic = require("nvim-navic")
 local null_ls = require("null-ls")
 local utils = require("utils")
-local coq = require("coq")
 
 -- Customize diagnostic symbols in the gutter
 local signs = { Error = " ", Warn = " ", Hint = " ", Info = " " }
@@ -35,8 +34,8 @@ vim.diagnostic.config({
     float = { border = border },
 })
 
--- Initialize capabilities with all the completions that `coq` can perform.
-local capabilities = coq.lsp_ensure_capabilities().capabilities
+-- Initialize capabilities with all the completions that `nvim-cmp` can perform.
+local capabilities = require("cmp_nvim_lsp").default_capabilities()
 
 -- Extend capabilities with folding functionality from 'nvim-ufo'
 capabilities.textDocument.foldingRange = {
