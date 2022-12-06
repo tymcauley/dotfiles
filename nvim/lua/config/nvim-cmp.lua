@@ -16,33 +16,66 @@ cmp.setup({
     },
 
     mapping = {
-        ["<C-n>"] = cmp.mapping(function(fallback)
-            if cmp.visible() then
-                cmp.select_next_item()
-            elseif vim.fn["vsnip#available"](1) == 1 then
-                feedkey("<Plug>(vsnip-expand-or-jump)", "")
-            elseif has_words_before() then
-                cmp.complete()
-            else
-                fallback()
-            end
-        end, { "i" }),
+        ["<C-n>"] = cmp.mapping({
+            c = function(fallback)
+                if cmp.visible() then
+                    cmp.select_next_item({ behavior = cmp.SelectBehavior.Insert })
+                else
+                    fallback()
+                end
+            end,
+            i = function(fallback)
+                if cmp.visible() then
+                    cmp.select_next_item()
+                elseif vim.fn["vsnip#available"](1) == 1 then
+                    feedkey("<Plug>(vsnip-expand-or-jump)", "")
+                elseif has_words_before() then
+                    cmp.complete()
+                else
+                    fallback()
+                end
+            end,
+        }),
 
-        ["<C-p>"] = cmp.mapping(function()
-            if cmp.visible() then
-                cmp.select_prev_item()
-            elseif vim.fn["vsnip#jumpable"](-1) == 1 then
-                feedkey("<Plug>(vsnip-jump-prev)", "")
-            end
-        end, { "i" }),
+        ["<C-p>"] = cmp.mapping({
+            c = function(fallback)
+                if cmp.visible() then
+                    cmp.select_prev_item({ behavior = cmp.SelectBehavior.Insert })
+                else
+                    fallback()
+                end
+            end,
+            i = function()
+                if cmp.visible() then
+                    cmp.select_prev_item()
+                elseif vim.fn["vsnip#jumpable"](-1) == 1 then
+                    feedkey("<Plug>(vsnip-jump-prev)", "")
+                end
+            end,
+        }),
 
-        ["<C-b>"] = cmp.mapping(cmp.mapping.scroll_docs(-4), { "i" }),
-        ["<C-f>"] = cmp.mapping(cmp.mapping.scroll_docs(4), { "i" }),
-        ["<C-Space>"] = cmp.mapping(cmp.mapping.complete(), { "i" }),
-        ["<C-e>"] = cmp.mapping(cmp.mapping.abort(), { "i" }),
-        ["<CR>"] = cmp.mapping.confirm({
-            behavior = cmp.ConfirmBehavior.Replace,
-            select = false,
+        ["<C-b>"] = cmp.mapping(cmp.mapping.scroll_docs(-4), { "c", "i" }),
+        ["<C-f>"] = cmp.mapping(cmp.mapping.scroll_docs(4), { "c", "i" }),
+        ["<C-Space>"] = cmp.mapping(cmp.mapping.complete(), { "c", "i" }),
+        ["<C-e>"] = cmp.mapping({
+            c = cmp.mapping.close(),
+            i = cmp.mapping.abort(),
+        }),
+        ["<CR>"] = cmp.mapping({
+            c = function(fallback)
+                if cmp.visible() then
+                    cmp.confirm({
+                        behavior = cmp.ConfirmBehavior.Insert,
+                        select = true,
+                    })
+                else
+                    fallback()
+                end
+            end,
+            i = cmp.mapping.confirm({
+                behavior = cmp.ConfirmBehavior.Replace,
+                select = false,
+            }),
         }),
     },
 
@@ -93,4 +126,10 @@ cmp.setup({
             return vim_item
         end,
     },
+})
+
+cmp.setup.cmdline("/", {
+    sources = cmp.config.sources({
+        { name = "nvim_lsp_document_symbol" },
+    }),
 })
