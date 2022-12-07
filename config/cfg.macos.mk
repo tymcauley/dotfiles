@@ -12,6 +12,7 @@ ZSH      := 1
 
 BREW_FORMULAE := \
 	bat \
+	coreutils \
 	duf \
 	dust \
 	exa \
