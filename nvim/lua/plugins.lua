@@ -102,7 +102,6 @@ local plugins_fn = function()
             { "hrsh7th/cmp-buffer" },
             { "hrsh7th/cmp-path" },
             { "hrsh7th/cmp-calc" },
-            { "hrsh7th/cmp-nvim-lsp-document-symbol" },
         },
     })
 
