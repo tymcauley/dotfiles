@@ -259,6 +259,10 @@ local plugins_fn = function()
         "lewis6991/satellite.nvim",
         config = function()
             require("satellite").setup()
+            -- Ensure the scrollbar isn't included in diff mode.
+            if vim.opt.diff:get() then
+                vim.api.nvim_command("SatelliteDisable")
+            end
         end,
     })
 
