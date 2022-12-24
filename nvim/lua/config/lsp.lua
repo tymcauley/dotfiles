@@ -2,6 +2,7 @@ local lspconfig = require("lspconfig")
 local navic = require("nvim-navic")
 local null_ls = require("null-ls")
 local utils = require("utils")
+local fzf = require("fzf-lua")
 
 -- Customize diagnostic symbols in the gutter
 local signs = { Error = " ", Warn = " ", Hint = " ", Info = " " }
@@ -45,8 +46,6 @@ capabilities.textDocument.foldingRange = {
 
 -- Buffer-local setup function
 local function custom_lsp_attach(client, bufnr)
-    local ts_builtin = require("telescope.builtin")
-
     -- Define buffer-local mapping
     local function map(mode, l, r, opts)
         opts = opts or {}
@@ -96,24 +95,29 @@ local function custom_lsp_attach(client, bufnr)
 
     -- Set up key mappings
     map({ "n", "v" }, "gla", vim.lsp.buf.code_action, opts)
-    map("n", "gld", ts_builtin.lsp_definitions, opts)
+    map("n", "gld", function()
+        fzf.lsp_definitions({
+            jump_to_single_result = true,
+            jump_to_single_result_action = require("fzf-lua.actions").file_vsplit,
+        })
+    end, opts)
     map("n", "glD", vim.lsp.buf.declaration, opts)
     map("n", "glf", function()
         vim.lsp.buf.format({ async = true })
     end, opts)
     map("n", "glh", vim.lsp.buf.hover, opts)
     map("n", "glH", vim.lsp.buf.signature_help, opts)
-    map("n", "gli", ts_builtin.lsp_implementations, opts)
+    map("n", "gli", fzf.lsp_implementations, opts)
     map("n", "glj", vim.diagnostic.goto_next, opts)
     map("n", "glk", vim.diagnostic.goto_prev, opts)
     map("n", "gln", vim.lsp.buf.rename, opts)
-    map("n", "glr", ts_builtin.lsp_references, opts)
-    map("n", "gltd", vim.lsp.buf.type_definition, opts)
-    map("n", "glwd", ts_builtin.diagnostics, opts)
-    map("n", "glwl", function()
-        print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
+    map("n", "glr", function()
+        fzf.lsp_references({
+            ignore_current_line = true,
+            jump_to_single_result = true,
+        })
     end, opts)
-    map("n", "glws", ts_builtin.lsp_workspace_symbols, opts)
+    map("n", "gltd", vim.lsp.buf.type_definition, opts)
     map("n", "glx", function()
         vim.lsp.stop_client(vim.lsp.get_active_clients())
     end, opts)

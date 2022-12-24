@@ -177,14 +177,17 @@ local plugins_fn = function()
 
     -- Fuzzy finder
     use({
-        "nvim-telescope/telescope.nvim",
+        "ibhagwan/fzf-lua",
+        requires = { "nvim-tree/nvim-web-devicons" },
         config = function()
-            require("config.telescope")
+            local fzf = require("fzf-lua")
+            fzf.register_ui_select()
+
+            vim.keymap.set("n", "<leader>ff", fzf.files)
+            vim.keymap.set("n", "<leader>fg", fzf.grep_project)
+            vim.keymap.set("n", "<leader>fb", fzf.buffers)
+            vim.keymap.set("n", "<leader>fh", fzf.help_tags)
         end,
-        requires = {
-            { "nvim-lua/plenary.nvim" },
-            { "nvim-telescope/telescope-fzf-native.nvim", run = "make" },
-        },
     })
 
     -- Improve the default vim.ui interfaces
