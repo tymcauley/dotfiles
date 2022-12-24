@@ -2,6 +2,14 @@ local plugins_fn = function()
     -- Plugin manager
     use({ "wbthomason/packer.nvim" })
 
+    -- Speed up loading Lua modules in Neovim to improve startup time
+    use({
+        "lewis6991/impatient.nvim",
+        config = function()
+            require("impatient")
+        end,
+    })
+
     -- Useful lua functions for nvim
     use({ "nvim-lua/plenary.nvim" })
 
