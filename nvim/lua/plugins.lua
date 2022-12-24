@@ -18,7 +18,12 @@ local plugins_fn = function()
     use({ "machakann/vim-sandwich" })
 
     -- Automatic closing of quotes, parens, brackets, etc
-    use({ "Raimondi/delimitMate" })
+    use({
+        "windwp/nvim-autopairs",
+        config = function()
+            require("nvim-autopairs").setup({})
+        end,
+    })
 
     -- Commenting plugin
     use({
@@ -103,6 +108,7 @@ local plugins_fn = function()
             { "hrsh7th/cmp-path" },
             { "hrsh7th/cmp-calc" },
         },
+        after = "nvim-autopairs",
     })
 
     -- LSP statusline components
