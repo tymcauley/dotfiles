@@ -195,6 +195,15 @@ local plugins_fn = function()
         requires = { "nvim-tree/nvim-web-devicons" },
         config = function()
             local fzf = require("fzf-lua")
+            fzf.setup({
+                file_icon_padding = " ",
+                files = {
+                    prompt = "fd> ",
+                },
+                grep = {
+                    prompt = "rg> ",
+                },
+            })
             fzf.register_ui_select()
 
             vim.keymap.set("n", "<leader>ff", fzf.files)
