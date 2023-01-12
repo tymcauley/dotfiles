@@ -119,7 +119,7 @@ vim.opt.scrolloff = 2
 
 -- Configure and enable spell checking (without capitalization check)
 vim.opt.spelllang = "en_us"
-vim.opt.spellfile = "~/.local/share/nvim/en.utf-8.add"
+vim.opt.spellfile = vim.fn.stdpath("data") .. "/en.utf-8.add"
 vim.opt.spellcapcheck = ""
 vim.opt.spell = true
 
