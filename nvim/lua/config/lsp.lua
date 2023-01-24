@@ -98,7 +98,6 @@ local function custom_lsp_attach(client, bufnr)
     map("n", "gld", function()
         fzf.lsp_definitions({
             jump_to_single_result = true,
-            jump_to_single_result_action = require("fzf-lua.actions").file_vsplit,
         })
     end, opts)
     map("n", "glD", vim.lsp.buf.declaration, opts)
