@@ -29,7 +29,11 @@ local plugins_fn = function()
     use({
         "windwp/nvim-autopairs",
         config = function()
-            require("nvim-autopairs").setup({})
+            local npairs = require("nvim-autopairs")
+            npairs.setup({})
+
+            -- In Verilog/SystemVerilog, backtick is used for text macros, so disable autopairs for those files
+            npairs.get_rule("`").not_filetypes = { "verilog", "systemverilog" }
         end,
     })
 
