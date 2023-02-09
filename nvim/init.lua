@@ -2,25 +2,19 @@
 
 local utils = require("utils")
 
---
--- Plugins
---
-
--- Bootstrap packer installation
-local install_path = vim.fn.stdpath("data") .. "/site/pack/packer/start/packer.nvim"
-if vim.fn.empty(vim.fn.glob(install_path)) > 0 then
-    vim.fn.system({ "git", "clone", "https://github.com/wbthomason/packer.nvim", install_path })
-    vim.api.nvim_command("packadd packer.nvim")
+-- Bootstrap plugin manager installation
+local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
+if not vim.loop.fs_stat(lazypath) then
+    vim.fn.system({
+        "git",
+        "clone",
+        "--filter=blob:none",
+        "https://github.com/folke/lazy.nvim.git",
+        "--branch=stable", -- latest stable release
+        lazypath,
+    })
 end
-
-require("plugins")
-
--- Compile packer config whenever 'plugins.lua' changes
-local packer_user_config = vim.api.nvim_create_augroup("packer_user_config", {})
-vim.api.nvim_create_autocmd(
-    "BufWritePost",
-    { pattern = "plugins.lua", command = "source <afile> | PackerCompile", group = packer_user_config }
-)
+vim.opt.rtp:prepend(lazypath)
 
 --
 -- Mappings
@@ -55,14 +49,6 @@ end, { expr = true })
 
 -- Re-sync treesitter highlighting
 vim.keymap.set("n", "<leader>tss", "<Cmd>write | edit | TSBufEnable highlight<CR>")
-
--- EasyAlign
--- Note that '<Plug>' mappings depend on the 'noremap' option being unset, so we can't use the 'map' function
-
--- Start interactive EasyAlign in visual mode (e.g. vipgs)
-vim.keymap.set("x", "gs", "<Plug>(EasyAlign)")
--- Start interactive EasyAlign for a motion/text object (e.g. gsip)
-vim.keymap.set("n", "gs", "<Plug>(EasyAlign)")
 
 -- Enable code folding with the spacebar
 vim.keymap.set("n", "<space>", "za")
@@ -217,31 +203,6 @@ vim.opt.updatetime = 300
 -- Set pop-up-menu transparency
 vim.opt.pumblend = 30
 
--- Disable unnecessary built-in plugins
-local disabled_built_ins = {
-    "netrw",
-    "netrwPlugin",
-    "netrwSettings",
-    "netrwFileHandlers",
-    "gzip",
-    "zip",
-    "zipPlugin",
-    "tar",
-    "tarPlugin",
-    "getscript",
-    "getscriptPlugin",
-    "vimball",
-    "vimballPlugin",
-    "2html_plugin",
-    "logipat",
-    "rrhelper",
-    "spellfile_plugin",
-    "matchit",
-}
-for _, plugin in pairs(disabled_built_ins) do
-    vim.g["loaded_" .. plugin] = 1
-end
-
 -- Avoid showing extra messages when using completion: append 'c'
 -- Remove 'F' (required by 'scalameta/nvim-metals')
 vim.o.shortmess = string.gsub(vim.o.shortmess, "F", "") .. "c"
@@ -250,20 +211,39 @@ vim.o.shortmess = string.gsub(vim.o.shortmess, "F", "") .. "c"
 vim.cmd("autocmd TextYankPost * lua vim.highlight.on_yank {on_visual = false}")
 
 --
--- Colors
+-- Plugins
 --
 
-require("tokyonight").setup({
-    -- Set a darker background on sidebar-like windows
-    sidebars = { "qf", "help", "terminal", "packer" },
-    -- Section headers in the lualine theme will be bold
-    lualine_bold = true,
-    -- Change the window separator color to 'colors.blue'
-    on_colors = function(colors)
-        colors.border = colors.blue
-    end,
+require("lazy").setup({
+    spec = {
+        { import = "plugins" },
+    },
+    install = { colorscheme = { "tokyonight" } },
+    performance = {
+        rtp = {
+            disabled_plugins = {
+                "2html_plugin",
+                "getscript",
+                "getscriptPlugin",
+                "gzip",
+                "logipat",
+                "matchit",
+                "matchparen",
+                "netrw",
+                "netrwFileHandlers",
+                "netrwPlugin",
+                "netrwSettings",
+                "rrhelper",
+                "spellfile_plugin",
+                "tar",
+                "tarPlugin",
+                "tohtml",
+                "tutor",
+                "vimball",
+                "vimballPlugin",
+                "zip",
+                "zipPlugin",
+            },
+        },
+    },
 })
-
-vim.cmd("colorscheme tokyonight")
-
-vim.opt.termguicolors = true

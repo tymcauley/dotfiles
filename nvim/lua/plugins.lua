@@ -1,32 +1,48 @@
-local plugins_fn = function()
-    -- Plugin manager
-    use({ "wbthomason/packer.nvim" })
-
-    -- Speed up loading Lua modules in Neovim to improve startup time
-    use({
-        "lewis6991/impatient.nvim",
+return {
+    -- Color scheme
+    {
+        "folke/tokyonight.nvim",
+        lazy = false, -- make sure we load this during startup since it is the main color scheme
+        priority = 1000, -- make sure to load this before all the other start plugins
         config = function()
-            require("impatient")
-        end,
-    })
+            require("tokyonight").setup({
+                -- Set a darker background on sidebar-like windows
+                sidebars = { "qf", "help", "terminal" },
+                -- Section headers in the lualine theme will be bold
+                lualine_bold = true,
+                -- Change the window separator color to 'colors.blue'
+                on_colors = function(colors)
+                    colors.border = colors.blue
+                end,
+            })
 
-    -- Useful lua functions for nvim
-    use({ "nvim-lua/plenary.nvim" })
+            -- load the color scheme
+            vim.cmd([[colorscheme tokyonight]])
+        end,
+    },
+
+    -- Useful lua functions for nvim, used by other plugins
+    { "nvim-lua/plenary.nvim", lazy = true },
 
     -- Column-align multiple lines
-    use({ "junegunn/vim-easy-align" })
-
-    -- Color scheme
-    use({ "folke/tokyonight.nvim" })
+    {
+        "junegunn/vim-easy-align",
+        config = function()
+            -- Start interactive EasyAlign in visual mode (e.g. vipgs)
+            vim.keymap.set("x", "gs", "<Plug>(EasyAlign)")
+            -- Start interactive EasyAlign for a motion/text object (e.g. gsip)
+            vim.keymap.set("n", "gs", "<Plug>(EasyAlign)")
+        end,
+    },
 
     -- Make a new text object for lines at the same indent level
-    use({ "michaeljsmith/vim-indent-object" })
+    { "michaeljsmith/vim-indent-object" },
 
     -- Operators for surrounding/sandwiching text objects
-    use({ "machakann/vim-sandwich" })
+    { "machakann/vim-sandwich" },
 
     -- Automatic closing of quotes, parens, brackets, etc
-    use({
+    {
         "windwp/nvim-autopairs",
         config = function()
             local npairs = require("nvim-autopairs")
@@ -35,130 +51,132 @@ local plugins_fn = function()
             -- In Verilog/SystemVerilog, backtick is used for text macros, so disable autopairs for those files
             npairs.get_rule("`").not_filetypes = { "verilog", "systemverilog" }
         end,
-    })
+    },
 
-    -- Commenting plugin
-    use({
+    -- Easy comment insertion
+    {
         "numToStr/Comment.nvim",
         config = function()
             require("Comment").setup()
         end,
-    })
+    },
 
-    -- Add commands for smart text substitution
-    use({ "tpope/vim-abolish" })
+    -- Commands for smart text substitution
+    { "tpope/vim-abolish" },
 
-    -- Add ability to use dot operator (.) to repeat plugin map operations
-    use({ "tpope/vim-repeat" })
+    -- Use dot operator (.) to repeat plugin map operations
+    { "tpope/vim-repeat" },
 
     -- Add nice integration with git
-    use({
+    {
         "lewis6991/gitsigns.nvim",
-        after = "plenary.nvim",
+        event = { "BufReadPre", "BufNewFile" },
         config = function()
             require("config.gitsigns")
         end,
-    })
+    },
 
     -- Git diff viewer
-    use({ "sindrets/diffview.nvim", requires = "nvim-lua/plenary.nvim" })
+    { "sindrets/diffview.nvim", dependencies = { "nvim-lua/plenary.nvim" } },
 
     -- Improved match motions
-    use({
+    {
         "haya14busa/vim-asterisk",
         config = function()
             require("config.vim-asterisk")
         end,
-    })
+    },
 
     -- File type icons for various plugins
-    use({
-        "kyazdani42/nvim-web-devicons",
+    {
+        "nvim-tree/nvim-web-devicons",
         config = function()
             require("config.nvim-web-devicons")
         end,
-    })
+    },
 
     -- Languages
-    use({ "azidar/firrtl-syntax" })
-    use({ "fladson/vim-kitty" })
-    use({ "rust-lang/rust.vim" })
-    use({ "tymcauley/llvm-vim-syntax" })
+    { "azidar/firrtl-syntax" },
+    { "fladson/vim-kitty" },
+    { "rust-lang/rust.vim" },
+    { "tymcauley/llvm-vim-syntax" },
 
     -- Treesitter integration into neovim
-    use({
+    {
         "nvim-treesitter/nvim-treesitter",
+        build = ":TSUpdate",
+        event = { "BufReadPost", "BufNewFile" },
         config = function()
             require("config.treesitter")
         end,
-        run = ":TSUpdate",
-    })
-    use({ "p00f/nvim-ts-rainbow", after = "nvim-treesitter" })
-    use({
+    },
+    { "p00f/nvim-ts-rainbow" },
+    {
         "nvim-treesitter/nvim-treesitter-context",
-        after = "nvim-treesitter",
         config = function()
             require("treesitter-context").setup({
                 max_lines = 3,
             })
         end,
-    })
+    },
 
     -- Autocompletion plugin
-    use({
+    {
         "hrsh7th/nvim-cmp",
+        event = "InsertEnter", -- load cmp on InsertEnter
+        dependencies = {
+            "hrsh7th/cmp-vsnip",
+            "hrsh7th/vim-vsnip",
+            "hrsh7th/cmp-nvim-lsp",
+            "hrsh7th/cmp-nvim-lsp-signature-help",
+            "hrsh7th/cmp-nvim-lua",
+            "hrsh7th/cmp-buffer",
+            "hrsh7th/cmp-path",
+            "hrsh7th/cmp-calc",
+        },
         config = function()
             require("config.nvim-cmp")
         end,
-        requires = {
-            { "hrsh7th/cmp-vsnip" },
-            { "hrsh7th/vim-vsnip" },
-            { "hrsh7th/cmp-nvim-lsp" },
-            { "hrsh7th/cmp-nvim-lsp-signature-help" },
-            { "hrsh7th/cmp-nvim-lua" },
-            { "hrsh7th/cmp-buffer" },
-            { "hrsh7th/cmp-path" },
-            { "hrsh7th/cmp-calc" },
-        },
-        after = "nvim-autopairs",
-    })
+    },
 
     -- LSP statusline components
-    use({
+    {
         "j-hui/fidget.nvim",
         config = function()
             require("fidget").setup({})
         end,
-    })
+    },
 
     -- Collection of common configurations for the nvim LSP client
-    use({
+    {
         "neovim/nvim-lspconfig",
-        after = {
-            "cmp-nvim-lsp",
+        event = { "BufReadPre", "BufNewFile" },
+        dependencies = {
+            "hrsh7th/cmp-nvim-lsp",
         },
         config = function()
             require("config.lsp")
         end,
-    })
+    },
 
     -- Display code context from LSP
-    use({
+    {
         "SmiteshP/nvim-navic",
-        requires = "neovim/nvim-lspconfig",
-    })
+        dependencies = { "neovim/nvim-lspconfig" },
+    },
 
     -- Connect non-LSP sources into nvim's LSP client
-    use({
+    {
         "jose-elias-alvarez/null-ls.nvim",
-        requires = {
-            { "nvim-lua/plenary.nvim" },
-            { "neovim/nvim-lspconfig" },
+        event = { "BufReadPre", "BufNewFile" },
+        dependencies = {
+            "nvim-lua/plenary.nvim",
+            "neovim/nvim-lspconfig",
         },
-    })
+    },
 
     -- Display LSP inlay hints
-    use({
+    {
         "lvimuser/lsp-inlayhints.nvim",
         config = function()
             local inlayhints = require("lsp-inlayhints")
@@ -177,26 +195,26 @@ local plugins_fn = function()
                 end,
             })
         end,
-    })
+    },
 
     -- Extra tools for using rust-analyzer with nvim LSP client.
-    use({ "simrat39/rust-tools.nvim" })
+    { "simrat39/rust-tools.nvim" },
 
     -- Metals (Scala language server) integration for nvim LSP
-    use({ "scalameta/nvim-metals", requires = { "nvim-lua/plenary.nvim" } })
+    { "scalameta/nvim-metals", dependencies = { "nvim-lua/plenary.nvim" } },
 
     -- Render LSP diagnostics inline with code
-    use({
+    {
         "https://git.sr.ht/~whynothugo/lsp_lines.nvim",
         config = function()
             require("lsp_lines").setup()
         end,
-    })
+    },
 
     -- Fuzzy finder
-    use({
+    {
         "ibhagwan/fzf-lua",
-        requires = { "nvim-tree/nvim-web-devicons" },
+        dependencies = { "nvim-tree/nvim-web-devicons" },
         config = function()
             local fzf = require("fzf-lua")
             fzf.setup({
@@ -215,34 +233,21 @@ local plugins_fn = function()
             vim.keymap.set("n", "<leader>fb", fzf.buffers)
             vim.keymap.set("n", "<leader>fh", fzf.help_tags)
         end,
-    })
+    },
 
     -- Improve the default vim.ui interfaces
-    use({ "stevearc/dressing.nvim" })
-
-    -- Pretty list for showing all sorts of diagnostics and search results
-    use({
-        "folke/trouble.nvim",
-        config = function()
-            require("trouble").setup({})
-        end,
-    })
+    { "stevearc/dressing.nvim", event = "VeryLazy" },
 
     -- Statusline
-    use({
+    {
         "nvim-lualine/lualine.nvim",
-        after = {
-            "gitsigns.nvim",
-            "nvim-navic",
-            "tokyonight.nvim",
-        },
         config = function()
             require("config.lualine").setup()
         end,
-    })
+    },
 
     -- Buffer line
-    use({
+    {
         "romgrk/barbar.nvim",
         config = function()
             local utils = require("utils")
@@ -262,18 +267,18 @@ local plugins_fn = function()
             utils.hi("BufferInactiveMod", { gui = "bold" })
             utils.hi("BufferVisibleMod", { gui = "bold" })
         end,
-    })
+    },
 
     -- Smart window-split resizing and navigation
-    use({
+    {
         "mrjones2014/smart-splits.nvim",
         config = function()
             require("config.smart-splits")
         end,
-    })
+    },
 
     -- Indent guides
-    use({
+    {
         "lukas-reineke/indent-blankline.nvim",
         config = function()
             require("indent_blankline").setup({
@@ -282,10 +287,10 @@ local plugins_fn = function()
                 disable_with_nolist = true,
             })
         end,
-    })
+    },
 
     -- Scrollbar
-    use({
+    {
         "lewis6991/satellite.nvim",
         config = function()
             require("satellite").setup()
@@ -294,13 +299,13 @@ local plugins_fn = function()
                 vim.api.nvim_command("SatelliteDisable")
             end
         end,
-    })
+    },
 
     -- Automatic table creator
-    use({ "dhruvasagar/vim-table-mode" })
+    { "dhruvasagar/vim-table-mode" },
 
     -- Fancy notification manager
-    use({
+    {
         "rcarriga/nvim-notify",
         config = function()
             local notify = require("notify")
@@ -314,23 +319,14 @@ local plugins_fn = function()
             })
             vim.notify = notify
         end,
-    })
+    },
 
     -- Improved code folding
-    use({
+    {
         "kevinhwang91/nvim-ufo",
-        requires = "kevinhwang91/promise-async",
+        dependencies = { "kevinhwang91/promise-async" },
         config = function()
             require("config.nvim-ufo")
         end,
-    })
-end
-
-return require("packer").startup({
-    plugins_fn,
-    config = {
-        display = {
-            open_cmd = "vnew",
-        },
     },
-})
+}
