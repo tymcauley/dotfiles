@@ -120,11 +120,12 @@ vim.opt.shortmess:append({
     C = true, -- Hide messages when scanning for completion sources
 })
 
--- Auto-toggling of relative numbers. This will disable relative numbers for panes that do not have focus, and will
--- also disable relative numbers in insert mode. Don't mess with relative numbers if the buffer doesn't have numbers
--- enabled.
+-- Auto-toggling of relative numbers
+-- - Only enable relative numbers for the focused window
+-- - Disable relative numbers in insert mode
+-- - Don't change relative numbers if numbers are disabled
 local numbertoggle = vim.api.nvim_create_augroup("numbertoggle", {})
-vim.api.nvim_create_autocmd({ "BufEnter", "FocusGained", "InsertLeave" }, {
+vim.api.nvim_create_autocmd({ "BufEnter", "FocusGained", "InsertLeave", "WinEnter" }, {
     callback = function()
         if vim.wo.number then
             vim.wo.relativenumber = true
@@ -132,7 +133,7 @@ vim.api.nvim_create_autocmd({ "BufEnter", "FocusGained", "InsertLeave" }, {
     end,
     group = numbertoggle,
 })
-vim.api.nvim_create_autocmd({ "BufLeave", "FocusLost", "InsertEnter" }, {
+vim.api.nvim_create_autocmd({ "BufLeave", "FocusLost", "InsertEnter", "WinLeave" }, {
     callback = function()
         if vim.wo.number then
             vim.wo.relativenumber = false
