@@ -53,3 +53,6 @@ require("nvim-treesitter.configs").setup({
     highlight = { enable = true },
     rainbow = { enable = true },
 })
+
+-- Re-sync treesitter highlighting
+vim.keymap.set("n", "<leader>tss", "<Cmd>write | edit | TSBufEnable highlight<CR>")

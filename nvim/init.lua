@@ -35,10 +35,10 @@ vim.keymap.set("n", "<A-j>", "<Cmd>resize -2<CR>", { desc = "Decrease window hei
 vim.keymap.set("n", "<A-k>", "<Cmd>resize +2<CR>", { desc = "Increase window height" })
 vim.keymap.set("n", "<A-l>", "<Cmd>vertical resize +2<CR>", { desc = "Increase window width" })
 
--- clear search
+-- Clear search highlighting
 vim.keymap.set("n", "<leader>/", ":nohlsearch<CR>", { silent = true })
 
--- spelling
+-- Toggle spell check
 vim.keymap.set("n", "<leader>s", "<Cmd>set spell!<CR>", { silent = true })
 
 -- Delete trailing whitespace
@@ -59,45 +59,20 @@ vim.keymap.set("n", "dd", function()
     end
 end, { expr = true })
 
--- Re-sync treesitter highlighting
-vim.keymap.set("n", "<leader>tss", "<Cmd>write | edit | TSBufEnable highlight<CR>")
-
--- Enable code folding with the spacebar
+-- Toggle code folding
 vim.keymap.set("n", "<space>", "za")
 
 --
 -- Settings
 --
 
--- Set the command window height to 2 lines, to avoid many cases of having to 'press <Enter> to continue'
-vim.opt.cmdheight = 2
-
--- Don't show what mode we're in on the last line, the status line takes care of that
-vim.opt.showmode = false
-
--- Enable global statusline
-vim.opt.laststatus = 3
-
--- This allows you to switch from an unsaved buffer without saving it first. Also allows you to keep an undo history
--- for multiple files. Vim will complain if you try to quit without saving, and swap files will keep you safe if your
--- computer crashes.
-vim.opt.hidden = true
-
--- Search settings
-vim.opt.hlsearch = true -- highlight search
-vim.opt.incsearch = true -- reveal search incrementally as typed
+vim.opt.cmdheight = 2 -- Command window height; 2 lines avoids many cases of 'press <Enter> to continue'
+vim.opt.showmode = false -- Don't show mode on the last line, the status line does that
+vim.opt.laststatus = 3 -- Enable global statusline
 vim.opt.ignorecase = true -- case-insensitive match...
 vim.opt.smartcase = true -- ...except when uppercase letters are given
-
--- Instead of failing a command because of unsaved changes, raise a prompt asking if you wish to save changed files
-vim.opt.confirm = true
-
--- Use visual bell instead of beeping when doing something wrong
-vim.opt.visualbell = true
-vim.opt.errorbells = false
-
--- Show special characters
-vim.opt.list = true
+vim.opt.confirm = true -- Prompt to save changes before exiting a modified buffer
+vim.opt.list = true -- Show some invisible characters
 vim.opt.listchars = {
     -- Place a '#' in the last column when 'wrap' is off and the line continues beyond the right of the screen
     extends = "#",
@@ -111,22 +86,39 @@ vim.opt.listchars = {
     -- Show trailing spaces
     trail = "◊",
 }
-
--- When scrolling to the top or bottom of the screen, keep 2 lines between the cursor and the edge of the screen
-vim.opt.scrolloff = 2
-
--- Configure and enable spell checking (without capitalization check)
-vim.opt.spelllang = "en_us"
-vim.opt.spellfile = vim.fn.stdpath("data") .. "/en.utf-8.add"
-vim.opt.spellcapcheck = ""
-vim.opt.spell = true
-
--- Display line numbers with relative line numbers
-vim.opt.number = true
-vim.opt.relativenumber = true
-
--- Use new second stage diff option to improve nvim diff view
-vim.opt.diffopt:append("linematch:60")
+vim.opt.scrolloff = 2 -- Lines of context between top/bottom of window and cursor
+vim.opt.spelllang = "en_us" -- Spell check language
+vim.opt.spellfile = vim.fn.stdpath("data") .. "/en.utf-8.add" -- Custom spell check entries
+vim.opt.spellcapcheck = "" -- Disable capitalization check
+vim.opt.spell = true -- Enable spell check by default
+vim.opt.number = true -- Enable line numbers
+vim.opt.relativenumber = true -- Enable relative line numbers
+vim.opt.diffopt:append("linematch:60") -- Use new second stage diff option to improve nvim diff view
+vim.opt.tabstop = 4 -- Default <Tab> size in spaces
+vim.opt.softtabstop = 4 -- Default <Tab> size when editing
+vim.opt.shiftwidth = 4 -- Default indent size in spaces
+vim.opt.expandtab = true -- Use tabs instead of spaces
+vim.opt.wrap = false -- Disable text wrap
+vim.opt.colorcolumn = "+1" -- Highlight column after 'textwidth'
+vim.opt.splitbelow = true -- Put a new hsplit below the current one
+vim.opt.splitright = true -- Put a new vsplit to the right of the current one
+vim.opt.foldcolumn = "auto:9" -- Auto-size the foldcolumn
+vim.opt.foldlevel = 99 -- Start with all folds open
+vim.opt.fillchars = {
+    -- Customize the foldcolumn
+    fold = " ",
+    foldopen = "",
+    foldsep = "│",
+    foldclose = "",
+}
+vim.opt.updatetime = 300 -- Speed up CursorHold autocommand events (also writes swap file)
+vim.opt.pumblend = 30 -- Pop-up-menu transparency
+vim.opt_global.shortmess:remove("F") -- Allow nvim-metals to show setup messages
+vim.opt.shortmess:append({
+    I = true, -- Hide vim's intro message
+    c = true, -- Hide messages when using completion
+    C = true, -- Hide messages when scanning for completion sources
+})
 
 -- Auto-toggling of relative numbers. This will disable relative numbers for panes that do not have focus, and will
 -- also disable relative numbers in insert mode. Don't mess with relative numbers if the buffer doesn't have numbers
@@ -149,17 +141,6 @@ vim.api.nvim_create_autocmd({ "BufLeave", "FocusLost", "InsertEnter" }, {
     group = numbertoggle,
 })
 
--- When opening a new line and no filetype-specific indenting is enabled, keep the same indent as the line you're
--- currently on. Useful for READMEs, etc
-vim.opt.autoindent = true
-
--- Default indentation settings. Display tabs as four characters wide, insert tabs as 4 spaces
-local indent = 4
-vim.opt.tabstop = indent
-vim.opt.softtabstop = indent
-vim.opt.shiftwidth = indent
-vim.opt.expandtab = true
-
 -- Filetype-specific overrides for indentation
 local override_indents = vim.api.nvim_create_augroup("override_indents", {})
 vim.api.nvim_create_autocmd(
@@ -170,9 +151,6 @@ vim.api.nvim_create_autocmd(
     "FileType",
     { pattern = "haskell", command = "setlocal softtabstop=2 shiftwidth=2", group = override_indents }
 )
-
--- By default, don't wrap text
-vim.opt.wrap = false
 
 -- Filetype-specific overrides for 'textwidth'
 local override_textwidth = vim.api.nvim_create_augroup("override_textwidth", {})
@@ -188,36 +166,6 @@ vim.api.nvim_create_autocmd(
     "FileType",
     { pattern = "scala", command = "setlocal textwidth=119", group = override_textwidth }
 )
-
--- Add a ruler to visually indicate the file's textwidth setting
-vim.opt.colorcolumn = "+1"
-
--- Set the default location of window splits
-vim.opt.splitbelow = true
-vim.opt.splitright = true
-
--- Set up code folding for 'nvim-ufo'
-vim.opt.foldcolumn = "auto:9"
-vim.opt.foldlevel = 99
-vim.opt.foldenable = true
-
-vim.opt.fillchars = {
-    -- Customize how folds are displayed
-    fold = " ",
-    foldopen = "",
-    foldsep = "│",
-    foldclose = "",
-}
-
--- Speed up CursorHold autocommand events
-vim.opt.updatetime = 300
-
--- Set pop-up-menu transparency
-vim.opt.pumblend = 30
-
--- Avoid showing extra messages when using completion: append 'c'
--- Remove 'F' (required by 'scalameta/nvim-metals')
-vim.o.shortmess = string.gsub(vim.o.shortmess, "F", "") .. "c"
 
 -- Highlight text after yanking it
 vim.cmd("autocmd TextYankPost * lua vim.highlight.on_yank {on_visual = false}")
