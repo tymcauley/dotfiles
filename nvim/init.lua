@@ -50,6 +50,17 @@ vim.keymap.set("n", "<leader>w", function()
     end
 end, { silent = true })
 
+-- Toggle enabling relative numbers
+vim.g.enable_relativenumber = true
+vim.keymap.set("n", "<leader>rn", function()
+    vim.g.enable_relativenumber = not vim.g.enable_relativenumber
+    if vim.g.enable_relativenumber then
+        vim.opt.relativenumber = true
+    else
+        vim.opt.relativenumber = false
+    end
+end, { silent = true })
+
 -- If you run "dd" on a blank line (or a line with only whitespace), don't copy the line into the unnamed register
 vim.keymap.set("n", "dd", function()
     if vim.api.nvim_get_current_line():match("^%s*$") then
@@ -127,7 +138,7 @@ vim.opt.shortmess:append({
 local numbertoggle = vim.api.nvim_create_augroup("numbertoggle", {})
 vim.api.nvim_create_autocmd({ "BufEnter", "FocusGained", "InsertLeave", "WinEnter" }, {
     callback = function()
-        if vim.wo.number then
+        if vim.g.enable_relativenumber and vim.wo.number then
             vim.wo.relativenumber = true
         end
     end,
@@ -135,7 +146,7 @@ vim.api.nvim_create_autocmd({ "BufEnter", "FocusGained", "InsertLeave", "WinEnte
 })
 vim.api.nvim_create_autocmd({ "BufLeave", "FocusLost", "InsertEnter", "WinLeave" }, {
     callback = function()
-        if vim.wo.number then
+        if vim.g.enable_relativenumber and vim.wo.number then
             vim.wo.relativenumber = false
         end
     end,
