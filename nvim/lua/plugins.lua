@@ -90,6 +90,7 @@ return {
     -- File type icons for various plugins
     {
         "nvim-tree/nvim-web-devicons",
+        lazy = true,
         config = function()
             require("config.nvim-web-devicons")
         end,
@@ -162,7 +163,7 @@ return {
     -- Display code context from LSP
     {
         "SmiteshP/nvim-navic",
-        dependencies = { "neovim/nvim-lspconfig" },
+        lazy = true,
     },
 
     -- Connect non-LSP sources into nvim's LSP client
@@ -241,6 +242,7 @@ return {
     -- Statusline
     {
         "nvim-lualine/lualine.nvim",
+        event = "VeryLazy",
         config = function()
             require("config.lualine").setup()
         end,
@@ -249,6 +251,7 @@ return {
     -- Buffer line
     {
         "romgrk/barbar.nvim",
+        event = "VeryLazy",
         config = function()
             local utils = require("utils")
 
@@ -280,8 +283,10 @@ return {
     -- Indent guides
     {
         "lukas-reineke/indent-blankline.nvim",
+        event = { "BufReadPost", "BufNewFile" },
         config = function()
             require("indent_blankline").setup({
+                filetype_exclude = { "help", "lazy" },
                 show_current_context = true,
                 show_trailing_blankline_indent = false,
                 disable_with_nolist = true,
@@ -316,6 +321,12 @@ return {
                     -- Don't let user move cursor to notification windows
                     vim.api.nvim_win_set_config(win, { focusable = false })
                 end,
+                max_height = function()
+                    return math.floor(vim.o.lines * 0.75)
+                end,
+                max_width = function()
+                    return math.floor(vim.o.columns * 0.75)
+                end,
             })
             vim.notify = notify
         end,
@@ -324,6 +335,7 @@ return {
     -- Improved code folding
     {
         "kevinhwang91/nvim-ufo",
+        event = { "BufReadPost", "BufNewFile" },
         dependencies = { "kevinhwang91/promise-async" },
         config = function()
             require("config.nvim-ufo")

@@ -1,6 +1,5 @@
 local M = {}
 local ll = require("lualine")
-local navic = require("nvim-navic")
 
 M.setup = function()
     ll.setup({
@@ -9,6 +8,7 @@ M.setup = function()
             component_separators = { left = "", right = "" },
             theme = "tokyonight",
             globalstatus = true,
+            disabled_filetypes = { statusline = { "lazy" } },
         },
 
         sections = {
@@ -44,8 +44,12 @@ M.setup = function()
                 },
                 -- Display code context
                 {
-                    navic.get_location,
-                    cond = navic.is_available,
+                    function()
+                        return require("nvim-navic").get_location()
+                    end,
+                    cond = function()
+                        return package.loaded["nvim-navic"] and require("nvim-navic").is_available()
+                    end,
                 },
             },
             lualine_x = {
