@@ -23,6 +23,18 @@ vim.opt.rtp:prepend(lazypath)
 vim.g.mapleader = [[,]] -- map by , instead of /
 vim.g.maplocalleader = [[\]] -- map local by \
 
+-- Navigate between splits with <Ctrl> hjkl
+vim.keymap.set("n", "<C-h>", "<C-w>h", { desc = "Go to left window" })
+vim.keymap.set("n", "<C-j>", "<C-w>j", { desc = "Go to lower window" })
+vim.keymap.set("n", "<C-k>", "<C-w>k", { desc = "Go to upper window" })
+vim.keymap.set("n", "<C-l>", "<C-w>l", { desc = "Go to right window" })
+
+-- Resize splits with <Alt> hjkl
+vim.keymap.set("n", "<A-h>", "<Cmd>vertical resize -2<CR>", { desc = "Decrease window width" })
+vim.keymap.set("n", "<A-j>", "<Cmd>resize -2<CR>", { desc = "Decrease window height" })
+vim.keymap.set("n", "<A-k>", "<Cmd>resize +2<CR>", { desc = "Increase window height" })
+vim.keymap.set("n", "<A-l>", "<Cmd>vertical resize +2<CR>", { desc = "Increase window width" })
+
 -- clear search
 vim.keymap.set("n", "<leader>/", ":nohlsearch<CR>", { silent = true })
 

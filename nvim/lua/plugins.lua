@@ -272,14 +272,6 @@ return {
         end,
     },
 
-    -- Smart window-split resizing and navigation
-    {
-        "mrjones2014/smart-splits.nvim",
-        config = function()
-            require("config.smart-splits")
-        end,
-    },
-
     -- Indent guides
     {
         "lukas-reineke/indent-blankline.nvim",
