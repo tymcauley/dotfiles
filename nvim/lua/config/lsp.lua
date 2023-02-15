@@ -1,8 +1,5 @@
 local lspconfig = require("lspconfig")
-local navic = require("nvim-navic")
-local null_ls = require("null-ls")
 local utils = require("utils")
-local fzf = require("fzf-lua")
 
 -- Customize diagnostic symbols in the gutter
 local signs = { Error = " ", Warn = " ", Hint = " ", Info = " " }
@@ -29,6 +26,7 @@ local border = {
 vim.diagnostic.config({
     underline = true,
     virtual_text = false,
+    virtual_lines = true,
     signs = true,
     update_in_insert = false,
     severity_sort = false,
@@ -62,7 +60,7 @@ local function custom_lsp_attach(client, bufnr)
 
     -- Set up code-context plugin
     if cap.documentSymbolProvider then
-        navic.attach(client, bufnr)
+        require("nvim-navic").attach(client, bufnr)
     end
 
     -- Highlight the symbol under the cursor
@@ -94,6 +92,7 @@ local function custom_lsp_attach(client, bufnr)
     end
 
     -- Set up key mappings
+    local fzf = require("fzf-lua")
     map({ "n", "v" }, "gla", vim.lsp.buf.code_action, opts)
     map("n", "gld", function()
         fzf.lsp_definitions({
@@ -120,14 +119,6 @@ local function custom_lsp_attach(client, bufnr)
     map("n", "glx", function()
         vim.lsp.stop_client(vim.lsp.get_active_clients())
     end, opts)
-
-    -- trouble.nvim
-    map("n", "<leader>xx", "<Cmd>Trouble<CR>", opts)
-    map("n", "<leader>xw", "<Cmd>Trouble lsp_workspace_diagnostics<CR>", opts)
-    map("n", "<leader>xd", "<Cmd>Trouble lsp_document_diagnostics<CR>", opts)
-    map("n", "<leader>xl", "<Cmd>Trouble loclist<CR>", opts)
-    map("n", "<leader>xq", "<Cmd>Trouble quickfix<CR>", opts)
-    map("n", "<leader>xr", "<Cmd>Trouble lsp_references<CR>", opts)
 end
 
 -- Enable/configure LSPs
@@ -148,36 +139,22 @@ for _, lsp in ipairs(servers) do
     })
 end
 
--- null-ls
-
-null_ls.setup({
+local nls = require("null-ls")
+nls.setup({
     sources = {
-        -- Python code formatter
-        null_ls.builtins.formatting.black,
-
-        -- Code formatter for many languages, such as Markdown
-        null_ls.builtins.formatting.prettier,
-
-        -- Code formatter for shell scripts
-        null_ls.builtins.formatting.shfmt.with({
+        nls.builtins.formatting.black, -- Python code formatter
+        nls.builtins.formatting.prettier, -- Code formatter for many languages, such as Markdown
+        nls.builtins.formatting.shfmt.with({ -- Code formatter for shell scripts
             extra_args = { "-i", "4", "-bn", "-ci", "-sr" },
         }),
-
-        -- Lua code formatter
-        null_ls.builtins.formatting.stylua.with({
+        nls.builtins.formatting.stylua.with({ -- Lua code formatter
             extra_args = { "--indent-type", "Spaces" },
         }),
-
-        -- Linter for git commits
-        null_ls.builtins.diagnostics.gitlint.with({
+        nls.builtins.diagnostics.gitlint.with({ -- Linter for git commits
             extra_args = { "--ignore", "body-is-missing" },
         }),
-
-        -- Linter for Dockerfiles
-        null_ls.builtins.diagnostics.hadolint,
-
-        -- Static analysis tool for shell scripts
-        null_ls.builtins.diagnostics.shellcheck,
+        nls.builtins.diagnostics.hadolint, -- Linter for Dockerfiles
+        nls.builtins.diagnostics.shellcheck, -- Static analysis tool for shell scripts
     },
     on_attach = custom_lsp_attach,
 })

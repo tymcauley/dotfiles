@@ -27,6 +27,7 @@ return {
     -- Column-align multiple lines
     {
         "junegunn/vim-easy-align",
+        event = "VeryLazy",
         config = function()
             -- Start interactive EasyAlign in visual mode (e.g. vipgs)
             vim.keymap.set("x", "gs", "<Plug>(EasyAlign)")
@@ -36,14 +37,15 @@ return {
     },
 
     -- Make a new text object for lines at the same indent level
-    { "michaeljsmith/vim-indent-object" },
+    { "michaeljsmith/vim-indent-object", event = "VeryLazy" },
 
     -- Operators for surrounding/sandwiching text objects
-    { "machakann/vim-sandwich" },
+    { "machakann/vim-sandwich", event = "VeryLazy" },
 
     -- Automatic closing of quotes, parens, brackets, etc
     {
         "windwp/nvim-autopairs",
+        event = "VeryLazy",
         config = function()
             local npairs = require("nvim-autopairs")
             npairs.setup({})
@@ -56,16 +58,17 @@ return {
     -- Easy comment insertion
     {
         "numToStr/Comment.nvim",
+        event = "VeryLazy",
         config = function()
             require("Comment").setup()
         end,
     },
 
     -- Commands for smart text substitution
-    { "tpope/vim-abolish" },
+    { "tpope/vim-abolish", event = "VeryLazy" },
 
     -- Use dot operator (.) to repeat plugin map operations
-    { "tpope/vim-repeat" },
+    { "tpope/vim-repeat", event = "VeryLazy" },
 
     -- Add nice integration with git
     {
@@ -77,11 +80,16 @@ return {
     },
 
     -- Git diff viewer
-    { "sindrets/diffview.nvim", dependencies = { "nvim-lua/plenary.nvim" } },
+    {
+        "sindrets/diffview.nvim",
+        event = "VeryLazy",
+        dependencies = { "nvim-lua/plenary.nvim" },
+    },
 
     -- Improved match motions
     {
         "haya14busa/vim-asterisk",
+        event = "VeryLazy",
         config = function()
             require("config.vim-asterisk")
         end,
@@ -97,23 +105,26 @@ return {
     },
 
     -- Languages
-    { "azidar/firrtl-syntax" },
-    { "fladson/vim-kitty" },
-    { "rust-lang/rust.vim" },
-    { "tymcauley/llvm-vim-syntax" },
+    { "azidar/firrtl-syntax", event = "VeryLazy" },
+    { "fladson/vim-kitty", event = "VeryLazy" },
+    { "rust-lang/rust.vim", event = "VeryLazy" },
+    { "tymcauley/llvm-vim-syntax", event = "VeryLazy" },
 
     -- Treesitter integration into neovim
     {
         "nvim-treesitter/nvim-treesitter",
         build = ":TSUpdate",
         event = { "BufReadPost", "BufNewFile" },
+        dependencies = {
+            "p00f/nvim-ts-rainbow",
+        },
         config = function()
             require("config.treesitter")
         end,
     },
-    { "p00f/nvim-ts-rainbow" },
     {
         "nvim-treesitter/nvim-treesitter-context",
+        event = { "BufReadPost", "BufNewFile" },
         config = function()
             require("treesitter-context").setup({
                 max_lines = 3,
@@ -124,7 +135,7 @@ return {
     -- Autocompletion plugin
     {
         "hrsh7th/nvim-cmp",
-        event = "InsertEnter", -- load cmp on InsertEnter
+        event = "InsertEnter",
         dependencies = {
             "hrsh7th/cmp-vsnip",
             "hrsh7th/vim-vsnip",
@@ -140,45 +151,41 @@ return {
         end,
     },
 
-    -- LSP statusline components
-    {
-        "j-hui/fidget.nvim",
-        config = function()
-            require("fidget").setup({})
-        end,
-    },
-
     -- Collection of common configurations for the nvim LSP client
     {
         "neovim/nvim-lspconfig",
         event = { "BufReadPre", "BufNewFile" },
         dependencies = {
-            "hrsh7th/cmp-nvim-lsp",
+            "hrsh7th/cmp-nvim-lsp", -- Completion for LSP
+            "lsp_lines.nvim", -- Render LSP diagnostics inline with code
+            "j-hui/fidget.nvim", -- Display LSP status in standalone UI
+            "simrat39/rust-tools.nvim", -- rust-analyzer plugin
+            "scalameta/nvim-metals", -- Metals plugin
+            "jose-elias-alvarez/null-ls.nvim", -- Connect non-LSP sources into nvim's LSP client
         },
         config = function()
             require("config.lsp")
         end,
     },
 
-    -- Display code context from LSP
+    -- Render LSP diagnostics inline with code
     {
-        "SmiteshP/nvim-navic",
+        "https://git.sr.ht/~whynothugo/lsp_lines.nvim",
+        name = "lsp_lines.nvim",
         lazy = true,
+        config = function()
+            require("lsp_lines").setup()
+            vim.keymap.set("n", "<leader>l", require("lsp_lines").toggle, { desc = "Toggle lsp_lines" })
+        end,
     },
 
-    -- Connect non-LSP sources into nvim's LSP client
-    {
-        "jose-elias-alvarez/null-ls.nvim",
-        event = { "BufReadPre", "BufNewFile" },
-        dependencies = {
-            "nvim-lua/plenary.nvim",
-            "neovim/nvim-lspconfig",
-        },
-    },
+    -- Display code context from LSP
+    { "SmiteshP/nvim-navic", lazy = true },
 
     -- Display LSP inlay hints
     {
         "lvimuser/lsp-inlayhints.nvim",
+        event = { "BufReadPre", "BufNewFile" },
         config = function()
             local inlayhints = require("lsp-inlayhints")
             inlayhints.setup()
@@ -198,23 +205,10 @@ return {
         end,
     },
 
-    -- Extra tools for using rust-analyzer with nvim LSP client.
-    { "simrat39/rust-tools.nvim" },
-
-    -- Metals (Scala language server) integration for nvim LSP
-    { "scalameta/nvim-metals", dependencies = { "nvim-lua/plenary.nvim" } },
-
-    -- Render LSP diagnostics inline with code
-    {
-        "https://git.sr.ht/~whynothugo/lsp_lines.nvim",
-        config = function()
-            require("lsp_lines").setup()
-        end,
-    },
-
     -- Fuzzy finder
     {
         "ibhagwan/fzf-lua",
+        event = { "BufReadPre", "BufNewFile" },
         dependencies = { "nvim-tree/nvim-web-devicons" },
         config = function()
             local fzf = require("fzf-lua")
@@ -289,6 +283,7 @@ return {
     -- Scrollbar
     {
         "lewis6991/satellite.nvim",
+        event = "VeryLazy",
         config = function()
             require("satellite").setup()
             -- Ensure the scrollbar isn't included in diff mode.
@@ -299,7 +294,7 @@ return {
     },
 
     -- Automatic table creator
-    { "dhruvasagar/vim-table-mode" },
+    { "dhruvasagar/vim-table-mode" , event = "VeryLazy" },
 
     -- Fancy notification manager
     {
