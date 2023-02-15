@@ -1,5 +1,4 @@
 local lspconfig = require("lspconfig")
-local utils = require("utils")
 
 -- Customize diagnostic symbols in the gutter
 local signs = { Error = " ", Warn = " ", Hint = " ", Info = " " }
@@ -124,19 +123,35 @@ end
 -- Enable/configure LSPs
 
 local servers = {
-    "clangd",
-    "denols",
-    "hls",
-    "pyright",
-    "verible",
+    { "clangd", {} },
+    { "denols", {} },
+    { "hls", {} },
+    {
+        "lua_ls",
+        {
+            Lua = {
+                runtime = { version = "LuaJIT" },
+                diagnostics = { globals = { "vim" } }, -- Recognize the `vim` global
+                workspace = {
+                    checkThirdParty = false,
+                    library = vim.api.nvim_get_runtime_file("", true), -- Make server aware of nvim runtime files
+                },
+            },
+        },
+    },
+    { "pyright", {} },
+    { "verible", {} },
 }
 for _, lsp in ipairs(servers) do
-    lspconfig[lsp].setup({
+    local lsp_name = lsp[1]
+    local lsp_settings = lsp[2]
+    lspconfig[lsp_name].setup({
         on_attach = custom_lsp_attach,
         capabilities = capabilities,
         flags = {
             debounce_text_changes = 150,
         },
+        settings = lsp_settings,
     })
 end
 
