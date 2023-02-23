@@ -26,13 +26,16 @@ return {
 
     -- Column-align multiple lines
     {
-        "junegunn/vim-easy-align",
+        "echasnovski/mini.align",
         event = "VeryLazy",
-        config = function()
-            -- Start interactive EasyAlign in visual mode (e.g. vipgs)
-            vim.keymap.set("x", "gs", "<Plug>(EasyAlign)")
-            -- Start interactive EasyAlign for a motion/text object (e.g. gsip)
-            vim.keymap.set("n", "gs", "<Plug>(EasyAlign)")
+        opts = {
+            mappings = {
+                start = "gs",
+                start_with_preview = "gS",
+            },
+        },
+        config = function(_, opts)
+            require("mini.align").setup(opts)
         end,
     },
 
@@ -294,7 +297,7 @@ return {
     },
 
     -- Automatic table creator
-    { "dhruvasagar/vim-table-mode" , event = "VeryLazy" },
+    { "dhruvasagar/vim-table-mode", event = "VeryLazy" },
 
     -- Fancy notification manager
     {
