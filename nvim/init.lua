@@ -113,15 +113,8 @@ vim.opt.wrap = false -- Disable text wrap
 vim.opt.colorcolumn = "+1" -- Highlight column after 'textwidth'
 vim.opt.splitbelow = true -- Put a new hsplit below the current one
 vim.opt.splitright = true -- Put a new vsplit to the right of the current one
-vim.opt.foldcolumn = "auto:9" -- Auto-size the foldcolumn
+vim.opt.foldmethod = "indent"
 vim.opt.foldlevel = 99 -- Start with all folds open
-vim.opt.fillchars = {
-    -- Customize the foldcolumn
-    fold = " ",
-    foldopen = "",
-    foldsep = "│",
-    foldclose = "",
-}
 vim.opt.updatetime = 300 -- Speed up CursorHold autocommand events (also writes swap file)
 vim.opt.pumblend = 30 -- Pop-up-menu transparency
 vim.opt_global.shortmess:remove("F") -- Allow nvim-metals to show setup messages

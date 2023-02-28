@@ -35,12 +35,6 @@ vim.diagnostic.config({
 -- Initialize capabilities with all the completions that `nvim-cmp` can perform.
 local capabilities = require("cmp_nvim_lsp").default_capabilities()
 
--- Extend capabilities with folding functionality from 'nvim-ufo'
-capabilities.textDocument.foldingRange = {
-    dynamicRegistration = false,
-    lineFoldingOnly = true,
-}
-
 -- Buffer-local setup function
 local function custom_lsp_attach(client, bufnr)
     -- Define buffer-local mapping

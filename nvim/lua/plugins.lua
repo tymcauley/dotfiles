@@ -321,14 +321,4 @@ return {
             vim.notify = notify
         end,
     },
-
-    -- Improved code folding
-    {
-        "kevinhwang91/nvim-ufo",
-        event = { "BufReadPost", "BufNewFile" },
-        dependencies = { "kevinhwang91/promise-async" },
-        config = function()
-            require("config.nvim-ufo")
-        end,
-    },
 }
