@@ -66,6 +66,8 @@ require("nvim-treesitter.configs").setup({
     rainbow = {
         enable = true,
         disable = disable_fn,
+        query = "rainbow-parens",
+        strategy = require("ts-rainbow.strategy.global"),
     },
 })
 

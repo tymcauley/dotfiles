@@ -119,7 +119,7 @@ return {
         build = ":TSUpdate",
         event = { "BufReadPost", "BufNewFile" },
         dependencies = {
-            "p00f/nvim-ts-rainbow",
+            "https://gitlab.com/HiPhish/nvim-ts-rainbow2",
         },
         config = function()
             require("config.treesitter")
