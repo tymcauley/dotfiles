@@ -53,6 +53,7 @@ require("nvim-treesitter.configs").setup({
         "ruby",
         "rust",
         "scala",
+        "tablegen",
         "toml",
         "typescript",
         "verilog",
