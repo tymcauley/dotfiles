@@ -190,8 +190,7 @@ return {
         "lvimuser/lsp-inlayhints.nvim",
         event = { "BufReadPre", "BufNewFile" },
         config = function()
-            local inlayhints = require("lsp-inlayhints")
-            inlayhints.setup()
+            require("lsp-inlayhints").setup()
             vim.api.nvim_create_augroup("LspAttach_inlayhints", {})
             vim.api.nvim_create_autocmd("LspAttach", {
                 group = "LspAttach_inlayhints",
@@ -202,7 +201,7 @@ return {
 
                     local bufnr = args.buf
                     local client = vim.lsp.get_client_by_id(args.data.client_id)
-                    inlayhints.on_attach(client, bufnr)
+                    require("lsp-inlayhints").on_attach(client, bufnr)
                 end,
             })
         end,

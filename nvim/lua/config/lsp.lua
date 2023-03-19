@@ -43,15 +43,7 @@ vim.api.nvim_create_autocmd("LspAttach", {
         local client = vim.lsp.get_client_by_id(args.data.client_id)
 
         -- Define buffer-local mapping
-        local function map(mode, l, r, opts)
-            opts = opts or {}
-            opts.buffer = bufnr
-            vim.keymap.set(mode, l, r, opts)
-        end
-        local opts = {
-            noremap = true,
-            silent = true,
-        }
+        local opts = { buffer = bufnr }
 
         -- Find the client's capabilities
         local cap = client.server_capabilities
@@ -86,35 +78,35 @@ vim.api.nvim_create_autocmd("LspAttach", {
                 buffer = bufnr,
                 group = lsp_code_lens,
             })
-            map("n", "glcl", vim.lsp.codelens.run, opts)
+            vim.keymap.set("n", "glcl", vim.lsp.codelens.run, opts)
         end
 
         -- Set up key mappings
         local fzf = require("fzf-lua")
-        map({ "n", "v" }, "gla", vim.lsp.buf.code_action, opts)
-        map("n", "gld", function()
+        vim.keymap.set({ "n", "v" }, "gla", vim.lsp.buf.code_action, opts)
+        vim.keymap.set("n", "gld", function()
             fzf.lsp_definitions({
                 jump_to_single_result = true,
             })
         end, opts)
-        map("n", "glD", vim.lsp.buf.declaration, opts)
-        map("n", "glf", function()
+        vim.keymap.set("n", "glD", vim.lsp.buf.declaration, opts)
+        vim.keymap.set("n", "glf", function()
             vim.lsp.buf.format({ async = true })
         end, opts)
-        map("n", "glh", vim.lsp.buf.hover, opts)
-        map("n", "glH", vim.lsp.buf.signature_help, opts)
-        map("n", "gli", fzf.lsp_implementations, opts)
-        map("n", "glj", vim.diagnostic.goto_next, opts)
-        map("n", "glk", vim.diagnostic.goto_prev, opts)
-        map("n", "gln", vim.lsp.buf.rename, opts)
-        map("n", "glr", function()
+        vim.keymap.set("n", "glh", vim.lsp.buf.hover, opts)
+        vim.keymap.set("n", "glH", vim.lsp.buf.signature_help, opts)
+        vim.keymap.set("n", "gli", fzf.lsp_implementations, opts)
+        vim.keymap.set("n", "glj", vim.diagnostic.goto_next, opts)
+        vim.keymap.set("n", "glk", vim.diagnostic.goto_prev, opts)
+        vim.keymap.set("n", "gln", vim.lsp.buf.rename, opts)
+        vim.keymap.set("n", "glr", function()
             fzf.lsp_references({
                 ignore_current_line = true,
                 jump_to_single_result = true,
             })
         end, opts)
-        map("n", "gltd", vim.lsp.buf.type_definition, opts)
-        map("n", "glx", function()
+        vim.keymap.set("n", "gltd", vim.lsp.buf.type_definition, opts)
+        vim.keymap.set("n", "glx", function()
             vim.lsp.stop_client(vim.lsp.get_active_clients())
         end, opts)
     end,
@@ -147,9 +139,6 @@ for _, lsp in ipairs(servers) do
     local lsp_settings = lsp[2]
     lspconfig[lsp_name].setup({
         capabilities = capabilities,
-        flags = {
-            debounce_text_changes = 150,
-        },
         settings = lsp_settings,
     })
 end
@@ -263,14 +252,12 @@ vim.api.nvim_create_autocmd("FileType", {
 require("rust-tools").setup({
     tools = {
         inlay_hints = {
+            -- This is handled by lvimuser/lsp-inlayhints.nvim
             auto = false,
         },
     },
     server = {
         capabilities = capabilities,
-        flags = {
-            debounce_text_changes = 150,
-        },
         -- TODO: When I enable this setting, all diagnostics disappear
         -- settings = {
         --     ["rust-analyzer"] = {
