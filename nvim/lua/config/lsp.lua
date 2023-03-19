@@ -36,83 +36,89 @@ vim.diagnostic.config({
 local capabilities = require("cmp_nvim_lsp").default_capabilities()
 
 -- Buffer-local setup function
-local function custom_lsp_attach(client, bufnr)
-    -- Define buffer-local mapping
-    local function map(mode, l, r, opts)
-        opts = opts or {}
-        opts.buffer = bufnr
-        vim.keymap.set(mode, l, r, opts)
-    end
-    local opts = {
-        noremap = true,
-        silent = true,
-    }
+vim.api.nvim_create_autocmd("LspAttach", {
+    group = vim.api.nvim_create_augroup("UserLspConfig", {}),
+    callback = function(args)
+        local bufnr = args.buf
+        local client = vim.lsp.get_client_by_id(args.data.client_id)
 
-    -- Find the client's capabilities
-    local cap = client.server_capabilities
+        -- Define buffer-local mapping
+        local function map(mode, l, r, opts)
+            opts = opts or {}
+            opts.buffer = bufnr
+            vim.keymap.set(mode, l, r, opts)
+        end
+        local opts = {
+            noremap = true,
+            silent = true,
+        }
 
-    -- Set up code-context plugin
-    if cap.documentSymbolProvider then
-        require("nvim-navic").attach(client, bufnr)
-    end
+        -- Find the client's capabilities
+        local cap = client.server_capabilities
 
-    -- Highlight the symbol under the cursor
-    if cap.documentHighlightProvider then
-        local lsp_highlight_cursor = vim.api.nvim_create_augroup("lsp_highlight_cursor", {})
-        vim.api.nvim_create_autocmd("CursorHold", {
-            callback = vim.lsp.buf.document_highlight,
-            buffer = bufnr,
-            group = lsp_highlight_cursor,
-        })
-        vim.api.nvim_create_autocmd("CursorMoved", {
-            callback = vim.lsp.buf.clear_references,
-            buffer = bufnr,
-            group = lsp_highlight_cursor,
-        })
-    end
+        -- Set up code-context plugin
+        if cap.documentSymbolProvider then
+            require("nvim-navic").attach(client, bufnr)
+        end
 
-    -- Set up code lens support
-    if cap.code_lens then
-        local lsp_code_lens = vim.api.nvim_create_augroup("lsp_code_lens", {})
-        vim.api.nvim_create_autocmd({ "BufEnter", "CursorHold", "InsertLeave" }, {
-            callback = function()
-                vim.lsp.codelens.refresh()
-            end,
-            buffer = bufnr,
-            group = lsp_code_lens,
-        })
-        map("n", "glcl", vim.lsp.codelens.run, opts)
-    end
+        -- Highlight the symbol under the cursor
+        if cap.documentHighlightProvider then
+            local lsp_highlight_cursor = vim.api.nvim_create_augroup("lsp_highlight_cursor", {})
+            vim.api.nvim_create_autocmd("CursorHold", {
+                callback = vim.lsp.buf.document_highlight,
+                buffer = bufnr,
+                group = lsp_highlight_cursor,
+            })
+            vim.api.nvim_create_autocmd("CursorMoved", {
+                callback = vim.lsp.buf.clear_references,
+                buffer = bufnr,
+                group = lsp_highlight_cursor,
+            })
+        end
 
-    -- Set up key mappings
-    local fzf = require("fzf-lua")
-    map({ "n", "v" }, "gla", vim.lsp.buf.code_action, opts)
-    map("n", "gld", function()
-        fzf.lsp_definitions({
-            jump_to_single_result = true,
-        })
-    end, opts)
-    map("n", "glD", vim.lsp.buf.declaration, opts)
-    map("n", "glf", function()
-        vim.lsp.buf.format({ async = true })
-    end, opts)
-    map("n", "glh", vim.lsp.buf.hover, opts)
-    map("n", "glH", vim.lsp.buf.signature_help, opts)
-    map("n", "gli", fzf.lsp_implementations, opts)
-    map("n", "glj", vim.diagnostic.goto_next, opts)
-    map("n", "glk", vim.diagnostic.goto_prev, opts)
-    map("n", "gln", vim.lsp.buf.rename, opts)
-    map("n", "glr", function()
-        fzf.lsp_references({
-            ignore_current_line = true,
-            jump_to_single_result = true,
-        })
-    end, opts)
-    map("n", "gltd", vim.lsp.buf.type_definition, opts)
-    map("n", "glx", function()
-        vim.lsp.stop_client(vim.lsp.get_active_clients())
-    end, opts)
-end
+        -- Set up code lens support
+        if cap.code_lens then
+            local lsp_code_lens = vim.api.nvim_create_augroup("lsp_code_lens", {})
+            vim.api.nvim_create_autocmd({ "BufEnter", "CursorHold", "InsertLeave" }, {
+                callback = function()
+                    vim.lsp.codelens.refresh()
+                end,
+                buffer = bufnr,
+                group = lsp_code_lens,
+            })
+            map("n", "glcl", vim.lsp.codelens.run, opts)
+        end
+
+        -- Set up key mappings
+        local fzf = require("fzf-lua")
+        map({ "n", "v" }, "gla", vim.lsp.buf.code_action, opts)
+        map("n", "gld", function()
+            fzf.lsp_definitions({
+                jump_to_single_result = true,
+            })
+        end, opts)
+        map("n", "glD", vim.lsp.buf.declaration, opts)
+        map("n", "glf", function()
+            vim.lsp.buf.format({ async = true })
+        end, opts)
+        map("n", "glh", vim.lsp.buf.hover, opts)
+        map("n", "glH", vim.lsp.buf.signature_help, opts)
+        map("n", "gli", fzf.lsp_implementations, opts)
+        map("n", "glj", vim.diagnostic.goto_next, opts)
+        map("n", "glk", vim.diagnostic.goto_prev, opts)
+        map("n", "gln", vim.lsp.buf.rename, opts)
+        map("n", "glr", function()
+            fzf.lsp_references({
+                ignore_current_line = true,
+                jump_to_single_result = true,
+            })
+        end, opts)
+        map("n", "gltd", vim.lsp.buf.type_definition, opts)
+        map("n", "glx", function()
+            vim.lsp.stop_client(vim.lsp.get_active_clients())
+        end, opts)
+    end,
+})
 
 -- Enable/configure LSPs
 
@@ -140,7 +146,6 @@ for _, lsp in ipairs(servers) do
     local lsp_name = lsp[1]
     local lsp_settings = lsp[2]
     lspconfig[lsp_name].setup({
-        on_attach = custom_lsp_attach,
         capabilities = capabilities,
         flags = {
             debounce_text_changes = 150,
@@ -168,7 +173,6 @@ nls.setup({
         nls.builtins.diagnostics.hadolint, -- Linter for Dockerfiles
         nls.builtins.diagnostics.shellcheck, -- Static analysis tool for shell scripts
     },
-    on_attach = custom_lsp_attach,
 })
 
 -- nvim-metals (Scala LSP)
@@ -177,7 +181,6 @@ local Path = require("plenary.path")
 
 local metals = require("metals")
 metals_config = metals.bare_config()
-metals_config.on_attach = custom_lsp_attach
 metals_config.settings = {
     showImplicitArguments = true,
     excludedPackages = { "akka.actor.typed.javadsl", "com.github.swagger.akka.javadsl" },
@@ -264,12 +267,10 @@ require("rust-tools").setup({
         },
     },
     server = {
-        on_attach = custom_lsp_attach,
         capabilities = capabilities,
         flags = {
             debounce_text_changes = 150,
         },
-
         -- TODO: When I enable this setting, all diagnostics disappear
         -- settings = {
         --     ["rust-analyzer"] = {
