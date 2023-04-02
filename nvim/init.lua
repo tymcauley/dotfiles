@@ -184,6 +184,7 @@ require("lazy").setup({
         { import = "plugins" },
     },
     install = { colorscheme = { "tokyonight" } },
+    checker = { enabled = true },
     performance = {
         rtp = {
             disabled_plugins = {

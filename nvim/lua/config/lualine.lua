@@ -8,9 +8,7 @@ M.setup = function()
             component_separators = { left = "", right = "" },
             theme = "tokyonight",
             globalstatus = true,
-            disabled_filetypes = { statusline = { "lazy" } },
         },
-
         sections = {
             lualine_a = {
                 -- Return a single character representing the current Vim mode.
@@ -77,10 +75,12 @@ M.setup = function()
                 "location",
             },
         },
-
         inactive_sections = {
             lualine_c = { "filename" },
             lualine_x = { "location" },
+        },
+        extensions = {
+            "lazy",
         },
     })
 end
