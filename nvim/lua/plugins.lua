@@ -182,6 +182,13 @@ return {
         end,
     },
 
+    -- Display LSP status in standalone UI
+    {
+        "j-hui/fidget.nvim",
+        lazy = true,
+        opts = {}, -- `opts = {}` is the same as calling `require('fidget').setup({})`
+    },
+
     -- Display code context from LSP
     { "SmiteshP/nvim-navic", lazy = true },
 
