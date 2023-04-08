@@ -1,7 +1,3 @@
--- Prelude
-
-local utils = require("utils")
-
 -- Bootstrap plugin manager installation
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not vim.loop.fs_stat(lazypath) then
@@ -123,6 +119,8 @@ vim.opt.shortmess:append({
     c = true, -- Hide messages when using completion
     C = true, -- Hide messages when scanning for completion sources
 })
+vim.opt.cursorline = true -- Enable cursor-line highlighting
+vim.opt.cursorlineopt = "number" -- Only highlight the line number at the cursor
 
 -- Auto-toggling of relative numbers
 -- - Only enable relative numbers for the focused window

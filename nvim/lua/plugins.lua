@@ -10,9 +10,11 @@ return {
                 sidebars = { "qf", "help", "terminal" },
                 -- Section headers in the lualine theme will be bold
                 lualine_bold = true,
-                -- Change the window separator color to 'colors.blue'
                 on_colors = function(colors)
-                    colors.border = colors.blue
+                    colors.border = colors.blue -- Window separator color
+                end,
+                on_highlights = function(hl, colors)
+                    hl.CursorLineNr = { fg = colors.orange, bold = true } -- Cursor line number highlight
                 end,
             })
 
@@ -208,7 +210,7 @@ return {
 
                     local bufnr = args.buf
                     local client = vim.lsp.get_client_by_id(args.data.client_id)
-                    require("lsp-inlayhints").on_attach(client, bufnr)
+                    require("lsp-inlayhints").on_attach(client, bufnr, false)
                 end,
             })
         end,
