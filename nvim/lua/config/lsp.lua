@@ -169,7 +169,7 @@ nls.setup({
 local Path = require("plenary.path")
 
 local metals = require("metals")
-metals_config = metals.bare_config()
+local metals_config = metals.bare_config()
 metals_config.settings = {
     showImplicitArguments = true,
     excludedPackages = { "akka.actor.typed.javadsl", "com.github.swagger.akka.javadsl" },
