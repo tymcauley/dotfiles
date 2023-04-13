@@ -40,10 +40,10 @@ BREW_FORMULAE := \
 BREW_CASKS := \
 	docker \
 	gtkwave \
-	kitty \
 	mattermost \
 	tigervnc-viewer \
 	vagrant \
+	wezterm \
 	xquartz \
 	yed
 
