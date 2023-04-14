@@ -211,3 +211,9 @@ fi
 
 # Set up shell prompt
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+
+# Set up wezterm shell integration
+function {
+  local wezterm_shell_int_macos="/Applications/WezTerm.app/Contents/Resources/wezterm.sh"
+  [[ -f "$wezterm_shell_int_macos" ]] && source "$wezterm_shell_int_macos"
+}
