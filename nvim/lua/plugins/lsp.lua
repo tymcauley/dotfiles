@@ -29,6 +29,7 @@ return {
                 lua_ls = {
                     settings = {
                         Lua = {
+                            format = { enable = false }, -- Use stylua instead
                             runtime = { version = "LuaJIT" },
                             diagnostics = { globals = { "vim" } }, -- Recognize the `vim` global
                             workspace = {
