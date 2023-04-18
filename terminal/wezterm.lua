@@ -56,6 +56,15 @@ config.keys = {
     },
 }
 
+-- Navigate through tabs by number
+for i = 1, 9 do
+    table.insert(config.keys, {
+        key = tostring(i),
+        mods = "LEADER",
+        action = wezterm.action.ActivateTab(i - 1),
+    })
+end
+
 -- Domains
 
 config.unix_domains = {
