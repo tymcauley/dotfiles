@@ -153,7 +153,7 @@ if [[ -n "$HOMEBREW_PREFIX" ]]; then
   # If ruby is installed, add to the start of the path, to override the
   # OS-provided version.
   [[ -d "$HOMEBREW_PREFIX/opt/ruby/bin" ]] && path=("$HOMEBREW_PREFIX/opt/ruby/bin" $path)
-  [[ -d "$HOMEBREW_PREFIX/lib/ruby/gems/3.0.0/bin" ]] && path=("$HOMEBREW_PREFIX/lib/ruby/gems/3.0.0/bin" $path)
+  [[ -d "$HOMEBREW_PREFIX/lib/ruby/gems/3.2.0/bin" ]] && path=("$HOMEBREW_PREFIX/lib/ruby/gems/3.2.0/bin" $path)
 
   # If 'make' is installed, add it to the start of the path, so we can use more
   # modern 'make' features.
