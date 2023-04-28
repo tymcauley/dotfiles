@@ -187,7 +187,7 @@ return {
                 sources = {
                     nls.builtins.formatting.black, -- Python code formatter
                     nls.builtins.formatting.prettier.with({ -- Code formatter for many languages, such as Markdown
-                        filetypes = { "yaml" },
+                        filetypes = { "json", "yaml" },
                     }),
                     nls.builtins.formatting.shfmt.with({ -- Code formatter for shell scripts
                         extra_args = { "-i", "4", "-bn", "-ci", "-sr" },
