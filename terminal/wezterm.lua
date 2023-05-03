@@ -2,6 +2,10 @@ local wezterm = require("wezterm")
 
 local config = wezterm.config_builder()
 
+-- Behavior
+
+config.scrollback_lines = 50000
+
 -- Appearance
 
 local color_scheme_name = "tokyonight_storm"
