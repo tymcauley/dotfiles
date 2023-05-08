@@ -39,6 +39,7 @@ BREW_FORMULAE := \
 
 BREW_CASKS := \
 	docker \
+	font-iosevka-term-nerd-font \
 	gtkwave \
 	mattermost \
 	tigervnc-viewer \
