@@ -129,7 +129,6 @@ export KEYTIMEOUT=1
 # Add Scala tools to PATH
 export COURSIER_BIN_DIR="$HOME/.local/share/coursier/bin"
 [[ -d "$COURSIER_BIN_DIR" ]] && path=("$COURSIER_BIN_DIR" $path)
-[[ -s "${SDKMAN_DIR:-$HOME/.sdkman}/bin/sdkman-init.sh" ]] && source "${SDKMAN_DIR:-$HOME/.sdkman}/bin/sdkman-init.sh"
 
 # Add Haskell tools to PATH
 [[ -f "${GHCUP_INSTALL_BASE_PREFIX:-$HOME}/.ghcup/env" ]] && source "${GHCUP_INSTALL_BASE_PREFIX:-$HOME}/.ghcup/env"
@@ -142,9 +141,6 @@ path=(
   ~/.local/bin
   $path
 )
-
-# Load Homebrew path/environment modifications.
-command -v brew > /dev/null 2>&1 && eval $(brew shellenv)
 
 if [[ -n "$HOMEBREW_PREFIX" ]]; then
   # If LLVM is installed, add all of the LLVM utilities to the end of the path.

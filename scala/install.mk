@@ -1,12 +1,6 @@
 .PHONY: scala
 ALL_TARGETS += scala
 
-ifeq ($(SDKMAN_DIR),)
-$(error Please install sdkman: >>> \
-	curl -s "https://get.sdkman.io?rcupdate=false" | bash \
-	<<<)
-endif
-
 ifeq ($(shell which cs 2> /dev/null),)
 $(error Please install coursier: >>> \
 	curl -fLo cs https://git.io/coursier-cli-"$$(uname | tr LD ld)" \
