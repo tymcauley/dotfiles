@@ -165,10 +165,16 @@ return {
         "https://git.sr.ht/~whynothugo/lsp_lines.nvim",
         name = "lsp_lines.nvim",
         lazy = true,
-        config = function()
-            require("lsp_lines").setup()
-            vim.keymap.set("n", "<leader>l", require("lsp_lines").toggle, { desc = "Toggle lsp_lines" })
-        end,
+        keys = {
+            {
+                "<leader>ll",
+                function()
+                    require("lsp_lines").toggle()
+                end,
+                desc = "Toggle lsp_lines",
+            },
+        },
+        opts = {},
     },
 
     -- Display LSP status in standalone UI
@@ -332,6 +338,15 @@ return {
     {
         "lvimuser/lsp-inlayhints.nvim",
         event = { "BufReadPre", "BufNewFile" },
+        keys = {
+            {
+                "<leader>lh",
+                function()
+                    require("lsp-inlayhints").toggle()
+                end,
+                desc = "Toggle inlay hints",
+            },
+        },
         config = function()
             require("lsp-inlayhints").setup()
             vim.api.nvim_create_augroup("LspAttach_inlayhints", {})
