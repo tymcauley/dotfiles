@@ -11,8 +11,9 @@
 	emailpersonal = config user.email \"16469394+tymcauley@users.noreply.github.com\"
 [include]
 	path = ~/.gitconfig.private
+	path = ~/.config/git/tokyonight_storm.gitconfig
 [core]
-	excludesfile = ~/.gitignore_global
+	excludesfile = ~/.config/git/gitignore_global
 [mergetool "diffconflicts"]
 	cmd = vim -c DiffConflictsWithHistory \"$MERGED\" \"$BASE\" \"$LOCAL\" \"$REMOTE\"
 	trustExitCode = true
@@ -35,14 +36,8 @@
 	features = decorations navigate
 	line-numbers = true
 	side-by-side = true
-	syntax-theme = Dracula
-	plus-style = syntax "#003800"
-	minus-style = syntax "#3f0001"
 [delta "decorations"]
 	commit-decoration-style = blue ol
 	commit-style = raw
 	file-style = omit
-	hunk-header-decoration-style = blue box
-	hunk-header-file-style = red
-	hunk-header-line-number-style = "#067a00"
 	hunk-header-style = file line-number syntax
