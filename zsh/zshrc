@@ -156,6 +156,9 @@ if [[ -n "$HOMEBREW_PREFIX" ]]; then
   [[ -d "$HOMEBREW_PREFIX/opt/make/libexec/gnubin" ]] && path=("$HOMEBREW_PREFIX/opt/make/libexec/gnubin" $path)
 fi
 
+# Configure bat theme
+export BAT_THEME="tokyonight_storm"
+
 # Set up modifications for Python REPL
 [[ -f "$HOME/.pystartup" ]] && export PYTHONSTARTUP="$HOME/.pystartup"
 

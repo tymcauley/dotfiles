@@ -9,6 +9,10 @@ ALL_TARGETS =
 .PHONY: all default
 default: all
 
+ifeq ($(BAT),1)
+include bat/install.mk
+endif
+
 ifeq ($(BREW),1)
 include brew/install.mk
 endif

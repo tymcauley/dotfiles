@@ -1,3 +1,4 @@
+BAT      := 1
 BREW     := 1
 GIT      := 1
 HASKELL  := 1
