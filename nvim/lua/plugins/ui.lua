@@ -9,7 +9,10 @@ return {
     {
         "romgrk/barbar.nvim",
         event = "VeryLazy",
-        dependencies = "nvim-tree/nvim-web-devicons",
+        dependencies = {
+            "lewis6991/gitsigns.nvim",
+            "nvim-tree/nvim-web-devicons",
+        },
         keys = {
             -- Move between buffers
             { "gn", "<Cmd>BufferNext<CR>" },
@@ -24,7 +27,23 @@ return {
         init = function()
             vim.g.barbar_auto_setup = false
         end,
-        opts = {},
+        opts = {
+            icons = {
+                -- Show some LSP diagnostics in the bar
+                diagnostics = {
+                    [vim.diagnostic.severity.ERROR] = { enabled = true },
+                    [vim.diagnostic.severity.WARN] = { enabled = false },
+                    [vim.diagnostic.severity.INFO] = { enabled = false },
+                    [vim.diagnostic.severity.HINT] = { enabled = false },
+                },
+                -- TODO: This currently has strange background highlighting
+                -- gitsigns = {
+                --     added = { enabled = true },
+                --     changed = { enabled = true },
+                --     deleted = { enabled = true },
+                -- },
+            },
+        },
         config = function(_, opts)
             require("barbar").setup(opts)
 
@@ -33,6 +52,17 @@ return {
             vim.cmd("highlight BufferInactiveMod gui=bold")
             vim.cmd("highlight BufferVisibleMod gui=bold")
         end,
+    },
+
+    -- winbar with nvim-navic integration
+    {
+        "utilyre/barbecue.nvim",
+        event = "VeryLazy",
+        dependencies = {
+            "SmiteshP/nvim-navic",
+            "nvim-tree/nvim-web-devicons",
+        },
+        opts = {},
     },
 
     -- Fancy notification manager
@@ -127,15 +157,6 @@ return {
                     },
                     {
                         "b:gitsigns_status",
-                    },
-                    -- Display code context
-                    {
-                        function()
-                            return require("nvim-navic").get_location()
-                        end,
-                        cond = function()
-                            return package.loaded["nvim-navic"] and require("nvim-navic").is_available()
-                        end,
                     },
                 },
                 lualine_x = {
