@@ -1,7 +1,6 @@
 return {
     -- Languages
     { "azidar/firrtl-syntax", event = "VeryLazy" },
-    { "fladson/vim-kitty", event = "VeryLazy" },
     { "rust-lang/rust.vim", event = "VeryLazy" },
     { "tymcauley/llvm-vim-syntax", event = "VeryLazy" },
 
