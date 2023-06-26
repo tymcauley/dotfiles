@@ -21,6 +21,10 @@ return {
                 update_in_insert = false,
                 severity_sort = false,
             },
+            -- Enable the builtin LSP inlay hints
+            inlay_hints = {
+                enabled = true,
+            },
             -- LSP server settings
             servers = {
                 clangd = {},
@@ -127,6 +131,16 @@ return {
                         end, map_opts)
                     end
 
+                    -- Set up inlay hints
+                    if opts.inlay_hints.enabled and vim.lsp.buf.inlay_hint then
+                        if client.server_capabilities.inlayHintProvider then
+                            vim.lsp.buf.inlay_hint(bufnr, true)
+                        end
+                        vim.keymap.set("n", "<leader>lh", function()
+                            vim.lsp.buf.inlay_hint(0, nil)
+                        end, { desc = "Toggle Inlay Hints" })
+                    end
+
                     -- Set up key mappings
                     local fzf = require("fzf-lua")
                     vim.keymap.set({ "n", "v" }, "gla", vim.lsp.buf.code_action, map_opts)
@@ -222,7 +236,7 @@ return {
             return {
                 tools = {
                     inlay_hints = {
-                        -- This is handled by lvimuser/lsp-inlayhints.nvim
+                        -- This is handled by builtin LSP
                         auto = false,
                     },
                 },
@@ -334,35 +348,4 @@ return {
 
     -- Display code context from LSP
     { "SmiteshP/nvim-navic", lazy = true },
-
-    -- Display LSP inlay hints
-    {
-        "lvimuser/lsp-inlayhints.nvim",
-        event = { "BufReadPre", "BufNewFile" },
-        keys = {
-            {
-                "<leader>lh",
-                function()
-                    require("lsp-inlayhints").toggle()
-                end,
-                desc = "Toggle inlay hints",
-            },
-        },
-        config = function()
-            require("lsp-inlayhints").setup()
-            vim.api.nvim_create_augroup("LspAttach_inlayhints", {})
-            vim.api.nvim_create_autocmd("LspAttach", {
-                group = "LspAttach_inlayhints",
-                callback = function(args)
-                    if not (args.data and args.data.client_id) then
-                        return
-                    end
-
-                    local bufnr = args.buf
-                    local client = vim.lsp.get_client_by_id(args.data.client_id)
-                    require("lsp-inlayhints").on_attach(client, bufnr, false)
-                end,
-            })
-        end,
-    },
 }
