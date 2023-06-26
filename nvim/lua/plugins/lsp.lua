@@ -180,6 +180,7 @@ return {
     -- Display LSP status in standalone UI
     {
         "j-hui/fidget.nvim",
+        tag = "legacy",
         lazy = true,
         opts = {}, -- `opts = {}` is the same as calling `require("fidget").setup({})`
     },
