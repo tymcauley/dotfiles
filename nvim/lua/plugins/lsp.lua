@@ -94,7 +94,9 @@ return {
                             group = lsp_highlight_cursor,
                         })
                         vim.api.nvim_create_autocmd("CursorMoved", {
-                            callback = vim.lsp.buf.clear_references,
+                            callback = function()
+                                vim.lsp.buf.clear_references(bufnr)
+                            end,
                             buffer = bufnr,
                             group = lsp_highlight_cursor,
                         })
