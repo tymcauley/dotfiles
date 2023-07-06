@@ -33,6 +33,7 @@
 [interactive]
 	diffFilter = delta --color-only --features=interactive
 [delta]
+	commit-regex = "^Commit: "
 	features = decorations navigate
 	line-numbers = true
 	side-by-side = true
