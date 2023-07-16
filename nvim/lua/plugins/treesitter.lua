@@ -4,9 +4,6 @@ return {
         "nvim-treesitter/nvim-treesitter",
         build = ":TSUpdate",
         event = { "BufReadPost", "BufNewFile" },
-        dependencies = {
-            "https://gitlab.com/HiPhish/nvim-ts-rainbow2",
-        },
         keys = {
             -- Re-sync treesitter highlighting
             { "<leader>tss", "<Cmd>write | edit | TSBufEnable highlight<CR>" },
@@ -73,12 +70,6 @@ return {
                 highlight = {
                     enable = true,
                     disable = disable_fn,
-                },
-                rainbow = {
-                    enable = true,
-                    disable = disable_fn,
-                    query = "rainbow-parens",
-                    strategy = require("ts-rainbow.strategy.global"),
                 },
             }
         end,
