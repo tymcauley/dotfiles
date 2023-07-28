@@ -47,6 +47,7 @@ config.keys = {
 
     -- Copy mode
     { key = "[", mods = "LEADER", action = wezterm.action.ActivateCopyMode },
+    { key = "x", mods = "LEADER", action = wezterm.action.CopyMode("ClearPattern") },
 
     -- Domains
     { key = "d", mods = "LEADER", action = wezterm.action.DetachDomain("CurrentPaneDomain") },
