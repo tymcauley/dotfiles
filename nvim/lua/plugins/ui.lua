@@ -116,6 +116,21 @@ return {
         end,
     },
 
+    -- Add highlighting blocks around nested scope levels
+    {
+        "HampusHauffman/block.nvim",
+        event = { "BufReadPost", "BufNewFile" },
+        keys = {
+            {
+                "<leader>b",
+                function()
+                    vim.api.nvim_command("Block")
+                end,
+            },
+        },
+        opts = {},
+    },
+
     -- Statusline
     {
         "nvim-lualine/lualine.nvim",
