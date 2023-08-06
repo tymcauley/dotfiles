@@ -69,7 +69,20 @@ return {
     },
 
     -- Automatic table creator
-    { "dhruvasagar/vim-table-mode", event = "VeryLazy" },
+    {
+        "dhruvasagar/vim-table-mode",
+        event = "VeryLazy",
+        config = function()
+            -- Fix table formatting for ReST and Markdown files
+            local ft = vim.bo.filetype
+            if ft == "rst" then
+                vim.cmd("let b:table_mode_corner_corner = '+'")
+                vim.cmd("let b:table_mode_header_fillchar = '='")
+            elseif ft == "markdown" then
+                vim.cmd("let b:table_mode_corner = '|'")
+            end
+        end,
+    },
 
     -- Autocompletion plugin
     {
