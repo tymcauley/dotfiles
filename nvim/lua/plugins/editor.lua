@@ -15,52 +15,38 @@ return {
             on_attach = function(bufnr)
                 local gs = package.loaded.gitsigns
 
-                local function map(mode, l, r, opts)
-                    opts = opts or {}
-                    opts.buffer = bufnr
-                    vim.keymap.set(mode, l, r, opts)
+                -- Define buffer-local mapping
+                local function map(mode, l, r, desc)
+                    vim.keymap.set(mode, l, r, { buffer = bufnr, desc = desc })
                 end
 
-                -- Navigation
-                map("n", "]c", function()
-                    if vim.wo.diff then
-                        return "]c"
-                    end
-                    vim.schedule(function()
-                        gs.next_hunk()
-                    end)
-                    return "<Ignore>"
-                end, { expr = true })
-
-                map("n", "[c", function()
-                    if vim.wo.diff then
-                        return "[c"
-                    end
-                    vim.schedule(function()
-                        gs.prev_hunk()
-                    end)
-                    return "<Ignore>"
-                end, { expr = true })
-
                 -- Actions
-                map({ "n", "v" }, "<leader>hs", ":Gitsigns stage_hunk<CR>")
-                map({ "n", "v" }, "<leader>hr", ":Gitsigns reset_hunk<CR>")
-                map("n", "<leader>hS", gs.stage_buffer)
-                map("n", "<leader>hu", gs.undo_stage_hunk)
-                map("n", "<leader>hR", gs.reset_buffer)
-                map("n", "<leader>hp", gs.preview_hunk)
-                map("n", "<leader>hb", function()
+                map("n", "]c", gs.next_hunk, "Next hunk")
+                map("n", "[c", gs.prev_hunk, "Prev hunk")
+                map("n", "<leader>ghs", gs.stage_hunk, "Stage hunk")
+                map("n", "<leader>ghr", gs.reset_hunk, "Reset hunk")
+                map("v", "<leader>ghs", function()
+                    gs.stage_hunk({ vim.fn.line("."), vim.fn.line("v") })
+                end, "Stage hunk")
+                map("v", "<leader>ghr", function()
+                    gs.reset_hunk({ vim.fn.line("."), vim.fn.line("v") })
+                end, "Reset hunk")
+                map("n", "<leader>ghS", gs.stage_buffer, "Stage buffer")
+                map("n", "<leader>ghu", gs.undo_stage_hunk, "Undo stage hunk")
+                map("n", "<leader>ghR", gs.reset_buffer, "Reset buffer")
+                map("n", "<leader>ghp", gs.preview_hunk, "Preview hunk")
+                map("n", "<leader>ghb", function()
                     gs.blame_line({ full = true })
-                end)
-                map("n", "<leader>tb", gs.toggle_current_line_blame)
-                map("n", "<leader>hd", gs.diffthis)
-                map("n", "<leader>hD", function()
+                end, "Blame line")
+                map("n", "<leader>ghd", gs.diffthis, "Diff this")
+                map("n", "<leader>ghD", function()
                     gs.diffthis("~")
-                end)
-                map("n", "<leader>td", gs.toggle_deleted)
+                end, "Diff this ~")
+                map("n", "<leader>ghtb", gs.toggle_current_line_blame, "Toggle blame annotation")
+                map("n", "<leader>ghtd", gs.toggle_deleted, "Toggle deleted hunks")
 
                 -- Text object
-                map({ "o", "x" }, "ih", ":<C-U>Gitsigns select_hunk<CR>")
+                map({ "o", "x" }, "ih", ":<C-U>Gitsigns select_hunk<CR>", "GitSigns select hunk")
             end,
         },
     },
@@ -83,24 +69,28 @@ return {
                 function()
                     require("fzf-lua").files()
                 end,
+                desc = "Find files",
             },
             {
                 "<leader>fg",
                 function()
                     require("fzf-lua").grep_project()
                 end,
+                desc = "Grep",
             },
             {
                 "<leader>fb",
                 function()
                     require("fzf-lua").buffers()
                 end,
+                desc = "Buffers",
             },
             {
                 "<leader>fh",
                 function()
                     require("fzf-lua").help_tags()
                 end,
+                desc = "Help pages",
             },
         },
         opts = {

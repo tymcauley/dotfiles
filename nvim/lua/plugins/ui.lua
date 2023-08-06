@@ -15,14 +15,14 @@ return {
         },
         keys = {
             -- Move between buffers
-            { "gn", "<Cmd>BufferNext<CR>" },
-            { "gp", "<Cmd>BufferPrevious<CR>" },
+            { "gn", "<Cmd>BufferNext<CR>", desc = "Next buffer" },
+            { "gp", "<Cmd>BufferPrevious<CR>", desc = "Previous buffer" },
 
             -- Re-order buffers
-            { "gN", "<Cmd>BufferMoveNext<CR>" },
-            { "gP", "<Cmd>BufferMovePrevious<CR>" },
+            { "gN", "<Cmd>BufferMoveNext<CR>", desc = "Move buffer right" },
+            { "gP", "<Cmd>BufferMovePrevious<CR>", desc = "Move buffer left" },
 
-            { "gk", "<Cmd>BufferClose<CR>" },
+            { "gk", "<Cmd>BufferClose<CR>", desc = "Close buffer" },
         },
         init = function()
             vim.g.barbar_auto_setup = false
@@ -126,11 +126,36 @@ return {
                 function()
                     vim.api.nvim_command("Block")
                 end,
+                desc = "Toggle block highlight"
             },
         },
         opts = {
             automatic = true, -- Automatically turn on for files with a treesitter parser
         },
+    },
+
+    -- Displays a pop-up with possible keybindings for commands
+    {
+        "folke/which-key.nvim",
+        event = "VeryLazy",
+        opts = {
+            defaults = {
+                mode = { "n", "v" },
+                ["]"] = { name = "+next" },
+                ["["] = { name = "+prev" },
+                ["<leader>c"] = { name = "+code" },
+                ["<leader>ct"] = { name = "+toggle" },
+                ["<leader>f"] = { name = "+file/find" },
+                ["<leader>g"] = { name = "+git" },
+                ["<leader>gh"] = { name = "+hunks" },
+                ["<leader>ght"] = { name = "+toggle" },
+            },
+        },
+        config = function(_, opts)
+            local wk = require("which-key")
+            wk.setup(opts)
+            wk.register(opts.defaults)
+        end,
     },
 
     -- Statusline

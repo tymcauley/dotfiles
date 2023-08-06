@@ -75,7 +75,9 @@ return {
                     local client = vim.lsp.get_client_by_id(args.data.client_id)
 
                     -- Define buffer-local mapping
-                    local map_opts = { buffer = bufnr }
+                    local function map(mode, l, r, desc)
+                        vim.keymap.set(mode, l, r, { buffer = bufnr, desc = desc })
+                    end
 
                     -- Find the client's capabilities
                     local cap = client.server_capabilities
@@ -94,9 +96,7 @@ return {
                             group = lsp_highlight_cursor,
                         })
                         vim.api.nvim_create_autocmd("CursorMoved", {
-                            callback = function()
-                                vim.lsp.buf.clear_references(bufnr)
-                            end,
+                            callback = vim.lsp.buf.clear_references,
                             buffer = bufnr,
                             group = lsp_highlight_cursor,
                         })
@@ -112,7 +112,7 @@ return {
                             buffer = bufnr,
                             group = lsp_code_lens,
                         })
-                        vim.keymap.set("n", "glcl", vim.lsp.codelens.run, map_opts)
+                        map("n", "<leader>ccl", vim.lsp.codelens.run, "Run code lens")
                     end
 
                     -- Set up code formatting
@@ -120,7 +120,7 @@ return {
                         -- Determine if this buffer has a formatting provider from null-ls.
                         local ft = vim.bo[bufnr].filetype
                         local have_nls = #require("null-ls.sources").get_available(ft, "NULL_LS_FORMATTING") > 0
-                        vim.keymap.set("n", "glf", function()
+                        map("n", "<leader>cf", function()
                             vim.lsp.buf.format({
                                 async = true,
                                 filter = function(format_client)
@@ -130,7 +130,7 @@ return {
                                     return format_client.name ~= "null-ls"
                                 end,
                             })
-                        end, map_opts)
+                        end, "Format document")
                     end
 
                     -- Set up inlay hints
@@ -138,39 +138,38 @@ return {
                         if client.server_capabilities.inlayHintProvider then
                             vim.lsp.buf.inlay_hint(bufnr, true)
                         end
-                        vim.keymap.set("n", "<leader>lh", function()
+                        map("n", "<leader>cth", function()
                             vim.lsp.buf.inlay_hint(0, nil)
-                        end, { desc = "Toggle Inlay Hints" })
+                        end, "Toggle inlay hints")
                     end
 
-                    -- Set up key mappings
                     local fzf = require("fzf-lua")
-                    vim.keymap.set({ "n", "v" }, "gla", vim.lsp.buf.code_action, map_opts)
-                    vim.keymap.set("n", "gld", function()
+
+                    -- Set up mappings
+
+                    map("n", "]d", vim.diagnostic.goto_next, "Next diagnostic")
+                    map("n", "[d", vim.diagnostic.goto_prev, "Previous diagnostic")
+
+                    map({ "n", "v" }, "<leader>ca", vim.lsp.buf.code_action, "Run code action")
+                    map("n", "<leader>cr", vim.lsp.buf.rename, "Rename")
+                    map("n", "<leader>cx", client.stop, "Stop client")
+
+                    map("n", "gd", function()
                         fzf.lsp_definitions({
                             jump_to_single_result = true,
                         })
-                    end, map_opts)
-                    vim.keymap.set("n", "glD", vim.lsp.buf.declaration, map_opts)
-                    vim.keymap.set("n", "glf", function()
-                        vim.lsp.buf.format({ async = true })
-                    end, map_opts)
-                    vim.keymap.set("n", "glh", vim.lsp.buf.hover, map_opts)
-                    vim.keymap.set("n", "glH", vim.lsp.buf.signature_help, map_opts)
-                    vim.keymap.set("n", "gli", fzf.lsp_implementations, map_opts)
-                    vim.keymap.set("n", "glj", vim.diagnostic.goto_next, map_opts)
-                    vim.keymap.set("n", "glk", vim.diagnostic.goto_prev, map_opts)
-                    vim.keymap.set("n", "gln", vim.lsp.buf.rename, map_opts)
-                    vim.keymap.set("n", "glr", function()
+                    end, "Go to definition")
+                    map("n", "gD", vim.lsp.buf.declaration, "Go to declaration")
+                    map("n", "K", vim.lsp.buf.hover, "Hover")
+                    map("n", "gK", vim.lsp.buf.signature_help, "Signature help")
+                    map("n", "gI", fzf.lsp_implementations, "Go to implementation")
+                    map("n", "gr", function()
                         fzf.lsp_references({
                             ignore_current_line = true,
                             jump_to_single_result = true,
                         })
-                    end, map_opts)
-                    vim.keymap.set("n", "gltd", vim.lsp.buf.type_definition, map_opts)
-                    vim.keymap.set("n", "glx", function()
-                        vim.lsp.stop_client(vim.lsp.get_active_clients())
-                    end, map_opts)
+                    end, "Go to reference")
+                    map("n", "gy", vim.lsp.buf.type_definition, "Go to t[y]pe definition")
                 end,
             })
         end,
@@ -183,7 +182,7 @@ return {
         lazy = true,
         keys = {
             {
-                "<leader>ll",
+                "<leader>ctl",
                 function()
                     require("lsp_lines").toggle()
                 end,

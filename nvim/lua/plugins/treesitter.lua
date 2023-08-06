@@ -6,7 +6,7 @@ return {
         event = { "BufReadPost", "BufNewFile" },
         keys = {
             -- Re-sync treesitter highlighting
-            { "<leader>tss", "<Cmd>write | edit | TSBufEnable highlight<CR>" },
+            { "<leader>tss", "<Cmd>write | edit | TSBufEnable highlight<CR>", desc = "Re-sync treesitter" },
         },
         opts = function()
             -- Disable treesitter if the file is too large

@@ -20,22 +20,22 @@ vim.g.mapleader = [[,]] -- map by , instead of /
 vim.g.maplocalleader = [[\]] -- map local by \
 
 -- Navigate between splits with <Ctrl> hjkl
-vim.keymap.set("n", "<C-h>", "<C-w>h", { desc = "Go to left window" })
-vim.keymap.set("n", "<C-j>", "<C-w>j", { desc = "Go to lower window" })
-vim.keymap.set("n", "<C-k>", "<C-w>k", { desc = "Go to upper window" })
-vim.keymap.set("n", "<C-l>", "<C-w>l", { desc = "Go to right window" })
+vim.keymap.set("n", "<C-h>", "<C-w>h", { desc = "Go to left split" })
+vim.keymap.set("n", "<C-j>", "<C-w>j", { desc = "Go to lower split" })
+vim.keymap.set("n", "<C-k>", "<C-w>k", { desc = "Go to upper split" })
+vim.keymap.set("n", "<C-l>", "<C-w>l", { desc = "Go to right split" })
 
 -- Resize splits with <Alt> hjkl
-vim.keymap.set("n", "<A-h>", "<Cmd>vertical resize -2<CR>", { desc = "Decrease window width" })
-vim.keymap.set("n", "<A-j>", "<Cmd>resize -2<CR>", { desc = "Decrease window height" })
-vim.keymap.set("n", "<A-k>", "<Cmd>resize +2<CR>", { desc = "Increase window height" })
-vim.keymap.set("n", "<A-l>", "<Cmd>vertical resize +2<CR>", { desc = "Increase window width" })
+vim.keymap.set("n", "<A-h>", "<Cmd>vertical resize -2<CR>", { desc = "Decrease split width" })
+vim.keymap.set("n", "<A-j>", "<Cmd>resize -2<CR>", { desc = "Decrease split height" })
+vim.keymap.set("n", "<A-k>", "<Cmd>resize +2<CR>", { desc = "Increase split height" })
+vim.keymap.set("n", "<A-l>", "<Cmd>vertical resize +2<CR>", { desc = "Increase split width" })
 
 -- Clear search highlighting
-vim.keymap.set("n", "<leader>/", ":nohlsearch<CR>", { silent = true })
+vim.keymap.set("n", "<leader>/", ":nohlsearch<CR>", { silent = true, desc = "Clear search highlighting" })
 
 -- Toggle spell check
-vim.keymap.set("n", "<leader>s", "<Cmd>set spell!<CR>", { silent = true })
+vim.keymap.set("n", "<leader>s", "<Cmd>set spell!<CR>", { silent = true, desc = "Toggle spellcheck" })
 
 -- Delete trailing whitespace
 vim.keymap.set("n", "<leader>w", function()
@@ -44,7 +44,7 @@ vim.keymap.set("n", "<leader>w", function()
         vim.cmd([[keeppatterns %s/\s\+$//e]])
         vim.fn.winrestview(current_view)
     end
-end, { silent = true })
+end, { silent = true, desc = "Delete trailing whitespace" })
 
 -- Toggle enabling relative numbers
 vim.g.enable_relativenumber = true
@@ -55,7 +55,7 @@ vim.keymap.set("n", "<leader>rn", function()
     else
         vim.opt.relativenumber = false
     end
-end, { silent = true })
+end, { silent = true, desc = "Toggle relative line numbers" })
 
 -- If you run "dd" on a blank line (or a line with only whitespace), don't copy the line into the unnamed register
 vim.keymap.set("n", "dd", function()
@@ -67,7 +67,7 @@ vim.keymap.set("n", "dd", function()
 end, { expr = true })
 
 -- Toggle code folding
-vim.keymap.set("n", "<space>", "za")
+vim.keymap.set("n", "<space>", "za", { desc = "Toggle fold" })
 
 --
 -- Settings
@@ -121,6 +121,8 @@ vim.opt.shortmess:append({
 })
 vim.opt.cursorline = true -- Enable cursor-line highlighting
 vim.opt.cursorlineopt = "number" -- Only highlight the line number at the cursor
+vim.opt.timeout = true -- Enable timeout for completing a mapped key sequence
+vim.opt.timeoutlen = 500 -- Mapped-key-sequence timeout in milliseconds, and startup-delay time for which-key.nvim
 
 -- Auto-toggling of relative numbers
 -- - Only enable relative numbers for the focused window
