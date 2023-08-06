@@ -128,7 +128,9 @@ return {
                 end,
             },
         },
-        opts = {},
+        opts = {
+            automatic = true, -- Automatically turn on for files with a treesitter parser
+        },
     },
 
     -- Statusline
