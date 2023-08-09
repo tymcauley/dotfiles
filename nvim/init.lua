@@ -175,6 +175,21 @@ vim.api.nvim_create_autocmd(
 -- Highlight text after yanking it
 vim.cmd("autocmd TextYankPost * lua vim.highlight.on_yank {on_visual = false}")
 
+-- Close these buffers with "q"
+local ephemeral_buffers = vim.api.nvim_create_augroup("ephemeral_buffers", {})
+vim.api.nvim_create_autocmd("Filetype", {
+    pattern = {
+        "help",
+        "qf",
+        "checkhealth",
+    },
+    callback = function()
+        vim.keymap.set("n", "q", ":bd<CR>", { buffer = true, silent = true })
+        vim.bo.buflisted = false
+    end,
+    group = ephemeral_buffers,
+})
+
 --
 -- Plugins
 --
