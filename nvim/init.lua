@@ -173,7 +173,12 @@ vim.api.nvim_create_autocmd(
 )
 
 -- Highlight text after yanking it
-vim.cmd("autocmd TextYankPost * lua vim.highlight.on_yank {on_visual = false}")
+vim.api.nvim_create_autocmd("TextYankPost", {
+    callback = function()
+        vim.highlight.on_yank()
+    end,
+    desc = "Briefly highlight yanked text",
+})
 
 -- Close these buffers with "q"
 local ephemeral_buffers = vim.api.nvim_create_augroup("ephemeral_buffers", {})
