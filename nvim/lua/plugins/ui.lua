@@ -102,20 +102,6 @@ return {
         end,
     },
 
-    -- Scrollbar
-    {
-        "lewis6991/satellite.nvim",
-        event = "VeryLazy",
-        opts = {},
-        config = function(_, opts)
-            require("satellite").setup(opts)
-            -- Ensure the scrollbar isn't included in diff mode.
-            if vim.opt.diff:get() then
-                vim.api.nvim_command("SatelliteDisable")
-            end
-        end,
-    },
-
     -- Add highlighting blocks around nested scope levels
     {
         "HampusHauffman/block.nvim",
