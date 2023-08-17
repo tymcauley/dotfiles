@@ -200,4 +200,12 @@ return {
             require("cmp").event:on("confirm_done", cmp_autopairs.on_confirm_done())
         end,
     },
+
+    -- Smart selection of closest text object
+    {
+        "sustech-data/wildfire.nvim",
+        event = "VeryLazy",
+        dependencies = { "nvim-treesitter/nvim-treesitter" },
+        opts = {},
+    },
 }
