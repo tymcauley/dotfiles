@@ -116,7 +116,7 @@ return {
             },
         },
         opts = {
-            automatic = true, -- Automatically turn on for files with a treesitter parser
+            automatic = false, -- Don't automatically turn on for files with a treesitter parser
         },
     },
 
