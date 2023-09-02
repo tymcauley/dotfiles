@@ -177,7 +177,7 @@ require("lazy").setup({
     spec = {
         { import = "plugins" },
     },
-    install = { colorscheme = { "tokyonight" } },
+    install = { colorscheme = { "kanagawa" } },
     checker = {
         enabled = true,
         notify = false,

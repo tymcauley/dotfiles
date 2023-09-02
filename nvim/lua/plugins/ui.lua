@@ -112,7 +112,7 @@ return {
                 function()
                     vim.api.nvim_command("Block")
                 end,
-                desc = "Toggle block highlight"
+                desc = "Toggle block highlight",
             },
         },
         opts = {
@@ -152,7 +152,7 @@ return {
             options = {
                 section_separators = { left = "", right = "" },
                 component_separators = { left = "", right = "" },
-                theme = "tokyonight",
+                theme = "kanagawa",
                 globalstatus = true,
             },
             sections = {
@@ -163,6 +163,7 @@ return {
                         fmt = function(str)
                             return str:sub(1, 1)
                         end,
+                        color = { gui = "bold" },
                     },
                 },
                 lualine_b = {
@@ -207,9 +208,16 @@ return {
                         cond = function()
                             return vim.bo.fileformat ~= "unix"
                         end,
+                        color = { gui = "bold" },
                     },
-                    "progress",
-                    "location",
+                    {
+                        "progress",
+                        color = { gui = "bold" },
+                    },
+                    {
+                        "location",
+                        color = { gui = "bold" },
+                    },
                 },
             },
             inactive_sections = {
