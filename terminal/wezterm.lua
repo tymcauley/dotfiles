@@ -8,7 +8,7 @@ config.scrollback_lines = 50000
 
 -- Appearance
 
-local color_scheme_name = "tokyonight_storm"
+local color_scheme_name = "Kanagawa (Gogh)"
 local color_scheme = wezterm.color.get_builtin_schemes()[color_scheme_name]
 
 config.color_scheme = color_scheme_name
