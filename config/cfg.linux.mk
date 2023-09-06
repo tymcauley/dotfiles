@@ -15,7 +15,6 @@ BREW_FORMULAE := \
 	bat \
 	duf \
 	dust \
-	exa \
 	fd \
 	fzf \
 	git \

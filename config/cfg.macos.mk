@@ -16,7 +16,6 @@ BREW_FORMULAE := \
 	coreutils \
 	duf \
 	dust \
-	exa \
 	fd \
 	fzf \
 	git \
