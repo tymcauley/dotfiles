@@ -5,8 +5,6 @@ return {
         event = { "BufReadPre", "BufNewFile" },
         dependencies = {
             "hrsh7th/cmp-nvim-lsp", -- Completion for LSP
-            "lsp_lines.nvim", -- Render LSP diagnostics inline with code
-            "j-hui/fidget.nvim", -- Display LSP status in standalone UI
             "simrat39/rust-tools.nvim", -- rust-analyzer plugin
             "scalameta/nvim-metals", -- Metals plugin
             "jose-elias-alvarez/null-ls.nvim", -- Connect non-LSP sources into nvim's LSP client
@@ -179,7 +177,7 @@ return {
     {
         "https://git.sr.ht/~whynothugo/lsp_lines.nvim",
         name = "lsp_lines.nvim",
-        lazy = true,
+        event = "LspAttach",
         keys = {
             {
                 "<leader>ctl",
@@ -196,7 +194,7 @@ return {
     {
         "j-hui/fidget.nvim",
         tag = "legacy",
-        lazy = true,
+        event = "LspAttach",
         opts = {}, -- `opts = {}` is the same as calling `require("fidget").setup({})`
     },
 
@@ -348,5 +346,8 @@ return {
     },
 
     -- Display code context from LSP
-    { "SmiteshP/nvim-navic", lazy = true },
+    {
+        "SmiteshP/nvim-navic",
+        event = "LspAttach",
+    },
 }
