@@ -72,6 +72,9 @@ return {
                     local bufnr = args.buf
                     local client = vim.lsp.get_client_by_id(args.data.client_id)
 
+                    -- Disable LSP formatting when running `gq` commands.
+                    vim.bo.formatexpr = nil
+
                     -- Define buffer-local mapping
                     local function map(mode, l, r, desc)
                         vim.keymap.set(mode, l, r, { buffer = bufnr, desc = desc })
