@@ -10,4 +10,5 @@ zsh:
 	./install_file.sh zsh/git.zsh        ~/.config/git.zsh
 	./install_file.sh zsh/editor.zsh     ~/.config/editor.zsh
 	./install_file.sh zsh/fzf-config.zsh ~/.config/fzf-config.zsh
-	./git_clone_or_pull.sh https://github.com/romkatv/powerlevel10k.git $(ZSH_DIR)/plugins/powerlevel10k
+	./git_clone_or_pull.sh https://github.com/romkatv/powerlevel10k.git          $(ZSH_DIR)/plugins/powerlevel10k
+	./git_clone_or_pull.sh https://github.com/marlonrichert/zsh-autocomplete.git $(ZSH_DIR)/plugins/zsh-autocomplete
