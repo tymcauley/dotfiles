@@ -31,11 +31,10 @@ vim.keymap.set("n", "<A-j>", "<Cmd>resize -2<CR>", { desc = "Decrease split heig
 vim.keymap.set("n", "<A-k>", "<Cmd>resize +2<CR>", { desc = "Increase split height" })
 vim.keymap.set("n", "<A-l>", "<Cmd>vertical resize +2<CR>", { desc = "Increase split width" })
 
--- Clear search highlighting
 vim.keymap.set("n", "<leader>/", ":nohlsearch<CR>", { silent = true, desc = "Clear search highlighting" })
-
--- Toggle spell check
 vim.keymap.set("n", "<leader>s", "<Cmd>set spell!<CR>", { silent = true, desc = "Toggle spellcheck" })
+vim.keymap.set("n", "U", "<C-r>", { desc = "Redo" })
+vim.keymap.set("n", "<space>", "za", { desc = "Toggle fold" })
 
 -- Delete trailing whitespace
 vim.keymap.set("n", "<leader>w", function()
@@ -46,7 +45,6 @@ vim.keymap.set("n", "<leader>w", function()
     end
 end, { silent = true, desc = "Delete trailing whitespace" })
 
--- Toggle enabling relative numbers
 vim.g.enable_relativenumber = true
 vim.keymap.set("n", "<leader>rn", function()
     vim.g.enable_relativenumber = not vim.g.enable_relativenumber
@@ -64,10 +62,7 @@ vim.keymap.set("n", "dd", function()
     else
         return "dd"
     end
-end, { expr = true })
-
--- Toggle code folding
-vim.keymap.set("n", "<space>", "za", { desc = "Toggle fold" })
+end, { expr = true, desc = "Delete line" })
 
 --
 -- Settings
