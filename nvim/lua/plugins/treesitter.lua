@@ -59,6 +59,7 @@ return {
                     "ruby",
                     "rust",
                     "scala",
+                    "ssh_config",
                     "tablegen",
                     "toml",
                     "typescript",
