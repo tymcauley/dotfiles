@@ -7,18 +7,8 @@ return {
             "hrsh7th/cmp-nvim-lsp", -- Completion for LSP
             "simrat39/rust-tools.nvim", -- rust-analyzer plugin
             "scalameta/nvim-metals", -- Metals plugin
-            "jose-elias-alvarez/null-ls.nvim", -- Connect non-LSP sources into nvim's LSP client
         },
         opts = {
-            -- options for vim.diagnostic.config()
-            diagnostics = {
-                underline = true,
-                virtual_text = false,
-                virtual_lines = false,
-                signs = true,
-                update_in_insert = false,
-                severity_sort = false,
-            },
             -- Enable the builtin LSP inlay hints
             inlay_hints = {
                 enabled = true,
@@ -46,14 +36,6 @@ return {
             },
         },
         config = function(_, opts)
-            -- Customize diagnostic symbols in the gutter
-            local signs = { Error = "󰅚 ", Warn = " ", Hint = "󰌶 ", Info = " " }
-            for type, icon in pairs(signs) do
-                local hl = "DiagnosticSign" .. type
-                vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = "" })
-            end
-            vim.diagnostic.config(opts.diagnostics)
-
             local servers = opts.servers
             local capabilities = require("cmp_nvim_lsp").default_capabilities()
 
@@ -116,24 +98,6 @@ return {
                         map("n", "<leader>ccl", vim.lsp.codelens.run, "Run code lens")
                     end
 
-                    -- Set up code formatting
-                    if client.supports_method("textDocument/formatting") then
-                        -- Determine if this buffer has a formatting provider from null-ls.
-                        local ft = vim.bo[bufnr].filetype
-                        local have_nls = #require("null-ls.sources").get_available(ft, "NULL_LS_FORMATTING") > 0
-                        map("n", "<leader>cf", function()
-                            vim.lsp.buf.format({
-                                async = true,
-                                filter = function(format_client)
-                                    if have_nls then
-                                        return format_client.name == "null-ls"
-                                    end
-                                    return format_client.name ~= "null-ls"
-                                end,
-                            })
-                        end, "Format document")
-                    end
-
                     -- Set up inlay hints
                     if opts.inlay_hints.enabled and vim.lsp.buf.inlay_hint then
                         if client.server_capabilities.inlayHintProvider then
@@ -147,9 +111,6 @@ return {
                     local fzf = require("fzf-lua")
 
                     -- Set up mappings
-
-                    map("n", "]d", vim.diagnostic.goto_next, "Next diagnostic")
-                    map("n", "[d", vim.diagnostic.goto_prev, "Previous diagnostic")
 
                     map({ "n", "v" }, "<leader>ca", vim.lsp.buf.code_action, "Run code action")
                     map("n", "<leader>cr", vim.lsp.buf.rename, "Rename")
@@ -180,7 +141,7 @@ return {
     {
         "https://git.sr.ht/~whynothugo/lsp_lines.nvim",
         name = "lsp_lines.nvim",
-        event = "LspAttach",
+        event = "VeryLazy",
         keys = {
             {
                 "<leader>ctl",
@@ -198,33 +159,67 @@ return {
         "j-hui/fidget.nvim",
         tag = "legacy",
         event = "LspAttach",
-        opts = {}, -- `opts = {}` is the same as calling `require("fidget").setup({})`
+        opts = {},
     },
 
+    -- Run standalone linters
     {
-        "jose-elias-alvarez/null-ls.nvim",
-        lazy = true,
-        opts = function()
-            local nls = require("null-ls")
-            return {
-                sources = {
-                    nls.builtins.formatting.black, -- Python code formatter
-                    nls.builtins.formatting.prettier.with({ -- Code formatter for many languages, such as Markdown
-                        filetypes = { "json", "yaml" },
-                    }),
-                    nls.builtins.formatting.shfmt.with({ -- Code formatter for shell scripts
-                        extra_args = { "-i", "4", "-bn", "-ci", "-sr" },
-                    }),
-                    nls.builtins.formatting.stylua.with({ -- Lua code formatter
-                        extra_args = { "--indent-type", "Spaces" },
-                    }),
-                    nls.builtins.diagnostics.gitlint.with({ -- Linter for git commits
-                        extra_args = { "--ignore", "body-is-missing" },
-                    }),
-                    nls.builtins.diagnostics.hadolint, -- Linter for Dockerfiles
-                    nls.builtins.diagnostics.shellcheck, -- Static analysis tool for shell scripts
-                },
-            }
+        "mfussenegger/nvim-lint",
+        event = "VeryLazy",
+        opts = {
+            linters = {
+                dockerfile = { "hadolint" },
+                json = { "jq" },
+                sh = { "shellcheck" },
+                verilog = { "verilator" },
+            },
+        },
+        config = function(_, opts)
+            require("lint").linters_by_ft = opts.linters
+
+            -- Run linter after writing.
+            vim.api.nvim_create_autocmd({ "BufRead", "BufWritePost" }, {
+                callback = function()
+                    require("lint").try_lint()
+                end,
+            })
+        end,
+    },
+
+    -- Run standalone code formatters, or LSP formatter
+    {
+        "stevearc/conform.nvim",
+        event = "VeryLazy",
+        opts = {
+            formatters_by_ft = {
+                json = { "prettier" },
+                lua = { "stylua" },
+                python = { "black" },
+                sh = { "shfmt" },
+                yaml = { "prettier" },
+            },
+        },
+        config = function(_, opts)
+            require("conform").setup(opts)
+
+            -- Fall back to LSP formatter method if no standalone formatter is available here.
+            vim.keymap.set("n", "<leader>cf", function()
+                require("conform").format({
+                    lsp_fallback = true,
+                    async = true,
+                })
+            end, { desc = "Format document" })
+
+            -- Customize arguments passed to formatters.
+            local util = require("conform.util")
+            local shfmt = require("conform.formatters.shfmt")
+            require("conform").formatters.shfmt = vim.tbl_deep_extend("force", shfmt, {
+                args = util.extend_args(shfmt.args, { "-i", "4", "-bn", "-ci", "-sr" }),
+            })
+            local stylua = require("conform.formatters.stylua")
+            require("conform").formatters.stylua = vim.tbl_deep_extend("force", stylua, {
+                args = util.extend_args(stylua.args, { "--indent-type", "Spaces" }),
+            })
         end,
     },
 

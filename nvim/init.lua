@@ -36,6 +36,9 @@ vim.keymap.set("n", "<leader>s", "<Cmd>set spell!<CR>", { silent = true, desc = 
 vim.keymap.set("n", "U", "<C-r>", { desc = "Redo" })
 vim.keymap.set("n", "<space>", "za", { desc = "Toggle fold" })
 
+vim.keymap.set("n", "]d", vim.diagnostic.goto_next, { desc = "Next diagnostic" })
+vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, { desc = "Previous diagnostic" })
+
 -- Delete trailing whitespace
 vim.keymap.set("n", "<leader>w", function()
     if not vim.o.binary and vim.o.filetype ~= "diff" then
@@ -167,6 +170,23 @@ vim.api.nvim_create_autocmd("FileType", {
 --
 -- Plugins
 --
+
+-- Configure LSP diagnostics.
+
+-- Customize diagnostic symbols in the gutter
+local signs = { Error = "󰅚 ", Warn = " ", Hint = "󰌶 ", Info = " " }
+for type, icon in pairs(signs) do
+    local hl = "DiagnosticSign" .. type
+    vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = "" })
+end
+vim.diagnostic.config({
+    underline = true,
+    virtual_text = false,
+    virtual_lines = false,
+    signs = true,
+    update_in_insert = false,
+    severity_sort = false,
+})
 
 require("lazy").setup({
     spec = {
