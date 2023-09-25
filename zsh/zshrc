@@ -12,6 +12,20 @@ if [[ -r "$ZSH_DIR/plugins/zsh-autocomplete/zsh-autocomplete.plugin.zsh" ]]; the
   source "$ZSH_DIR/plugins/zsh-autocomplete/zsh-autocomplete.plugin.zsh"
 fi
 
+# Undo settings from zsh-autocomplete, reset up and down arrows to their
+# original behavior.
+() {
+  local -a prefix=( '\e'{\[,O} )
+  local -a up=( ${^prefix}A ) down=( ${^prefix}B )
+  local key=
+  for key in $up[@]; do
+    bindkey "$key" up-line-or-history
+  done
+  for key in $down[@]; do
+    bindkey "$key" down-line-or-history
+  done
+}
+
 # vi keybindings
 bindkey -v
 
