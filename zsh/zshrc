@@ -7,25 +7,6 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
-# Type-ahead completion plugin, must come before calling `compdef`.
-if [[ -r "$ZSH_DIR/plugins/zsh-autocomplete/zsh-autocomplete.plugin.zsh" ]]; then
-  source "$ZSH_DIR/plugins/zsh-autocomplete/zsh-autocomplete.plugin.zsh"
-fi
-
-# Undo settings from zsh-autocomplete, reset up and down arrows to their
-# original behavior.
-() {
-  local -a prefix=( '\e'{\[,O} )
-  local -a up=( ${^prefix}A ) down=( ${^prefix}B )
-  local key=
-  for key in $up[@]; do
-    bindkey "$key" up-line-or-history
-  done
-  for key in $down[@]; do
-    bindkey "$key" down-line-or-history
-  done
-}
-
 # vi keybindings
 bindkey -v
 
@@ -139,3 +120,35 @@ function {
 if [[ -r "$ZSH_DIR/plugins/powerlevel10k/powerlevel10k.zsh-theme" ]]; then
   source "$ZSH_DIR/plugins/powerlevel10k/powerlevel10k.zsh-theme"
 fi
+
+# Type-ahead completion plugin, must come before calling `compdef`.
+if [[ -r "$ZSH_DIR/plugins/zsh-autocomplete/zsh-autocomplete.plugin.zsh" ]]; then
+  source "$ZSH_DIR/plugins/zsh-autocomplete/zsh-autocomplete.plugin.zsh"
+fi
+
+zstyle ':completion:*' file-sort modification
+zstyle ':completion:*:*:*:*:corrections' format '%F{yellow}!- %d (errors: %e) -!%f'
+
+# Configure zsh-autocomplete.
+
+# When you hit Tab, before going to the completion menu, first insert the
+# sequence of characters that are common to all the completions (if any exist).
+zstyle ':autocomplete:*complete*:*' insert-unambiguous yes
+
+# Use Tab and Shift-Tab to move through the completion menu
+bindkey -M viins "${terminfo[kcbt]}" reverse-menu-complete
+bindkey -M viins "${terminfo[ht]}" menu-complete
+
+# Undo settings from zsh-autocomplete, reset up and down arrows to their
+# original behavior.
+() {
+  local -a prefix=( '\e'{\[,O} )
+  local -a up=( ${^prefix}A ) down=( ${^prefix}B )
+  local key=
+  for key in $up[@]; do
+    bindkey "$key" up-line-or-history
+  done
+  for key in $down[@]; do
+    bindkey "$key" down-line-or-history
+  done
+}
