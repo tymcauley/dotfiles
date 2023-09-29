@@ -20,54 +20,49 @@ config.font = wezterm.font("IosevkaTerm Nerd Font") -- TODO use the "Fixed" vari
 
 -- Key bindings
 
+local act = wezterm.action
+
 config.leader = { key = "a", mods = "CTRL", timeout_milliseconds = 1000 }
 config.keys = {
     -- Tabs
-    { key = "c", mods = "LEADER", action = wezterm.action.SpawnTab("CurrentPaneDomain") },
-    { key = "n", mods = "LEADER", action = wezterm.action.ActivateTabRelative(1) },
-    { key = "p", mods = "LEADER", action = wezterm.action.ActivateTabRelative(-1) },
-    { key = "a", mods = "LEADER", action = wezterm.action.ActivateLastTab },
+    { key = "c", mods = "LEADER", action = act.SpawnTab("CurrentPaneDomain") },
+    { key = "n", mods = "LEADER", action = act.ActivateTabRelative(1) },
+    { key = "p", mods = "LEADER", action = act.ActivateTabRelative(-1) },
+    { key = "a", mods = "LEADER", action = act.ActivateLastTab },
 
     -- Panes
-    { key = "h", mods = "LEADER", action = wezterm.action.ActivatePaneDirection("Left") },
-    { key = "j", mods = "LEADER", action = wezterm.action.ActivatePaneDirection("Down") },
-    { key = "k", mods = "LEADER", action = wezterm.action.ActivatePaneDirection("Up") },
-    { key = "l", mods = "LEADER", action = wezterm.action.ActivatePaneDirection("Right") },
-    { key = "s", mods = "LEADER", action = wezterm.action.SplitVertical({ domain = "CurrentPaneDomain" }) },
-    { key = "v", mods = "LEADER", action = wezterm.action.SplitHorizontal({ domain = "CurrentPaneDomain" }) },
+    { key = "h", mods = "LEADER", action = act.ActivatePaneDirection("Left") },
+    { key = "j", mods = "LEADER", action = act.ActivatePaneDirection("Down") },
+    { key = "k", mods = "LEADER", action = act.ActivatePaneDirection("Up") },
+    { key = "l", mods = "LEADER", action = act.ActivatePaneDirection("Right") },
+    { key = "s", mods = "LEADER", action = act.SplitVertical({ domain = "CurrentPaneDomain" }) },
+    { key = "v", mods = "LEADER", action = act.SplitHorizontal({ domain = "CurrentPaneDomain" }) },
 
     -- Navigation
-    { key = "g", mods = "LEADER", action = wezterm.action.ScrollToTop },
-    { key = "G", mods = "LEADER|SHIFT", action = wezterm.action.ScrollToBottom },
-    { key = "UpArrow", mods = "SHIFT", action = wezterm.action.ScrollToPrompt(-1) },
-    { key = "DownArrow", mods = "SHIFT", action = wezterm.action.ScrollToPrompt(1) },
+    { key = "g", mods = "LEADER", action = act.ScrollToTop },
+    { key = "G", mods = "LEADER|SHIFT", action = act.ScrollToBottom },
+    { key = "UpArrow", mods = "SHIFT", action = act.ScrollToPrompt(-1) },
+    { key = "DownArrow", mods = "SHIFT", action = act.ScrollToPrompt(1) },
 
     -- Search
-    { key = "/", mods = "LEADER", action = wezterm.action.Search({ CaseSensitiveString = "" }) },
+    { key = "/", mods = "LEADER", action = act.Search({ CaseSensitiveString = "" }) },
 
     -- Copy mode
-    { key = "[", mods = "LEADER", action = wezterm.action.ActivateCopyMode },
-    { key = "x", mods = "LEADER", action = wezterm.action.CopyMode("ClearPattern") },
+    { key = "[", mods = "LEADER", action = act.ActivateCopyMode },
+    { key = "x", mods = "LEADER", action = act.CopyMode("ClearPattern") },
 
     -- Domains
-    { key = "d", mods = "LEADER", action = wezterm.action.DetachDomain("CurrentPaneDomain") },
+    { key = "d", mods = "LEADER", action = act.DetachDomain("CurrentPaneDomain") },
 
     -- Misc
-    {
-        -- Send "CTRL-A" to the terminal when pressing CTRL-A, CTRL-A
-        key = "a",
-        mods = "LEADER|CTRL",
-        action = wezterm.action.SendString("\x01"),
-    },
+
+    -- Send "CTRL-A" to the terminal when pressing CTRL-A, CTRL-A
+    { key = "a", mods = "LEADER|CTRL", action = act.SendString("\x01") },
 }
 
 -- Navigate through tabs by number
 for i = 1, 9 do
-    table.insert(config.keys, {
-        key = tostring(i),
-        mods = "LEADER",
-        action = wezterm.action.ActivateTab(i - 1),
-    })
+    table.insert(config.keys, { key = tostring(i), mods = "LEADER", action = act.ActivateTab(i - 1) })
 end
 
 -- Domains
