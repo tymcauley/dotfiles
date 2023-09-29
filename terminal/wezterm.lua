@@ -29,6 +29,8 @@ config.keys = {
     { key = "n", mods = "LEADER", action = act.ActivateTabRelative(1) },
     { key = "p", mods = "LEADER", action = act.ActivateTabRelative(-1) },
     { key = "a", mods = "LEADER", action = act.ActivateLastTab },
+    { key = "n", mods = "LEADER|SHIFT", action = act.MoveTabRelative(1) },
+    { key = "p", mods = "LEADER|SHIFT", action = act.MoveTabRelative(-1) },
 
     -- Panes
     { key = "h", mods = "LEADER", action = act.ActivatePaneDirection("Left") },
