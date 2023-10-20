@@ -7,51 +7,28 @@ return {
 
     -- Buffer line
     {
-        "romgrk/barbar.nvim",
+        "akinsho/bufferline.nvim",
         event = "VeryLazy",
-        dependencies = {
-            "lewis6991/gitsigns.nvim",
-            "nvim-tree/nvim-web-devicons",
-        },
+        dependencies = "nvim-tree/nvim-web-devicons",
         keys = {
             -- Move between buffers
-            { "gn", "<Cmd>BufferNext<CR>", desc = "Next buffer" },
-            { "gp", "<Cmd>BufferPrevious<CR>", desc = "Previous buffer" },
-
+            { "gn", "<Cmd>BufferLineCycleNext<CR>", desc = "Next buffer" },
+            { "gp", "<Cmd>BufferLineCyclePrev<CR>", desc = "Previous buffer" },
             -- Re-order buffers
-            { "gN", "<Cmd>BufferMoveNext<CR>", desc = "Move buffer right" },
-            { "gP", "<Cmd>BufferMovePrevious<CR>", desc = "Move buffer left" },
-
-            { "gk", "<Cmd>BufferClose<CR>", desc = "Close buffer" },
+            { "gN", "<Cmd>BufferLineMoveNext<CR>", desc = "Move buffer right" },
+            { "gP", "<Cmd>BufferLineMovePrev<CR>", desc = "Move buffer left" },
         },
-        init = function()
-            vim.g.barbar_auto_setup = false
-        end,
         opts = {
-            icons = {
-                -- Show some LSP diagnostics in the bar
-                diagnostics = {
-                    [vim.diagnostic.severity.ERROR] = { enabled = true },
-                    [vim.diagnostic.severity.WARN] = { enabled = false },
-                    [vim.diagnostic.severity.INFO] = { enabled = false },
-                    [vim.diagnostic.severity.HINT] = { enabled = false },
-                },
-                -- TODO: This currently has strange background highlighting
-                -- gitsigns = {
-                --     added = { enabled = true },
-                --     changed = { enabled = true },
-                --     deleted = { enabled = true },
-                -- },
+            options = {
+                diagnostics = "nvim_lsp",
+                diagnostics_indicator = function(count, level)
+                    local icon = level:match("error") and "󰅚 " or " "
+                    return " " .. icon .. count
+                end,
+                show_buffer_close_icons = false,
+                separator_style = "slant",
             },
         },
-        config = function(_, opts)
-            require("barbar").setup(opts)
-
-            -- Make all modified buffers bold
-            vim.cmd("highlight BufferCurrentMod gui=bold")
-            vim.cmd("highlight BufferInactiveMod gui=bold")
-            vim.cmd("highlight BufferVisibleMod gui=bold")
-        end,
     },
 
     -- winbar with nvim-navic integration

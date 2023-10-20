@@ -19,6 +19,8 @@ vim.opt.rtp:prepend(lazypath)
 vim.g.mapleader = [[,]] -- map by , instead of /
 vim.g.maplocalleader = [[\]] -- map local by \
 
+vim.keymap.set("n", "gk", "<Cmd>bdelete<CR>", { desc = "Close buffer" })
+
 -- Navigate between splits with <Ctrl> hjkl
 vim.keymap.set("n", "<C-h>", "<C-w>h", { desc = "Go to left split" })
 vim.keymap.set("n", "<C-j>", "<C-w>j", { desc = "Go to lower split" })
