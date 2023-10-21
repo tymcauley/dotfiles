@@ -20,6 +20,7 @@ return {
         },
         opts = {
             options = {
+                truncate_names = false,
                 diagnostics = "nvim_lsp",
                 diagnostics_indicator = function(count, level)
                     local icon = level:match("error") and "󰅚 " or " "
@@ -27,6 +28,7 @@ return {
                 end,
                 show_buffer_close_icons = false,
                 separator_style = "slant",
+                enforce_regular_tabs = false,
             },
         },
     },
