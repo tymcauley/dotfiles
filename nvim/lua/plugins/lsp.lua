@@ -257,6 +257,15 @@ return {
         "scalameta/nvim-metals",
         dependencies = "hrsh7th/cmp-nvim-lsp", -- Completion for LSP
         lazy = true,
+        keys = {
+            {
+                "<leader>m",
+                function()
+                    require("metals").commands()
+                end,
+                desc = "Show metals commands",
+            },
+        },
         config = function()
             local metals_config = require("metals").bare_config()
 
