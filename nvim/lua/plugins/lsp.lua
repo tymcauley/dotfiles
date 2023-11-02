@@ -5,7 +5,6 @@ return {
         event = { "BufReadPre", "BufNewFile" },
         dependencies = {
             "hrsh7th/cmp-nvim-lsp", -- Completion for LSP
-            "simrat39/rust-tools.nvim", -- rust-analyzer plugin
             "scalameta/nvim-metals", -- Metals plugin
         },
         opts = {
@@ -225,28 +224,14 @@ return {
 
     -- rust-analyzer plugin
     {
-        "simrat39/rust-tools.nvim",
-        dependencies = "hrsh7th/cmp-nvim-lsp", -- Completion for LSP
-        lazy = true,
-        opts = function()
+        "mrcjkb/rustaceanvim",
+        version = "^3",
+        ft = { "rust" },
+        config = function()
             local capabilities = require("cmp_nvim_lsp").default_capabilities()
-            return {
-                tools = {
-                    inlay_hints = {
-                        -- This is handled by builtin LSP
-                        auto = false,
-                    },
-                },
+            vim.g.rustaceanvim = {
                 server = {
                     capabilities = capabilities,
-                    -- TODO: When I enable this setting, all diagnostics disappear
-                    -- settings = {
-                    --     ["rust-analyzer"] = {
-                    --         checkOnSave = {
-                    --             command = "clippy",
-                    --         },
-                    --     },
-                    -- },
                 },
             }
         end,
