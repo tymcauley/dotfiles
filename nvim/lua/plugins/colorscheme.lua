@@ -1,23 +1,21 @@
 return {
     {
-        "rebelot/kanagawa.nvim",
-        lazy = false, -- make sure we load this during startup since it is the main color scheme
-        priority = 1000, -- make sure to load this before all the other start plugins
+        "folke/tokyonight.nvim",
+        lazy = false,
+        priority = 1000,
         opts = {
-            compile = true,
-            background = {
-                dark = "wave",
-            },
-            overrides = function(colors)
-                return {
-                    WinSeparator = { fg = colors.palette.waveBlue2 }, -- Color for separators between window splits
-                }
+            lualine_bold = true,
+            on_colors = function(colors)
+                colors.border = colors.blue -- Window separator color
+            end,
+            on_highlights = function(hl, colors)
+                hl.CursorLineNr = { fg = colors.orange, bold = true } -- Cursor line number highlight
             end,
         },
         config = function(_, opts)
-            require("kanagawa").setup(opts)
+            require("tokyonight").setup(opts)
             -- Load the color scheme
-            vim.cmd("colorscheme kanagawa")
+            vim.cmd("colorscheme tokyonight")
         end,
     },
 }
