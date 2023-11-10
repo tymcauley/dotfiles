@@ -156,7 +156,6 @@ return {
     -- Display LSP status in standalone UI
     {
         "j-hui/fidget.nvim",
-        tag = "legacy",
         event = "LspAttach",
         opts = {},
     },
