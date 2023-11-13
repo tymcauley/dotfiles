@@ -87,7 +87,7 @@ export LESS="-i -M -R -S -w -X -z-4"
 if command -v eza > /dev/null 2>&1 ; then
   alias eza="eza --classify"
   alias ls="eza"
-  alias ll="ls --long --binary --group --icons"
+  alias ll="ls --long --binary --group --icons=automatic"
   alias llg="ll --git"
   alias la="ll --all"
   alias l="ls --oneline --all"
