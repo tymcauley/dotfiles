@@ -16,7 +16,7 @@ config.colors = {
     scrollbar_thumb = color_scheme["selection_fg"],
 }
 config.enable_scroll_bar = true
-config.font = wezterm.font("IosevkaTerm Nerd Font") -- TODO use the "Fixed" variant, it disables ligatures
+config.font = wezterm.font("IosevkaTerm NF") -- TODO use the "Fixed" variant, it disables ligatures
 
 -- Key bindings
 
