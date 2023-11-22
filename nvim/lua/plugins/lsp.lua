@@ -36,7 +36,11 @@ return {
         },
         config = function(_, opts)
             local servers = opts.servers
-            local capabilities = require("cmp_nvim_lsp").default_capabilities()
+            local capabilities = vim.tbl_deep_extend(
+                "force",
+                vim.lsp.protocol.make_client_capabilities(),
+                require("cmp_nvim_lsp").default_capabilities()
+            )
 
             -- Configure LSP servers
             for server, base_server_opts in pairs(servers) do
@@ -227,7 +231,11 @@ return {
         version = "^3",
         ft = { "rust" },
         config = function()
-            local capabilities = require("cmp_nvim_lsp").default_capabilities()
+            local capabilities = vim.tbl_deep_extend(
+                "force",
+                vim.lsp.protocol.make_client_capabilities(),
+                require("cmp_nvim_lsp").default_capabilities()
+            )
             vim.g.rustaceanvim = {
                 server = {
                     capabilities = capabilities,
@@ -319,7 +327,11 @@ return {
             local handlers = {}
             handlers["metals/status"] = metals_status_handler
 
-            local capabilities = require("cmp_nvim_lsp").default_capabilities()
+            local capabilities = vim.tbl_deep_extend(
+                "force",
+                vim.lsp.protocol.make_client_capabilities(),
+                require("cmp_nvim_lsp").default_capabilities()
+            )
 
             metals_config.init_options.statusBarProvider = "on"
             metals_config.capabilities = capabilities
