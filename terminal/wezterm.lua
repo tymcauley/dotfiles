@@ -69,13 +69,14 @@ end
 
 -- Domains
 
-config.unix_domains = {
-    {
-        name = "unix",
-    },
-}
--- Connect to the unix domain on startup.
-config.default_gui_startup_args = { "connect", "unix" }
+-- Disable while this causes screen-refresh issues with vim
+-- config.unix_domains = {
+--     {
+--         name = "unix",
+--     },
+-- }
+-- -- Connect to the unix domain on startup.
+-- config.default_gui_startup_args = { "connect", "unix" }
 
 -- Don't remove the "SSH_CLIENT" variable from the multiplexer server environment when connecting over SSH, it's useful
 -- for prompts to detect if the shell is running over ssh.
