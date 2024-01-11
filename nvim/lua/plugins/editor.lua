@@ -60,51 +60,44 @@ return {
 
     -- Fuzzy finder
     {
-        "ibhagwan/fzf-lua",
-        event = { "BufReadPre", "BufNewFile" },
-        dependencies = { "nvim-tree/nvim-web-devicons" },
+        "nvim-telescope/telescope.nvim",
+        lazy = true,
+        dependencies = {
+            "nvim-lua/plenary.nvim",
+            -- Improve fuzzy finding performance for `telescope.nvim`
+            {
+                "nvim-telescope/telescope-fzf-native.nvim",
+                build = "cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build",
+            },
+        },
+        cmd = "Telescope",
         keys = {
             {
                 "<leader>ff",
                 function()
-                    require("fzf-lua").files()
+                    require("telescope.builtin").find_files()
                 end,
                 desc = "Find files",
             },
             {
                 "<leader>fg",
                 function()
-                    require("fzf-lua").grep_project()
+                    require("telescope.builtin").live_grep()
                 end,
                 desc = "Grep",
             },
             {
                 "<leader>fb",
                 function()
-                    require("fzf-lua").buffers()
+                    require("telescope.builtin").buffers()
                 end,
                 desc = "Buffers",
             },
-            {
-                "<leader>fh",
-                function()
-                    require("fzf-lua").help_tags()
-                end,
-                desc = "Help pages",
-            },
         },
-        opts = {
-            file_icon_padding = " ",
-            files = {
-                prompt = "fd> ",
-            },
-            grep = {
-                prompt = "rg> ",
-            },
-        },
+        opts = {},
         config = function(_, opts)
-            require("fzf-lua").setup(opts)
-            require("fzf-lua").register_ui_select()
+            require("telescope").setup(opts)
+            require("telescope").load_extension("fzf")
         end,
     },
 }
