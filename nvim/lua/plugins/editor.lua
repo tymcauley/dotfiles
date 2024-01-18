@@ -105,4 +105,42 @@ return {
         "kevinhwang91/nvim-bqf",
         ft = "qf",
     },
+
+    -- Window for diagnostics
+    {
+        "folke/trouble.nvim",
+        dependencies = { "nvim-tree/nvim-web-devicons" },
+        opts = { use_diagnostic_signs = true },
+        cmd = { "TroubleToggle", "Trouble" },
+        keys = {
+            {
+                "<leader>xx",
+                function()
+                    require("trouble").toggle("document_diagnostics")
+                end,
+                desc = "Document Diagnostics (Trouble)",
+            },
+            {
+                "<leader>xX",
+                function()
+                    require("trouble").toggle("workspace_diagnostics")
+                end,
+                desc = "Workspace Diagnostics (Trouble)",
+            },
+            {
+                "<leader>xL",
+                function()
+                    require("trouble").toggle("loclist")
+                end,
+                desc = "Location List (Trouble)",
+            },
+            {
+                "<leader>xQ",
+                function()
+                    require("trouble").toggle("quickfix")
+                end,
+                desc = "Quickfix List (Trouble)",
+            },
+        },
+    },
 }
