@@ -61,7 +61,6 @@ return {
     -- Fuzzy finder
     {
         "nvim-telescope/telescope.nvim",
-        lazy = true,
         dependencies = {
             "nvim-lua/plenary.nvim",
             -- Improve fuzzy finding performance for `telescope.nvim`
@@ -99,5 +98,11 @@ return {
             require("telescope").setup(opts)
             require("telescope").load_extension("fzf")
         end,
+    },
+
+    -- Better quickfix window
+    {
+        "kevinhwang91/nvim-bqf",
+        ft = "qf",
     },
 }
