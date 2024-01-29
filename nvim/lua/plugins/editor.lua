@@ -68,6 +68,8 @@ return {
                 "nvim-telescope/telescope-fzf-native.nvim",
                 build = "cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build",
             },
+            -- Picker for live-grep args
+            { "nvim-telescope/telescope-live-grep-args.nvim" },
         },
         cmd = "Telescope",
         keys = {
@@ -81,7 +83,7 @@ return {
             {
                 "<leader>fg",
                 function()
-                    require("telescope.builtin").live_grep()
+                    require("telescope").extensions.live_grep_args.live_grep_args()
                 end,
                 desc = "Grep",
             },
@@ -93,10 +95,25 @@ return {
                 desc = "Buffers",
             },
         },
-        opts = {},
+        opts = function()
+            local lga_actions = require("telescope-live-grep-args.actions")
+            return {
+                extensions = {
+                    live_grep_args = {
+                        mappings = {
+                            i = {
+                                ["<C-k>"] = lga_actions.quote_prompt(),
+                                ["<C-i>"] = lga_actions.quote_prompt({ postfix = " --iglob " }),
+                            },
+                        },
+                    },
+                },
+            }
+        end,
         config = function(_, opts)
             require("telescope").setup(opts)
             require("telescope").load_extension("fzf")
+            require("telescope").load_extension("live_grep_args")
         end,
     },
 
