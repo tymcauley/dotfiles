@@ -64,7 +64,6 @@ PYTHON_PACKAGES := \
 	jupyter \
 	jupyterlab \
 	matplotlib \
-	nb_black \
 	numpy \
 	pynvim \
 	scipy
