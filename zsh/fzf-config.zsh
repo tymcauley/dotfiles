@@ -6,7 +6,7 @@ export FZF_DEFAULT_OPTS="
 --reverse \
 "
 
-source ~/.fzf.zsh
+eval "$(fzf --zsh)"
 
 # Search history with fzf if it is present
 bindkey -M vicmd "/" fzf-history-widget

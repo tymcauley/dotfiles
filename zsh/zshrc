@@ -104,7 +104,7 @@ if command -v eza > /dev/null 2>&1 ; then
 fi
 
 # Set up fzf
-[ -f ~/.fzf.zsh ] && [[ -f "$HOME/.config/fzf-config.zsh" ]] && source "$HOME/.config/fzf-config.zsh"
+[[ -f "$HOME/.config/fzf-config.zsh" ]] && source "$HOME/.config/fzf-config.zsh"
 
 # Set up shell prompt
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
