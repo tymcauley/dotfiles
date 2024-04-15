@@ -62,6 +62,7 @@ return {
                     "ssh_config",
                     "tablegen",
                     "toml",
+                    "typst",
                     "typescript",
                     "verilog",
                     "vim",
