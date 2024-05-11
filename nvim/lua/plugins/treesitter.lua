@@ -78,7 +78,7 @@ return {
         config = function(_, opts)
             -- Haskell treesitter plugin uses C++11 features, but macOS clang doesn't enable those by default.
             if vim.fn.has("mac") == 1 then
-                require("nvim-treesitter.install").compilers = { "gcc-13" }
+                require("nvim-treesitter.install").compilers = { "gcc-14" }
             end
 
             require("nvim-treesitter.configs").setup(opts)
