@@ -1,6 +1,6 @@
 -- Bootstrap plugin manager installation
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
-if not vim.uv.fs_stat(lazypath) then
+if not (vim.uv or vim.loop).fs_stat(lazypath) then
     vim.fn.system({
         "git",
         "clone",
@@ -176,16 +176,18 @@ vim.api.nvim_create_autocmd("FileType", {
 -- Configure LSP diagnostics.
 
 -- Customize diagnostic symbols in the gutter
-local signs = { Error = "󰅚 ", Warn = " ", Hint = "󰌶 ", Info = " " }
-for type, icon in pairs(signs) do
-    local hl = "DiagnosticSign" .. type
-    vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = "" })
-end
 vim.diagnostic.config({
     underline = true,
     virtual_text = false,
     virtual_lines = false,
-    signs = true,
+    signs = {
+        text = {
+            [vim.diagnostic.severity.ERROR] = "󰅚 ",
+            [vim.diagnostic.severity.WARN] = " ",
+            [vim.diagnostic.severity.HINT] = "󰌶 ",
+            [vim.diagnostic.severity.INFO] = " ",
+        },
+    },
     update_in_insert = false,
     severity_sort = false,
 })
