@@ -195,10 +195,10 @@ return {
         config = function(_, opts)
             require("conform").setup(opts)
 
-            -- Fall back to LSP formatter method if no standalone formatter is available here.
+            -- Use LSP formatter if available, otherwise use formatter configured here.
             vim.keymap.set("n", "<leader>cf", function()
                 require("conform").format({
-                    lsp_fallback = true,
+                    lsp_format = "prefer",
                     async = true,
                 })
             end, { desc = "Format document" })
