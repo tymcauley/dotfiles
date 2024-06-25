@@ -13,16 +13,31 @@ return {
             },
             -- Set up buffer mappings
             on_attach = function(bufnr)
-                local gs = package.loaded.gitsigns
+                local gs = require("gitsigns")
 
                 -- Define buffer-local mapping
                 local function map(mode, l, r, desc)
                     vim.keymap.set(mode, l, r, { buffer = bufnr, desc = desc })
                 end
 
+                -- Navigation
+                map("n", "]c", function()
+                    if vim.wo.diff then
+                        vim.cmd.normal({ "]c", bang = true })
+                    else
+                        gs.nav_hunk("next")
+                    end
+                end, "Next hunk")
+
+                map("n", "[c", function()
+                    if vim.wo.diff then
+                        vim.cmd.normal({ "[c", bang = true })
+                    else
+                        gs.nav_hunk("prev")
+                    end
+                end, "Prev hunk")
+
                 -- Actions
-                map("n", "]c", gs.next_hunk, "Next hunk")
-                map("n", "[c", gs.prev_hunk, "Prev hunk")
                 map("n", "<leader>ghs", gs.stage_hunk, "Stage hunk")
                 map("n", "<leader>ghr", gs.reset_hunk, "Reset hunk")
                 map("v", "<leader>ghs", function()
