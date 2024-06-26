@@ -1,0 +1,38 @@
+# XDG
+export XDG_CONFIG_HOME="$HOME/.config"
+export XDG_DATA_HOME="$HOME/.local/share"
+export XDG_CACHE_HOME="$HOME/.cache"
+
+# Set default text editor
+alias vim="nvim"
+alias vimdiff="nvim -d"
+export EDITOR="nvim"
+export VISUAL="nvim"
+
+# zsh
+export ZDOTDIR="$XDG_CONFIG_HOME/zsh"
+export HISTFILE="$ZDOTDIR/.zhistory"  # History filepath
+export HISTSIZE=100000                # Maximum events for internal history
+export SAVEHIST=100000                # Maximum events in history file
+
+# Use bat for man pager
+export MANPAGER="sh -c 'col -bx | bat -l man -p'"
+
+# pager
+export PAGER="less"
+export LESS="-i -M -R -S -w -X -z-4"
+
+# fzf
+export FZF_DEFAULT_COMMAND="fd --type file --follow --hidden --exclude .git --color=always"
+export FZF_CTRL_T_COMMAND=$FZF_DEFAULT_COMMAND
+
+export FZF_DEFAULT_OPTS="
+--ansi \
+--reverse \
+"
+
+# Other software
+export COURSIER_BIN_DIR="$XDG_DATA_HOME/coursier/bin"
+export BAT_THEME="tokyonight_storm"
+[[ -f /opt/homebrew/bin/brew ]] && eval $(/opt/homebrew/bin/brew shellenv)
+[[ -d /opt/homebrew/Cellar/riscv-gnu-toolchain/main ]] && export RISCV=/opt/homebrew/Cellar/riscv-gnu-toolchain/main

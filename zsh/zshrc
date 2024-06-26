@@ -1,153 +1,132 @@
-ZSH_DIR="$HOME/.zsh"
+#
+# Utility functions
+#
+
+# Prepend a directory to the PATH if it exists.
+function __path_prepend {
+  [[ -d "$1" ]] && path=("$1" $path)
+}
+
+# Source a file if it exists.
+function __check_and_source {
+  [[ -f "$1" ]] && source "$1"
+}
+
+# Source a file if it is readable.
+function __check_readable_and_source {
+  [[ -r "$1" ]] && source "$1"
+}
 
 # Enable Powerlevel10k instant prompt, should be close to top of ~/.zshrc.
 # Initialization code that may require console input (password prompts, [y/n]
 # confirmations, etc.) must go above this block; everything else may go below.
-if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
-  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
-fi
+__check_readable_and_source "$XDG_CACHE_HOME/p10k-instant-prompt-${(%):-%n}.zsh"
 
-# vi keybindings
-bindkey -v
+#
+# History
+#
 
-# ZSH command history
-export HISTSIZE=100000
-export SAVEHIST=100000
-export HISTFILE="$HOME/.zsh_history"
+setopt   EXTENDED_HISTORY       # Write the history file in the ':start:elapsed;command' format.
+unsetopt SHARE_HISTORY          # Don't share history between all sessions
+setopt   HIST_EXPIRE_DUPS_FIRST # Expire a duplicate event first when trimming history.
+setopt   HIST_IGNORE_DUPS       # Do not record an event that was just recorded again.
+setopt   HIST_IGNORE_ALL_DUPS   # Delete an old recorded event if a new event is a duplicate.
+setopt   HIST_FIND_NO_DUPS      # Do not display a previously found event.
+setopt   HIST_IGNORE_SPACE      # Do not record an event starting with a space.
+setopt   HIST_SAVE_NO_DUPS      # Do not write a duplicate event to the history file.
+setopt   HIST_VERIFY            # Do not execute immediately upon history expansion.
 
-export KEYTIMEOUT=1 # Quick transition from vi-insert to vi-normal mode
+#
+# Other shell options
+#
 
-unsetopt SHARE_HISTORY # Don't share history between all sessions
-setopt   CHECK_JOBS    # Report the status of background/suspended jobs before exiting
+setopt   CHECK_JOBS # Report the status of background/suspended jobs before exiting
 
-# Customize function path
-if [[ -d $ZSH_DIR/completions ]]; then
-  fpath=($ZSH_DIR/completions $fpath)
-fi
+#
+# Aliases
+#
+
+__check_and_source "$ZDOTDIR/aliases.zsh"
+
+#
+# Path
+#
 
 # Load system-specific modifications to the shell
-[[ -f "$HOME/.zshrc.local" ]] && source "$HOME/.zshrc.local"
+__check_and_source "$ZDOTDIR/.zshrc.local"
 
-# Add Scala tools to PATH
-export COURSIER_BIN_DIR="$HOME/.local/share/coursier/bin"
-[[ -d "$COURSIER_BIN_DIR" ]] && path=("$COURSIER_BIN_DIR" $path)
-
-# Add Haskell tools to PATH
-[[ -f "${GHCUP_INSTALL_BASE_PREFIX:-$HOME}/.ghcup/env" ]] && source "${GHCUP_INSTALL_BASE_PREFIX:-$HOME}/.ghcup/env"
-
-# Add Rust toolchain to PATH
-[[ -f ~/.cargo/env ]] && source ~/.cargo/env
-
-# Customize PATH
-path=(~/.local/bin $path)
+__path_prepend "$COURSIER_BIN_DIR"    # Scala
+__check_and_source "$HOME/.cargo/env" # Rust
+__check_and_source "${GHCUP_INSTALL_BASE_PREFIX:-$HOME}/.ghcup/env" # Haskell
+__path_prepend "$HOME/.local/bin"
 
 if [[ -n "$HOMEBREW_PREFIX" ]]; then
-  # If LLVM is installed, add all of the LLVM utilities to the end of the path.
-  [[ -d "$HOMEBREW_PREFIX/opt/llvm/bin" ]] && path=($path "$HOMEBREW_PREFIX/opt/llvm/bin")
-
-  # If ruby is installed, add to the start of the path, to override the
-  # OS-provided version.
-  [[ -d "$HOMEBREW_PREFIX/opt/ruby/bin" ]] && path=("$HOMEBREW_PREFIX/opt/ruby/bin" $path)
-  [[ -d "$HOMEBREW_PREFIX/lib/ruby/gems/3.2.0/bin" ]] && path=("$HOMEBREW_PREFIX/lib/ruby/gems/3.2.0/bin" $path)
-
-  # If 'make' is installed, add it to the start of the path, so we can use more
-  # modern 'make' features.
-  [[ -d "$HOMEBREW_PREFIX/opt/make/libexec/gnubin" ]] && path=("$HOMEBREW_PREFIX/opt/make/libexec/gnubin" $path)
+  __path_prepend "$HOMEBREW_PREFIX/opt/llvm/bin"            # LLVM utilities
+  __path_prepend "$HOMEBREW_PREFIX/opt/ruby/bin"            # Ruby
+  __path_prepend "$HOMEBREW_PREFIX/lib/ruby/gems/3.3.0/bin" # Ruby gems
+  __path_prepend "$HOMEBREW_PREFIX/opt/make/libexec/gnubin" # make
 fi
 
-# Configure bat theme
-export BAT_THEME="tokyonight_storm"
+#
+# vi keybindings
+#
 
-# Set up modifications for Python REPL
-[[ -f "$HOME/.pystartup" ]] && export PYTHONSTARTUP="$HOME/.pystartup"
+bindkey -v
+export KEYTIMEOUT=1 # Quick transition from vi-insert to vi-normal mode
 
-# Set up git aliases
-[[ -f "$HOME/.config/git.zsh" ]] && source "$HOME/.config/git.zsh"
+# Add Vi text-objects for brackets and quotes
+autoload -Uz select-bracketed select-quoted
+zle -N select-quoted
+zle -N select-bracketed
+for km in viopp visual; do
+  bindkey -M $km -- '-' vi-up-line-or-history
+  for c in {a,i}${(s..)^:-\'\"\`\|,./:;=+@}; do
+    bindkey -M $km $c select-quoted
+  done
+  for c in {a,i}${(s..)^:-'()[]{}<>bB'}; do
+    bindkey -M $km $c select-bracketed
+  done
+done
+
+# Emulation of vim-surround
+autoload -Uz surround
+zle -N delete-surround surround
+zle -N add-surround surround
+zle -N change-surround surround
+bindkey -M vicmd cs change-surround
+bindkey -M vicmd ds delete-surround
+bindkey -M vicmd ys add-surround
+bindkey -M visual S add-surround
+
+#
+# Completion
+#
+
+__check_and_source "$ZDOTDIR/completion.zsh"
+
+#
+# fzf
+#
+
+eval "$(fzf --zsh)"
+bindkey -M vicmd "/" fzf-history-widget # Search history with fzf
+bindkey -M vicmd "gf" fzf-file-widget   # Find files with fzf
+bindkey -M vicmd "gd" fzf-cd-widget     # Find directories with fzf
+
+#
+# Other
+#
+
+[[ -f "$HOME/.pystartup" ]] && export PYTHONSTARTUP="$HOME/.pystartup" # Modify Python REPL
 
 # Configure line editor
-[[ -f "$HOME/.config/editor.zsh" ]] && source "$HOME/.config/editor.zsh"
-
-# Set up default text editor
-if command -v nvim > /dev/null 2>&1 ; then
-  alias vim="nvim"
-  alias vimdiff="nvim -d"
-  export EDITOR="nvim"
-  export VISUAL="nvim"
-else
-  export EDITOR="vim"
-  export VISUAL="vim"
-fi
-
-export PAGER="less"
-
-# Customize 'less' options
-export LESS="-i -M -R -S -w -X -z-4"
-
-# Replace ls with eza
-if command -v eza > /dev/null 2>&1 ; then
-  alias ls="eza --classify=automatic"
-  alias ll="ls --long --binary --group --icons=automatic"
-  alias llg="ll --git"
-  alias la="ll --all"
-  alias l="ls --oneline --all"
-  alias lr="ls --recurse"
-  alias llr="ll --recurse"
-  alias lt="ls --tree"
-  alias llt="ll --tree"
-  alias llst="ll --sort=newest" # Sort by modified time, most recent at the bottom
-  alias llss="ll --sort=size"   # Sort by size, largest at the bottom
-
-  # 'git status' in tree view
-  alias gwst="eza -l --tree --git --git-ignore \
-    --no-filesize --no-permissions --no-user --no-time --color=always \
-    | awk '\$1 !~ /--/ { print }'"
-fi
-
-# Set up fzf
-[[ -f "$HOME/.config/fzf-config.zsh" ]] && source "$HOME/.config/fzf-config.zsh"
+__check_and_source "$ZDOTDIR/editor.zsh"
 
 # Set up shell prompt
-[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+__check_and_source "$ZDOTDIR/.p10k.zsh"
 
 # Set up wezterm shell integration
-function {
-  local wezterm_shell_int_macos="/Applications/WezTerm.app/Contents/Resources/wezterm.sh"
-  [[ -f "$wezterm_shell_int_macos" ]] && source "$wezterm_shell_int_macos"
-}
+__check_and_source "/Applications/WezTerm.app/Contents/Resources/wezterm.sh"
 
 # Load powerlevel10k theme.
-if [[ -r "$ZSH_DIR/plugins/powerlevel10k/powerlevel10k.zsh-theme" ]]; then
-  source "$ZSH_DIR/plugins/powerlevel10k/powerlevel10k.zsh-theme"
-fi
-
-# Type-ahead completion plugin, must come before calling `compdef`.
-if [[ -r "$ZSH_DIR/plugins/zsh-autocomplete/zsh-autocomplete.plugin.zsh" ]]; then
-  source "$ZSH_DIR/plugins/zsh-autocomplete/zsh-autocomplete.plugin.zsh"
-fi
-
-zstyle ':completion:*' file-sort modification
-zstyle ':completion:*:*:*:*:corrections' format '%F{yellow}!- %d (errors: %e) -!%f'
-
-# Configure zsh-autocomplete.
-
-# When you hit Tab, before going to the completion menu, first insert the
-# sequence of characters that are common to all the completions (if any exist).
-zstyle ':autocomplete:*complete*:*' insert-unambiguous yes
-
-# Use Tab and Shift-Tab to move through the completion menu
-bindkey -M viins "${terminfo[kcbt]}" reverse-menu-complete
-bindkey -M viins "${terminfo[ht]}" menu-complete
-
-# Undo settings from zsh-autocomplete, reset up and down arrows to their
-# original behavior.
-() {
-  local -a prefix=( '\e'{\[,O} )
-  local -a up=( ${^prefix}A ) down=( ${^prefix}B )
-  local key=
-  for key in $up[@]; do
-    bindkey "$key" up-line-or-history
-  done
-  for key in $down[@]; do
-    bindkey "$key" down-line-or-history
-  done
-}
+__check_readable_and_source "$ZDOTDIR/plugins/powerlevel10k/powerlevel10k.zsh-theme"

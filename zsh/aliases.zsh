@@ -1,3 +1,30 @@
+# Replace ls with eza
+alias ls="eza --classify=automatic"
+alias ll="ls --long --binary --group --icons=automatic"
+alias llg="ll --git"
+alias la="ll --all"
+alias l="ls --oneline --all"
+alias lr="ls --recurse"
+alias llr="ll --recurse"
+alias lt="ls --tree"
+alias llt="ll --tree"
+alias llst="ll --sort=newest" # Sort by modified time, most recent at the bottom
+alias llss="ll --sort=size"   # Sort by size, largest at the bottom
+
+# 'git status' in tree view
+alias gwst="eza -l --tree --git --git-ignore \
+  --no-filesize --no-permissions --no-user --no-time --color=always \
+  | awk '\$1 !~ /--/ { print }'"
+
+# Monitor a file with syntax highlighting
+function tailf() {
+  tail -f "$1" | bat --paging=never -l log
+}
+
+#
+# Git aliases
+#
+
 # The git prompt's git commands are read-only and should not interfere with
 # other processes. This environment variable is equivalent to running with `git
 # --no-optional-locks`, but falls back gracefully for older versions of git.
@@ -28,10 +55,6 @@ function git_current_branch() {
 _git_log_medium_format='%C(bold)Commit:%C(reset) %C(green)%H%C(red)%d%n%C(bold)Author:%C(reset) %C(cyan)%an <%ae>%n%C(bold)Date:%C(reset)   %C(blue)%ai (%ar)%C(reset)%n%+B'
 _git_log_oneline_format='%C(green)%h%C(reset) %s%C(red)%d%C(reset)%n'
 _git_log_brief_format='%C(green)%h%C(reset) %s%n%C(blue)(%ar by %an)%C(red)%d%C(reset)%n'
-
-#
-# Aliases
-#
 
 # Git
 alias g='git'
