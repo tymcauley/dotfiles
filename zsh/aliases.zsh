@@ -1,3 +1,7 @@
+# Easy-to-use neovim
+alias vim="nvim"
+alias vimdiff="nvim -d"
+
 # Replace ls with eza
 alias ls="eza --classify=automatic"
 alias ll="ls --long --binary --group --icons=automatic"
