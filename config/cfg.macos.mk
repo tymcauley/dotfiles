@@ -1,5 +1,6 @@
 BAT      := 1
 BREW     := 1
+FISH     := 1
 GIT      := 1
 HASKELL  := 1
 NODE     := 1
@@ -17,6 +18,7 @@ BREW_FORMULAE := \
 	duf \
 	dust \
 	fd \
+	fish \
 	fzf \
 	git \
 	git-delta \
