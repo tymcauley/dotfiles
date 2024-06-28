@@ -41,6 +41,11 @@ if status is-interactive
     # Path additions
     #
 
+    # Load system-specific modifications
+    if test -r $__fish_config_dir/config.local.fish
+        source $__fish_config_dir/config.local.fish
+    end
+
     if test -x /opt/homebrew/bin/brew
         eval $(/opt/homebrew/bin/brew shellenv)
     end
@@ -56,6 +61,8 @@ if status is-interactive
         __path_prepend "$HOMEBREW_PREFIX/lib/ruby/gems/3.3.0/bin" # Ruby gems
         __path_prepend "$HOMEBREW_PREFIX/opt/make/libexec/gnubin" # make
     end
+
+    __path_prepend ~/.local/bin # Local tools
 
     #
     # Aliases
