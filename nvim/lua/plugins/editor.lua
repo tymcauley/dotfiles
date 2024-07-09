@@ -11,6 +11,13 @@ return {
                 topdelete = { text = "‾" },
                 changedelete = { text = "~" },
             },
+            signs_staged = {
+                add = { text = "+" },
+                change = { text = "~" },
+                delete = { text = "_" },
+                topdelete = { text = "‾" },
+                changedelete = { text = "~" },
+            },
             -- Set up buffer mappings
             on_attach = function(bufnr)
                 local gs = require("gitsigns")
