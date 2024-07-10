@@ -102,12 +102,15 @@ return {
                     end
 
                     -- Set up inlay hints
-                    if opts.inlay_hints.enabled and vim.lsp.buf.inlay_hint then
+                    if opts.inlay_hints.enabled and vim.lsp.inlay_hint then
                         if client.server_capabilities.inlayHintProvider then
-                            vim.lsp.buf.inlay_hint(bufnr, true)
+                            vim.lsp.inlay_hint.enable(true, { bufnr = bufnr })
                         end
                         map("n", "<leader>cth", function()
-                            vim.lsp.buf.inlay_hint(0, nil)
+                            vim.lsp.inlay_hint.enable(
+                                not vim.lsp.inlay_hint.is_enabled({ bufnr = bufnr }),
+                                { bufnr = bufnr }
+                            )
                         end, "Toggle inlay hints")
                     end
 
