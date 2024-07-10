@@ -38,8 +38,12 @@ vim.keymap.set("n", "<leader>s", "<Cmd>set spell!<CR>", { silent = true, desc = 
 vim.keymap.set("n", "U", "<C-r>", { desc = "Redo" })
 vim.keymap.set("n", "<space>", "za", { desc = "Toggle fold" })
 
-vim.keymap.set("n", "]d", vim.diagnostic.goto_next, { desc = "Next diagnostic" })
-vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, { desc = "Previous diagnostic" })
+vim.keymap.set("n", "]d", function()
+    vim.diagnostic.jump({ count = 1, float = true })
+end, { desc = "Next diagnostic" })
+vim.keymap.set("n", "[d", function()
+    vim.diagnostic.jump({ count = -1, float = true })
+end, { desc = "Previous diagnostic" })
 
 -- Delete trailing whitespace
 vim.keymap.set("n", "<leader>w", function()
