@@ -256,8 +256,12 @@ return {
             local metals_config = require("metals").bare_config()
 
             metals_config.settings = {
-                showImplicitArguments = true,
+                enableSemanticHighlighting = true,
                 excludedPackages = { "akka.actor.typed.javadsl", "com.github.swagger.akka.javadsl" },
+                -- These two settings are a bit too verbose.
+                -- showImplicitArguments = true,
+                -- showImplicitConversionsAndClasses = true,
+                showInferredType = true,
             }
 
             metals_config.root_patterns = { "build.sbt", "build.sc" }
