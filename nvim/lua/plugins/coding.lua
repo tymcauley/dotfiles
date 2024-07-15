@@ -10,13 +10,10 @@ return {
         event = "VeryLazy",
         opts = {
             mappings = {
-                start = "gs",
-                start_with_preview = "gS",
+                start = "ga",
+                start_with_preview = "gA",
             },
         },
-        config = function(_, opts)
-            require("mini.align").setup(opts)
-        end,
     },
 
     -- Automatic closing of quotes, parens, brackets, etc
@@ -46,8 +43,22 @@ return {
     -- Make a new text object for lines at the same indent level
     { "michaeljsmith/vim-indent-object", event = "VeryLazy" },
 
-    -- Operators for surrounding/sandwiching text objects
-    { "machakann/vim-sandwich", event = "VeryLazy" },
+    -- Surround actions
+    {
+        "echasnovski/mini.surround",
+        event = "VeryLazy",
+        opts = {
+            mappings = {
+                add = "gsa", -- Add surrounding in Normal and Visual modes
+                delete = "gsd", -- Delete surrounding
+                find = "gsf", -- Find surrounding (to the right)
+                find_left = "gsF", -- Find surrounding (to the left)
+                highlight = "gsh", -- Highlight surrounding
+                replace = "gsr", -- Replace surrounding
+                update_n_lines = "gsn", -- Update `n_lines`
+            },
+        },
+    },
 
     -- Commands for smart text substitution
     { "tpope/vim-abolish", event = "VeryLazy" },
