@@ -222,20 +222,7 @@ return {
     -- rust-analyzer plugin
     {
         "mrcjkb/rustaceanvim",
-        version = "^3",
-        ft = { "rust" },
-        config = function()
-            local capabilities = vim.tbl_deep_extend(
-                "force",
-                vim.lsp.protocol.make_client_capabilities(),
-                require("cmp_nvim_lsp").default_capabilities()
-            )
-            vim.g.rustaceanvim = {
-                server = {
-                    capabilities = capabilities,
-                },
-            }
-        end,
+        lazy = false, -- This plugin is already lazy
     },
 
     -- Metals plugin
