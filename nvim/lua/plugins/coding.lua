@@ -120,6 +120,34 @@ return {
                 vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes(key, true, true, true), mode, true)
             end
 
+            local kind_icons = {
+                Text = "󰀬",
+                Method = "󰊕",
+                Function = "󰊕",
+                Constructor = "",
+                Field = "",
+                Variable = "",
+                Class = "",
+                Interface = "󰜰",
+                Module = "󰏗",
+                Property = "",
+                Unit = "",
+                Value = "󰎠",
+                Enum = "",
+                Keyword = "󰌋",
+                Snippet = "󰘍",
+                Color = "",
+                File = "",
+                Reference = "󰆑",
+                Folder = "",
+                EnumMember = "",
+                Constant = "",
+                Struct = "",
+                Event = "",
+                Operator = "󰘧",
+                TypeParameter = "",
+            }
+
             local cmp = require("cmp")
             return {
                 snippet = {
@@ -171,33 +199,7 @@ return {
                             nvim_lsp = "",
                             buffer = "",
                         })[entry.source.name]
-                        vim_item.kind = ({
-                            Text = "󰀬",
-                            Method = "󰊕",
-                            Function = "󰊕",
-                            Constructor = "",
-                            Field = "",
-                            Variable = "",
-                            Class = "",
-                            Interface = "󰜰",
-                            Module = "󰏗",
-                            Property = "",
-                            Unit = "",
-                            Value = "󰎠",
-                            Enum = "",
-                            Keyword = "󰌋",
-                            Snippet = "󰘍",
-                            Color = "",
-                            File = "",
-                            Reference = "󰆑",
-                            Folder = "",
-                            EnumMember = "",
-                            Constant = "",
-                            Struct = "",
-                            Event = "",
-                            Operator = "󰘧",
-                            TypeParameter = "",
-                        })[vim_item.kind] .. " " .. vim_item.kind
+                        vim_item.kind = string.format("%s %s", kind_icons[vim_item.kind], vim_item.kind)
                         return vim_item
                     end,
                 },
