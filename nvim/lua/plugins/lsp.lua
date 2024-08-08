@@ -31,6 +31,7 @@ return {
                     },
                 },
                 pyright = {},
+                typst_lsp = {},
                 verible = {},
             },
         },
