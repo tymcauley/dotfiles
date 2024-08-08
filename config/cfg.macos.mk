@@ -59,13 +59,3 @@ NODE_PACKAGES := \
 	npm \
 	neovim \
 	pyright
-
-PYTHON_PACKAGES := \
-	black \
-	gitlint \
-	jupyter \
-	jupyterlab \
-	matplotlib \
-	numpy \
-	pynvim \
-	scipy
