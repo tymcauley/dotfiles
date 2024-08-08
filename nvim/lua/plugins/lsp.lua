@@ -188,7 +188,7 @@ return {
             formatters_by_ft = {
                 json = { "prettier" },
                 lua = { "stylua" },
-                python = { "black" },
+                python = { "ruff_format" },
                 sh = { "shfmt" },
                 yaml = { "prettier" },
             },
