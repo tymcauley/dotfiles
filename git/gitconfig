@@ -44,3 +44,8 @@
 	commit-style = raw
 	file-style = omit
 	hunk-header-style = file line-number syntax
+[filter "lfs"]
+	required = true
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
