@@ -62,7 +62,8 @@ if status is-interactive
         __path_prepend "$HOMEBREW_PREFIX/opt/make/libexec/gnubin" # make
     end
 
-    __path_prepend ~/.local/bin # Local tools
+    __path_prepend ~/.local/nvim-macos-arm64/bin # macOS installation of neovim
+    __path_prepend ~/.local/bin                  # Local tools
 
     #
     # Aliases

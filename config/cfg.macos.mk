@@ -27,7 +27,6 @@ BREW_FORMULAE := \
 	hyperfine \
 	jq \
 	make \
-	neovim \
 	node \
 	python \
 	ripgrep \

@@ -25,7 +25,6 @@ BREW_FORMULAE := \
 	hyperfine \
 	jq \
 	node \
-	neovim \
 	python \
 	ripgrep \
 	shellcheck \
