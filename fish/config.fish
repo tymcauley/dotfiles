@@ -60,6 +60,10 @@ if status is-interactive
         __path_prepend "$HOMEBREW_PREFIX/opt/ruby/bin"            # Ruby
         __path_prepend "$HOMEBREW_PREFIX/lib/ruby/gems/3.3.0/bin" # Ruby gems
         __path_prepend "$HOMEBREW_PREFIX/opt/make/libexec/gnubin" # make
+
+        if test -d "$HOMEBREW_PREFIX/Cellar/riscv-gnu-toolchain/main"
+            set -gx RISCV "$HOMEBREW_PREFIX/Cellar/riscv-gnu-toolchain/main"
+        end
     end
 
     __path_prepend ~/.local/nvim-macos-arm64/bin # macOS installation of neovim
