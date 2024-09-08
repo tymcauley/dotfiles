@@ -85,6 +85,7 @@ if status is-interactive
     # prompt
     #
 
+    # Run this function once to configure the tide command-line prompt
     function setup_prompt
         tide configure --auto \
             --style=Classic \
