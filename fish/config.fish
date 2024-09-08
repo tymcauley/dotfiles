@@ -66,8 +66,8 @@ if status is-interactive
         end
     end
 
-    __path_prepend ~/.local/nvim-macos-arm64/bin # macOS installation of neovim
-    __path_prepend ~/.local/bin                  # Local tools
+    __path_prepend ~/.local/nvim-macos-$(uname -m)/bin # macOS installation of neovim
+    __path_prepend ~/.local/bin                        # Local tools
 
     #
     # Aliases
