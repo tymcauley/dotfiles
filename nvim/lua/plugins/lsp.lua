@@ -244,10 +244,13 @@ return {
             metals_config.settings = {
                 enableSemanticHighlighting = true,
                 excludedPackages = { "akka.actor.typed.javadsl", "com.github.swagger.akka.javadsl" },
-                -- These two settings are a bit too verbose.
-                -- showImplicitArguments = true,
-                -- showImplicitConversionsAndClasses = true,
-                showInferredType = true,
+                inlayHints = {
+                    hintsInPatternMatch = { enable = true },
+                    implicitArguments = { enable = true },
+                    implicitConversions = { enable = true },
+                    inferredTypes = { enable = true },
+                    typeParameters = { enable = true },
+                },
             }
 
             metals_config.root_patterns = { "build.sbt", "build.sc" }
