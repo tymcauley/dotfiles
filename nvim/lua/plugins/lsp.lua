@@ -253,7 +253,7 @@ return {
                 },
             }
 
-            metals_config.root_patterns = { "build.sbt", "build.sc" }
+            metals_config.root_patterns = { "build.sbt", "build.sc", "build.mill" }
 
             -- Find the last directory which contains one of the files/directories in 'metals_config.root_patterns'.
             -- This ensures that Metals finds the highest-level root directory in a project with nested sub-projects.
