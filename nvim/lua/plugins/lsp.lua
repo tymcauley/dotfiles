@@ -4,7 +4,6 @@ return {
         "neovim/nvim-lspconfig",
         event = { "BufReadPre", "BufNewFile" },
         dependencies = {
-            "hrsh7th/cmp-nvim-lsp", -- Completion for LSP
             "scalameta/nvim-metals", -- Metals plugin
         },
         opts = {
@@ -37,17 +36,9 @@ return {
         },
         config = function(_, opts)
             local servers = opts.servers
-            local capabilities = vim.tbl_deep_extend(
-                "force",
-                vim.lsp.protocol.make_client_capabilities(),
-                require("cmp_nvim_lsp").default_capabilities()
-            )
 
             -- Configure LSP servers
-            for server, base_server_opts in pairs(servers) do
-                local server_opts = vim.tbl_deep_extend("force", {
-                    capabilities = vim.deepcopy(capabilities),
-                }, base_server_opts or {})
+            for server, server_opts in pairs(servers) do
                 require("lspconfig")[server].setup(server_opts)
             end
 
@@ -227,7 +218,6 @@ return {
     -- Metals plugin
     {
         "scalameta/nvim-metals",
-        dependencies = "hrsh7th/cmp-nvim-lsp", -- Completion for LSP
         lazy = true,
         keys = {
             {
@@ -272,15 +262,7 @@ return {
                 return root_dir
             end
 
-            local capabilities = vim.tbl_deep_extend(
-                "force",
-                vim.lsp.protocol.make_client_capabilities(),
-                require("cmp_nvim_lsp").default_capabilities()
-            )
-
             metals_config.init_options.statusBarProvider = "on"
-            metals_config.capabilities = capabilities
-            metals_config.handlers = handlers
 
             local lsp_metals = vim.api.nvim_create_augroup("lsp_metals", {})
             vim.api.nvim_create_autocmd("FileType", {
