@@ -104,15 +104,13 @@ return {
 
         opts = {
             keymap = {
-                show = "<C-e>",
-                hide = "<C-e>",
-                accept = "<CR>",
+                ["<C-e>"] = { "show", "hide" },
+                ["<CR>"] = { "accept" },
 
-                show_documentation = "<C-d>",
-                hide_documentation = "<C-d>",
+                ["<C-d>"] = { "show_documentation", "hide_documentation" },
 
-                snippet_forward = "<C-n>",
-                snippet_backward = "<C-p>",
+                ["<C-n>"] = { "select_next", "snippet_forward" },
+                ["<C-p>"] = { "select_prev", "snippet_backward" },
             },
 
             -- set to 'mono' for 'Nerd Font Mono' or 'normal' for 'Nerd Font'
