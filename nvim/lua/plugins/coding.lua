@@ -105,7 +105,7 @@ return {
         opts = {
             keymap = {
                 ["<C-e>"] = { "show", "hide" },
-                ["<CR>"] = { "accept" },
+                ["<C-y>"] = { "select_and_accept" },
 
                 ["<C-d>"] = { "show_documentation", "hide_documentation" },
 
