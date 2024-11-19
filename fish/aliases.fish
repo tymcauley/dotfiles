@@ -209,8 +209,8 @@ alias gts='git tag --sign'
 alias gtv='git verify-tag'
 
 # Working Copy (w)
-alias gws='git status --short'
-alias gwS='git status '
+alias gws='git status'
+alias gwS='git status --short'
 alias gwd='git diff --no-ext-diff'
 alias gwD='git diff --no-ext-diff --word-diff'
 alias gwr='git restore'
