@@ -48,6 +48,9 @@ return {
                 callback = function(args)
                     local bufnr = args.buf
                     local client = vim.lsp.get_client_by_id(args.data.client_id)
+                    if not client then
+                        return
+                    end
 
                     -- Disable LSP formatting when running `gq` commands.
                     vim.bo.formatexpr = nil
@@ -61,12 +64,12 @@ return {
                     local cap = client.server_capabilities
 
                     -- Set up code-context plugin
-                    if cap.documentSymbolProvider then
+                    if cap and cap.documentSymbolProvider then
                         require("nvim-navic").attach(client, bufnr)
                     end
 
                     -- Highlight the symbol under the cursor
-                    if cap.documentHighlightProvider then
+                    if cap and cap.documentHighlightProvider then
                         local lsp_highlight_cursor = vim.api.nvim_create_augroup("lsp_highlight_cursor", {})
                         vim.api.nvim_create_autocmd("CursorHold", {
                             callback = vim.lsp.buf.document_highlight,
@@ -81,7 +84,7 @@ return {
                     end
 
                     -- Set up code lens support
-                    if cap.code_lens then
+                    if cap and cap.code_lens then
                         local lsp_code_lens = vim.api.nvim_create_augroup("lsp_code_lens", {})
                         vim.api.nvim_create_autocmd({ "BufEnter", "CursorHold", "InsertLeave" }, {
                             callback = function()
