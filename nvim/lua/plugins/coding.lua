@@ -112,10 +112,6 @@ return {
                 ["<C-n>"] = { "select_next", "snippet_forward" },
                 ["<C-p>"] = { "select_prev", "snippet_backward" },
             },
-
-            -- set to 'mono' for 'Nerd Font Mono' or 'normal' for 'Nerd Font'
-            -- adjusts spacing to ensure icons are aligned
-            nerd_font_variant = "mono",
         },
     },
 
