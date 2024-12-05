@@ -33,8 +33,11 @@ BREW_FORMULAE := \
 	shellcheck \
 	shfmt \
 	stylua \
+	tinymist \
 	tmux \
 	tokei \
+	typst \
+	typstyle \
 	wget \
 	zsh
 

@@ -30,7 +30,7 @@ return {
                     },
                 },
                 pyright = {},
-                typst_lsp = {},
+                tinymist = {},
                 verible = {},
             },
         },

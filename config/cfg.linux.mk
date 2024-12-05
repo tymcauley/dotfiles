@@ -30,8 +30,11 @@ BREW_FORMULAE := \
 	shellcheck \
 	shfmt \
 	stylua \
+	tinymist \
 	tmux \
 	tokei \
+	typst \
+	typstyle \
 	zsh
 
 GHCUP_TOOLS := \
