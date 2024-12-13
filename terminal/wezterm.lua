@@ -18,6 +18,21 @@ config.colors = {
 config.enable_scroll_bar = true
 config.font = wezterm.font("IosevkaTerm NF") -- TODO use the "Fixed" variant, it disables ligatures
 
+-- Config overrides
+
+-- Toggle ligatures for the window
+wezterm.on("toggle-ligature", function(window, pane)
+    local overrides = window:get_config_overrides() or {}
+    if not overrides.harfbuzz_features then
+        -- If we haven't overridden it yet, then override with ligatures disabled
+        overrides.harfbuzz_features = { "calt=0", "clig=0", "liga=0" }
+    else
+        -- else we did already, and we should disable our override now
+        overrides.harfbuzz_features = nil
+    end
+    window:set_config_overrides(overrides)
+end)
+
 -- Key bindings
 
 local act = wezterm.action
@@ -57,6 +72,7 @@ config.keys = {
     { key = "d", mods = "LEADER", action = act.DetachDomain("CurrentPaneDomain") },
 
     -- Misc
+    { key = "t", mods = "LEADER", action = act.EmitEvent("toggle-ligature") },
 
     -- Send "CTRL-A" to the terminal when pressing CTRL-A, CTRL-A
     { key = "a", mods = "LEADER|CTRL", action = act.SendString("\x01") },
