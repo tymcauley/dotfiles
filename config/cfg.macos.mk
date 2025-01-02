@@ -39,6 +39,7 @@ BREW_FORMULAE := \
 	typst \
 	typstyle \
 	wget \
+	zellij \
 	zsh
 
 BREW_CASKS := \

@@ -57,6 +57,10 @@ ifeq ($(TMUX),1)
 include tmux/install.mk
 endif
 
+ifeq ($(ZELLIJ),1)
+include zellij/install.mk
+endif
+
 ifeq ($(ZSH),1)
 include zsh/install.mk
 endif

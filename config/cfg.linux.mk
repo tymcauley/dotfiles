@@ -35,6 +35,7 @@ BREW_FORMULAE := \
 	tokei \
 	typst \
 	typstyle \
+	zellij \
 	zsh
 
 GHCUP_TOOLS := \
