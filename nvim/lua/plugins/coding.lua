@@ -122,4 +122,15 @@ return {
         dependencies = { "nvim-treesitter/nvim-treesitter" },
         opts = {},
     },
+
+    -- Tools for working with the Lean language
+    {
+        "Julian/lean.nvim",
+        event = { "BufReadPre *.lean", "BufNewFile *.lean" },
+        dependencies = {
+            "neovim/nvim-lspconfig",
+            "nvim-lua/plenary.nvim",
+        },
+        opts = {},
+    },
 }
