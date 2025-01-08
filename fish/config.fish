@@ -54,6 +54,7 @@ if status is-interactive
     __path_prepend ~/.cargo/bin      # Rust
     __path_prepend ~/.ghcup/bin      # Haskell
     __path_prepend ~/.cabal/bin      # Haskell
+    __path_prepend ~/.elan/bin       # Lean
 
     if set -q HOMEBREW_PREFIX
         __path_prepend "$HOMEBREW_PREFIX/opt/llvm/bin"            # LLVM utilities
