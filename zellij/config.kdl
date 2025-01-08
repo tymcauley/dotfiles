@@ -2,6 +2,11 @@ keybinds clear-defaults=true {
     locked {
         bind "Ctrl g" { SwitchToMode "normal"; }
         bind "Super k" { Clear; }
+        // Native tab management/navigation commands
+        bind "Super n" { NewTab; }
+        bind "Super w" { CloseTab; }
+        bind "Super Alt Left" { GoToPreviousTab; }
+        bind "Super Alt Right" { GoToNextTab; }
     }
     pane {
         bind "left" { MoveFocus "left"; }
