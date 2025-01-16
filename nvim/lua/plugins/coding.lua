@@ -104,13 +104,40 @@ return {
 
         opts = {
             keymap = {
-                ["<C-e>"] = { "show", "hide" },
-                ["<C-y>"] = { "select_and_accept" },
+                preset = "default",
+                -- Preset:
+                -- ['<C-space>'] = { 'show', 'show_documentation', 'hide_documentation' },
+                -- ['<C-e>'] = { 'hide' },
+                -- ['<C-y>'] = { 'select_and_accept' },
+                -- ['<C-p>'] = { 'select_prev', 'fallback' },
+                -- ['<C-n>'] = { 'select_next', 'fallback' },
+                -- ['<C-b>'] = { 'scroll_documentation_up', 'fallback' },
+                -- ['<C-f>'] = { 'scroll_documentation_down', 'fallback' },
+                -- ['<Tab>'] = { 'snippet_forward', 'fallback' },
+                -- ['<S-Tab>'] = { 'snippet_backward', 'fallback' },
+                ["<C-e>"] = { "show", "hide" }, -- Toggle completion menu
+                ["<C-d>"] = { "show_documentation", "hide_documentation" }, -- Toggle documentation
 
-                ["<C-d>"] = { "show_documentation", "hide_documentation" },
-
-                ["<C-n>"] = { "select_next", "snippet_forward" },
-                ["<C-p>"] = { "select_prev", "snippet_backward" },
+                cmdline = {
+                    preset = "enter",
+                    -- Preset:
+                    -- ['<C-space>'] = { 'show', 'show_documentation', 'hide_documentation' },
+                    -- ['<C-e>'] = { 'hide', 'fallback' },
+                    -- ['<CR>'] = { 'accept', 'fallback' },
+                    -- ['<Tab>'] = { 'snippet_forward', 'fallback' },
+                    -- ['<S-Tab>'] = { 'snippet_backward', 'fallback' },
+                    -- ['<Up>'] = { 'select_prev', 'fallback' },
+                    -- ['<Down>'] = { 'select_next', 'fallback' },
+                    -- ['<C-p>'] = { 'select_prev', 'fallback' },
+                    -- ['<C-n>'] = { 'select_next', 'fallback' },
+                    -- ['<C-b>'] = { 'scroll_documentation_up', 'fallback' },
+                    -- ['<C-f>'] = { 'scroll_documentation_down', 'fallback' },
+                    ["<CR>"] = { "fallback" }, -- Immediately run the selected command
+                    ["<C-e>"] = { "show", "hide" }, -- Toggle completion menu
+                    -- Accept the selection with either of these
+                    ["<Tab>"] = { "accept", "fallback" },
+                    ["<C-y>"] = { "accept", "fallback" },
+                },
             },
         },
     },

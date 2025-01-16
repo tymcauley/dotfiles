@@ -2,9 +2,6 @@ return {
     -- File type icons for various plugins
     { "nvim-tree/nvim-web-devicons", lazy = true },
 
-    -- Improve the default vim.ui interfaces
-    { "stevearc/dressing.nvim", event = "VeryLazy" },
-
     -- Buffer line
     {
         "akinsho/bufferline.nvim",
@@ -44,44 +41,13 @@ return {
         opts = {},
     },
 
-    -- Fancy notification manager
-    {
-        "rcarriga/nvim-notify",
-        opts = {
-            timeout = 3000,
-            stages = "fade",
-            on_open = function(win)
-                -- Don't let user move cursor to notification windows
-                vim.api.nvim_win_set_config(win, { focusable = false })
-            end,
-            max_height = function()
-                return math.floor(vim.o.lines * 0.75)
-            end,
-            max_width = function()
-                return math.floor(vim.o.columns * 0.75)
-            end,
-        },
-        config = function(_, opts)
-            require("notify").setup(opts)
-            vim.notify = require("notify")
-        end,
-    },
-
-    -- Indent guides
-    {
-        "lukas-reineke/indent-blankline.nvim",
-        event = { "BufReadPost", "BufNewFile" },
-        main = "ibl",
-        opts = {},
-    },
-
     -- Add highlighting blocks around nested scope levels
     {
         "HampusHauffman/block.nvim",
         event = { "BufReadPost", "BufNewFile" },
         keys = {
             {
-                "<leader>b",
+                "<leader>tb",
                 function()
                     vim.api.nvim_command("Block")
                 end,

@@ -1,4 +1,40 @@
 return {
+    -- Collection of quality-of-life plugins
+    {
+        "folke/snacks.nvim",
+        priority = 1000,
+        lazy = false,
+        opts = {
+            bigfile = {},
+            indent = {},
+            notifier = {},
+            notify = {},
+            input = {},
+            picker = {},
+        },
+        keys = {
+            -- stylua: ignore start
+            { "<leader>z",  function() Snacks.zen() end, desc = "Toggle Zen Mode" },
+            { "<leader>Z",  function() Snacks.zen.zoom() end, desc = "Toggle Zoom" },
+            { "<leader>.",  function() Snacks.scratch() end, desc = "Toggle Scratch Buffer" },
+            { "<leader>S",  function() Snacks.scratch.select() end, desc = "Select Scratch Buffer" },
+            { "<leader>n",  function() Snacks.notifier.show_history() end, desc = "Notification History" },
+            { "<leader>un", function() Snacks.notifier.hide() end, desc = "Dismiss All Notifications" },
+            { "<leader>bd", function() Snacks.bufdelete() end, desc = "Delete Buffer" },
+            -- find
+            { "<leader>ff", function() Snacks.picker.files() end, desc = "Find files" },
+            { "<leader>fb", function() Snacks.picker.buffers() end, desc = "Buffers" },
+            { "<leader>fg", function() Snacks.picker.grep() end, desc = "Grep" },
+            -- LSP
+            { "gd", function() Snacks.picker.lsp_definitions() end, desc = "Goto Definition" },
+            { "gr", function() Snacks.picker.lsp_references() end, nowait = true, desc = "References" },
+            { "gI", function() Snacks.picker.lsp_implementations() end, desc = "Goto Implementation" },
+            { "gy", function() Snacks.picker.lsp_type_definitions() end, desc = "Goto T[y]pe Definition" },
+            { "<leader>ss", function() Snacks.picker.lsp_symbols() end, desc = "LSP Symbols" },
+            -- stylua: ignore end
+        },
+    },
+
     -- Add nice integration with git
     {
         "lewis6991/gitsigns.nvim",
@@ -78,65 +114,6 @@ return {
         "sindrets/diffview.nvim",
         event = "VeryLazy",
         dependencies = { "nvim-lua/plenary.nvim" },
-    },
-
-    -- Fuzzy finder
-    {
-        "nvim-telescope/telescope.nvim",
-        dependencies = {
-            "nvim-lua/plenary.nvim",
-            -- Improve fuzzy finding performance for `telescope.nvim`
-            {
-                "nvim-telescope/telescope-fzf-native.nvim",
-                build = "make",
-            },
-            -- Picker for live-grep args
-            { "nvim-telescope/telescope-live-grep-args.nvim" },
-        },
-        cmd = "Telescope",
-        keys = {
-            {
-                "<leader>ff",
-                function()
-                    require("telescope.builtin").find_files()
-                end,
-                desc = "Find files",
-            },
-            {
-                "<leader>fg",
-                function()
-                    require("telescope").extensions.live_grep_args.live_grep_args()
-                end,
-                desc = "Grep",
-            },
-            {
-                "<leader>fb",
-                function()
-                    require("telescope.builtin").buffers()
-                end,
-                desc = "Buffers",
-            },
-        },
-        opts = function()
-            local lga_actions = require("telescope-live-grep-args.actions")
-            return {
-                extensions = {
-                    live_grep_args = {
-                        mappings = {
-                            i = {
-                                ["<C-k>"] = lga_actions.quote_prompt(),
-                                ["<C-i>"] = lga_actions.quote_prompt({ postfix = " --iglob " }),
-                            },
-                        },
-                    },
-                },
-            }
-        end,
-        config = function(_, opts)
-            require("telescope").setup(opts)
-            require("telescope").load_extension("fzf")
-            require("telescope").load_extension("live_grep_args")
-        end,
     },
 
     -- Better quickfix window

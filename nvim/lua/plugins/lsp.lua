@@ -106,21 +106,15 @@ return {
                         end, "Toggle inlay hints")
                     end
 
-                    local ts = require("telescope.builtin")
-
                     -- Set up mappings
 
                     map({ "n", "v" }, "<leader>ca", vim.lsp.buf.code_action, "Run code action")
                     map("n", "<leader>cr", vim.lsp.buf.rename, "Rename")
                     map("n", "<leader>cx", client.stop, "Stop client")
 
-                    map("n", "gd", ts.lsp_definitions, "Go to definition")
                     map("n", "gD", vim.lsp.buf.declaration, "Go to declaration")
                     map("n", "K", vim.lsp.buf.hover, "Hover")
                     map("n", "gK", vim.lsp.buf.signature_help, "Signature help")
-                    map("n", "gI", ts.lsp_implementations, "Go to implementation")
-                    map("n", "gr", ts.lsp_references, "Go to reference")
-                    map("n", "gy", ts.lsp_type_definitions, "Go to t[y]pe definition")
                 end,
             })
         end,
