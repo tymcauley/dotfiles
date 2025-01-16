@@ -74,13 +74,4 @@ return {
             require("nvim-treesitter.configs").setup(opts)
         end,
     },
-
-    -- Show code context with treesitter
-    {
-        "nvim-treesitter/nvim-treesitter-context",
-        event = { "BufReadPost", "BufNewFile" },
-        opts = {
-            max_lines = 3,
-        },
-    },
 }
