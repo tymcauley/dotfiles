@@ -11,6 +11,14 @@ return {
             notify = {},
             input = {},
             picker = {},
+            styles = {
+                notification = {
+                    wo = { wrap = true }, -- Wrap notifications
+                },
+                notification_history = {
+                    wo = { wrap = true }, -- Wrap notifications
+                },
+            },
         },
         keys = {
             -- stylua: ignore start
