@@ -98,7 +98,6 @@ return {
                     gs.reset_hunk({ vim.fn.line("."), vim.fn.line("v") })
                 end, "Reset hunk")
                 map("n", "<leader>ghS", gs.stage_buffer, "Stage buffer")
-                map("n", "<leader>ghu", gs.undo_stage_hunk, "Undo stage hunk")
                 map("n", "<leader>ghR", gs.reset_buffer, "Reset buffer")
                 map("n", "<leader>ghp", gs.preview_hunk, "Preview hunk")
                 map("n", "<leader>ghb", function()
@@ -109,7 +108,6 @@ return {
                     gs.diffthis("~")
                 end, "Diff this ~")
                 map("n", "<leader>ghtb", gs.toggle_current_line_blame, "Toggle blame annotation")
-                map("n", "<leader>ghtd", gs.toggle_deleted, "Toggle deleted hunks")
 
                 -- Text object
                 map({ "o", "x" }, "ih", ":<C-U>Gitsigns select_hunk<CR>", "GitSigns select hunk")
