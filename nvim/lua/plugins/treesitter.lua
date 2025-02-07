@@ -11,6 +11,7 @@ return {
         opts = function()
             return {
                 ensure_installed = {
+                    "asm",
                     "bash",
                     "bibtex",
                     "c",
