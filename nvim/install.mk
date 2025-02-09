@@ -30,9 +30,9 @@ ifeq ($(OS),Darwin)
 		mv nvim-macos-$(ARCH) ~/.local/ && \
 		rm ./nvim-macos-$(ARCH).tar.gz
 else
-	curl -fLO $(NVIM_URL)/nvim.appimage && \
-		mv nvim.appimage ~/.local/bin && \
+	curl -fLO $(NVIM_URL)/nvim-linux-$(ARCH).appimage && \
+		mv nvim-linux-$(ARCH).appimage ~/.local/bin && \
 		cd ~/.local/bin && \
-		chmod u+x nvim.appimage && \
-		ln -sf nvim.appimage nvim
+		chmod u+x nvim-linux-$(ARCH).appimage && \
+		ln -sf nvim-linux-$(ARCH).appimage nvim
 endif
