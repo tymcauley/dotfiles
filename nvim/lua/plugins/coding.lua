@@ -117,8 +117,9 @@ return {
                 -- ['<S-Tab>'] = { 'snippet_backward', 'fallback' },
                 ["<C-e>"] = { "show", "hide" }, -- Toggle completion menu
                 ["<C-d>"] = { "show_documentation", "hide_documentation" }, -- Toggle documentation
-
-                cmdline = {
+            },
+            cmdline = {
+                keymap = {
                     preset = "enter",
                     -- Preset:
                     -- ['<C-space>'] = { 'show', 'show_documentation', 'hide_documentation' },
