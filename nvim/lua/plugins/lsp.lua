@@ -177,6 +177,7 @@ return {
                 cmake = { "gersemi" },
                 json = { "prettier" },
                 lua = { "stylua" },
+                markdown = { "markdownlint-cli2" },
                 python = { "ruff_format" },
                 sh = { "shfmt" },
                 yaml = { "prettier" },
