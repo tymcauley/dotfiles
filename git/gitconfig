@@ -1,6 +1,7 @@
 [user]
 	name = Tynan McAuley
 	useConfigOnly = true
+	signingkey = ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICH0jtvvmPSqkoJCygJxWsBum/XVLwZ1j5mFJW2XSmev
 [init]
 	defaultBranch = main
 [push]
@@ -11,6 +12,10 @@
 	tool = diffconflicts
 [alias]
 	emailpersonal = config user.email \"16469394+tymcauley@users.noreply.github.com\"
+[gpg]
+	format = ssh
+[commit]
+	gpgsign = true
 [include]
 	path = ~/.gitconfig.private
 	path = ~/.config/git/tokyonight_storm.gitconfig
