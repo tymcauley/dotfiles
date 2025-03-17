@@ -77,6 +77,12 @@ if status is-interactive
     source $__fish_config_dir/aliases.fish
 
     #
+    # SSH
+    #
+
+    source $__fish_config_dir/ssh.fish
+
+    #
     # fzf
     #
 
