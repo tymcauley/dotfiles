@@ -113,8 +113,12 @@ return {
                     map("n", "<leader>cx", client.stop, "Stop client")
 
                     map("n", "gD", vim.lsp.buf.declaration, "Go to declaration")
-                    map("n", "K", vim.lsp.buf.hover, "Hover")
-                    map("n", "gK", vim.lsp.buf.signature_help, "Signature help")
+                    map("n", "K", function()
+                        vim.lsp.buf.hover({ border = "rounded" })
+                    end, "Hover")
+                    map("n", "gK", function()
+                        vim.lsp.buf.signature_help({ border = "rounded" })
+                    end, "Signature help")
                 end,
             })
         end,

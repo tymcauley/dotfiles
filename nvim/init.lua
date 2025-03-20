@@ -39,10 +39,10 @@ vim.keymap.set("n", "U", "<C-r>", { desc = "Redo" })
 vim.keymap.set("n", "<space>", "za", { desc = "Toggle fold" })
 
 vim.keymap.set("n", "]d", function()
-    vim.diagnostic.jump({ count = 1, float = true })
+    vim.diagnostic.jump({ count = 1, float = { border = "rounded" } })
 end, { desc = "Next diagnostic" })
 vim.keymap.set("n", "[d", function()
-    vim.diagnostic.jump({ count = -1, float = true })
+    vim.diagnostic.jump({ count = -1, float = { border = "rounded" } })
 end, { desc = "Previous diagnostic" })
 
 -- Delete trailing whitespace
