@@ -33,13 +33,6 @@ return {
         end,
     },
 
-    -- Easy comment insertion
-    {
-        "numToStr/Comment.nvim",
-        event = "VeryLazy",
-        opts = {}, -- `opts = {}` is the same as calling `require("Comment").setup({})`
-    },
-
     -- Make a new text object for lines at the same indent level
     { "michaeljsmith/vim-indent-object", event = "VeryLazy" },
 
