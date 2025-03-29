@@ -93,7 +93,7 @@ return {
         "saghen/blink.cmp",
         lazy = false, -- lazy loading handled internally
         dependencies = "rafamadriz/friendly-snippets", -- snippet source
-        version = "v0.*", -- use a release tag to download pre-built binaries
+        version = "1.*", -- use a release tag to download pre-built binaries
 
         opts = {
             keymap = {
