@@ -73,6 +73,15 @@ vim.keymap.set("n", "dd", function()
     end
 end, { expr = true, desc = "Delete line" })
 
+-- Toggle virtual_lines for diagnostics
+vim.keymap.set("n", "<leader>ctl", function()
+    if vim.diagnostic.config().virtual_lines then
+        vim.diagnostic.config({ virtual_lines = false })
+    else
+        vim.diagnostic.config({ virtual_lines = true })
+    end
+end, { desc = "Toggle virtual_lines" })
+
 --
 -- Settings
 --

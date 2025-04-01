@@ -130,23 +130,6 @@ return {
         end,
     },
 
-    -- Render LSP diagnostics inline with code
-    {
-        "https://git.sr.ht/~whynothugo/lsp_lines.nvim",
-        name = "lsp_lines.nvim",
-        event = "VeryLazy",
-        keys = {
-            {
-                "<leader>ctl",
-                function()
-                    require("lsp_lines").toggle()
-                end,
-                desc = "Toggle lsp_lines",
-            },
-        },
-        opts = {},
-    },
-
     -- Display LSP status in standalone UI
     {
         "j-hui/fidget.nvim",
