@@ -96,6 +96,11 @@ return {
         version = "1.*", -- use a release tag to download pre-built binaries
 
         opts = {
+            completion = {
+                menu = { border = "rounded" },
+                documentation = { window = { border = "rounded" } },
+            },
+            signature = { enabled = true, window = { border = "rounded" } },
             keymap = {
                 preset = "default",
                 -- Preset:
@@ -110,28 +115,6 @@ return {
                 -- ['<S-Tab>'] = { 'snippet_backward', 'fallback' },
                 ["<C-e>"] = { "show", "hide" }, -- Toggle completion menu
                 ["<C-d>"] = { "show_documentation", "hide_documentation" }, -- Toggle documentation
-            },
-            cmdline = {
-                keymap = {
-                    preset = "enter",
-                    -- Preset:
-                    -- ['<C-space>'] = { 'show', 'show_documentation', 'hide_documentation' },
-                    -- ['<C-e>'] = { 'hide', 'fallback' },
-                    -- ['<CR>'] = { 'accept', 'fallback' },
-                    -- ['<Tab>'] = { 'snippet_forward', 'fallback' },
-                    -- ['<S-Tab>'] = { 'snippet_backward', 'fallback' },
-                    -- ['<Up>'] = { 'select_prev', 'fallback' },
-                    -- ['<Down>'] = { 'select_next', 'fallback' },
-                    -- ['<C-p>'] = { 'select_prev', 'fallback' },
-                    -- ['<C-n>'] = { 'select_next', 'fallback' },
-                    -- ['<C-b>'] = { 'scroll_documentation_up', 'fallback' },
-                    -- ['<C-f>'] = { 'scroll_documentation_down', 'fallback' },
-                    ["<CR>"] = { "fallback" }, -- Immediately run the selected command
-                    ["<C-e>"] = { "show", "hide" }, -- Toggle completion menu
-                    -- Accept the selection with either of these
-                    ["<Tab>"] = { "accept", "fallback" },
-                    ["<C-y>"] = { "accept", "fallback" },
-                },
             },
         },
     },
