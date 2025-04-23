@@ -227,6 +227,7 @@ return {
                 enableSemanticHighlighting = true,
                 excludedPackages = { "akka.actor.typed.javadsl", "com.github.swagger.akka.javadsl" },
                 inlayHints = {
+                    byNameParameters = { enable = true },
                     hintsInPatternMatch = { enable = true },
                     implicitArguments = { enable = true },
                     implicitConversions = { enable = true },
