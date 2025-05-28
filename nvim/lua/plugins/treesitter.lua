@@ -2,12 +2,9 @@ return {
     -- Treesitter integration into neovim
     {
         "nvim-treesitter/nvim-treesitter",
+        lazy = false,
+        branch = "main",
         build = ":TSUpdate",
-        event = { "BufReadPost", "BufNewFile" },
-        keys = {
-            -- Re-sync treesitter highlighting
-            { "<leader>tss", "<Cmd>write | edit | TSBufEnable highlight<CR>", desc = "Re-sync treesitter" },
-        },
         opts = function()
             return {
                 ensure_installed = {
@@ -63,18 +60,71 @@ return {
                     "vimdoc",
                     "yaml",
                 },
-                highlight = {
-                    enable = true,
-                },
             }
         end,
         config = function(_, opts)
-            -- Haskell treesitter plugin uses C++11 features, but macOS clang doesn't enable those by default.
-            if vim.fn.has("mac") == 1 then
-                require("nvim-treesitter.install").compilers = { "gcc-14" }
-            end
+            -- Only install the parsers that aren't already installed.
+            local already_installed = require("nvim-treesitter.config").installed_parsers()
+            local parsers_to_install = vim.iter(opts.ensure_installed)
+                :filter(function(parser)
+                    return not vim.tbl_contains(already_installed, parser)
+                end)
+                :totable()
+            require("nvim-treesitter").install(parsers_to_install)
 
-            require("nvim-treesitter.configs").setup(opts)
+            -- Auto-start parsers for any buffer
+            vim.api.nvim_create_autocmd("FileType", {
+                desc = "Enable Treesitter",
+                callback = function(event)
+                    local bufnr = event.buf
+                    local filetype = vim.api.nvim_get_option_value("filetype", { buf = bufnr })
+
+                    -- Skip if no filetype
+                    if filetype == "" then
+                        return
+                    end
+
+                    -- Get parser name based on filetype
+                    local parser_name = vim.treesitter.language.get_lang(filetype)
+                    if not parser_name then
+                        vim.notify(
+                            vim.inspect("No treesitter parser found for filetype: " .. filetype),
+                            vim.log.levels.WARN
+                        )
+                        return
+                    end
+
+                    -- Try to get existing parser
+                    local parser_configs = require("nvim-treesitter.parsers")
+                    if not parser_configs[parser_name] then
+                        return -- Parser not available, skip silently
+                    end
+
+                    local parser_exists = pcall(vim.treesitter.get_parser, bufnr, parser_name)
+                    if not parser_exists then
+                        -- Check if parser is already installed
+                        if not vim.tbl_contains(already_installed, parser_name) then
+                            -- If not installed, warn user
+                            vim.notify("Treesitter parser not installed for " .. parser_name, vim.log.levels.WARN)
+                        end
+                    end
+
+                    -- Start treesitter for this buffer
+                    -- vim.notify(
+                    --     vim.inspect("Starting treesitter parser '" .. parser_name .. "' for filetype: " .. filetype),
+                    --     vim.log.levels.WARN
+                    -- )
+                    vim.treesitter.start(bufnr, parser_name)
+                    -- Use regex based syntax-highlighting as fallback as some plugins might need it
+                    vim.bo[bufnr].syntax = "ON"
+                    -- Use treesitter for folds
+                    vim.wo.foldmethod = "expr"
+                    vim.wo.foldexpr = "v:lua.vim.treesitter.foldexpr()"
+                    vim.wo.foldtext = "v:lua.vim.treesitter.foldtext()"
+                    -- Use treesitter for indentation
+                    vim.bo[bufnr].indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
+                end,
+            })
         end,
     },
 }

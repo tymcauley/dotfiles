@@ -119,14 +119,6 @@ return {
         },
     },
 
-    -- Smart selection of closest text object
-    {
-        "sustech-data/wildfire.nvim",
-        event = "VeryLazy",
-        dependencies = { "nvim-treesitter/nvim-treesitter" },
-        opts = {},
-    },
-
     -- Tools for working with the Lean language
     {
         "Julian/lean.nvim",
