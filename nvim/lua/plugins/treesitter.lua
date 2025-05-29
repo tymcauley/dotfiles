@@ -64,7 +64,7 @@ return {
         end,
         config = function(_, opts)
             -- Only install the parsers that aren't already installed.
-            local already_installed = require("nvim-treesitter.config").installed_parsers()
+            local already_installed = require("nvim-treesitter.config").get_installed('parsers')
             local parsers_to_install = vim.iter(opts.ensure_installed)
                 :filter(function(parser)
                     return not vim.tbl_contains(already_installed, parser)
