@@ -7,6 +7,7 @@ return {
         build = ":TSUpdate",
         opts = function()
             return {
+                -- Ensure these treesitter parsers are installed
                 ensure_installed = {
                     "asm",
                     "bash",
@@ -60,11 +61,15 @@ return {
                     "vimdoc",
                     "yaml",
                 },
+                -- Don't enable treesitter indentation for these filetypes
+                fts_disable_indent = {
+                    "scala",
+                },
             }
         end,
         config = function(_, opts)
             -- Only install the parsers that aren't already installed.
-            local already_installed = require("nvim-treesitter.config").get_installed('parsers')
+            local already_installed = require("nvim-treesitter.config").get_installed("parsers")
             local parsers_to_install = vim.iter(opts.ensure_installed)
                 :filter(function(parser)
                     return not vim.tbl_contains(already_installed, parser)
@@ -121,8 +126,17 @@ return {
                     vim.wo.foldmethod = "expr"
                     vim.wo.foldexpr = "v:lua.vim.treesitter.foldexpr()"
                     vim.wo.foldtext = "v:lua.vim.treesitter.foldtext()"
-                    -- Use treesitter for indentation
-                    vim.bo[bufnr].indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
+                    -- Use treesitter for indentation if the filetype isn't in `opts.fts_disable_indent`.
+                    local use_treesitter_indent = true
+                    for _, ft_disable_indent in pairs(opts.fts_disable_indent) do
+                        if ft_disable_indent == filetype then
+                            use_treesitter_indent = false
+                            break
+                        end
+                    end
+                    if use_treesitter_indent then
+                        vim.bo[bufnr].indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
+                    end
                 end,
             })
         end,
