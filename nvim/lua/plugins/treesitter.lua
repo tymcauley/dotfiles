@@ -109,8 +109,9 @@ return {
                     if not parser_exists then
                         -- Check if parser is already installed
                         if not vim.tbl_contains(already_installed, parser_name) then
-                            -- If not installed, warn user
+                            -- If not installed, warn user and exit before trying to start treesitter
                             vim.notify("Treesitter parser not installed for " .. parser_name, vim.log.levels.WARN)
+                            return
                         end
                     end
 
