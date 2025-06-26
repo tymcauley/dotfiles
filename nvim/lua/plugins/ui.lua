@@ -178,6 +178,8 @@ return {
     -- Markdown previewer
     {
         "OXY2DEV/markview.nvim",
+        lazy = false,
+        priority = 49, -- Force markview to load after nvim-treesitter
         dependencies = {
             "nvim-treesitter/nvim-treesitter",
             "nvim-tree/nvim-web-devicons",
