@@ -236,6 +236,23 @@ return {
                 },
             }
 
+            -- Find the last directory which contains one of the files/directories in 'metals_config.root_patterns'.
+            -- This ensures that Metals finds the highest-level root directory in a project with nested sub-projects.
+            metals_config.find_root_dir = function(patterns, startpath)
+                local Path = require("plenary.path")
+                local root_dir = nil
+                local path = Path:new(startpath)
+                for _, parent in ipairs(path:parents()) do
+                    for _, pattern in ipairs(patterns) do
+                        local target = Path:new(parent, pattern)
+                        if target:exists() then
+                            root_dir = parent
+                        end
+                    end
+                end
+                return root_dir
+            end
+
             metals_config.init_options.statusBarProvider = "on"
 
             local lsp_metals = vim.api.nvim_create_augroup("lsp_metals", {})
