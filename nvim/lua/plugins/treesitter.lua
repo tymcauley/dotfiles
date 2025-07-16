@@ -61,6 +61,7 @@ return {
                     "typst",
                     "vim",
                     "vimdoc",
+                    "xml",
                     "yaml",
                 },
                 -- Don't enable treesitter indentation for these filetypes
