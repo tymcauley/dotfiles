@@ -30,7 +30,6 @@ return {
             { "<leader>un", function() Snacks.notifier.hide() end, desc = "Dismiss All Notifications" },
             { "<leader>bd", function() Snacks.bufdelete() end, desc = "Delete Buffer" },
             -- find
-            { "<leader>ff", function() Snacks.picker.files() end, desc = "Find files" },
             { "<leader>fb", function() Snacks.picker.buffers() end, desc = "Buffers" },
             { "<leader>fg", function() Snacks.picker.grep() end, desc = "Grep" },
             -- LSP
@@ -40,6 +39,22 @@ return {
             { "gy", function() Snacks.picker.lsp_type_definitions() end, desc = "Goto T[y]pe Definition" },
             { "<leader>ss", function() Snacks.picker.lsp_symbols() end, desc = "LSP Symbols" },
             -- stylua: ignore end
+        },
+    },
+
+    -- Fast file picker
+    {
+        "dmtrKovalenko/fff.nvim",
+        build = "cargo build --release",
+        opts = {},
+        keys = {
+            {
+                "<leader>ff",
+                function()
+                    require("fff").find_files()
+                end,
+                desc = "Find files",
+            },
         },
     },
 
