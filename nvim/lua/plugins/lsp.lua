@@ -233,6 +233,7 @@ return {
                     implicitConversions = { enable = true },
                     inferredTypes = { enable = true },
                     typeParameters = { enable = true },
+                    hintsXRayMode = { enable = true },
                 },
             }
 
