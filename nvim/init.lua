@@ -227,6 +227,9 @@ require("lazy").setup({
     spec = {
         { import = "plugins" },
     },
+    git = {
+        timeout = 480, -- Increase default timeout to allow for long build processes
+    },
     install = { colorscheme = { "tokyonight" } },
     checker = {
         enabled = true,
