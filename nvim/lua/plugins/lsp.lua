@@ -39,7 +39,11 @@ return {
 
             -- Configure LSP servers
             for server, server_opts in pairs(servers) do
-                require("lspconfig")[server].setup(server_opts)
+                -- Optionally override default configuration
+                if next(server_opts) then
+                    vim.lsp.config(server, server_opts)
+                end
+                vim.lsp.enable(server)
             end
 
             -- Buffer-local setup function
