@@ -30,6 +30,7 @@ return {
                     },
                 },
                 pyright = {},
+                rust_analyzer = {},
                 tinymist = {},
                 verible = {},
             },
@@ -203,12 +204,6 @@ return {
                 args = util.extend_args(stylua.args, { "--indent-type", "Spaces" }),
             })
         end,
-    },
-
-    -- rust-analyzer plugin
-    {
-        "mrcjkb/rustaceanvim",
-        lazy = false, -- This plugin is already lazy
     },
 
     -- Metals plugin
