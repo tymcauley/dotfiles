@@ -32,7 +32,6 @@ return {
                 pyright = {},
                 rust_analyzer = {},
                 tinymist = {},
-                verible = {},
             },
         },
         config = function(_, opts)
