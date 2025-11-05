@@ -39,10 +39,10 @@ vim.keymap.set("n", "U", "<C-r>", { desc = "Redo" })
 vim.keymap.set("n", "<space>", "za", { desc = "Toggle fold" })
 
 vim.keymap.set("n", "]d", function()
-    vim.diagnostic.jump({ count = 1, float = { border = "rounded" } })
+    vim.diagnostic.jump({ count = 1 })
 end, { desc = "Next diagnostic" })
 vim.keymap.set("n", "[d", function()
-    vim.diagnostic.jump({ count = -1, float = { border = "rounded" } })
+    vim.diagnostic.jump({ count = -1 })
 end, { desc = "Previous diagnostic" })
 
 -- Delete trailing whitespace
@@ -72,15 +72,6 @@ vim.keymap.set("n", "dd", function()
         return "dd"
     end
 end, { expr = true, desc = "Delete line" })
-
--- Toggle virtual_lines for diagnostics
-vim.keymap.set("n", "<leader>ctl", function()
-    if vim.diagnostic.config().virtual_lines then
-        vim.diagnostic.config({ virtual_lines = false })
-    else
-        vim.diagnostic.config({ virtual_lines = true })
-    end
-end, { desc = "Toggle virtual_lines" })
 
 --
 -- Settings

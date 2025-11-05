@@ -135,6 +135,14 @@ return {
         end,
     },
 
+    -- Display inline diagnostic messages with customizable styles and icons
+    {
+        "rachartier/tiny-inline-diagnostic.nvim",
+        event = "VeryLazy",
+        priority = 1000,
+        opts = {},
+    },
+
     -- Display LSP status in standalone UI
     {
         "j-hui/fidget.nvim",
