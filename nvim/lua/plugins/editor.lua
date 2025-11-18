@@ -5,12 +5,10 @@ return {
         priority = 1000,
         lazy = false,
         opts = {
-            bigfile = {},
-            indent = {},
-            notifier = {},
-            notify = {},
-            input = {},
-            picker = {},
+            bigfile = { enabled = true },
+            notifier = { enabled = true },
+            input = { enabled = true },
+            picker = { enabled = true },
             styles = {
                 notification = {
                     wo = { wrap = true }, -- Wrap notifications
@@ -56,6 +54,11 @@ return {
                 desc = "Find files",
             },
         },
+    },
+
+    -- Performant indent guides
+    {
+        "saghen/blink.indent",
     },
 
     -- Add nice integration with git
