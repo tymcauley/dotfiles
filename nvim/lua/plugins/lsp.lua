@@ -29,9 +29,9 @@ return {
                         },
                     },
                 },
-                pyright = {},
                 rust_analyzer = {},
                 tinymist = {},
+                ty = {},
             },
         },
         config = function(_, opts)
