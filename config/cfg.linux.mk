@@ -13,18 +13,29 @@ TMUX     := 1
 ZSH      := 1
 
 BREW_FORMULAE := \
+	asciidoctor \
 	bat \
+	btop \
+	cmake \
+	dtc \
 	duf \
 	dust \
+	eza \
 	fd \
 	fish \
 	fzf \
+	gh \
 	git \
 	git-delta \
+	glab \
 	hadolint \
+	harper \
 	hyperfine \
 	jq \
+	llvm \
+	ninja \
 	node \
+	prettier \
 	python \
 	ripgrep \
 	shellcheck \
@@ -33,8 +44,11 @@ BREW_FORMULAE := \
 	tinymist \
 	tmux \
 	tokei \
+	tree-sitter-cli \
 	typst \
 	typstyle \
+	uv \
+	verilator \
 	zellij \
 	zsh
 

@@ -10,24 +10,38 @@ RUST     := 1
 SCALA    := 1
 TERMINAL := 1
 TMUX     := 1
+ZELLIJ   := 1
 ZSH      := 1
 
 BREW_FORMULAE := \
+	asciidoctor \
 	bat \
+	btop \
+	cmake \
 	coreutils \
+	dtc \
 	duf \
 	dust \
+	eza \
 	fd \
 	fish \
+	fswatch \
 	fzf \
+	gh \
 	git \
 	git-delta \
+	glab \
+	gsed \
 	hadolint \
+	harper \
 	htop \
 	hyperfine \
 	jq \
+	llvm \
 	make \
+	ninja \
 	node \
+	prettier \
 	python \
 	ripgrep \
 	shellcheck \
@@ -36,20 +50,19 @@ BREW_FORMULAE := \
 	tinymist \
 	tmux \
 	tokei \
+	tree-sitter-cli \
 	typst \
 	typstyle \
+	uv \
+	verilator \
 	wget \
 	zellij \
 	zsh
 
 BREW_CASKS := \
-	docker \
 	font-iosevka-term-nerd-font \
 	gtkwave \
 	mattermost \
-	tigervnc-viewer \
-	vagrant \
-	wezterm \
 	xquartz \
 	yed
 
