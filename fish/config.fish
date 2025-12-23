@@ -112,6 +112,12 @@ if status is-interactive
     end
 
     #
+    # direnv
+    #
+
+    direnv hook fish | source
+
+    #
     # Cleanup
     #
 
