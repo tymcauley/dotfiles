@@ -89,33 +89,30 @@ if status is-interactive
     fzf --fish | source
 
     #
-    # prompt
-    #
-
-    # Run this function once to configure the tide command-line prompt
-    function setup_prompt
-        tide configure --auto \
-            --style=Classic \
-            --prompt_colors='True color' \
-            --classic_prompt_color=Light \
-            --show_time='24-hour format' \
-            --classic_prompt_separators=Slanted \
-            --powerline_prompt_heads=Slanted \
-            --powerline_prompt_tails=Flat \
-            --powerline_prompt_style='Two lines, character' \
-            --prompt_connection=Solid \
-            --powerline_right_prompt_frame=No \
-            --prompt_connection_andor_frame_color=Light \
-            --prompt_spacing=Sparse \
-            --icons='Few icons' \
-            --transient=Yes
-    end
-
-    #
     # direnv
     #
 
     direnv hook fish | source
+
+    #
+    # prompt
+    #
+
+    set -g hydro_color_pwd cyan --bold
+    set -g hydro_color_git yellow --bold
+    set -g hydro_color_error red --bold
+    set -g hydro_color_prompt green --bold
+    set -g hydro_color_duration brblack
+    set -g hydro_color_time brblack
+
+    set -g hydro_multiline true
+
+    function fish_right_prompt
+        # Show the time in HH:MM:SS format
+        set_color $hydro_color_time
+        date "+%H:%M:%S"
+        set_color normal
+    end
 
     #
     # Cleanup
