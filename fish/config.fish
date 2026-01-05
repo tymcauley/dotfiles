@@ -92,7 +92,9 @@ if status is-interactive
     # direnv
     #
 
-    direnv hook fish | source
+    if type -q direnv
+        direnv hook fish | source
+    end
 
     #
     # prompt
