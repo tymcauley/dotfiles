@@ -34,7 +34,6 @@ return {
                     "java",
                     "javascript",
                     "json",
-                    "jsonc",
                     "lalrpop",
                     "latex",
                     "linkerscript",
