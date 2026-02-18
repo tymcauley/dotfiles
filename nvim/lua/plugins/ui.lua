@@ -30,15 +30,21 @@ return {
         },
     },
 
-    -- winbar with nvim-navic integration
+    -- Winbar with breadcrumb navigation
     {
-        "utilyre/barbecue.nvim",
-        event = "VeryLazy",
+        "Bekaboo/dropbar.nvim",
+        priority = 1000,
+        lazy = false,
         dependencies = {
-            "SmiteshP/nvim-navic",
             "nvim-tree/nvim-web-devicons",
         },
-        opts = {},
+        opts = {
+            icons = {
+                kinds = {
+                    dir_icon = "", -- Disable directory icon, it takes up too much space
+                },
+            },
+        },
     },
 
     -- Add highlighting blocks around nested scope levels

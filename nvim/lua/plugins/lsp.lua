@@ -74,11 +74,6 @@ return {
                     -- Find the client's capabilities
                     local cap = client.server_capabilities
 
-                    -- Set up code-context plugin
-                    if cap and cap.documentSymbolProvider then
-                        require("nvim-navic").attach(client, bufnr)
-                    end
-
                     -- Highlight the symbol under the cursor
                     if cap and cap.documentHighlightProvider then
                         local lsp_highlight_cursor = vim.api.nvim_create_augroup("lsp_highlight_cursor", {})
@@ -271,11 +266,5 @@ return {
                 group = lsp_metals,
             })
         end,
-    },
-
-    -- Display code context from LSP
-    {
-        "SmiteshP/nvim-navic",
-        event = "LspAttach",
     },
 }
