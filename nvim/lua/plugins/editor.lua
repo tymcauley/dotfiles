@@ -1,4 +1,37 @@
 return {
+    -- Fuzzy finder
+    {
+        "ibhagwan/fzf-lua",
+        priority = 1000,
+        lazy = false,
+        opts = {
+            lsp = {
+                async_or_timeout = true,
+                code_actions = {
+                    previewer = "codeaction_native",
+                },
+            },
+        },
+        config = function(_, opts)
+            require("fzf-lua").setup(opts)
+            require("fzf-lua").register_ui_select()
+        end,
+        keys = {
+            -- stylua: ignore start
+            { "<leader>ff", function() require("fzf-lua").files() end, desc = "Find files" },
+            { "<leader>fb", function() require("fzf-lua").buffers() end, desc = "Buffers" },
+            { "<leader>fg", function() require("fzf-lua").live_grep() end, desc = "Grep" },
+            { "<leader>fr", function() require("fzf-lua").resume() end, desc = "Resume last picker" },
+            -- LSP
+            { "gd", function() require("fzf-lua").lsp_definitions() end, desc = "Goto Definition" },
+            { "gr", function() require("fzf-lua").lsp_references() end, nowait = true, desc = "References" },
+            { "gI", function() require("fzf-lua").lsp_implementations() end, desc = "Goto Implementation" },
+            { "gy", function() require("fzf-lua").lsp_typedefs() end, desc = "Goto T[y]pe Definition" },
+            { "<leader>ss", function() require("fzf-lua").lsp_document_symbols() end, desc = "LSP Symbols" },
+            -- stylua: ignore end
+        },
+    },
+
     -- Collection of quality-of-life plugins
     {
         "folke/snacks.nvim",
@@ -8,7 +41,6 @@ return {
             bigfile = { enabled = true },
             notifier = { enabled = true },
             input = { enabled = true },
-            picker = { enabled = true },
             styles = {
                 notification = {
                     wo = { wrap = true }, -- Wrap notifications
@@ -27,32 +59,7 @@ return {
             { "<leader>n",  function() Snacks.notifier.show_history() end, desc = "Notification History" },
             { "<leader>un", function() Snacks.notifier.hide() end, desc = "Dismiss All Notifications" },
             { "<leader>bd", function() Snacks.bufdelete() end, desc = "Delete Buffer" },
-            -- find
-            { "<leader>fb", function() Snacks.picker.buffers() end, desc = "Buffers" },
-            { "<leader>fg", function() Snacks.picker.grep() end, desc = "Grep" },
-            -- LSP
-            { "gd", function() Snacks.picker.lsp_definitions() end, desc = "Goto Definition" },
-            { "gr", function() Snacks.picker.lsp_references() end, nowait = true, desc = "References" },
-            { "gI", function() Snacks.picker.lsp_implementations() end, desc = "Goto Implementation" },
-            { "gy", function() Snacks.picker.lsp_type_definitions() end, desc = "Goto T[y]pe Definition" },
-            { "<leader>ss", function() Snacks.picker.lsp_symbols() end, desc = "LSP Symbols" },
             -- stylua: ignore end
-        },
-    },
-
-    -- Fast file picker
-    {
-        "dmtrKovalenko/fff.nvim",
-        build = "cargo build --release",
-        opts = {},
-        keys = {
-            {
-                "<leader>ff",
-                function()
-                    require("fff").find_files()
-                end,
-                desc = "Find files",
-            },
         },
     },
 
