@@ -142,9 +142,9 @@ return {
 
     -- Git diff viewer
     {
-        "sindrets/diffview.nvim",
-        event = "VeryLazy",
-        dependencies = { "nvim-lua/plenary.nvim" },
+        "esmuellert/codediff.nvim",
+        dependencies = { "MunifTanjim/nui.nvim" },
+        cmd = "CodeDiff",
     },
 
     -- Better quickfix window
