@@ -7,3 +7,6 @@
 
 # Deployed configuration file.
 /cfg.mk
+
+# Private Neovim configuration.
+/nvim/lua/private.lua

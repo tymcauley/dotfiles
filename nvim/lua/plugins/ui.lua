@@ -78,6 +78,7 @@ return {
                     { "<leader>f", group = "file/find" },
                     { "<leader>g", group = "git" },
                     { "<leader>gh", group = "hunks" },
+                    { "<leader>gl", group = "links" },
                     { "<leader>x", group = "diagnostics/quickfix", icon = { icon = "󱖫 ", color = "green" } },
                     { "[", group = "prev" },
                     { "]", group = "next" },

@@ -147,6 +147,54 @@ return {
         cmd = "CodeDiff",
     },
 
+    -- Generate permalinks for git host websites
+    {
+        "linrongbin16/gitlinker.nvim",
+        lazy = true,
+        keys = {
+            {
+                "<leader>gll",
+                "<Cmd>GitLink<CR>",
+                mode = { "n", "v" },
+                silent = true,
+                noremap = true,
+                desc = "Copy git permlink to clipboard",
+            },
+            {
+                "<leader>glL",
+                "<Cmd>GitLink!<CR>",
+                mode = { "n", "v" },
+                silent = true,
+                noremap = true,
+                desc = "Open git permlink in browser",
+            },
+            {
+                "<leader>glb",
+                "<Cmd>GitLink blame<CR>",
+                mode = { "n", "v" },
+                silent = true,
+                noremap = true,
+                desc = "Copy git blame link to clipboard",
+            },
+            {
+                "<leader>glB",
+                "<Cmd>GitLink! blame<CR>",
+                mode = { "n", "v" },
+                silent = true,
+                noremap = true,
+                desc = "Open git blame link in browser",
+            },
+        },
+        opts = function()
+            -- Check if custom routers are defined in the private file.
+            local ok, private = pcall(require, "private")
+            if ok and private.gitlinker_routers then
+                return { router = private.gitlinker_routers }
+            end
+            return {}
+        end,
+    },
+
     -- Better quickfix window
     {
         "kevinhwang91/nvim-bqf",
