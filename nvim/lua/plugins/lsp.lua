@@ -225,6 +225,7 @@ return {
             local metals_config = require("metals").bare_config()
 
             metals_config.settings = {
+                defaultBspToBuildTool = true,
                 enableSemanticHighlighting = true,
                 excludedPackages = { "akka.actor.typed.javadsl", "com.github.swagger.akka.javadsl" },
                 inlayHints = {
@@ -236,6 +237,8 @@ return {
                     typeParameters = { enable = true },
                     hintsXRayMode = { enable = true },
                 },
+                mcpClient = "claude",
+                startMcpServer = true,
             }
 
             -- Find the last directory which contains one of the files/directories in 'metals_config.root_patterns'.
