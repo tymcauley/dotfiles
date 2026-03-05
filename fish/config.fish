@@ -86,7 +86,9 @@ if status is-interactive
     # fzf
     #
 
-    fzf --fish | source
+    if type -q fzf
+        fzf --fish | source
+    end
 
     #
     # direnv
