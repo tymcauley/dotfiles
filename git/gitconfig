@@ -10,6 +10,7 @@
 	recurseSubmodules = check
 [merge]
 	tool = diffconflicts
+	conflictStyle = zdiff3
 [alias]
 	emailpersonal = config user.email \"16469394+tymcauley@users.noreply.github.com\"
 [gpg]
