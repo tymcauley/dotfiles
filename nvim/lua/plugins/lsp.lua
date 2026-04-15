@@ -30,6 +30,11 @@ return {
                     },
                 },
                 rust_analyzer = {},
+                ["slang-server"] = {
+                    cmd = { "slang-server" },
+                    filetypes = { "systemverilog", "verilog" },
+                    root_markers = { ".git", ".slang" },
+                },
                 tinymist = {},
                 ty = {},
             },
@@ -154,7 +159,6 @@ return {
                 dockerfile = { "hadolint" },
                 json = { "jq" },
                 sh = { "shellcheck" },
-                verilog = { "verilator" },
             },
         },
         config = function(_, opts)
