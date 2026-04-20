@@ -99,6 +99,18 @@ if status is-interactive
     end
 
     #
+    # History filtering
+    #
+
+    # Drop "command not found" typos (exit 127) from history
+    function __drop_not_found --on-event fish_postexec
+        set -l exit_code $status
+        if test $exit_code -eq 127
+            history delete --exact --case-sensitive -- "$argv"
+        end
+    end
+
+    #
     # prompt
     #
 
