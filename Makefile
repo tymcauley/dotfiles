@@ -17,6 +17,10 @@ ifeq ($(BREW),1)
 include brew/install.mk
 endif
 
+ifeq ($(CLAUDE),1)
+include claude/install.mk
+endif
+
 ifeq ($(FISH),1)
 include fish/install.mk
 endif

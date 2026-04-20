@@ -1,5 +1,6 @@
 BAT      := 1
 BREW     := 1
+CLAUDE   := 1
 FISH     := 1
 GIT      := 1
 HASKELL  := 1
