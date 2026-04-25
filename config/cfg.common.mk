@@ -10,7 +10,6 @@ PYTHON   := 1
 RUST     := 1
 SCALA    := 1
 TERMINAL := 1
-TMUX     := 1
 ZELLIJ   := 1
 
 BREW_FORMULAE := \
