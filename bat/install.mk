@@ -1,12 +1,13 @@
 .PHONY: bat
-ALL_TARGETS += bat
+ALL_TARGETS  += bat
+TOOL_TARGETS += bat
 
-ifeq ($(shell which bat 2> /dev/null),)
-$(error Please install bat: https://github.com/sharkdp/bat)
-endif
+bat_TOOL := bat
+bat_HINT := https://github.com/sharkdp/bat
 
-BAT_THEMES_DIR := $(shell bat --config-dir)/themes
+BAT_THEMES_DIR = $(shell bat --config-dir)/themes
 
 bat: ## Install bat theme
+	@$(call check-tool,$(bat_TOOL),$(bat_HINT))
 	./install_file.sh bat/tokyonight_storm.tmTheme $(BAT_THEMES_DIR)/tokyonight_storm.tmTheme
 	bat cache --build

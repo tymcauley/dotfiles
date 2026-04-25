@@ -9,8 +9,6 @@ nvim: ## Install neovim config
 
 # If this is 1 on Linux, then download a version which works with older glibc.
 OLD_GLIBC ?= 0
-OS := $(shell uname -s)
-ARCH := $(shell uname -m)
 ifeq ($(OS),Darwin)
 NVIM_REPO := neovim
 else ifeq ($(OLD_GLIBC),0)

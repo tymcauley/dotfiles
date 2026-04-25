@@ -1,14 +1,12 @@
 .PHONY: rust
-ALL_TARGETS += rust
+ALL_TARGETS  += rust
+TOOL_TARGETS += rust
 
-ifeq ($(shell which rustup 2> /dev/null),)
-$(error Please install rustup: >>> \
-	curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- --no-modify-path -y \
-	<<<)
-endif
+rust_TOOL := rustup
+rust_HINT := https://rustup.rs
 
-ifeq ($(shell uname),Darwin)
-ifeq ($(shell uname -p),arm)
+ifeq ($(OS),Darwin)
+ifeq ($(ARCH),arm64)
 RUST_ANALYZER_NAME := rust-analyzer-aarch64-apple-darwin
 else
 RUST_ANALYZER_NAME := rust-analyzer-x86_64-apple-darwin
@@ -21,6 +19,7 @@ RUST_ANALYZER_URL := https://github.com/rust-lang/rust-analyzer/releases/latest/
 # TODO: Install zsh completions for rustup?
 
 rust: ## Update rustup, install rust-analyzer
+	@$(call check-tool,$(rust_TOOL),$(rust_HINT))
 	rustup update
 	curl -L $(RUST_ANALYZER_URL) | gunzip -c - > ~/.local/bin/rust-analyzer
 	chmod +x ~/.local/bin/rust-analyzer
