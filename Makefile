@@ -1,5 +1,5 @@
 ifeq ($(wildcard cfg.mk),)
-$(error Missing dotfiles config file 'cfg.mk', check examples in 'config/' folder)
+$(error Missing dotfiles config file 'cfg.mk', run './init.sh' to generate one)
 endif
 
 include cfg.mk
