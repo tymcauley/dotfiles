@@ -9,7 +9,5 @@ BREW_FORMULAE += \
 BREW_CASKS := \
 	font-iosevka-term-nerd-font \
 	font-lilex-nerd-font \
-	gtkwave \
-	mattermost \
 	xquartz \
 	yed
