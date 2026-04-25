@@ -12,7 +12,6 @@ SCALA    := 1
 TERMINAL := 1
 TMUX     := 1
 ZELLIJ   := 1
-ZSH      := 1
 
 BREW_FORMULAE := \
 	asciidoctor \
