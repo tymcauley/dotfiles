@@ -3,7 +3,7 @@ ALL_TARGETS += claude
 
 CLAUDE_SETTINGS := $(HOME)/.claude/settings.json
 
-claude:
+claude: ## Install Claude Code statusline
 	./install_file.sh claude/statusline-command.sh ~/.claude/statusline-command.sh
 	@mkdir -p $(dir $(CLAUDE_SETTINGS))
 	@[ -f $(CLAUDE_SETTINGS) ] || echo '{}' > $(CLAUDE_SETTINGS)

@@ -20,7 +20,7 @@ RUST_ANALYZER_URL := https://github.com/rust-lang/rust-analyzer/releases/latest/
 
 # TODO: Install zsh completions for rustup?
 
-rust:
+rust: ## Update rustup, install rust-analyzer
 	rustup update
 	curl -L $(RUST_ANALYZER_URL) | gunzip -c - > ~/.local/bin/rust-analyzer
 	chmod +x ~/.local/bin/rust-analyzer

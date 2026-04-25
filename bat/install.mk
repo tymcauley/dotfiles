@@ -7,6 +7,6 @@ endif
 
 BAT_THEMES_DIR := $(shell bat --config-dir)/themes
 
-bat:
+bat: ## Install bat theme
 	./install_file.sh bat/tokyonight_storm.tmTheme $(BAT_THEMES_DIR)/tokyonight_storm.tmTheme
 	bat cache --build

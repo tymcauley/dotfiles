@@ -1,7 +1,7 @@
 .PHONY: terminal
 ALL_TARGETS += terminal
 
-terminal:
+terminal: ## Install terminal emulator configs
 	./install_file.sh terminal/alacritty.yml         ~/.config/alacritty/alacritty.yml
 	./install_file.sh terminal/ghostty.config        ~/.config/ghostty/config
 	./install_file.sh terminal/kitty.conf            ~/.config/kitty/kitty.conf

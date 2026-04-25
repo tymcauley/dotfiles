@@ -16,7 +16,7 @@ BREW_INSTALLED_CASKS  = $(shell brew list --cask -1)
 BREW_CASKS_TO_INSTALL = $(filter-out $(BREW_INSTALLED_CASKS),$(BREW_CASKS))
 endif
 
-brew:
+brew: ## Install/upgrade configured brew formulae and casks
 	brew update
 	brew upgrade --greedy
 	@for formula in $(BREW_FORMULAE_TO_INSTALL) ; do \

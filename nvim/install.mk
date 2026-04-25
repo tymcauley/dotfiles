@@ -1,7 +1,7 @@
 .PHONY: nvim update-nvim
 ALL_TARGETS += nvim
 
-nvim:
+nvim: ## Install neovim config
 	./install_file.sh nvim/init.lua       ~/.config/nvim/init.lua
 	./install_dir.sh  nvim/lua            ~/.config/nvim/lua
 	./install_dir.sh  nvim/lua/plugins    ~/.config/nvim/lua/plugins
@@ -21,7 +21,7 @@ endif
 NVIM_URL := https://github.com/neovim/$(NVIM_REPO)/releases/download/nightly
 
 # Update to latest nightly build of neovim for macOS/Linux
-update-nvim:
+update-nvim: ## Download latest neovim nightly
 ifeq ($(OS),Darwin)
 	curl -fLO $(NVIM_URL)/nvim-macos-$(ARCH).tar.gz && \
 		xattr -c ./nvim-macos-$(ARCH).tar.gz && \

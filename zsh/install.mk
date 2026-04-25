@@ -3,7 +3,7 @@ ALL_TARGETS += zsh
 
 ZDOTDIR := ~/.config/zsh
 
-zsh:
+zsh: ## Install zsh config and powerlevel10k
 	mkdir -p $(ZDOTDIR)/completions $(ZDOTDIR)/plugins
 	./install_file.sh zsh/zshenv         ~/.zshenv
 	./install_file.sh zsh/p10k.zsh       $(ZDOTDIR)/.p10k.zsh

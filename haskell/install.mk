@@ -10,7 +10,7 @@ endif
 GHCUP_INSTALLED_TOOLS = $(shell ghcup list --show-criteria installed --raw-format 2> /dev/null | cut -f 1 -d " " | uniq)
 GHCUP_TOOLS_TO_INSTALL = $(filter-out $(GHCUP_INSTALLED_TOOLS),$(GHCUP_TOOLS))
 
-haskell:
+haskell: ## Install configured ghcup tools
 	ghcup upgrade
 	@for tool in $(GHCUP_TOOLS_TO_INSTALL) ; do \
 		ghcup install $$tool ; \
