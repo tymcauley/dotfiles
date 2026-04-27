@@ -28,6 +28,6 @@ help: ## Show this help message
 
 doctor: ## Report missing tools required by enabled modules
 	@status=0; \
-	$(foreach t,$(TOOL_TARGETS),command -v $($(t)_TOOL) >/dev/null 2>&1 || { echo "$(t) needs '$($(t)_TOOL)': $($(t)_HINT)"; status=1; }; ) \
+	$(foreach t,$(TOOL_TARGETS),$($(t)_CHECK) >/dev/null 2>&1 || { echo "$(t) needs '$($(t)_TOOL)': $($(t)_HINT)"; status=1; }; ) \
 	[ $$status -eq 0 ] && echo "all required tools installed"; \
 	exit $$status
