@@ -10,3 +10,6 @@
 
 # Private Neovim configuration.
 /nvim/lua/private.lua
+
+# Agent files.
+.claude/settings.local.json
