@@ -114,26 +114,6 @@ if status is-interactive
     end
 
     #
-    # prompt
-    #
-
-    set -g hydro_color_pwd cyan --bold
-    set -g hydro_color_git yellow --bold
-    set -g hydro_color_error red --bold
-    set -g hydro_color_prompt green --bold
-    set -g hydro_color_duration brblack
-    set -g hydro_color_time brblack
-
-    set -g hydro_multiline true
-
-    function fish_right_prompt
-        # Show the time in HH:MM:SS format
-        set_color $hydro_color_time
-        date "+%H:%M:%S"
-        set_color normal
-    end
-
-    #
     # Cleanup
     #
 
