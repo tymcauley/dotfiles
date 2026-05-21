@@ -17,6 +17,7 @@ BREW_FORMULAE := \
 	bat \
 	btop \
 	cmake \
+	direnv \
 	dtc \
 	duf \
 	dust \
