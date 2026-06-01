@@ -44,18 +44,6 @@ return {
                     dir_icon = "", -- Disable directory icon, it takes up too much space
                 },
             },
-            bar = {
-                -- BufModifiedSet was dropped in nvim 0.13 (neovim/neovim#35610);
-                -- swap it for OptionSet until dropbar.nvim#280 lands.
-                update_events = {
-                    buf = {
-                        "OptionSet",
-                        "FileChangedShellPost",
-                        "TextChanged",
-                        "ModeChanged",
-                    },
-                },
-            },
         },
     },
 
