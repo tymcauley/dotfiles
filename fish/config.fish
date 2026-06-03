@@ -7,9 +7,6 @@ set -gx XDG_CACHE_HOME  "$HOME/.cache"
 set -gx EDITOR "nvim"
 set -gx VISUAL "nvim"
 
-# Use bat for man pager
-set -gx MANPAGER "sh -c 'col -bx | bat -l man -p'"
-
 # pager
 set -gx PAGER "less"
 set -gx LESS "-i -M -R -S -w -X -z-4"
@@ -86,19 +83,28 @@ if status is-interactive
     source $__fish_config_dir/ssh.fish
 
     #
-    # fzf
+    # Tool setup
     #
 
+    # fzf
     if type -q fzf
         fzf --fish | source
     end
 
-    #
     # direnv
-    #
-
     if type -q direnv
         direnv hook fish | source
+    end
+
+    # bat
+    if type -q bat
+        # Use bat for man pager. On macOS, strip overstrike sequences (macOS
+        # uses `mandoc`, Linux uses `groff`).
+        if test (uname) = Darwin
+            set -gx MANPAGER "sh -c 'col -bx | bat -pl man'"
+        else
+            set -gx MANPAGER "bat -pl man"
+        end
     end
 
     #
