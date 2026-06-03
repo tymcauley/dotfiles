@@ -46,8 +46,12 @@ if status is-interactive
         source $__fish_config_dir/config.local.fish
     end
 
-    if test -x /opt/homebrew/bin/brew
-        eval $(/opt/homebrew/bin/brew shellenv)
+    # Set up Homebrew if it exists
+    for brew_path in /opt/homebrew/bin/brew ~/.linuxbrew/bin/brew
+        if test -x $brew_path
+            eval ($brew_path shellenv fish)
+            break
+        end
     end
 
     __path_prepend $COURSIER_BIN_DIR # Scala
@@ -67,8 +71,8 @@ if status is-interactive
         end
     end
 
-    __path_prepend ~/.local/nvim-macos-$(uname -m)/bin # macOS installation of neovim
-    __path_prepend ~/.local/bin                        # Local tools
+    __path_prepend ~/.local/nvim-macos-(uname -m)/bin # macOS installation of neovim
+    __path_prepend ~/.local/bin                       # Local tools
 
     #
     # Aliases
