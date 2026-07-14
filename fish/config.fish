@@ -60,6 +60,7 @@ if status is-interactive
     end
 
     __path_prepend ~/.local/nvim-macos-(uname -m)/bin # macOS installation of neovim
+    __path_prepend ~/.local/oss-cad-suite/bin         # OSS CAD Suite
     __path_prepend ~/.local/bin                       # Local tools
 
     #
