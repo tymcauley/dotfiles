@@ -23,8 +23,9 @@ set -gx FZF_DEFAULT_OPTS "\
 set -gx COURSIER_BIN_DIR "$XDG_DATA_HOME/coursier/bin"
 set -gx BAT_THEME "tokyonight_storm"
 
-# Disable telemetry for gh
-set -gx DO_NOT_TRACK "true"
+# Disable telemetry
+set -gx DO_NOT_TRACK "true"     # gh
+set -gx HOMEBREW_NO_ANALYTICS 1 # Homebrew
 
 if status is-interactive
     # Prepend a directory to the PATH if it exists.
