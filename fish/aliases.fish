@@ -3,8 +3,8 @@ alias vim="nvim"
 alias vimdiff="nvim -d"
 
 # Replace ls with eza
-alias ls="eza --classify=automatic"
-alias ll="ls --long --binary --group --icons=automatic"
+alias ls="eza --classify=auto"
+alias ll="ls --long --binary --group --icons=auto"
 alias llg="ll --git"
 alias la="ll --all"
 alias l="ls --oneline --all"
