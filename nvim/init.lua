@@ -161,7 +161,7 @@ vim.api.nvim_create_autocmd({ "BufLeave", "FocusLost", "InsertEnter", "WinLeave"
 -- Highlight text after yanking it
 vim.api.nvim_create_autocmd("TextYankPost", {
     callback = function()
-        vim.highlight.on_yank()
+        vim.hl.hl_op()
     end,
     desc = "Briefly highlight yanked text",
 })
