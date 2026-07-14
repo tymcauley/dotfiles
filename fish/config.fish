@@ -3,25 +3,12 @@ set -gx XDG_CONFIG_HOME "$HOME/.config"
 set -gx XDG_DATA_HOME   "$HOME/.local/share"
 set -gx XDG_CACHE_HOME  "$HOME/.cache"
 
-# Set default text editor
-set -gx EDITOR "nvim"
-set -gx VISUAL "nvim"
-
 # pager
 set -gx PAGER "less"
 set -gx LESS "-i -M -R -S -w -X -z-4"
 
-# fzf
-set -gx FZF_DEFAULT_COMMAND "fd --type file --follow --hidden --exclude .git --color=always"
-set -gx FZF_CTRL_T_COMMAND $FZF_DEFAULT_COMMAND
-set -gx FZF_DEFAULT_OPTS "\
---ansi \
---reverse \
-"
-
 # Other software
 set -gx COURSIER_BIN_DIR "$XDG_DATA_HOME/coursier/bin"
-set -gx BAT_THEME "tokyonight_storm"
 
 # Disable telemetry
 set -gx DO_NOT_TRACK "true"     # gh
@@ -93,6 +80,15 @@ if status is-interactive
 
     # fzf
     if type -q fzf
+        if type -q fd
+            set -gx FZF_DEFAULT_COMMAND "fd --type file --follow --hidden --exclude .git --color=always"
+            set -gx FZF_CTRL_T_COMMAND $FZF_DEFAULT_COMMAND
+        end
+        set -gx FZF_DEFAULT_OPTS "\
+        --ansi \
+        --reverse \
+        "
+
         fzf --fish | source
     end
 
@@ -103,6 +99,7 @@ if status is-interactive
 
     # bat
     if type -q bat
+        set -gx BAT_THEME "tokyonight_storm"
         # Use bat for man pager. On macOS, strip overstrike sequences (macOS
         # uses `mandoc`, Linux uses `groff`).
         if test (uname) = Darwin
@@ -110,6 +107,13 @@ if status is-interactive
         else
             set -gx MANPAGER "bat -pl man"
         end
+    end
+
+    # nvim
+    if type -q nvim
+        # Set default text editor
+        set -gx EDITOR "nvim"
+        set -gx VISUAL "nvim"
     end
 
     #
