@@ -67,6 +67,19 @@ return {
                 fts_disable_indent = {
                     "scala",
                 },
+                -- Disabled filetypes.
+                disabled_filetypes = {
+                    "blink-cmp-menu",
+                    "blink-cmp-signature",
+                    "fidget",
+                    "fzf",
+                    "lazy",
+                    "lazy_backdrop",
+                    "snacks_input",
+                    "snacks_notif",
+                    "snacks_notif_history",
+                    "snacks_win_backdrop",
+                },
             }
         end,
         config = function(_, opts)
@@ -89,8 +102,8 @@ return {
                     local bufnr = event.buf
                     local filetype = vim.api.nvim_get_option_value("filetype", { buf = bufnr })
 
-                    -- Skip if no filetype
-                    if filetype == "" then
+                    -- Skip if no filetype, or if this filetype is disabled.
+                    if filetype == "" or vim.tbl_contains(opts.disabled_filetypes, filetype) then
                         return
                     end
 
