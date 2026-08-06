@@ -22,6 +22,13 @@ if status is-interactive
         end
     end
 
+    # Append a directory to the PATH if it exists.
+    function __path_append
+        if test -d $argv
+            fish_add_path -agP $argv
+        end
+    end
+
     # Use vi key bindings
     fish_vi_key_bindings
 
@@ -60,7 +67,7 @@ if status is-interactive
     end
 
     __path_prepend ~/.local/nvim-macos-(uname -m)/bin # macOS installation of neovim
-    __path_prepend ~/.local/oss-cad-suite/bin         # OSS CAD Suite
+    __path_append  ~/.local/oss-cad-suite/bin         # OSS CAD Suite
     __path_prepend ~/.local/bin                       # Local tools
 
     #
