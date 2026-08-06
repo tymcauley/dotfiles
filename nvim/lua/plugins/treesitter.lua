@@ -79,6 +79,9 @@ return {
                 :totable()
             require("nvim-treesitter").install(parsers_to_install)
 
+            -- The systemverilog parser covers plain Verilog too, register it for both filetypes.
+            vim.treesitter.language.register("systemverilog", "verilog")
+
             -- Auto-start parsers for any buffer
             vim.api.nvim_create_autocmd("FileType", {
                 desc = "Enable Treesitter",
@@ -94,35 +97,20 @@ return {
                     -- Get parser name based on filetype
                     local parser_name = vim.treesitter.language.get_lang(filetype)
                     if not parser_name then
-                        vim.notify(
-                            vim.inspect("No treesitter parser found for filetype: " .. filetype),
-                            vim.log.levels.WARN
-                        )
                         return
                     end
 
-                    -- Try to get existing parser
-                    local parser_configs = require("nvim-treesitter.parsers")
-                    if not parser_configs[parser_name] then
-                        return -- Parser not available, skip silently
+                    -- Start treesitter for this buffer. This is the only reliable way to tell whether a parser is
+                    -- actually installed and usable: vim.treesitter.get_parser can return successfully even when no
+                    -- parser is installed, deferring the failure to vim.treesitter.start.
+                    local started = pcall(vim.treesitter.start, bufnr, parser_name)
+                    if not started then
+                        vim.notify(
+                            "No treesitter parser for filetype '" .. filetype .. "' (language '" .. parser_name .. "')",
+                            vim.log.levels.INFO
+                        )
+                        return
                     end
-
-                    local parser_exists = pcall(vim.treesitter.get_parser, bufnr, parser_name)
-                    if not parser_exists then
-                        -- Check if parser is already installed
-                        if not vim.tbl_contains(already_installed, parser_name) then
-                            -- If not installed, warn user and exit before trying to start treesitter
-                            vim.notify("Treesitter parser not installed for " .. parser_name, vim.log.levels.WARN)
-                            return
-                        end
-                    end
-
-                    -- Start treesitter for this buffer
-                    -- vim.notify(
-                    --     vim.inspect("Starting treesitter parser '" .. parser_name .. "' for filetype: " .. filetype),
-                    --     vim.log.levels.WARN
-                    -- )
-                    vim.treesitter.start(bufnr, parser_name)
                     -- Use regex based syntax-highlighting as fallback as some plugins might need it
                     vim.bo[bufnr].syntax = "ON"
                     -- Use treesitter for folds

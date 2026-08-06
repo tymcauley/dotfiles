@@ -133,8 +133,12 @@ vim.opt.timeoutlen = 500 -- Mapped-key-sequence timeout in milliseconds, and sta
 vim.filetype.add({
     extension = {
         mill = "scala",
+        f = "filelist",
     },
 })
+
+-- Always treat '.v' files as Verilog.
+vim.g.filetype_v = "verilog"
 
 -- Auto-toggling of relative numbers
 -- - Only enable relative numbers for the focused window
