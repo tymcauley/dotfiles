@@ -38,7 +38,9 @@ return {
         priority = 1000,
         lazy = false,
         opts = {
-            bigfile = { enabled = true },
+            bigfile = {
+                size = 10 * 1024 * 1024, -- 10 MiB
+            },
             notifier = { enabled = true },
             input = { enabled = true },
             styles = {
