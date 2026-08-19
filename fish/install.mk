@@ -14,4 +14,5 @@ fish: ## Install fish shell config and plugins
 	./install_file.sh fish/aliases.fish $(FISH_CONFIG_DIR)/aliases.fish
 	./install_file.sh fish/ssh.fish     $(FISH_CONFIG_DIR)/ssh.fish
 	./install_file.sh fish/fish_plugins $(FISH_CONFIG_DIR)/fish_plugins
+	./install_dir.sh  fish/conf.d       $(FISH_CONFIG_DIR)/conf.d
 	fish -c 'fisher update'
