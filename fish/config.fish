@@ -15,10 +15,10 @@ set -gx DO_NOT_TRACK "true"     # gh
 set -gx HOMEBREW_NO_ANALYTICS 1 # Homebrew
 
 if status is-interactive
-    # Prepend a directory to the PATH if it exists.
+    # Prepend a directory to the PATH if it exists, moving it if it's already on the PATH.
     function __path_prepend
         if test -d $argv
-            fish_add_path -gP $argv
+            fish_add_path -gPm $argv
         end
     end
 
@@ -42,12 +42,6 @@ if status is-interactive
         end
     end
 
-    __path_prepend $COURSIER_BIN_DIR # Scala
-    __path_prepend ~/.cargo/bin      # Rust
-    __path_prepend ~/.ghcup/bin      # Haskell
-    __path_prepend ~/.cabal/bin      # Haskell
-    __path_prepend ~/.elan/bin       # Lean
-
     if set -q HOMEBREW_PREFIX
         __path_prepend "$HOMEBREW_PREFIX/opt/llvm/bin"            # LLVM utilities
         __path_prepend "$HOMEBREW_PREFIX/opt/ruby/bin"            # Ruby
@@ -58,6 +52,12 @@ if status is-interactive
             set -gx RISCV "$HOMEBREW_PREFIX/Cellar/riscv-gnu-toolchain/main"
         end
     end
+
+    __path_prepend $COURSIER_BIN_DIR # Scala
+    __path_prepend ~/.cargo/bin      # Rust
+    __path_prepend ~/.ghcup/bin      # Haskell
+    __path_prepend ~/.cabal/bin      # Haskell
+    __path_prepend ~/.elan/bin       # Lean
 
     __path_prepend ~/.local/nvim-macos-(uname -m)/bin # macOS installation of neovim
     __path_prepend ~/.local/bin                       # Local tools
