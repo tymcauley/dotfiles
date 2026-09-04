@@ -35,7 +35,7 @@ if status is-interactive
     end
 
     # Set up Homebrew if it exists
-    for brew_path in /opt/homebrew/bin/brew ~/.linuxbrew/bin/brew
+    for brew_path in /opt/homebrew/bin/brew ~/.linuxbrew/bin/brew /home/linuxbrew/.linuxbrew/bin/brew
         if test -x $brew_path
             eval ($brew_path shellenv fish)
             break
