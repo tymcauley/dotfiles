@@ -116,6 +116,11 @@ if status is-interactive
         set -gx VISUAL "nvim"
     end
 
+    # mise
+    if type -q mise
+        mise activate fish | source
+    end
+
     #
     # History filtering
     #
