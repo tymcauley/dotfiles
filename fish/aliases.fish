@@ -219,3 +219,9 @@ alias gwc='git clean --dry-run'
 alias gwC='git clean --force'
 alias gwx='git rm -r'
 alias gwX='git rm -r --force'
+
+# Worktree (W)
+alias gWa='git worktree add'
+alias gWl='git worktree list'
+alias gWx='git worktree remove'
+alias gWp='git worktree prune'
