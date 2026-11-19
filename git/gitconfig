@@ -46,7 +46,6 @@
 	commit-regex = "^Commit: "
 	features = decorations navigate
 	line-numbers = true
-	side-by-side = true
 [delta "decorations"]
 	commit-decoration-style = blue ol
 	commit-style = raw
