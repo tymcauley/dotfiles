@@ -21,7 +21,7 @@
 	gpgsign = true
 [include]
 	path = ~/.gitconfig.private
-	path = ~/.config/git/tokyonight_storm.gitconfig
+	path = ~/.config/git/tokyonight_moon.gitconfig
 [core]
 	excludesfile = ~/.config/git/gitignore_global
 [mergetool "diffconflicts"]

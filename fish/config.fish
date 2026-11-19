@@ -99,7 +99,7 @@ if status is-interactive
 
     # bat
     if type -q bat
-        set -gx BAT_THEME "tokyonight_storm"
+        set -gx BAT_THEME "tokyonight_moon"
         # Use bat for man pager. On macOS, strip overstrike sequences (macOS
         # uses `mandoc`, Linux uses `groff`).
         if test (uname) = Darwin

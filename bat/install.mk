@@ -11,4 +11,5 @@ BAT_THEMES_DIR = $(shell bat --config-dir)/themes
 bat: ## Install bat theme
 	@$(call check-tool,$(bat_TOOL),$(bat_HINT),$(bat_CHECK))
 	./install_file.sh bat/tokyonight_storm.tmTheme $(BAT_THEMES_DIR)/tokyonight_storm.tmTheme
+	./install_file.sh bat/tokyonight_moon.tmTheme $(BAT_THEMES_DIR)/tokyonight_moon.tmTheme
 	bat cache --build

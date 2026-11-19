@@ -4,6 +4,7 @@ return {
         lazy = false,
         priority = 1000,
         opts = {
+            style = "moon",
             lualine_bold = true,
             on_colors = function(colors)
                 colors.border = colors.blue -- Window separator color
