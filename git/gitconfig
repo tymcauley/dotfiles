@@ -12,7 +12,7 @@
 	tool = diffconflicts
 	conflictStyle = zdiff3
 [alias]
-	emailpersonal = config user.email \"16469394+tymcauley@users.noreply.github.com\"
+	emailpersonal = "!git config user.email \"16469394+tymcauley@users.noreply.github.com\" && git config user.signingkey \"ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICH0jtvvmPSqkoJCygJxWsBum/XVLwZ1j5mFJW2XSmev\""
 [gpg]
 	format = ssh
 [gpg "ssh"]
